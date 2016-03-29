@@ -25,7 +25,7 @@ There is a bug with cocoapods version 1.0.0.beta.6 that affects our build: https
 
 To fix:
 
-open /Users/jamesromo/Library/Developer/Xcode/DerivedData/App-duleyrsezkvsavdltyhdceybcwgx/Build/Products/Release-iphonesimulator/WMobileKit/
+open the directory to the bundle file: /Users/jamesromo/Library/Developer/Xcode/DerivedData/App-duleyrsezkvsavdltyhdceybcwgx/Build/Products/Release-iphonesimulator/WMobileKit/
 
 copy bundle to the directory above it and rerun.
 
@@ -33,7 +33,19 @@ copy bundle to the directory above it and rerun.
 
 ## Installation
 
-WMobileKit is available through [CocoaPods](http://cocoapods.org). To install
+WMobileKit is only available locally until it is ready for public consumption. To use,
+clone this repo and follow the usage instructions. Then, in your project, open your Podfile
+and add:
+
+```ruby
+pod 'WMobileKit', :path => '/Users/<yourusername>/<path>/w-mobile-kit/'
+```
+
+where the path is the path to the local w-mobile-kit repo
+
+
+Upon release:
+WMobileKit will be available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
