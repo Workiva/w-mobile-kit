@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "WMobileKit_Example.app"
-               BlueprintName = "WMobileKit_Example"
-               ReferencedContainer = "container:WMobileKit.xcodeproj">
+               BuildableName = "WMobileKitExample_Example.app"
+               BlueprintName = "WMobileKitExample"
+               ReferencedContainer = "container:WMobileKitExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "WMobileKit_Tests.xctest"
-               BlueprintName = "WMobileKit_Tests"
-               ReferencedContainer = "container:WMobileKit.xcodeproj">
+               BuildableName = "WMobileKitExample_Example.xctest"
+               BlueprintName = "WMobileKitExample_Tests"
+               ReferencedContainer = "container:WMobileKitExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "WMobileKit_Tests.xctest"
-               BlueprintName = "WMobileKit_Tests"
-               ReferencedContainer = "container:WMobileKit.xcodeproj">
+               BuildableName = "WMobileKitExample_Example.xctest"
+               BlueprintName = "WMobileKitExample_Tests"
+               ReferencedContainer = "container:WMobileKitExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "WMobileKit_Example.app"
-            BlueprintName = "WMobileKit_Example"
-            ReferencedContainer = "container:WMobileKit.xcodeproj">
+            BuildableName = "WMobileKitExample_Example.app"
+            BlueprintName = "WMobileKitExample"
+            ReferencedContainer = "container:WMobileKitExample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "WMobileKit_Example.app"
-            BlueprintName = "WMobileKit_Example"
-            ReferencedContainer = "container:WMobileKit.xcodeproj">
+            BuildableName = "WMobileKitExample_Example.app"
+            BlueprintName = "WMobileKitExample"
+            ReferencedContainer = "container:WMobileKitExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +99,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "WMobileKit_Example.app"
-            BlueprintName = "WMobileKit_Example"
-            ReferencedContainer = "container:WMobileKit.xcodeproj">
+            BuildableName = "WMobileKitExample_Example.app"
+            BlueprintName = "WMobileKitExample"
+            ReferencedContainer = "container:WMobileKitExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

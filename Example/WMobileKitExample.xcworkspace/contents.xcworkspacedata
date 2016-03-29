@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:WMobileKit.xcodeproj">
+      location = "group:/Users/jamesromo/Development/w-mobile-kit/Example/WMobileKitExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
