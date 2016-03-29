@@ -38,11 +38,16 @@ clone this repo and follow the usage instructions. Then, in your project, open y
 and add:
 
 ```ruby
-pod 'WMobileKit', :path => '/Users/<yourusername>/<path>/w-mobile-kit/'
+pod 'WMobileKit', :path => '/<path>/w-mobile-kit/'
 ```
 
-where the path is the path to the local w-mobile-kit repo
+where the path is the path to the local w-mobile-kit repo.
 
+If you are a Workiva User, use the releative path:
+
+```ruby
+pod 'WMobileKit', :path => '../../../../w-mobile-kit/'
+```
 
 Upon release:
 WMobileKit will be available through [CocoaPods](http://cocoapods.org). To install
