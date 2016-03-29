@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'WMobileKit_Example', :exclusive => true do
+target 'WMobileKitExample', :exclusive => true do
   pod 'WMobileKit', :path => '../'
 end
 
-target 'WMobileKit_Tests', :exclusive => true do
+target 'WMobileKitExample_Tests', :exclusive => true do
   pod 'WMobileKit', :path => '../'
 
   pod 'Quick', '~> 0.8'
