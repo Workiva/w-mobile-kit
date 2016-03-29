@@ -1,10 +1,6 @@
 //
 //  AppDelegate.swift
 //  WMobileKit
-//
-//  Created by James Romo on 03/29/2016.
-//  Copyright (c) 2016 James Romo. All rights reserved.
-//
 
 import UIKit
 

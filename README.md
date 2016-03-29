@@ -22,7 +22,7 @@ pod "WMobileKit"
 
 ## Author
 
-James Romo, james.romo@workiva.com
+Workiva
 
 ## License
 

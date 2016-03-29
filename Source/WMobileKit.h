@@ -1,10 +1,6 @@
 //
 //  WMobileKit.h
 //  WMobileKit
-//
-//  Created by James Romo on 3/29/16.
-//
-//
 
 #import <UIKit/UIKit.h>
 
