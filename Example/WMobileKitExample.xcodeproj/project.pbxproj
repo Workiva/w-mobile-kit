@@ -14,7 +14,6 @@
 		D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */; };
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
 		D53D0BC31CAB11B70065D106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBD1CAB11B70065D106 /* Images.xcassets */; };
-		D53D0BC41CAB11B70065D106 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBE1CAB11B70065D106 /* Info.plist */; };
 		D53D0BC51CAB11B70065D106 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -203,7 +202,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -242,7 +241,6 @@
 				D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */,
 				D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */,
 				D53D0BC31CAB11B70065D106 /* Images.xcassets in Resources */,
-				D53D0BC41CAB11B70065D106 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
