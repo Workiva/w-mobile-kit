@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'WMobileKitExample' do
-  pod 'WMobileKit', :path => '../'
+  pod 'WMobileKit', :path => '../'  
 end
 
 target 'WMobileKitExample_Tests' do

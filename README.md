@@ -16,14 +16,14 @@ To run the example project, clone the repo, and run `pod install --repo-update` 
 `--repo-update` is required as there is a bug in the current cocoapods beta.
 
 ## Requirements
-- You system must use the beta version of cocoapods (1.0.0.beta.6)
+- You system must use the beta version of cocoapods (1.0.0.beta.5)
     - This can be installed using: `gem install cocoapods --pre`
     - If you are using a Gemfile, add the cocoapods beta
 ```ruby
-gem "cocoapods", "1.0.0.beta.6"
+gem "cocoapods", "1.0.0.beta.5"
 
 DEPENDENCIES
-    cocoapods (= 1.0.0.beta.6)
+    cocoapods (= 1.0.0.beta.5)
  ```
  - `use_frameworks!` must be at the top of your Podfile (since this is a Swift pod)
 
