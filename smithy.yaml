@@ -1,7 +1,6 @@
 language: python
 
 before_install:
-  - rbenv rehash
 
 script:
   - ./smithy.sh
