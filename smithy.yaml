@@ -1,0 +1,15 @@
+language: python
+
+before_install:
+
+script:
+  - ./smithy.sh
+
+artifacts:
+  - dist/**/*.ipa
+  - dist/**/*.tar.gz
+  # - coverage/**/*  ## We do not generate for iOS atm, and this is including doc viewers stuff.
+  - test_reports/*.xml
+
+test_reports:
+  - test-reports/*.xml
