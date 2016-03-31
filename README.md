@@ -16,7 +16,7 @@ To run the example project, clone the repo, and run `pod install --repo-update` 
 `--repo-update` is required as there is a bug in the current cocoapods beta.
 
 ## Requirements
-- You system must use the beta version of cocoapods (1.0.0.beta.5)
+- You system must use the beta version of cocoapods (1.0.0.beta.6)
     - This can be installed using: `gem install cocoapods --pre`
     - If you are using a Gemfile, add the cocoapods beta
 ```ruby
