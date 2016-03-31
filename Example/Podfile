@@ -4,7 +4,3 @@ use_frameworks!
 target 'WMobileKitExample' do
   pod 'WMobileKit', :path => '../'  
 end
-
-target 'WMobileKitExample_Tests' do
-  pod 'WMobileKit', :path => '../'
-end
