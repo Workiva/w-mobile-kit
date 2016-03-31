@@ -21,6 +21,10 @@ class WMobileKitLeftMenuTVC: UITableViewController {
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.clearColor()
+    }
 
     func defaultVC() -> UIViewController {
         return vc0
