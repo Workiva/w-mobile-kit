@@ -7,9 +7,4 @@ end
 
 target 'WMobileKitExample_Tests' do
   pod 'WMobileKit', :path => '../'
-  pod 'Quick', '~> 0.8'
-  pod 'Nimble', '~> 3.0'
-# Commented out until necessary
-#  pod 'FBSnapshotTestCase'
-#  pod 'Nimble-Snapshots'
 end
