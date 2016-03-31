@@ -4,6 +4,8 @@
 
 import UIKit
 
+let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

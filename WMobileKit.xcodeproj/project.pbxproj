@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */; };
+		55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106301CAC849300495BBC /* WSideMenuVC.swift */; };
+		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
 		D53D0B9C1CAB09020065D106 /* WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D53D0B911CAB09020065D106 /* WMobileKit.framework */; };
 		D53D0BB01CAB0FD30065D106 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */; };
 		D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +27,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0093E47F1391E6BF1D607CD0 /* Pods-WMobileKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.debug.xcconfig"; sourceTree = "<group>"; };
+		291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.release.xcconfig"; sourceTree = "<group>"; };
+		55A106301CAC849300495BBC /* WSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVC.swift; sourceTree = "<group>"; };
+		9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D53D0B911CAB09020065D106 /* WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D53D0B9B1CAB09020065D106 /* WMobileKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMobileKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D53D0BAC1CAB0FD30065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,6 +40,7 @@
 		D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMobileKit.h; sourceTree = "<group>"; };
 		D53D0BB31CAB0FE60065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitTests.swift; sourceTree = "<group>"; };
+		DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,18 +57,49 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D0B9C1CAB09020065D106 /* WMobileKit.framework in Frameworks */,
+				99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A97BF6F65F054BD1EE8E35D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */,
+				9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55A1062F1CAC847500495BBC /* Side Menu */ = {
+			isa = PBXGroup;
+			children = (
+				55A106301CAC849300495BBC /* WSideMenuVC.swift */,
+			);
+			name = "Side Menu";
+			sourceTree = "<group>";
+		};
+		B5F40D8A9EA8A5698C7AD136 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */,
+				291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */,
+				DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */,
+				0093E47F1391E6BF1D607CD0 /* Pods-WMobileKitTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D53D0B871CAB09020065D106 = {
 			isa = PBXGroup;
 			children = (
 				D53D0BAB1CAB0FD30065D106 /* WMobileKit */,
 				D53D0BB21CAB0FE60065D106 /* WMobileKitTests */,
 				D53D0B921CAB09020065D106 /* Products */,
+				B5F40D8A9EA8A5698C7AD136 /* Pods */,
+				1A97BF6F65F054BD1EE8E35D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +115,7 @@
 		D53D0BAB1CAB0FD30065D106 /* WMobileKit */ = {
 			isa = PBXGroup;
 			children = (
+				55A1062F1CAC847500495BBC /* Side Menu */,
 				D53D0BAC1CAB0FD30065D106 /* Info.plist */,
 				D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */,
 				D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */,
@@ -109,10 +152,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D53D0BA51CAB09020065D106 /* Build configuration list for PBXNativeTarget "WMobileKit" */;
 			buildPhases = (
+				53CF0FEC4C594C5B31C50188 /* 📦 Check Pods Manifest.lock */,
 				D53D0B8C1CAB09020065D106 /* Sources */,
 				D53D0B8D1CAB09020065D106 /* Frameworks */,
 				D53D0B8E1CAB09020065D106 /* Headers */,
 				D53D0B8F1CAB09020065D106 /* Resources */,
+				621E7AD3D77EC818304B0A88 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,9 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D53D0BA81CAB09020065D106 /* Build configuration list for PBXNativeTarget "WMobileKitTests" */;
 			buildPhases = (
+				8D143FF2525C2780A48EB1F2 /* 📦 Check Pods Manifest.lock */,
 				D53D0B971CAB09020065D106 /* Sources */,
 				D53D0B981CAB09020065D106 /* Frameworks */,
 				D53D0B991CAB09020065D106 /* Resources */,
+				43E652AB36073A13CD00196A /* 📦 Embed Pods Frameworks */,
+				C16C0F96346540270D9EC9E4 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -193,11 +241,90 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		43E652AB36073A13CD00196A /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53CF0FEC4C594C5B31C50188 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		621E7AD3D77EC818304B0A88 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D143FF2525C2780A48EB1F2 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C16C0F96346540270D9EC9E4 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D53D0B8C1CAB09020065D106 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
 				D53D0BB01CAB0FD30065D106 /* ReplaceMe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +441,7 @@
 		};
 		D53D0BA61CAB09020065D106 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -330,6 +458,7 @@
 		};
 		D53D0BA71CAB09020065D106 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -346,6 +475,7 @@
 		};
 		D53D0BA91CAB09020065D106 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -356,6 +486,7 @@
 		};
 		D53D0BAA1CAB09020065D106 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0093E47F1391E6BF1D607CD0 /* Pods-WMobileKitTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
