@@ -6,7 +6,7 @@ echo
 # Install pods for the Framework
 echo "Installing pods for framework"
 echo
-bundle exec pod install
+bundle exec pod install --repo-update
 echo
 
 cd ./Example
@@ -14,6 +14,6 @@ cd ./Example
 echo
 echo "Installing pods for example project"
 echo
-bundle exec pod install
+bundle exec pod install --repo-update
 
 cd -
