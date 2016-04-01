@@ -31,7 +31,7 @@ public class WScrollView : UIScrollView {
     }
 }
 
-public class WStuffVC : UIControl {
+public class WTabLayout : UIControl {
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
     private var contentView = UIView()
@@ -86,9 +86,9 @@ public class WStuffVC : UIControl {
             make.height.equalTo(8)
             make.bottom.equalTo(contentView).offset(-1)
         }
-        selectionIndicator.backgroundColor = UIColor.init(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         
-        backgroundColor = UIColor.init(colorLiteralRed: 0.35, green: 0.858, blue: 0.54, alpha: 1)
+        selectionIndicator.backgroundColor = UIColor.init(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+
         opaque = false
         selectionIndicatorColor = UIColor.whiteColor()
         

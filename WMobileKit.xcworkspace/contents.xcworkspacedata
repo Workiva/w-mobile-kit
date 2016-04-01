@@ -2,6 +2,24 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:WMobileKit.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:setup.sh">
+   </FileRef>
+   <FileRef
+      location = "group:smithy.sh">
+   </FileRef>
+   <FileRef
+      location = "group:smithy.yaml">
+   </FileRef>
+   <FileRef
+      location = "group:style-guide.md">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
       location = "group:WMobileKit.xcodeproj">
    </FileRef>
    <FileRef

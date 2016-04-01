@@ -32,6 +32,7 @@
 		D53D0BBD1CAB11B70065D106 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitSideMenuVC.swift; sourceTree = "<group>"; };
+		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +108,7 @@
 				D53D0BBE1CAB11B70065D106 /* Info.plist */,
 				D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */,
 				55A106321CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift */,
+				D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */,
 			);
 			name = "WMobileKit Example";
 			path = WMobileKitExample;
@@ -141,7 +143,7 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -349,11 +351,14 @@
 			baseConfigurationReference = 21EC645DF7BC64E4457C7E25 /* Pods-WMobileKitExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/WMobileKitExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WMobileKitExample_Example;
+				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -363,11 +368,13 @@
 			baseConfigurationReference = 86294297CE93610FE8E6B978 /* Pods-WMobileKitExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/WMobileKitExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WMobileKitExample_Example;
+				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

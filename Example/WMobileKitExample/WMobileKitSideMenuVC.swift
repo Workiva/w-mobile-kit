@@ -21,11 +21,8 @@ class WMobileKitNVC: UINavigationController {
         super.viewDidLoad()
 
         navigationBar.barTintColor = UIColor.blackColor()
-        navigationBar.tintColor = UIColor.whiteColor()
-        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        navigationBar.translucent = false
-        
-        let tabLayout = WStuffVC(titles: ["Recents", "All Files"])
+
+        let tabLayout = WTabLayout(titles: ["Recents", "All Files"])
         
         view.addSubview(tabLayout);
         tabLayout.snp_makeConstraints { (make) in

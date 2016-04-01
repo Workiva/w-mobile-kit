@@ -12,8 +12,11 @@
 		7336F6211CADBA0600E5C984 /* WTabLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7336F6201CADBA0600E5C984 /* WTabLayout.swift */; };
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
 		D53D0B9C1CAB09020065D106 /* WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D53D0B911CAB09020065D106 /* WMobileKit.framework */; };
-		D53D0BB01CAB0FD30065D106 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */; };
 		D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5A4F5FE1CAEDA290041BB98 /* UIAppearance+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */; };
+		D5C4B4431CADBCB6009B4104 /* WThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4B4421CADBCB6009B4104 /* WThemeManager.swift */; };
+		D5C4B4451CADBD9A009B4104 /* WTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4B4441CADBD9A009B4104 /* WTheme.swift */; };
 		D5EF60C31CAC77230084472E /* WMobileKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,10 +41,13 @@
 		D53D0B911CAB09020065D106 /* WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D53D0B9B1CAB09020065D106 /* WMobileKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMobileKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D53D0BAC1CAB0FD30065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMobileKit.h; sourceTree = "<group>"; };
 		D53D0BB31CAB0FE60065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitTests.swift; sourceTree = "<group>"; };
+		D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; };
+		D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
+		D5C4B4421CADBCB6009B4104 /* WThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WThemeManager.swift; sourceTree = "<group>"; };
+		D5C4B4441CADBD9A009B4104 /* WTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTheme.swift; sourceTree = "<group>"; };
 		DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,11 +131,11 @@
 		D53D0BAB1CAB0FD30065D106 /* WMobileKit */ = {
 			isa = PBXGroup;
 			children = (
-				55A1062F1CAC847500495BBC /* Side Menu */,
-				D53D0BAC1CAB0FD30065D106 /* Info.plist */,
-				D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */,
-				7336F61F1CADB9F000E5C984 /* Tab Layout */,
 				D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */,
+				D5C4B4411CADBBDF009B4104 /* Theme */,
+				55A1062F1CAC847500495BBC /* Side Menu */,
+				7336F61F1CADB9F000E5C984 /* Tab Layout */,
+				D53D0BAC1CAB0FD30065D106 /* Info.plist */,
 			);
 			name = WMobileKit;
 			path = Source;
@@ -145,6 +151,17 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		D5C4B4411CADBBDF009B4104 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D5C4B4421CADBCB6009B4104 /* WThemeManager.swift */,
+				D5C4B4441CADBD9A009B4104 /* WTheme.swift */,
+				D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */,
+				D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */,
+			);
+			name = Theme;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -152,6 +169,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A4F5FE1CAEDA290041BB98 /* UIAppearance+Swift.h in Headers */,
 				D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,7 +355,9 @@
 			files = (
 				7336F6211CADBA0600E5C984 /* WTabLayout.swift in Sources */,
 				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
-				D53D0BB01CAB0FD30065D106 /* ReplaceMe.swift in Sources */,
+				D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */,
+				D5C4B4451CADBD9A009B4104 /* WTheme.swift in Sources */,
+				D5C4B4431CADBCB6009B4104 /* WThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +475,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -465,6 +486,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -472,6 +495,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -482,6 +506,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
