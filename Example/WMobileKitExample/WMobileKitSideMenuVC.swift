@@ -21,8 +21,8 @@ class WMobileKitNVC: UINavigationController {
         super.viewDidLoad()
 
         navigationBar.barTintColor = UIColor.blackColor()
-
-        let tabLayout = WTabLayout(titles: ["Recents", "All Files"])
+        
+        let tabLayout = WPagingSelectorVC(titles: ["Recent", "All Files"])
         
         view.addSubview(tabLayout);
         tabLayout.snp_makeConstraints { (make) in
@@ -33,5 +33,29 @@ class WMobileKitNVC: UINavigationController {
         }
         
         tabLayout.layoutSubviews()
+        
+        let tabLayout2 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots"])
+        
+        view.addSubview(tabLayout2);
+        tabLayout2.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.height.equalTo(50)
+            make.top.equalTo(tabLayout.snp_bottom)
+        }
+    
+        tabLayout2.layoutSubviews()
+        
+        let tabLayout3 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "More tabs!"])
+        
+        view.addSubview(tabLayout3);
+        tabLayout3.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.height.equalTo(50)
+            make.top.equalTo(tabLayout2.snp_bottom)
+        }
+        
+        tabLayout3.layoutSubviews()
     }
 }
