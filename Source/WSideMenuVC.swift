@@ -14,6 +14,8 @@ import SnapKit
 }
 
 public struct WSideMenuOptions {
+    public init(){}
+
     // Default WSideMenu options, change before calling super.viewDidLoad()
     public var menuWidth = 300.0
     public var useBlur = true
