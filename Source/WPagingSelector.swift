@@ -1,5 +1,5 @@
 //
-//  WTabLayout.swift
+//  WPagingSelector.swift
 //  WMobileKit
 
 import Foundation
@@ -31,12 +31,14 @@ public class WScrollView : UIScrollView {
     }
 }
 
-public class WStuffVC : UIControl {
+public class WPagingSelectorVC : UIControl {
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
     private var contentView = UIView()
     private var selectionIndicatorColor = UIColor()
     private var selectionIndicator = UIView()
+    
+    private var selectedContainer = UIView()
     
     private var tabViews = Array<UIView>()
     
@@ -60,6 +62,7 @@ public class WStuffVC : UIControl {
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.scrollEnabled = true
         
         addSubview(scrollView)
         scrollView.snp_makeConstraints { (make) in
@@ -72,17 +75,21 @@ public class WStuffVC : UIControl {
         scrollView.addSubview(contentView);
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
-            make.right.equalTo(scrollView)
             make.bottom.equalTo(scrollView)
             make.top.equalTo(scrollView)
-            make.width.equalTo(scrollView)
             make.height.equalTo(scrollView)
+            if (sectionTitles.count <= 3) {
+                make.width.equalTo(scrollView)
+                make.right.equalTo(scrollView)
+            } else {
+                make.width.equalTo(scrollView).multipliedBy((CGFloat)(sectionTitles.count) / 3.0 - 0.1)
+            }
         }
         
         contentView.addSubview(selectionIndicator)
         selectionIndicator.snp_makeConstraints { (make) in
             make.left.equalTo(contentView)
-            make.width.equalTo(contentView).dividedBy(2)
+            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
             make.height.equalTo(8)
             make.bottom.equalTo(contentView).offset(-1)
         }
@@ -92,79 +99,74 @@ public class WStuffVC : UIControl {
         opaque = false
         selectionIndicatorColor = UIColor.whiteColor()
         
-        switch sectionTitles.count {
-        case 2:
-            let container1 = UIView()
-            let container2 = UIView()
-            container1.tag = 0
-            container2.tag = 1
-            
-            let label1 = UILabel()
-            let label2 = UILabel()
-            
-            label1.text = sectionTitles[0]
-            label2.text = sectionTitles[1]
-            label1.textAlignment = NSTextAlignment.Center
-            label2.textAlignment = NSTextAlignment.Center
-            label1.textColor = UIColor.whiteColor()
-            label2.textColor = UIColor.whiteColor()
-            
-            contentView.addSubview(container1)
-            contentView.addSubview(container2)
-            container1.addSubview(label1)
-            container2.addSubview(label2)
-            
-            tabViews.append(container1)
-            tabViews.append(container2)
-            
-            container1.snp_makeConstraints { (make) in
-                make.left.equalTo(contentView)
-                make.width.equalTo(contentView).dividedBy(2)
-                make.height.equalTo(contentView)
-                make.top.equalTo(contentView)
+        if (sectionTitles.count > 0) {
+            for i in 0..<sectionTitles.count {
+                let container = UIView()
+                container.tag = i
+                let label = UILabel()
+                
+                label.text = sectionTitles[i]
+                label.textAlignment = NSTextAlignment.Center
+                label.textColor = UIColor.whiteColor()
+                
+                contentView.addSubview(container)
+                container.addSubview(label)
+                
+                tabViews.append(container)
+                
+                container.snp_makeConstraints { (make) in
+                    if (i == 0) {
+                        make.left.equalTo(contentView)
+                    } else {
+                        make.left.equalTo(tabViews[i - 1].snp_right)
+                    }
+                    
+                    make.width.equalTo(contentView).dividedBy(sectionTitles.count)
+                    make.height.equalTo(contentView)
+                    make.top.equalTo(contentView)
+                }
+                
+                label.snp_makeConstraints { (make) in
+                    make.left.equalTo(container)
+                    make.width.equalTo(container)
+                    make.height.equalTo(container)
+                    make.top.equalTo(container)
+                }
+                
+                let recognizer = UITapGestureRecognizer(target: self, action: #selector(WPagingSelectorVC.tappedTabItem(_:)))
+                container.addGestureRecognizer(recognizer)
+                
+                if (i == 0) {
+                    selectedContainer = container
+                } else {
+                    container.layer.opacity = 0.7
+                }
             }
-            
-            container2.snp_makeConstraints { (make) in
-                make.width.equalTo(contentView).dividedBy(2)
-                make.right.equalTo(contentView)
-                make.height.equalTo(contentView)
-                make.top.equalTo(contentView)
-            }
-            
-            label1.snp_makeConstraints { (make) in
-                make.left.equalTo(container1)
-                make.width.equalTo(container1)
-                make.height.equalTo(container1)
-                make.top.equalTo(container1)
-            }
-            
-            label2.snp_makeConstraints { (make) in
-                make.width.equalTo(container2)
-                make.right.equalTo(container2)
-                make.height.equalTo(container2)
-                make.top.equalTo(container2)
-            }
-            
-            let recognizer1 = UITapGestureRecognizer(target: self, action: "tappedTabItem:")
-            let recognizer2 = UITapGestureRecognizer(target: self, action: "tappedTabItem:")
-            container1.addGestureRecognizer(recognizer1)
-            container2.addGestureRecognizer(recognizer2)
-            
-            break
-        default:
-            break
         }
     }
     
-    func tappedTabItem(recognizer: UITapGestureRecognizer) {        
+    func tappedTabItem(recognizer: UITapGestureRecognizer) {
+        let newSelectedContainer = tabViews[(recognizer.view?.tag)!]
+        
+        selectedContainer.layer.opacity = 0.7
+        
+        newSelectedContainer.layer.opacity = 1.0
+        
+        selectedContainer = newSelectedContainer
+        
         selectionIndicator.snp_remakeConstraints { (make) in
-            make.left.equalTo(tabViews[(recognizer.view?.tag)!])
-            make.width.equalTo(contentView).dividedBy(2)
+            make.left.equalTo(selectedContainer)
+            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
             make.height.equalTo(8)
             make.bottom.equalTo(contentView).offset(-1)
         }
-        UIView.animateWithDuration(0.2) {
+        UIView.animateWithDuration(0.2, animations: { 
             self.layoutIfNeeded()
+        })
+        { (finished) in
+            self.scrollView.scrollRectToVisible(self.selectedContainer.frame, animated: true)
         }
     }
 }
+
+
