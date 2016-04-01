@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let theme = GreenTheme()
+        let theme: WTheme = GreenTheme()
         WThemeManager.globalTheme(theme)
 
         // Override point for customization after application launch.

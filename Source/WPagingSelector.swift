@@ -1,5 +1,5 @@
 //
-//  WPagingSelector.swift
+//  WPagingSelectorVC.swift
 //  WMobileKit
 
 import Foundation
@@ -31,12 +31,32 @@ public class WScrollView : UIScrollView {
     }
 }
 
+public class WSelectionIndicatorView : UIView {
+    public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
+//        var width = contentView.snp_width
+//
+//        width = width / numberOfSections
+//        width = width = 20
+
+        var width:CGFloat = selectionView.frame.width as CGFloat
+//        width = width / CGFloat(numberOfSections)
+        width = width - 40
+
+        self.snp_remakeConstraints { (make) in
+            make.left.equalTo(selectionView).offset(20)
+//            make.width.equalTo(contentView).dividedBy(numberOfSections)
+            make.width.equalTo(width)
+            make.height.equalTo(8)
+            make.bottom.equalTo(contentView).offset(-1)
+        }
+    }
+}
+
 public class WPagingSelectorVC : UIControl {
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
     private var contentView = UIView()
-    private var selectionIndicatorColor = UIColor()
-    private var selectionIndicator = UIView()
+    private var selectionIndicatorView = WSelectionIndicatorView()
     
     private var selectedContainer = UIView()
     
@@ -86,19 +106,21 @@ public class WPagingSelectorVC : UIControl {
             }
         }
         
-        contentView.addSubview(selectionIndicator)
-        selectionIndicator.snp_makeConstraints { (make) in
-            make.left.equalTo(contentView)
-            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
-            make.height.equalTo(8)
-            make.bottom.equalTo(contentView).offset(-1)
-        }
-        
-        selectionIndicator.backgroundColor = UIColor.init(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+        contentView.addSubview(selectionIndicatorView)
+
+//        selectionIndicatorView.snp_remakeConstraints { (make) in
+//            make.left.equalTo(selectedContainer)
+//            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
+//            make.height.equalTo(8)
+//            make.bottom.equalTo(contentView).offset(-1)
+//        }
+
+//        moveToTabIndex(0)
+
+//        selectionIndicatorView.moveToSelection(contentView, numberOfSections: sectionTitles.count, contentView: contentView)
 
         opaque = false
-        selectionIndicatorColor = UIColor.whiteColor()
-        
+
         if (sectionTitles.count > 0) {
             for i in 0..<sectionTitles.count {
                 let container = UIView()
@@ -142,27 +164,29 @@ public class WPagingSelectorVC : UIControl {
                     container.layer.opacity = 0.7
                 }
             }
+
+            moveToTabIndex(0)
         }
     }
     
     func tappedTabItem(recognizer: UITapGestureRecognizer) {
-        let newSelectedContainer = tabViews[(recognizer.view?.tag)!]
-        
+        moveToTabIndex((recognizer.view?.tag)!)
+    }
+
+    func moveToTabIndex(tabIndex: NSInteger) {
+        let newSelectedContainer = tabViews[tabIndex]
+
         selectedContainer.layer.opacity = 0.7
-        
+
         newSelectedContainer.layer.opacity = 1.0
-        
+
         selectedContainer = newSelectedContainer
-        
-        selectionIndicator.snp_remakeConstraints { (make) in
-            make.left.equalTo(selectedContainer)
-            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
-            make.height.equalTo(8)
-            make.bottom.equalTo(contentView).offset(-1)
-        }
-        UIView.animateWithDuration(0.2, animations: { 
+
+        selectionIndicatorView.moveToSelection(selectedContainer, numberOfSections: sectionTitles.count, contentView: contentView)
+
+        UIView.animateWithDuration(0.2, animations: {
             self.layoutIfNeeded()
-        })
+            })
         { (finished) in
             self.scrollView.scrollRectToVisible(self.selectedContainer.frame, animated: true)
         }
