@@ -61,6 +61,34 @@ public class WSelectionIndicatorView : UIView {
     }
 }
 
+public class WTabView : UIView {
+    private var title = String()
+    private var label = UILabel()
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public init(title text: String) {
+        super.init(frame: CGRectZero)
+        
+        title = text
+        label.text = title
+        label.textAlignment = NSTextAlignment.Center
+        label.textColor = UIColor.whiteColor()
+        
+        addSubview(label)
+        label.snp_makeConstraints { (make) in
+            make.left.equalTo(self)
+            make.width.equalTo(self)
+            make.height.equalTo(self)
+            make.top.equalTo(self)
+        }
+        
+        layer.opacity = 0.7
+    }
+}
+
 public class WPagingSelectorVC : UIControl {
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
@@ -145,19 +173,16 @@ public class WPagingSelectorVC : UIControl {
 
         if (sectionTitles.count > 0) {
             for i in 0..<sectionTitles.count {
-                let label = UILabel()
+                let tab = WTabView(title: sectionTitles[i])
+                                
+                tab.tag = i
+                tab.userInteractionEnabled = true
                 
-                label.text = sectionTitles[i]
-                label.textAlignment = NSTextAlignment.Center
-                label.textColor = UIColor.whiteColor()
-                label.tag = i
-                label.userInteractionEnabled = true
+                tabContainerView.addSubview(tab)
                 
-                tabContainerView.addSubview(label)
+                tabViews.append(tab)
                 
-                tabViews.append(label)
-                
-                label.snp_makeConstraints { (make) in
+                tab.snp_makeConstraints { (make) in
                     if (i == 0) {
                         make.left.equalTo(tabContainerView)
                     } else {
@@ -167,7 +192,7 @@ public class WPagingSelectorVC : UIControl {
                     if (widthMode == .Dynamic) {
                         make.width.equalTo(tabContainerView).dividedBy(sectionTitles.count)
                     } else {
-                        make.width.equalTo(tabWidth!)
+                        make.width.equalTo(frame.width).offset(44)
                     }
                     
                     make.height.equalTo(tabContainerView)
@@ -175,12 +200,10 @@ public class WPagingSelectorVC : UIControl {
                 }
                 
                 let recognizer = UITapGestureRecognizer(target: self, action: #selector(WPagingSelectorVC.tappedTabItem(_:)))
-                label.addGestureRecognizer(recognizer)
+                tab.addGestureRecognizer(recognizer)
                 
                 if (i == 0) {
-                    selectedContainer = label
-                } else {
-                    label.layer.opacity = 0.7
+                    selectedContainer = tab
                 }
             }
 
