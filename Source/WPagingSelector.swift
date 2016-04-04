@@ -32,14 +32,19 @@ public class WScrollView : UIScrollView {
 }
 
 public class WSelectionIndicatorView : UIView {
-//    init() {
-//        alpha = 0.5
-//        super.init()
-//    }
-//
-//    required init(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
+    public init(alpha: CGFloat) {
+        super.init(frame: CGRectMake(0, 0, 100, 50))
+
+        self.alpha = alpha
+    }
+
+    override convenience init(frame: CGRect) {
+        self.init(alpha: 0.7)
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
         self.snp_remakeConstraints { (make) in
@@ -107,17 +112,6 @@ public class WPagingSelectorVC : UIControl {
         
         contentView.addSubview(selectionIndicatorView)
 
-//        selectionIndicatorView.snp_remakeConstraints { (make) in
-//            make.left.equalTo(selectedContainer)
-//            make.width.equalTo(contentView).dividedBy(sectionTitles.count)
-//            make.height.equalTo(8)
-//            make.bottom.equalTo(contentView).offset(-1)
-//        }
-
-//        moveToTabIndex(0)
-
-//        selectionIndicatorView.moveToSelection(contentView, numberOfSections: sectionTitles.count, contentView: contentView)
-
         opaque = false
 
         if (sectionTitles.count > 0) {
@@ -165,8 +159,6 @@ public class WPagingSelectorVC : UIControl {
             }
 
             layoutIfNeeded()
-
-            updateConstraintsIfNeeded()
 
             moveToTabIndex(0)
         }

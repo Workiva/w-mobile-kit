@@ -20,8 +20,10 @@ class WMobileKitNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationBar.barTintColor = UIColor.blackColor()
-        
+        // NOTE: Not sure why this doesn't work with the theme in the app delegate
+        let theme: WTheme = GreenTheme()
+        navigationBar.barTintColor = theme.navigationColor
+
         let tabLayout = WPagingSelectorVC(titles: ["Recent", "All Files"])
         
         view.addSubview(tabLayout);
