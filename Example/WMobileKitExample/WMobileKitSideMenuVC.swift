@@ -24,7 +24,7 @@ class WMobileKitNVC: UINavigationController {
         let theme: WTheme = GreenTheme()
         navigationBar.barTintColor = theme.navigationColor
 
-        let tabLayout = WPagingSelectorVC(titles: ["Recent", "All Files"])
+        let tabLayout = WPagingSelectorControl(titles: ["Recent", "All Files"])
         
         view.addSubview(tabLayout);
         tabLayout.snp_makeConstraints { (make) in
@@ -36,7 +36,7 @@ class WMobileKitNVC: UINavigationController {
         
         tabLayout.layoutSubviews()
         
-        let tabLayout2 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots"])
+        let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
         
         view.addSubview(tabLayout2);
         tabLayout2.snp_makeConstraints { (make) in
@@ -48,7 +48,7 @@ class WMobileKitNVC: UINavigationController {
     
         tabLayout2.layoutSubviews()
         
-        let tabLayout3 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots"], withTabWidth: 84)
+        let tabLayout3 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
         
         view.addSubview(tabLayout3);
         tabLayout3.snp_makeConstraints { (make) in
@@ -60,7 +60,7 @@ class WMobileKitNVC: UINavigationController {
         
         tabLayout3.layoutSubviews()
         
-        let tabLayout4 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], withTabWidth: 100)
+        let tabLayout4 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], tabWidth: 90)
         
         view.addSubview(tabLayout4);
         tabLayout4.snp_makeConstraints { (make) in
@@ -72,7 +72,7 @@ class WMobileKitNVC: UINavigationController {
         
         tabLayout4.layoutSubviews()
         
-        let tabLayout5 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], withTabWidth: 100)
+        let tabLayout5 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], tabWidth: 90)
         
         view.addSubview(tabLayout5);
         tabLayout5.snp_makeConstraints { (make) in
