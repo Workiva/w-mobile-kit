@@ -6,8 +6,10 @@ import Foundation
 import UIKit
 
 let MIN_TAB_WIDTH = 20
+let SELECTED_OPACITY:Float = 0.1
+let UNSELECTED_OPACITY:Float = 0.7
 
-private enum WPagingWidthMode {
+public enum WPagingWidthMode {
     case Static
     case Dynamic
 }
@@ -54,7 +56,7 @@ public class WSelectionIndicatorView : UIView {
     }
 
     public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
-        self.snp_remakeConstraints { (make) in
+        snp_remakeConstraints { (make) in
             make.left.equalTo(selectionView).offset(6)
             make.width.equalTo(selectionView).offset(-12)
             make.height.equalTo(7)
@@ -87,21 +89,22 @@ public class WTabView : UIView {
             make.top.equalTo(self)
         }
         
-        layer.opacity = 0.7
+        layer.opacity = UNSELECTED_OPACITY
     }
 }
 
 public class WPagingSelectorControl : UIControl {
+    // Accessable properties
+    public private(set) var widthMode: WPagingWidthMode = .Dynamic
+    public private(set) var tabWidth: Int?
+    public private(set) var selectedPage: Int?
+
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
     private var contentView = UIView()
     private var tabContainerView = UIView()
     private var selectionIndicatorView = WSelectionIndicatorView()
-    private var widthMode: WPagingWidthMode = .Dynamic
-    private var tabWidth: Int?
-    
     private var selectedContainer = UIView()
-    
     private var tabViews = Array<UIView>()
     
     public required init?(coder aDecoder: NSCoder) {
@@ -170,7 +173,7 @@ public class WPagingSelectorControl : UIControl {
                 make.left.equalTo(contentView)
             } else {
 
-                var contentWidth:CGFloat = CGFloat(tabWidth! * sectionTitles.count)
+                let contentWidth:CGFloat = CGFloat(tabWidth! * sectionTitles.count)
                 make.width.equalTo(contentWidth)
 
                 // TODO: Temporary solution. Will not work if the scroll view is not the size of the screen
@@ -200,13 +203,13 @@ public class WPagingSelectorControl : UIControl {
                 tabViews.append(tab)
                 
                 tab.snp_makeConstraints { (make) in
-                    if (i == 0) {
+                    if i == 0 {
                         make.left.equalTo(tabContainerView)
                     } else {
                         make.left.equalTo(tabViews[i - 1].snp_right)
                     }
-                    
-                    if (widthMode == .Dynamic) {
+
+                    if widthMode == .Dynamic {
                         make.width.equalTo(tabContainerView).dividedBy(sectionTitles.count)
                     } else {
                         make.width.equalTo(tabWidth!)
@@ -219,7 +222,7 @@ public class WPagingSelectorControl : UIControl {
                 let recognizer = UITapGestureRecognizer(target: self, action: #selector(WPagingSelectorControl.tappedTabItem(_:)))
                 tab.addGestureRecognizer(recognizer)
                 
-                if (i == 0) {
+                if i == 0 {
                     selectedContainer = tab
                 }
             }
@@ -237,16 +240,18 @@ public class WPagingSelectorControl : UIControl {
         }
     }
     
-    func tappedTabItem(recognizer: UITapGestureRecognizer) {
+    @objc private func tappedTabItem(recognizer: UITapGestureRecognizer) {
         moveToTabIndex((recognizer.view?.tag)!)
     }
 
-    func moveToTabIndex(tabIndex: NSInteger) {
+    public func moveToTabIndex(tabIndex: NSInteger) {
+        selectedPage = tabIndex
+
         let newSelectedContainer = tabViews[tabIndex]
 
-        selectedContainer.layer.opacity = 0.7
+        selectedContainer.layer.opacity = UNSELECTED_OPACITY
 
-        newSelectedContainer.layer.opacity = 1.0
+        newSelectedContainer.layer.opacity = SELECTED_OPACITY
 
         selectedContainer = newSelectedContainer
 
