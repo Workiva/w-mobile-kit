@@ -48,7 +48,7 @@ class WMobileKitNVC: UINavigationController {
     
         tabLayout2.layoutSubviews()
         
-        let tabLayout3 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "More tabs!"])
+        let tabLayout3 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots"], withTabWidth: 84)
         
         view.addSubview(tabLayout3);
         tabLayout3.snp_makeConstraints { (make) in
@@ -59,5 +59,29 @@ class WMobileKitNVC: UINavigationController {
         }
         
         tabLayout3.layoutSubviews()
+        
+        let tabLayout4 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], withTabWidth: 100)
+        
+        view.addSubview(tabLayout4);
+        tabLayout4.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.height.equalTo(50)
+            make.top.equalTo(tabLayout3.snp_bottom)
+        }
+        
+        tabLayout4.layoutSubviews()
+        
+        let tabLayout5 = WPagingSelectorVC(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], withTabWidth: 100)
+        
+        view.addSubview(tabLayout5);
+        tabLayout5.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.height.equalTo(50)
+            make.top.equalTo(tabLayout4.snp_bottom)
+        }
+        
+        tabLayout5.layoutSubviews()
     }
 }

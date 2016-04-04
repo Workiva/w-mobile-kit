@@ -5,6 +5,11 @@
 import Foundation
 import UIKit
 
+private enum WPagingWidthMode {
+    case Static
+    case Dynamic
+}
+
 public class WScrollView : UIScrollView {
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!dragging) {
@@ -48,8 +53,8 @@ public class WSelectionIndicatorView : UIView {
 
     public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
         self.snp_remakeConstraints { (make) in
-            make.left.equalTo(selectionView).offset(20)
-            make.width.equalTo(contentView).dividedBy(numberOfSections).offset(-40)
+            make.left.equalTo(selectionView)
+            make.width.equalTo(selectionView)
             make.height.equalTo(7)
             make.bottom.equalTo(contentView)
         }
@@ -60,7 +65,10 @@ public class WPagingSelectorVC : UIControl {
     private var scrollView = WScrollView()
     private var sectionTitles = Array<String>()
     private var contentView = UIView()
+    private var tabContainerView = UIView()
     private var selectionIndicatorView = WSelectionIndicatorView()
+    private var widthMode: WPagingWidthMode = .Dynamic
+    private var tabWidth: Int?
     
     private var selectedContainer = UIView()
     
@@ -82,6 +90,14 @@ public class WPagingSelectorVC : UIControl {
         commonInit()
     }
     
+    public init(titles: Array<String>, withTabWidth: Int) {
+        super.init(frame: CGRectZero)
+        sectionTitles = titles
+        widthMode = .Static
+        tabWidth = withTabWidth
+        commonInit()
+    }
+    
     public func commonInit() {
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
@@ -99,14 +115,27 @@ public class WPagingSelectorVC : UIControl {
         scrollView.addSubview(contentView);
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
-            make.bottom.equalTo(scrollView)
             make.top.equalTo(scrollView)
             make.height.equalTo(scrollView)
-            if (sectionTitles.count <= 3) {
+            
+            if (widthMode == .Dynamic) {
                 make.width.equalTo(scrollView)
-                make.right.equalTo(scrollView)
             } else {
-                make.width.equalTo(scrollView).multipliedBy((CGFloat)(sectionTitles.count) / 3.0 - 0.1)
+                make.width.equalTo(scrollView)
+            }
+        }
+        
+        contentView.addSubview(tabContainerView)
+        tabContainerView.snp_makeConstraints { (make) in
+            make.top.equalTo(contentView)
+            make.height.equalTo(contentView)
+            
+            if (widthMode == .Dynamic) {
+                make.width.equalTo(contentView)
+                make.left.equalTo(contentView)
+            } else {
+                make.width.equalTo(tabWidth! * sectionTitles.count)
+                make.centerX.equalTo(contentView.snp_centerX)
             }
         }
         
@@ -116,45 +145,42 @@ public class WPagingSelectorVC : UIControl {
 
         if (sectionTitles.count > 0) {
             for i in 0..<sectionTitles.count {
-                let container = UIView()
-                container.tag = i
                 let label = UILabel()
                 
                 label.text = sectionTitles[i]
                 label.textAlignment = NSTextAlignment.Center
                 label.textColor = UIColor.whiteColor()
+                label.tag = i
+                label.userInteractionEnabled = true
                 
-                contentView.addSubview(container)
-                container.addSubview(label)
+                tabContainerView.addSubview(label)
                 
-                tabViews.append(container)
+                tabViews.append(label)
                 
-                container.snp_makeConstraints { (make) in
+                label.snp_makeConstraints { (make) in
                     if (i == 0) {
-                        make.left.equalTo(contentView)
+                        make.left.equalTo(tabContainerView)
                     } else {
                         make.left.equalTo(tabViews[i - 1].snp_right)
                     }
                     
-                    make.width.equalTo(contentView).dividedBy(sectionTitles.count)
-                    make.height.equalTo(contentView)
-                    make.top.equalTo(contentView)
-                }
-                
-                label.snp_makeConstraints { (make) in
-                    make.left.equalTo(container)
-                    make.width.equalTo(container)
-                    make.height.equalTo(container)
-                    make.top.equalTo(container)
+                    if (widthMode == .Dynamic) {
+                        make.width.equalTo(tabContainerView).dividedBy(sectionTitles.count)
+                    } else {
+                        make.width.equalTo(tabWidth!)
+                    }
+                    
+                    make.height.equalTo(tabContainerView)
+                    make.top.equalTo(tabContainerView)
                 }
                 
                 let recognizer = UITapGestureRecognizer(target: self, action: #selector(WPagingSelectorVC.tappedTabItem(_:)))
-                container.addGestureRecognizer(recognizer)
+                label.addGestureRecognizer(recognizer)
                 
                 if (i == 0) {
-                    selectedContainer = container
+                    selectedContainer = label
                 } else {
-                    container.layer.opacity = 0.7
+                    label.layer.opacity = 0.7
                 }
             }
 
