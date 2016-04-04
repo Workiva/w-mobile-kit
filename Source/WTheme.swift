@@ -38,7 +38,7 @@ public class WThemeManager {
 
     static func customizePagingSelectorVC(theme: WTheme) {
         WPagingSelectorVC.appearance().backgroundColor = theme.h1Color
-        WSelectionIndicatorView.appearance().backgroundColor = UIColor.blackColor()
+        WSelectionIndicatorView.appearance().backgroundColor = UIColor.whiteColor()
     }
 
     static func customizeNavigationBar(theme: WTheme) {

@@ -32,22 +32,21 @@ public class WScrollView : UIScrollView {
 }
 
 public class WSelectionIndicatorView : UIView {
-    public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
-//        var width = contentView.snp_width
+//    init() {
+//        alpha = 0.5
+//        super.init()
+//    }
 //
-//        width = width / numberOfSections
-//        width = width = 20
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
 
-        var width:CGFloat = selectionView.frame.width as CGFloat
-//        width = width / CGFloat(numberOfSections)
-        width = width - 40
-
+    public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {
         self.snp_remakeConstraints { (make) in
             make.left.equalTo(selectionView).offset(20)
-//            make.width.equalTo(contentView).dividedBy(numberOfSections)
-            make.width.equalTo(width)
-            make.height.equalTo(8)
-            make.bottom.equalTo(contentView).offset(-1)
+            make.width.equalTo(contentView).dividedBy(numberOfSections).offset(-40)
+            make.height.equalTo(7)
+            make.bottom.equalTo(contentView)
         }
     }
 }
@@ -164,6 +163,10 @@ public class WPagingSelectorVC : UIControl {
                     container.layer.opacity = 0.7
                 }
             }
+
+            layoutIfNeeded()
+
+            updateConstraintsIfNeeded()
 
             moveToTabIndex(0)
         }
