@@ -6,8 +6,8 @@ import Foundation
 import UIKit
 
 let MIN_TAB_WIDTH = 20
-let SELECTED_OPACITY:Float = 0.1
-let UNSELECTED_OPACITY:Float = 0.7
+let SELECTED_OPACITY:Float = 0.7
+let UNSELECTED_OPACITY:Float = 0.2
 
 public enum WPagingWidthMode {
     case Static
@@ -100,7 +100,8 @@ public class WPagingSelectorControl : UIControl {
     public private(set) var selectedPage: Int?
 
     private var scrollView = WScrollView()
-    private var sectionTitles = Array<String>()
+//    private var sectionTitles = Array<String>()
+    private var pages = [WPage]()
     private var contentView = UIView()
     private var tabContainerView = UIView()
     private var selectionIndicatorView = WSelectionIndicatorView()
@@ -112,25 +113,57 @@ public class WPagingSelectorControl : UIControl {
         commonInit()
     }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
+//    public override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        commonInit()
+//    }
+
+    public convenience init(titles: Array<String>) {
+        self.init(titles: titles, tabWidth: nil)
     }
-    
-    public init(titles: Array<String>) {
+
+    public init(titles: Array<String>, tabWidth: Int?) {
         super.init(frame: CGRectZero)
-        sectionTitles = titles
-        commonInit()
-    }
-    
-    public init(titles: Array<String>, tabWidth: Int) {
-        super.init(frame: CGRectZero)
-        sectionTitles = titles
-        widthMode = .Static
-        if (tabWidth >= MIN_TAB_WIDTH) {
-            self.tabWidth = tabWidth
+
+        for title in titles {
+            var page = WPage(title: title, viewController: nil)
+            pages.append(page)
+        }
+
+        if let tabWidth = tabWidth {
+            widthMode = .Static
+
+            if (tabWidth >= MIN_TAB_WIDTH) {
+                self.tabWidth = tabWidth
+            } else {
+                print("Invalid width: ", tabWidth, ". Defaulting to min tab width: ", MIN_TAB_WIDTH)
+            }
         } else {
-            print("Invalid width: ", tabWidth, ". Defaulting to min tab width: ", MIN_TAB_WIDTH)
+            widthMode = .Dynamic
+        }
+
+        commonInit()
+    }
+
+    public convenience init(pages: Array<WPage>) {
+        self.init(pages: pages, tabWidth: nil)
+    }
+
+    public init(pages: Array<WPage>, tabWidth: Int?) {
+        super.init(frame: CGRectZero)
+
+        self.pages = pages
+
+        if let tabWidth = tabWidth {
+            widthMode = .Static
+
+            if (tabWidth >= MIN_TAB_WIDTH) {
+                self.tabWidth = tabWidth
+            } else {
+                print("Invalid width: ", tabWidth, ". Defaulting to min tab width: ", MIN_TAB_WIDTH)
+            }
+        } else {
+            widthMode = .Dynamic
         }
 
         commonInit()
@@ -173,7 +206,7 @@ public class WPagingSelectorControl : UIControl {
                 make.left.equalTo(contentView)
             } else {
 
-                let contentWidth:CGFloat = CGFloat(tabWidth! * sectionTitles.count)
+                let contentWidth:CGFloat = CGFloat(tabWidth! * pages.count)
                 make.width.equalTo(contentWidth)
 
                 // TODO: Temporary solution. Will not work if the scroll view is not the size of the screen
@@ -191,9 +224,9 @@ public class WPagingSelectorControl : UIControl {
 
         opaque = false
 
-        if (sectionTitles.count > 0) {
-            for i in 0..<sectionTitles.count {
-                let tab = WTabView(title: sectionTitles[i])
+        if (pages.count > 0) {
+            for i in 0..<pages.count {
+                let tab = WTabView(title: pages[i].title)
                                 
                 tab.tag = i
                 tab.userInteractionEnabled = true
@@ -210,7 +243,7 @@ public class WPagingSelectorControl : UIControl {
                     }
 
                     if widthMode == .Dynamic {
-                        make.width.equalTo(tabContainerView).dividedBy(sectionTitles.count)
+                        make.width.equalTo(tabContainerView).dividedBy(pages.count)
                     } else {
                         make.width.equalTo(tabWidth!)
                     }
@@ -236,12 +269,15 @@ public class WPagingSelectorControl : UIControl {
             scrollView.contentSize = CGSize(width: contentView.frame.size.width, height: contentView.frame.size.height)
         } else {
             // Set width to number of tabs * tab width
-            scrollView.contentSize = CGSize(width: CGFloat(tabWidth! * sectionTitles.count), height: contentView.frame.size.height)
+            scrollView.contentSize = CGSize(width: CGFloat(tabWidth! * pages.count), height: contentView.frame.size.height)
         }
     }
     
     @objc private func tappedTabItem(recognizer: UITapGestureRecognizer) {
         moveToTabIndex((recognizer.view?.tag)!)
+
+        // TODO: Tell delegate that it was tapped
+        // Trigger which view to hide/show
     }
 
     public func moveToTabIndex(tabIndex: NSInteger) {
@@ -255,7 +291,7 @@ public class WPagingSelectorControl : UIControl {
 
         selectedContainer = newSelectedContainer
 
-        selectionIndicatorView.moveToSelection(selectedContainer, numberOfSections: sectionTitles.count, contentView: contentView)
+        selectionIndicatorView.moveToSelection(selectedContainer, numberOfSections: pages.count, contentView: contentView)
 
         UIView.animateWithDuration(0.2, animations: {
             self.layoutIfNeeded()
@@ -265,5 +301,164 @@ public class WPagingSelectorControl : UIControl {
         }
     }
 }
+
+public struct WPage {
+    public var title:String = ""
+    public var viewController:WSideMenuContentVC?
+
+    public init(title: String) {
+        self.init(title: title, viewController: nil)
+    }
+
+    public init(title: String, viewController: WSideMenuContentVC?) {
+        self.title = title
+    }
+}
+
+public class WPagingSelectorVC: WSideMenuContentVC {
+    public private(set) var pagingSelectorControl:WPagingSelectorControl?
+
+//    private var _pages = [WPage]()
+    public var pages:[WPage] = [WPage]() {
+
+
+        didSet {
+//            _pages = newValue
+
+            if let pagingSelectorControl = pagingSelectorControl {
+                pagingSelectorControl.removeFromSuperview()
+            }
+
+            pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: 90)
+
+            view.addSubview(pagingSelectorControl!);
+            pagingSelectorControl!.snp_makeConstraints { (make) in
+                make.left.equalTo(view)
+                make.right.equalTo(view)
+                make.height.equalTo(50)
+                make.top.equalTo(view)
+            }
+
+            pagingSelectorControl!.layoutSubviews()
+
+            // TODO: Show default view controller 
+
+            // TODO: Change on tapped action
+        }
+    }
+
+
+
+//    public convenience init(pages: WPage...) {
+//        self.init()
+//        self.pages = pages
+//    }
+
+//    public override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        let pagingSelectorControl = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
+//
+//        view.addSubview(pagingSelectorControl);
+//        pagingSelectorControl.snp_makeConstraints { (make) in
+//            make.left.equalTo(view)
+//            make.right.equalTo(view)
+//            make.height.equalTo(50)
+//            make.top.equalTo(view.snp_bottom)
+//        }
+//
+//        pagingSelectorControl.layoutSubviews()
+//
+//        updateUI()
+//    }
+//
+//    public func updateUI() {
+//    }
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+
+//        let pagingSelectorControl = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
+//
+//        view.addSubview(pagingSelectorControl);
+//        pagingSelectorControl.snp_makeConstraints { (make) in
+//            make.left.equalTo(view)
+//            make.right.equalTo(view)
+//            make.height.equalTo(50)
+//            make.top.equalTo(view)
+//        }
+//
+//        pagingSelectorControl.layoutSubviews()
+
+
+//    let tabLayout = WPagingSelectorControl(titles: ["Recent", "All Files"])
+//
+//    view.addSubview(tabLayout);
+//    tabLayout.snp_makeConstraints { (make) in
+//    make.left.equalTo(view)
+//    make.right.equalTo(view)
+//    make.height.equalTo(50)
+//    make.top.equalTo(view)
+//    }
+//
+//    tabLayout.layoutSubviews()
+//
+//    let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
+//
+//    view.addSubview(tabLayout2);
+//    tabLayout2.snp_makeConstraints { (make) in
+//    make.left.equalTo(view)
+//    make.right.equalTo(view)
+//    make.height.equalTo(50)
+//    make.top.equalTo(tabLayout.snp_bottom)
+//    }
+//
+//    tabLayout2.layoutSubviews()
+//
+//    let tabLayout3 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
+//
+//    view.addSubview(tabLayout3);
+//    tabLayout3.snp_makeConstraints { (make) in
+//    make.left.equalTo(view)
+//    make.right.equalTo(view)
+//    make.height.equalTo(50)
+//    make.top.equalTo(tabLayout2.snp_bottom)
+//    }
+//
+//    tabLayout3.layoutSubviews()
+//
+//    let tabLayout4 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], tabWidth: 90)
+//
+//    view.addSubview(tabLayout4);
+//    tabLayout4.snp_makeConstraints { (make) in
+//    make.left.equalTo(view)
+//    make.right.equalTo(view)
+//    make.height.equalTo(50)
+//    make.top.equalTo(tabLayout3.snp_bottom)
+//    }
+//
+//    tabLayout4.layoutSubviews()
+//
+//    let tabLayout5 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], tabWidth: 90)
+//
+//    view.addSubview(tabLayout5);
+//    tabLayout5.snp_makeConstraints { (make) in
+//    make.left.equalTo(view)
+//    make.right.equalTo(view)
+//    make.height.equalTo(50)
+//    make.top.equalTo(tabLayout4.snp_bottom)
+//    }
+//
+//    tabLayout5.layoutSubviews()
+}
+
+public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    // Set the WSideMenu delegate when the VC appears
+    sideMenuController()?.delegate = self
+}
+
+}
+
 
 

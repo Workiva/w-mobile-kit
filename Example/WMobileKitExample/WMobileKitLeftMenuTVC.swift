@@ -3,15 +3,39 @@
 //  WMobileKitExample
 
 import UIKit
+import WMobileKit
 
 class WMobileKitLeftMenuTVC: UITableViewController {
 
-    lazy var vc0 = mainStoryboard.instantiateViewControllerWithIdentifier("vc0")
+    lazy var baseContentVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc0") as! WMobileKitNVC // WSideMenuContentVC
+    lazy var pagingControlExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc1") as! WMobileKitNVC // WMobileKitPagingControlExamplesVC
+    lazy var pagingSelectorVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc3") as! WMobileKitNVC // WPagingSelectorVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            sideMenuController()?.changeMainViewController(vc0)
+            sideMenuController()?.changeMainViewController(baseContentVC)
+            break
+        case 1:
+            sideMenuController()?.changeMainViewController(pagingControlExamples)
+            break
+        case 2:
+//            var page = WPage(title: title, viewController: nil)
+            if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
+                let pages = [
+                    // TODO: Add controllers to this
+                    WPage(title: "test1"),
+                    WPage(title: "test2")
+                ]
+
+                pagingVC.pages = pages
+            }
+
+
+//            pagingSelectorVC.rootviewC
+//            pagingSelectorVC.pages = pages
+
+            sideMenuController()?.changeMainViewController(pagingSelectorVC)
             break
         default:
             break
@@ -27,6 +51,6 @@ class WMobileKitLeftMenuTVC: UITableViewController {
     }
 
     func defaultVC() -> UIViewController {
-        return vc0
+        return baseContentVC
     }
 }

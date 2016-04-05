@@ -14,6 +14,7 @@
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
 		D53D0BC31CAB11B70065D106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBD1CAB11B70065D106 /* Images.xcassets */; };
 		D53D0BC51CAB11B70065D106 /* WMobileKitSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */; };
+		D5A4F6151CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitSideMenuVC.swift; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		D5A4F6141CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitPagingControlExamplesVC.swift; sourceTree = "<group>"; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 				D53D0BBE1CAB11B70065D106 /* Info.plist */,
 				D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */,
 				55A106321CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift */,
+				D5A4F6141CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift */,
 				D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */,
 			);
 			name = "WMobileKit Example";
@@ -237,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
+				D5A4F6151CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift in Sources */,
 				55A106331CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift in Sources */,
 				D53D0BC51CAB11B70065D106 /* WMobileKitSideMenuVC.swift in Sources */,
 			);
