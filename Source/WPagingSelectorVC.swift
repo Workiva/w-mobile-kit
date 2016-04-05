@@ -184,6 +184,11 @@ public class WPagingSelectorControl : UIControl {
             make.top.equalTo(self)
         }
         
+        var contentWidth:CGFloat = CGFloat(0)
+        if (widthMode == .Static) {
+            contentWidth = CGFloat(tabWidth! * pages.count)
+        }
+        
         scrollView.addSubview(contentView);
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
@@ -192,6 +197,8 @@ public class WPagingSelectorControl : UIControl {
             
             if (widthMode == .Dynamic) {
                 make.width.equalTo(scrollView)
+            } else if (contentWidth > UIScreen.mainScreen().bounds.width) {
+                make.width.equalTo(contentWidth)
             } else {
                 make.width.equalTo(scrollView)
             }
@@ -203,13 +210,10 @@ public class WPagingSelectorControl : UIControl {
             make.height.equalTo(contentView)
             
             if (widthMode == .Dynamic) {
-                make.width.equalTo(contentView)
                 make.left.equalTo(contentView)
+                make.width.equalTo(contentView)
             } else {
-
-                let contentWidth:CGFloat = CGFloat(tabWidth! * pages.count)
                 make.width.equalTo(contentWidth)
-
                 // TODO: Temporary solution. Will not work if the scroll view is not the size of the screen
                 // Using the center works for non-scrollable number of tabs
                 // Using left works for scrolling tabs
