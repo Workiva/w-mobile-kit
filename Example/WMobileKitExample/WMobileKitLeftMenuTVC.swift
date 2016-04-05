@@ -32,8 +32,6 @@ class WMobileKitLeftMenuTVC: UITableViewController {
             if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
                 pagingVC.tabWidth = 90
 
-//                pagingVC.tabWidth = 20
-
                 let pages = [
                     WPage(title: "Green VC", viewController: vc1),
                     WPage(title: "Blue VC", viewController: vc2),
@@ -42,8 +40,6 @@ class WMobileKitLeftMenuTVC: UITableViewController {
                 ]
 
                 pagingVC.pages = pages
-
-//                pagingVC.tabWidth = 20
             }
 
             sideMenuController()?.changeMainViewController(pagingSelectorVC)

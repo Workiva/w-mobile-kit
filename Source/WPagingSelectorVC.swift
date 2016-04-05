@@ -128,7 +128,7 @@ public class WPagingSelectorControl : UIControl {
         super.init(frame: CGRectZero)
 
         for title in titles {
-            var page = WPage(title: title, viewController: nil)
+            let page = WPage(title: title, viewController: nil)
             pages.append(page)
         }
 
@@ -340,73 +340,15 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
             }
 
             setupUI()
-
-//            if (tabWidth >= DEFAULT_TAB_WIDTH) {
-//                pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: tabWidth)
-//            } else {
-//                pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: 90)
-//            }
-//            
-//            pagingSelectorControl?.delegate = self
-//            
-//            view.addSubview(pagingSelectorControl!);
-//            pagingSelectorControl!.snp_makeConstraints { (make) in
-//                make.left.equalTo(view)
-//                make.right.equalTo(view)
-//                make.height.equalTo(50)
-//                make.top.equalTo(view)
-//            }
-//            
-//            mainContainerView.snp_remakeConstraints { (make) in
-//                make.left.equalTo(view)
-//                make.right.equalTo(view)
-//                make.bottom.equalTo(view)
-//                make.top.equalTo(pagingSelectorControl!.snp_bottomMargin)
-//            }
-//
-//            if let mainViewController = pages[0].viewController {
-//                addViewControllerToContainer(mainContainerView, viewController: mainViewController)
-//                
-//                self.mainViewController = mainViewController
-//            }
         }
     }
 
-    public var tabWidth:Int = 0 {
+    public var tabWidth:Int? {
         didSet {
             if (pagingSelectorControl != nil) {
                 pagingSelectorControl!.removeFromSuperview()
 
                 setupUI()
-
-//                if (tabWidth >= DEFAULT_TAB_WIDTH) {
-//                    pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: tabWidth)
-//                } else {
-//                    pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: 90)
-//                }
-//
-//                pagingSelectorControl?.delegate = self
-//
-//                view.addSubview(pagingSelectorControl!);
-//                pagingSelectorControl!.snp_makeConstraints { (make) in
-//                    make.left.equalTo(view)
-//                    make.right.equalTo(view)
-//                    make.height.equalTo(50)
-//                    make.top.equalTo(view)
-//                }
-//
-//                mainContainerView.snp_remakeConstraints { (make) in
-//                    make.left.equalTo(view)
-//                    make.right.equalTo(view)
-//                    make.bottom.equalTo(view)
-//                    make.top.equalTo(pagingSelectorControl!.snp_bottomMargin)
-//                }
-//
-//                if let mainViewController = pages[0].viewController {
-//                    addViewControllerToContainer(mainContainerView, viewController: mainViewController)
-//                    
-//                    self.mainViewController = mainViewController
-//                }
             }
         }
     }
@@ -432,7 +374,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     }
 
     private func setupUI() {
-        if (tabWidth >= MIN_TAB_WIDTH) {
+        if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
             pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: tabWidth)
         } else {
             pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: DEFAULT_TAB_WIDTH)
