@@ -142,33 +142,7 @@ public class WSideMenuVC: UIViewController {
             }
         }
     }
-
-    private func addViewControllerToContainer(containerView: UIView, viewController: UIViewController?) {
-        // Adds a view controller as a child view controller and calls needed life cycle methods
-        if let targetViewController = viewController {
-            addChildViewController(targetViewController)
-            containerView.addSubview(targetViewController.view)
-
-            targetViewController.view.snp_makeConstraints(closure: { (make) in
-                make.left.equalTo(containerView)
-                make.top.equalTo(containerView)
-                make.right.equalTo(containerView)
-                make.bottom.equalTo(containerView)
-            })
-
-            targetViewController.didMoveToParentViewController(self)
-        }
-    }
-
-    private func removeViewControllerFromContainer(viewController: UIViewController?) {
-        // Removes a child view controller and calls needed life cyle methods
-        if let targetViewController = viewController {
-            targetViewController.willMoveToParentViewController(nil)
-            targetViewController.view.removeFromSuperview()
-            targetViewController.removeFromParentViewController()
-        }
-    }
-
+    
     public func changeMainViewController(newMainViewController: UIViewController) {
         // Swaps out main view controller
         removeViewControllerFromContainer(mainViewController)
@@ -331,5 +305,31 @@ extension UIViewController {
             viewController = viewController?.parentViewController
         }
         return nil;
+    }
+    
+    public func addViewControllerToContainer(containerView: UIView, viewController: UIViewController?) {
+        // Adds a view controller as a child view controller and calls needed life cycle methods
+        if let targetViewController = viewController {
+            addChildViewController(targetViewController)
+            containerView.addSubview(targetViewController.view)
+            
+            targetViewController.view.snp_makeConstraints(closure: { (make) in
+                make.left.equalTo(containerView)
+                make.top.equalTo(containerView)
+                make.right.equalTo(containerView)
+                make.bottom.equalTo(containerView)
+            })
+            
+            targetViewController.didMoveToParentViewController(self)
+        }
+    }
+    
+    public func removeViewControllerFromContainer(viewController: UIViewController?) {
+        // Removes a child view controller and calls needed life cyle methods
+        if let targetViewController = viewController {
+            targetViewController.willMoveToParentViewController(nil)
+            targetViewController.view.removeFromSuperview()
+            targetViewController.removeFromParentViewController()
+        }
     }
 }

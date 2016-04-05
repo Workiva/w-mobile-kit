@@ -20,20 +20,26 @@ class WMobileKitLeftMenuTVC: UITableViewController {
             sideMenuController()?.changeMainViewController(pagingControlExamples)
             break
         case 2:
-//            var page = WPage(title: title, viewController: nil)
+            // Create simple VC's to send to pagingSelectorVC
+            let vc1 = WSideMenuContentVC()
+            let vc2 = WSideMenuContentVC()
+            let vc3 = WSideMenuContentVC()
+            let vc4 = mainStoryboard.instantiateViewControllerWithIdentifier("vc4") as! WSideMenuContentVC
+            vc1.view.backgroundColor = UIColor.greenColor()
+            vc2.view.backgroundColor = UIColor.blueColor()
+            vc3.view.backgroundColor = UIColor.redColor()
+            
+            
             if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
                 let pages = [
-                    // TODO: Add controllers to this
-                    WPage(title: "test1"),
-                    WPage(title: "test2")
+                    WPage(title: "Green VC", viewController: vc1),
+                    WPage(title: "Blue VC", viewController: vc2),
+                    WPage(title: "Red VC", viewController: vc3),
+                    WPage(title: "Text VC", viewController: vc4)
                 ]
 
                 pagingVC.pages = pages
             }
-
-
-//            pagingSelectorVC.rootviewC
-//            pagingSelectorVC.pages = pages
 
             sideMenuController()?.changeMainViewController(pagingSelectorVC)
             break

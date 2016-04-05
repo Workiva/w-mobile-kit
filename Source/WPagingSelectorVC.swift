@@ -8,10 +8,16 @@ import UIKit
 let MIN_TAB_WIDTH = 20
 let SELECTED_OPACITY:Float = 0.7
 let UNSELECTED_OPACITY:Float = 0.2
+let ANIMATION_DURATION = 0.2
 
 public enum WPagingWidthMode {
     case Static
     case Dynamic
+}
+
+@objc protocol WPagingSelectorVCDelegate: class {
+    optional func willChangeToTab(sender: WPagingSelectorControl, tab: Int)
+    optional func didChangeToTab(sender: WPagingSelectorControl, tab: Int)
 }
 
 public class WScrollView : UIScrollView {
@@ -94,30 +100,25 @@ public class WTabView : UIView {
 }
 
 public class WPagingSelectorControl : UIControl {
-    // Accessable properties
+    // Accessible properties
     public private(set) var widthMode: WPagingWidthMode = .Dynamic
     public private(set) var tabWidth: Int?
     public private(set) var selectedPage: Int?
 
     private var scrollView = WScrollView()
-//    private var sectionTitles = Array<String>()
     private var pages = [WPage]()
     private var contentView = UIView()
     private var tabContainerView = UIView()
     private var selectionIndicatorView = WSelectionIndicatorView()
     private var selectedContainer = UIView()
     private var tabViews = Array<UIView>()
+    private weak var delegate:WPagingSelectorVCDelegate?
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
     
-//    public override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        commonInit()
-//    }
-
     public convenience init(titles: Array<String>) {
         self.init(titles: titles, tabWidth: nil)
     }
@@ -274,10 +275,13 @@ public class WPagingSelectorControl : UIControl {
     }
     
     @objc private func tappedTabItem(recognizer: UITapGestureRecognizer) {
-        moveToTabIndex((recognizer.view?.tag)!)
+        let index = (recognizer.view?.tag)!
+        if (index == selectedContainer.tag) {
+            return
+        }
+        moveToTabIndex(index)
 
-        // TODO: Tell delegate that it was tapped
-        // Trigger which view to hide/show
+        delegate?.willChangeToTab?(self, tab: index)
     }
 
     public func moveToTabIndex(tabIndex: NSInteger) {
@@ -293,11 +297,12 @@ public class WPagingSelectorControl : UIControl {
 
         selectionIndicatorView.moveToSelection(selectedContainer, numberOfSections: pages.count, contentView: contentView)
 
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animateWithDuration(ANIMATION_DURATION, animations: {
             self.layoutIfNeeded()
             })
         { (finished) in
             self.scrollView.scrollRectToVisible(self.selectedContainer.frame, animated: true)
+            self.delegate?.didChangeToTab?(self, tab: tabIndex)
         }
     }
 }
@@ -312,25 +317,27 @@ public struct WPage {
 
     public init(title: String, viewController: WSideMenuContentVC?) {
         self.title = title
+        self.viewController = viewController
     }
 }
 
-public class WPagingSelectorVC: WSideMenuContentVC {
+public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     public private(set) var pagingSelectorControl:WPagingSelectorControl?
-
-//    private var _pages = [WPage]()
+    
+    private var mainViewController : UIViewController?
+    private var mainContainerView = UIView(frame: CGRectZero)
+    private var currentPageIndex = 0
+    
     public var pages:[WPage] = [WPage]() {
-
-
         didSet {
-//            _pages = newValue
-
             if let pagingSelectorControl = pagingSelectorControl {
                 pagingSelectorControl.removeFromSuperview()
             }
 
             pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: 90)
-
+            
+            pagingSelectorControl?.delegate = self
+            
             view.addSubview(pagingSelectorControl!);
             pagingSelectorControl!.snp_makeConstraints { (make) in
                 make.left.equalTo(view)
@@ -338,126 +345,85 @@ public class WPagingSelectorVC: WSideMenuContentVC {
                 make.height.equalTo(50)
                 make.top.equalTo(view)
             }
+            
+            mainContainerView.snp_remakeConstraints { (make) in
+                make.left.equalTo(view)
+                make.right.equalTo(view)
+                make.bottom.equalTo(view)
+                make.top.equalTo(pagingSelectorControl!.snp_bottomMargin)
+            }
 
-            pagingSelectorControl!.layoutSubviews()
-
-            // TODO: Show default view controller 
-
-            // TODO: Change on tapped action
+            if let mainViewController = pages[0].viewController {
+                addViewControllerToContainer(mainContainerView, viewController: mainViewController)
+                
+                self.mainViewController = mainViewController
+            }
+        }
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(mainContainerView);
+        
+        mainContainerView.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.bottom.equalTo(view)
+            make.top.equalTo(view)
         }
     }
 
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
 
+        // Set the WSideMenu delegate when the VC appears
+        sideMenuController()?.delegate = self
+    }
+    
+    // Delegate methods
+    func willChangeToTab(sender: WPagingSelectorControl, tab: Int) {
+        // Store old main view controller to remove after animation
+        let oldMainViewController = mainViewController
 
-//    public convenience init(pages: WPage...) {
-//        self.init()
-//        self.pages = pages
-//    }
-
-//    public override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        let pagingSelectorControl = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
-//
-//        view.addSubview(pagingSelectorControl);
-//        pagingSelectorControl.snp_makeConstraints { (make) in
-//            make.left.equalTo(view)
-//            make.right.equalTo(view)
-//            make.height.equalTo(50)
-//            make.top.equalTo(view.snp_bottom)
-//        }
-//
-//        pagingSelectorControl.layoutSubviews()
-//
-//        updateUI()
-//    }
-//
-//    public func updateUI() {
-//    }
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-//        let pagingSelectorControl = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
-//
-//        view.addSubview(pagingSelectorControl);
-//        pagingSelectorControl.snp_makeConstraints { (make) in
-//            make.left.equalTo(view)
-//            make.right.equalTo(view)
-//            make.height.equalTo(50)
-//            make.top.equalTo(view)
-//        }
-//
-//        pagingSelectorControl.layoutSubviews()
-
-
-//    let tabLayout = WPagingSelectorControl(titles: ["Recent", "All Files"])
-//
-//    view.addSubview(tabLayout);
-//    tabLayout.snp_makeConstraints { (make) in
-//    make.left.equalTo(view)
-//    make.right.equalTo(view)
-//    make.height.equalTo(50)
-//    make.top.equalTo(view)
-//    }
-//
-//    tabLayout.layoutSubviews()
-//
-//    let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
-//
-//    view.addSubview(tabLayout2);
-//    tabLayout2.snp_makeConstraints { (make) in
-//    make.left.equalTo(view)
-//    make.right.equalTo(view)
-//    make.height.equalTo(50)
-//    make.top.equalTo(tabLayout.snp_bottom)
-//    }
-//
-//    tabLayout2.layoutSubviews()
-//
-//    let tabLayout3 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
-//
-//    view.addSubview(tabLayout3);
-//    tabLayout3.snp_makeConstraints { (make) in
-//    make.left.equalTo(view)
-//    make.right.equalTo(view)
-//    make.height.equalTo(50)
-//    make.top.equalTo(tabLayout2.snp_bottom)
-//    }
-//
-//    tabLayout3.layoutSubviews()
-//
-//    let tabLayout4 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], tabWidth: 90)
-//
-//    view.addSubview(tabLayout4);
-//    tabLayout4.snp_makeConstraints { (make) in
-//    make.left.equalTo(view)
-//    make.right.equalTo(view)
-//    make.height.equalTo(50)
-//    make.top.equalTo(tabLayout3.snp_bottom)
-//    }
-//
-//    tabLayout4.layoutSubviews()
-//
-//    let tabLayout5 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], tabWidth: 90)
-//
-//    view.addSubview(tabLayout5);
-//    tabLayout5.snp_makeConstraints { (make) in
-//    make.left.equalTo(view)
-//    make.right.equalTo(view)
-//    make.height.equalTo(50)
-//    make.top.equalTo(tabLayout4.snp_bottom)
-//    }
-//
-//    tabLayout5.layoutSubviews()
-}
-
-public override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-
-    // Set the WSideMenu delegate when the VC appears
-    sideMenuController()?.delegate = self
-}
-
+        if let newMainViewController = pages[tab].viewController {
+            mainViewController = newMainViewController
+            addViewControllerToContainer(mainContainerView, viewController: mainViewController)
+            
+            // Animates view controller in left or right
+            mainViewController?.view.snp_remakeConstraints(closure: { (make) in
+                if (tab < currentPageIndex) {
+                    make.right.equalTo(mainContainerView.snp_left)
+                } else {
+                    make.left.equalTo(mainContainerView.snp_right)
+                }
+                make.top.equalTo(mainContainerView)
+                make.bottom.equalTo(mainContainerView)
+                make.width.equalTo(mainContainerView)
+            })
+            
+            mainContainerView.layoutIfNeeded()
+            
+            mainViewController?.view.snp_remakeConstraints(closure: { (make) in
+                make.left.equalTo(mainContainerView)
+                make.top.equalTo(mainContainerView)
+                make.bottom.equalTo(mainContainerView)
+                make.right.equalTo(mainContainerView)
+            })
+            
+            UIView.animateWithDuration(ANIMATION_DURATION, animations: {
+                self.mainContainerView.layoutIfNeeded()
+                }, completion: { (finished) in
+                    if let oldMainViewController = oldMainViewController {
+                        self.removeViewControllerFromContainer(oldMainViewController)
+                    }
+            })
+        }
+    }
+    
+    func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
+        currentPageIndex = tab
+    }
 }
 
 

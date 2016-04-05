@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Mobile Kit Side MenuVC-->
@@ -190,6 +191,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIs-8f-LG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1119" y="2001"/>
+        </scene>
+        <!--Side Menu ContentVC-->
+        <scene sceneID="YYJ-vY-zbz">
+            <objects>
+                <viewController storyboardIdentifier="vc4" id="mX8-IJ-DeD" customClass="WSideMenuContentVC" customModule="WMobileKit" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3K1-hr-ABD"/>
+                        <viewControllerLayoutGuide type="bottom" id="FIr-Vm-EMw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uhq-Df-bU1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="H4k-77-kiy">
+                                <rect key="frame" x="36" y="148" width="528" height="420"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H4k-77-kiy" firstAttribute="top" secondItem="3K1-hr-ABD" secondAttribute="bottom" constant="16" id="2QI-8l-fUa"/>
+                            <constraint firstItem="H4k-77-kiy" firstAttribute="centerX" secondItem="Uhq-Df-bU1" secondAttribute="centerX" id="A19-3v-qON"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H4k-77-kiy" secondAttribute="trailing" constant="16" id="No3-Mh-IYi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H4k-77-kiy" secondAttribute="trailing" constant="16" id="T2g-LE-6mx"/>
+                            <constraint firstItem="H4k-77-kiy" firstAttribute="leading" secondItem="Uhq-Df-bU1" secondAttribute="leadingMargin" constant="16" id="W6W-oO-QwQ"/>
+                            <constraint firstItem="FIr-Vm-EMw" firstAttribute="top" secondItem="H4k-77-kiy" secondAttribute="bottom" constant="32" id="g0P-Y9-WDH"/>
+                            <constraint firstItem="H4k-77-kiy" firstAttribute="top" secondItem="3K1-hr-ABD" secondAttribute="bottom" constant="128" id="jOS-cy-hwG"/>
+                            <constraint firstItem="H4k-77-kiy" firstAttribute="leading" secondItem="Uhq-Df-bU1" secondAttribute="leadingMargin" constant="16" id="tWd-yG-bIn"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2QI-8l-fUa"/>
+                                <exclude reference="T2g-LE-6mx"/>
+                                <exclude reference="W6W-oO-QwQ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AaC-wL-5L4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1118" y="2703"/>
         </scene>
         <!--Paging SelectorVC-->
         <scene sceneID="bdh-GG-E3Y">
