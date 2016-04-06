@@ -299,6 +299,8 @@ public class WPagingSelectorControl : UIControl {
         newSelectedContainer.layer.opacity = SELECTED_OPACITY
 
         selectedContainer = newSelectedContainer
+        
+        self.scrollView.scrollRectToVisible(self.selectedContainer.frame, animated: true)
 
         selectionIndicatorView.moveToSelection(selectedContainer, numberOfSections: pages.count, contentView: contentView)
 
@@ -306,7 +308,6 @@ public class WPagingSelectorControl : UIControl {
             self.layoutIfNeeded()
             })
         { (finished) in
-            self.scrollView.scrollRectToVisible(self.selectedContainer.frame, animated: true)
             self.delegate?.didChangeToTab?(self, tab: tabIndex)
         }
     }
@@ -425,6 +426,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
                 make.width.equalTo(mainContainerView)
             })
             
+            oldMainViewController
+            
             mainContainerView.layoutIfNeeded()
             
             mainViewController?.view.snp_remakeConstraints(closure: { (make) in
@@ -433,6 +436,19 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
                 make.bottom.equalTo(mainContainerView)
                 make.right.equalTo(mainContainerView)
             })
+            
+            if oldMainViewController != nil {
+                oldMainViewController?.view.snp_remakeConstraints(closure: { (make) in
+                    if (tab > currentPageIndex) {
+                        make.right.equalTo(mainContainerView.snp_left)
+                    } else {
+                        make.left.equalTo(mainContainerView.snp_right)
+                    }
+                    make.top.equalTo(mainContainerView)
+                    make.bottom.equalTo(mainContainerView)
+                    make.width.equalTo(mainContainerView)
+                })
+            }
             
             UIView.animateWithDuration(ANIMATION_DURATION, animations: {
                 self.mainContainerView.layoutIfNeeded()
