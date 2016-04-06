@@ -9,65 +9,104 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tabLayout = WPagingSelectorControl(titles: ["Recent", "All Files"])
-
-        view.addSubview(tabLayout);
-        tabLayout.snp_makeConstraints { (make) in
+        let tabLayout1 = WPagingSelectorVC()
+        let pages1 = [
+            WPage(title: "Recent"),
+            WPage(title: "All Files")
+        ]
+        tabLayout1.pages = pages1
+        
+        view.addSubview(tabLayout1.view);
+        tabLayout1.view.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(50)
             make.top.equalTo(view)
         }
-
-        tabLayout.layoutSubviews()
-
-        let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
-
-        view.addSubview(tabLayout2);
-        tabLayout2.snp_makeConstraints { (make) in
+        
+        let tabLayout2 = WPagingSelectorVC()
+        let pages2 = [
+            WPage(title: "Recent"),
+            WPage(title: "All Files"),
+            WPage(title: "Snapshots")
+        ]
+        tabLayout2.pages = pages2
+        
+        view.addSubview(tabLayout2.view);
+        tabLayout2.view.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(50)
-            make.top.equalTo(tabLayout.snp_bottom)
+            make.top.equalTo(tabLayout1.view.snp_bottom)
         }
 
-        tabLayout2.layoutSubviews()
-
-        let tabLayout3 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
-
-        view.addSubview(tabLayout3);
-        tabLayout3.snp_makeConstraints { (make) in
+        let tabLayout3 = WPagingSelectorVC()
+        let pages3 = [
+            WPage(title: "Recent"),
+            WPage(title: "All Files"),
+            WPage(title: "Snapshots")
+        ]
+        tabLayout3.pages = pages3
+        tabLayout3.tabWidth = 90
+        
+        view.addSubview(tabLayout3.view);
+        tabLayout3.view.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(50)
-            make.top.equalTo(tabLayout2.snp_bottom)
+            make.top.equalTo(tabLayout2.view.snp_bottom)
         }
-
-        tabLayout3.layoutSubviews()
-
-        let tabLayout4 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], tabWidth: 90)
-
-        view.addSubview(tabLayout4);
-        tabLayout4.snp_makeConstraints { (make) in
+        
+        let tabLayout4 = WPagingSelectorVC()
+        let pages4 = [
+            WPage(title: "Recent"),
+            WPage(title: "All Files"),
+            WPage(title: "Snapshots"),
+            WPage(title: "Cool stuff")
+        ]
+        tabLayout4.pages = pages4
+        
+        view.addSubview(tabLayout4.view);
+        tabLayout4.view.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(50)
-            make.top.equalTo(tabLayout3.snp_bottom)
+            make.top.equalTo(tabLayout3.view.snp_bottom)
         }
 
-        tabLayout4.layoutSubviews()
-
-        let tabLayout5 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], tabWidth: 90)
-
-        view.addSubview(tabLayout5);
-        tabLayout5.snp_makeConstraints { (make) in
+        let tabLayout5 = WPagingSelectorVC()
+        let pages5 = [
+            WPage(title: "Recent"),
+            WPage(title: "All Files"),
+            WPage(title: "Snapshots"),
+            WPage(title: "Cool stuff"),
+            WPage(title: "Too many")
+        ]
+        tabLayout5.pages = pages5
+        
+        view.addSubview(tabLayout5.view);
+        tabLayout5.view.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(50)
-            make.top.equalTo(tabLayout4.snp_bottom)
+            make.top.equalTo(tabLayout4.view.snp_bottom)
         }
-
-        tabLayout5.layoutSubviews()
+        
+        let button = UIButton(frame: CGRectZero)
+        button.backgroundColor = UIColor.lightGrayColor()
+        button.tintColor = UIColor.greenColor()
+        button.titleLabel?.text = "Action Sheet!"
+        button.titleLabel?.textColor = UIColor.whiteColor()
+        button.addTarget(self, action: #selector(WMobileKitPagingControlExamplesVC.presentActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        view.addSubview(button)
+        button.snp_makeConstraints { (make) in
+            make.bottom.equalTo(view).offset(-32)
+            make.centerX.equalTo(view)
+            make.width.equalTo(128)
+        }
+        
+        view.layoutIfNeeded()
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -75,6 +114,19 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
 
         // Set the WSideMenu delegate when the VC appears
         sideMenuController()?.delegate = self
+    }
+    
+    public func presentActionSheet() {
+        let actionSheet = WActionSheetVC()
+        
+        self.definesPresentationContext = true
+        
+        actionSheet.modalPresentationStyle = .OverFullScreen
+        actionSheet.modalTransitionStyle = .CrossDissolve
+        actionSheet.providesPresentationContextTransitionStyle = true
+        actionSheet.view.window?.windowLevel = UIWindowLevelStatusBar + 10
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
     }
 }
 
