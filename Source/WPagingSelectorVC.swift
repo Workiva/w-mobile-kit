@@ -383,19 +383,21 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
 
         pagingSelectorControl?.delegate = self
 
-        view.addSubview(pagingSelectorControl!);
-        pagingSelectorControl!.snp_makeConstraints { (make) in
-            make.left.equalTo(view)
-            make.right.equalTo(view)
-            make.height.equalTo(50)
-            make.top.equalTo(view)
-        }
+        if let pagingSelectorControl = pagingSelectorControl {
+            view.addSubview(pagingSelectorControl);
+            pagingSelectorControl.snp_makeConstraints { (make) in
+                make.left.equalTo(view)
+                make.right.equalTo(view)
+                make.height.equalTo(50)
+                make.top.equalTo(view)
+            }
 
-        mainContainerView.snp_remakeConstraints { (make) in
-            make.left.equalTo(view)
-            make.right.equalTo(view)
-            make.bottom.equalTo(view)
-            make.top.equalTo(pagingSelectorControl!.snp_bottomMargin)
+            mainContainerView.snp_remakeConstraints { (make) in
+                make.left.equalTo(view)
+                make.right.equalTo(view)
+                make.bottom.equalTo(view)
+                make.top.equalTo(pagingSelectorControl.snp_bottom)
+            }
         }
 
         if let mainViewController = pages[0].viewController {
