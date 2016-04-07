@@ -92,7 +92,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
             make.top.equalTo(tabLayout4.view.snp_bottom)
         }
         
-        let button = UIButton(frame: CGRectZero)
+        let button = UIButton(type: UIButtonType.RoundedRect)
         button.backgroundColor = UIColor.lightGrayColor()
         button.tintColor = UIColor.greenColor()
         button.titleLabel?.text = "Action Sheet!"
@@ -118,6 +118,13 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
     
     public func presentActionSheet() {
         let actionSheet = WActionSheetVC()
+        
+        actionSheet.titleString = "Jordan Ross"
+        actionSheet.addAction("Owner", subtitle: "Has full editing rights. May set other users' permissions.")
+        actionSheet.addAction("Editor", subtitle: "May view and make changes to the document.")
+        actionSheet.addAction("Viewer", subtitle: "May only view and comment on the document.")
+        actionSheet.addAction("None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive)
+        actionSheet.hasCancel = true
         
         self.definesPresentationContext = true
         
