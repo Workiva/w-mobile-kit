@@ -13,7 +13,7 @@
 		D53D0B9C1CAB09020065D106 /* WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D53D0B911CAB09020065D106 /* WMobileKit.framework */; };
 		D53D0BB01CAB0FD30065D106 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */; };
 		D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D5EF60C31CAC77230084472E /* WMobileKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */; };
+		D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,7 @@
 		D53D0BAD1CAB0FD30065D106 /* ReplaceMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMobileKit.h; sourceTree = "<group>"; };
 		D53D0BB31CAB0FE60065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitTests.swift; sourceTree = "<group>"; };
+		D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVCTests.swift; sourceTree = "<group>"; };
 		DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,8 +127,8 @@
 		D53D0BB21CAB0FE60065D106 /* WMobileKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D53D0BB31CAB0FE60065D106 /* Info.plist */,
-				D53D0BB41CAB0FE60065D106 /* WMobileKitTests.swift */,
 			);
 			name = WMobileKitTests;
 			path = Tests;
@@ -333,7 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5EF60C31CAC77230084472E /* WMobileKitTests.swift in Sources */,
+				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,10 +477,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DEB6A6734DE063D29C8817C6 /* Pods-WMobileKitTests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -488,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0093E47F1391E6BF1D607CD0 /* Pods-WMobileKitTests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
