@@ -124,16 +124,19 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         actionSheet.addAction("Editor", subtitle: "May view and make changes to the document.")
         actionSheet.addAction("Viewer", subtitle: "May only view and comment on the document.")
         actionSheet.addAction("None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive)
+        actionSheet.sheetStyle = SheetStyle.Selection
+        actionSheet.selectedIndex = 2
         actionSheet.hasCancel = true
+        
+//        actionSheet.popoverPresentationController?.sourceView
         
         self.definesPresentationContext = true
         
-        actionSheet.modalPresentationStyle = .OverFullScreen
-        actionSheet.modalTransitionStyle = .CrossDissolve
-        actionSheet.providesPresentationContextTransitionStyle = true
-        actionSheet.view.window?.windowLevel = UIWindowLevelStatusBar + 10
-        
         presentViewController(actionSheet, animated: true, completion: nil)
+    }
+    
+    public func presentiPad() {
+        
     }
 }
 

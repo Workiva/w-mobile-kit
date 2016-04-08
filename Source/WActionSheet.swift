@@ -8,16 +8,25 @@ import SnapKit
 
 public enum ActionStyle {
     case Cancel
-    case Action
+    case Normal
     case Destructive
 }
 
-public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+public enum SheetStyle {
+    case Action
+    case Selection
+}
+
+public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var darkView = UIView(frame: CGRectZero)
     private var containerView = UIView(frame: CGRectZero)
     private var topLine = UIView(frame: CGRectZero)
-    private var collectionView : UICollectionView?
+    private var tableView : UITableView?
     private var cells = [Int: Array<WAction>]()
+   
+    public var sheetStyle = SheetStyle.Action
+    public var selectedIndex : Int?
+    
     public var hasCancel = false {
         didSet {
             if (hasCancel) {
@@ -30,18 +39,15 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
         }
     }
 
-    public var titleString: String? {
-        didSet {
-//            let titleCell = WAction(title: titleString!)
-//            if (cells[2] == nil) {
-//                cells[2] = [WAction]()
-//            }
-//            cells[2]!.insert(titleCell, atIndex: 0)
-        }
-    }
+    public var titleString: String?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        modalPresentationStyle = .OverFullScreen
+        modalTransitionStyle = .CrossDissolve
+        providesPresentationContextTransitionStyle = true
+        view.window?.windowLevel = UIWindowLevelStatusBar + 10
         
         commonInit()
     }
@@ -60,23 +66,20 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
         
         view.addSubview(containerView)
         
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-        layout.minimumLineSpacing = 0
-        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
+        tableView = UITableView(frame: CGRectZero)
         
-        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        tableView?.dataSource = self
+        tableView?.delegate = self
+        tableView?.delaysContentTouches = false
+        tableView?.showsHorizontalScrollIndicator = false
+        tableView?.showsVerticalScrollIndicator = false
+        tableView?.scrollEnabled = false
+        tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView?.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: "Header")
+        tableView?.registerClass(WTableViewCell.self, forCellReuseIdentifier: "ActionCell")
         
-        collectionView?.backgroundColor = UIColor(hex: 0xC3C3C3)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        collectionView?.delaysContentTouches = false
-        collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.registerClass(WHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-        collectionView?.registerClass(WCollectionViewCell.self, forCellWithReuseIdentifier: "ActionCell")
+        containerView.addSubview(tableView!)
         
-        containerView.addSubview(collectionView!)
         containerView.addSubview(topLine)
         containerView.layer.opacity = 0.8
         
@@ -104,7 +107,7 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
         }
         darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
         
-        collectionView?.snp_remakeConstraints { (make) in
+        tableView?.snp_remakeConstraints { (make) in
             make.left.equalTo(containerView)
             make.right.equalTo(containerView)
             make.top.equalTo(containerView)
@@ -145,6 +148,10 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
     }
     
     public func animateOut() {
+        animateOut(0)
+    }
+    
+    public func animateOut(delay: NSTimeInterval) {
         view.addSubview(containerView)
         containerView.snp_remakeConstraints { (make) in
             make.top.equalTo(view.snp_bottom)
@@ -152,7 +159,7 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
             make.right.equalTo(view)
         }
         
-        UIView.animateWithDuration(0.2, animations: { 
+        UIView.animateWithDuration(0.2, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: { 
             self.view.layoutIfNeeded()
             }) { (finished) in
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -164,7 +171,7 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
     }
     
     public func addAction(title: String, subtitle: String?) {
-        addAction(title, subtitle: subtitle, style: ActionStyle.Action)
+        addAction(title, subtitle: subtitle, style: ActionStyle.Normal)
     }
     
     public func addAction(title: String, subtitle: String?, style: ActionStyle?) {
@@ -177,7 +184,7 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
         
         setupUI(false)
         
-        collectionView?.reloadData()
+        tableView?.reloadData()
     }
     
     public func actionForIndexPath(indexPath: NSIndexPath) -> WAction {
@@ -185,82 +192,81 @@ public class WActionSheetVC : UIViewController, UICollectionViewDataSource, UICo
         return actionCells![indexPath.row]
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cells[section]!.count
     }
     
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1 + (hasCancel ? 1 : 0)
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell : WCollectionViewCell
     
-        cell = collectionView.dequeueReusableCellWithReuseIdentifier("ActionCell", forIndexPath: indexPath) as! WCollectionViewCell
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50
+    }
+    
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell : WTableViewCell
+        
+        cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as! WTableViewCell
+
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
         cell.actionInfo = action
-        if (indexPath.row == 0 && indexPath.section == 0) {
-            cell.selectBar.hidden = false
+        
+        if let selectedIndex = selectedIndex {
+            if (indexPath.row == selectedIndex && indexPath.section == 0 && sheetStyle == .Selection) {
+                cell.selectBar.hidden = false
+            }
         }
         
         return cell
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(collectionView.frame.width, 50)
-    }
-    
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var header : WHeaderView?
         if (section == 0) {
-            return UIEdgeInsetsMake(0, 0, 0, 0)
-        } else {
-            return UIEdgeInsetsMake(6, 0, 0, 0)
-        }
-    }
-
-    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        var header : WCollectionViewCell?
-        if (kind == UICollectionElementKindSectionHeader) {
-            header = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", forIndexPath: indexPath) as! WHeaderCell
+            header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! WHeaderView
             header?.actionInfo = WAction(title: titleString!)
             header?.backgroundColor = UIColor.whiteColor()
-        }
-        
-        if (kind == UICollectionElementKindSectionFooter) {
-            // do something for footer?
+        } else {
+            header = UIView(frame: CGRectZero) as UITableViewHeaderFooterView
         }
         return header!
     }
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if (section == 0) {
-            return CGSizeMake(collectionView.bounds.width, 50)
+            return 50
         } else {
-            return CGSizeZero
+            return 6
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! WCollectionViewCell
-        
-        UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { 
-            cell.backgroundColor = UIColor.redColor()
-            }, completion: nil)
-        
-        NSLog("Called highlight for " + cell.actionInfo!.title!)
-    }
-    
-    public func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! WCollectionViewCell
-        UIView.animateWithDuration(0.1) {
-            //cell.backgroundColor = UIColor.whiteColor()
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.section == 0) {
+            // selected action
+            if (sheetStyle == .Action) {
+                // perform handler
+                animateOut(0.1)
+            } else {
+                if let selectedIndex = selectedIndex {
+                    let oldIndexPath = NSIndexPath(forRow: selectedIndex, inSection: indexPath.section)
+                    let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath) as! WTableViewCell
+                    oldCell.selectBar.hidden = true
+                }
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! WTableViewCell
+                cell.selectBar.hidden = false
+                selectedIndex = indexPath.row
+            }
+        } else {
+            // selected cancel
+            animateOut(0.1)
         }
-        NSLog("Called unhighlight for " + cell.actionInfo!.title!)
     }
 }
 
-// Collection Cell
+// Table Cell
 
 public class WAction {
     private var title : String?
@@ -268,11 +274,11 @@ public class WAction {
     private var actionStyle : ActionStyle?
     
     public convenience init(title: String) {
-        self.init(title: title, subtitle : nil, style: ActionStyle.Action)
+        self.init(title: title, subtitle : nil, style: ActionStyle.Normal)
     }
     
     public convenience init(title: String, subtitle: String?) {
-        self.init(title: title, subtitle : subtitle, style: ActionStyle.Action)
+        self.init(title: title, subtitle : subtitle, style: ActionStyle.Normal)
     }
     
     public init(title: String, subtitle: String?, style: ActionStyle?) {
@@ -282,12 +288,26 @@ public class WAction {
     }
 }
 
-public class WCollectionViewCell : UICollectionViewCell {
+public class WTableViewCell : UITableViewCell {
     private var actionInfo : WAction? {
         didSet {
             commonInit()
         }
     }
+    
+//    public override var highlighted: Bool {
+//        didSet {
+//            if (highlighted) {
+//                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+//                    self.backgroundColor = UIColor.lightGrayColor()
+//                    }, completion: nil)
+//            } else {
+//                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+//                    self.backgroundColor = UIColor.whiteColor()
+//                    }, completion: nil)
+//            }
+//        }
+//    }
     
     private var selectBar = UIView(frame: CGRectZero)
     private var separatorBar = UIView(frame: CGRectZero)
@@ -300,16 +320,10 @@ public class WCollectionViewCell : UICollectionViewCell {
         commonInit()
     }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         commonInit()
-    }
-    
-    public init(action: WAction) {
-        super.init(frame: CGRectZero)
-        
-        self.actionInfo = action
     }
     
     public func commonInit() {
@@ -404,15 +418,45 @@ public class WCollectionViewCell : UICollectionViewCell {
 }
 
 // Has action handler when tapped
-public class WActionCell : WCollectionViewCell {
+public class WActionCell : WTableViewCell {
 //    public init(title: String, subtitle: String?, style: ActionStyle?, handler: ) {
 //        
 //    }
 }
 
-public class WHeaderCell : WCollectionViewCell {
-    public override func commonInit() {
-        super.commonInit()
+public class WHeaderView : UITableViewHeaderFooterView {
+    private var actionInfo : WAction? {
+        didSet {
+            commonInit()
+        }
+    }
+    
+    private var separatorBar = UIView(frame: CGRectZero)
+    private var titleLabel : UILabel?
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        commonInit()
+    }
+    
+    public override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        commonInit()
+    }
+    public func commonInit() {
+        if (!self.subviews.contains(separatorBar)) {
+            addSubview(separatorBar)
+        }
+        separatorBar.snp_removeConstraints()
+        separatorBar.snp_makeConstraints { (make) in
+            make.left.equalTo(self)
+            make.top.equalTo(self)
+            make.right.equalTo(self)
+            make.height.equalTo(0.5)
+        }
+        separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
         
         if let title = actionInfo?.title {
             if titleLabel == nil {
@@ -433,8 +477,6 @@ public class WHeaderCell : WCollectionViewCell {
             })
         }
         
-        if subtitleLabel != nil {
-            subtitleLabel?.removeFromSuperview()
-        }
+        layoutIfNeeded()
     }
 }
