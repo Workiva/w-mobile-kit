@@ -6,6 +6,9 @@ import Foundation
 import UIKit
 import SnapKit
 
+let CANCEL_SEPARATOR_HEIGHT:CGFloat = 6.0
+let ROW_HEIGHT:CGFloat = 50.0
+
 public enum ActionStyle {
     case Cancel
     case Normal
@@ -26,6 +29,7 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
    
     public var sheetStyle = SheetStyle.Action
     public var selectedIndex : Int?
+    public var dismissOnAction = true
     
     public var hasCancel = false {
         didSet {
@@ -33,7 +37,7 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
                 if (cells[1] == nil) {
                     cells[1] = [WAction]()
                 }
-                let cancelCell = WAction(title: "Cancel", subtitle: nil, style: ActionStyle.Cancel)
+                let cancelCell = WAction(title: "Cancel", subtitle: nil, style: ActionStyle.Cancel, handler: nil)
                 cells[1]?.insert(cancelCell, atIndex: 0)
             }
         }
@@ -87,6 +91,9 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
     }
     
     public func setupUI(animated: Bool) {
+        let numCells = cells[0]!.count + (hasCancel ? 1 : 0) + (titleString != nil ? 1 : 0)
+        let height = (CGFloat(numCells)) * ROW_HEIGHT + (hasCancel ? CANCEL_SEPARATOR_HEIGHT : 0)
+        
         containerView.snp_remakeConstraints { (make) in
             if (animated) {
                 make.top.equalTo(view.snp_bottom)
@@ -95,7 +102,7 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
             }
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo((cells[0]!.count + (titleString != nil ? 1 : 0)) * 50 + (hasCancel ? 56 : 0))
+            make.height.equalTo(height)
         }
         containerView.backgroundColor = UIColor.whiteColor()
         
@@ -129,7 +136,7 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
                 make.bottom.equalTo(view)
                 make.left.equalTo(view)
                 make.right.equalTo(view)
-                make.height.equalTo((cells[0]!.count + (titleString != nil ? 1 : 0)) * 50 + (hasCancel ? 56 : 0))
+                make.height.equalTo(height)
             }
             
             UIView.animateWithDuration(0.35, delay: 0.1,
@@ -166,16 +173,22 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // Actions
+    
     public func addAction(title: String) {
-        addAction(title, subtitle: nil)
+        addAction(title, subtitle: nil, style: ActionStyle.Normal, handler: nil)
     }
     
     public func addAction(title: String, subtitle: String?) {
-        addAction(title, subtitle: subtitle, style: ActionStyle.Normal)
+        addAction(title, subtitle: subtitle, style: ActionStyle.Normal, handler: nil)
     }
     
     public func addAction(title: String, subtitle: String?, style: ActionStyle?) {
-        let newCell = WAction(title: title, subtitle: subtitle, style: style)
+        addAction(title, subtitle: subtitle, style: style, handler: nil)
+    }
+    
+    public func addAction(title: String, subtitle: String?, style: ActionStyle?, handler: (WAction -> Void)?) {
+        let newCell = WAction(title: title, subtitle: subtitle, style: style, handler: handler)
         
         if (cells[0] == nil) {
             cells[0] = Array<WAction>()
@@ -187,10 +200,31 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
         tableView?.reloadData()
     }
     
-    public func actionForIndexPath(indexPath: NSIndexPath) -> WAction {
+    public func setSelectedAction(action: WAction) {
+        let path = indexPathForAction(action)
+//        let cell = tableView?.cellForRowAtIndexPath(path)
+        
+    }
+    
+    // Table Support Methods
+    
+    public func actionForIndexPath(indexPath: NSIndexPath) -> WAction? {
         let actionCells = cells[indexPath.section]
         return actionCells![indexPath.row]
     }
+    
+    public func indexPathForAction(action: WAction) -> NSIndexPath? {
+        if let actions = cells[0] {
+            for (index, cellAction) in actions.enumerate() {
+                if (cellAction == action) {
+                    return NSIndexPath(forRow: index, inSection: 0)
+                }
+            }
+        }
+        return nil
+    }
+    
+    // Delegate Methods
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cells[section]!.count
@@ -202,14 +236,14 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
     
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+        return ROW_HEIGHT
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
         var cell : WTableViewCell
         
         cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as! WTableViewCell
-
+        
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
         cell.actionInfo = action
@@ -224,32 +258,31 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var header : WHeaderView?
+        var header : UITableViewHeaderFooterView?
         if (section == 0) {
-            header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! WHeaderView
-            header?.actionInfo = WAction(title: titleString!)
-            header?.backgroundColor = UIColor.whiteColor()
+            let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! WHeaderView
+            WHeader.title = titleString
+            WHeader.contentView.backgroundColor = UIColor.whiteColor()
+            header = WHeader
         } else {
-            header = UIView(frame: CGRectZero) as UITableViewHeaderFooterView
+            header = UITableViewHeaderFooterView(frame: CGRectZero)
+            header?.contentView.backgroundColor = UIColor(hex: 0xC3C3C3)
         }
         return header!
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if (section == 0) {
-            return 50
+            return ROW_HEIGHT
         } else {
-            return 6
+            return CANCEL_SEPARATOR_HEIGHT
         }
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == 0) {
             // selected action
-            if (sheetStyle == .Action) {
-                // perform handler
-                animateOut(0.1)
-            } else {
+            if (sheetStyle == .Selection) {
                 if let selectedIndex = selectedIndex {
                     let oldIndexPath = NSIndexPath(forRow: selectedIndex, inSection: indexPath.section)
                     let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath) as! WTableViewCell
@@ -258,6 +291,15 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! WTableViewCell
                 cell.selectBar.hidden = false
                 selectedIndex = indexPath.row
+            }
+            
+            // perform handler
+            if let action = actionForIndexPath(indexPath) {
+                action.handler?(action)
+            }
+            
+            if (dismissOnAction) {
+                animateOut(0.1)
             }
         } else {
             // selected cancel
@@ -268,24 +310,22 @@ public class WActionSheetVC : UIViewController, UITableViewDelegate, UITableView
 
 // Table Cell
 
-public class WAction {
+public struct WAction {
     private var title : String?
     private var subtitle : String?
     private var actionStyle : ActionStyle?
+    private var handler : (WAction -> Void)?
     
-    public convenience init(title: String) {
-        self.init(title: title, subtitle : nil, style: ActionStyle.Normal)
-    }
-    
-    public convenience init(title: String, subtitle: String?) {
-        self.init(title: title, subtitle : subtitle, style: ActionStyle.Normal)
-    }
-    
-    public init(title: String, subtitle: String?, style: ActionStyle?) {
+    public init(title: String, subtitle: String?, style: ActionStyle?, handler: (WAction -> Void)?) {
         self.title = title
         self.subtitle = subtitle
         self.actionStyle = style
+        self.handler = handler
     }
+}
+extension WAction : Equatable{}
+public func ==(lhs: WAction, rhs: WAction) -> Bool {
+    return lhs.title == rhs.title && lhs.subtitle == rhs.subtitle && lhs.actionStyle == rhs.actionStyle
 }
 
 public class WTableViewCell : UITableViewCell {
@@ -294,20 +334,6 @@ public class WTableViewCell : UITableViewCell {
             commonInit()
         }
     }
-    
-//    public override var highlighted: Bool {
-//        didSet {
-//            if (highlighted) {
-//                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
-//                    self.backgroundColor = UIColor.lightGrayColor()
-//                    }, completion: nil)
-//            } else {
-//                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
-//                    self.backgroundColor = UIColor.whiteColor()
-//                    }, completion: nil)
-//            }
-//        }
-//    }
     
     private var selectBar = UIView(frame: CGRectZero)
     private var separatorBar = UIView(frame: CGRectZero)
@@ -355,18 +381,19 @@ public class WTableViewCell : UITableViewCell {
         if let subtitle = actionInfo?.subtitle {
             if subtitleLabel == nil {
                 subtitleLabel = UILabel(frame: CGRectZero)
+                subtitleLabel?.adjustsFontSizeToFitWidth = true
                 addSubview(subtitleLabel!)
-            } else {
-                subtitleLabel?.text = subtitle
-                subtitleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 12)
-                if (actionInfo?.actionStyle == ActionStyle.Destructive) {
-                    subtitleLabel?.textColor = UIColor(hex: 0xEE2724)
-                } else {
-                    subtitleLabel?.textColor = UIColor(hex: 0x707070)
-                }
-                
-                subtitleLabel?.snp_removeConstraints()
             }
+            
+            subtitleLabel?.text = subtitle
+            subtitleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 12)
+            if (actionInfo?.actionStyle == ActionStyle.Destructive) {
+                subtitleLabel?.textColor = UIColor(hex: 0xEE2724)
+            } else {
+                subtitleLabel?.textColor = UIColor(hex: 0x707070)
+            }
+            
+            subtitleLabel?.snp_removeConstraints()
             
             subtitleLabel?.snp_makeConstraints(closure: { (make) in
                 make.left.equalTo(self).offset(22)
@@ -381,19 +408,19 @@ public class WTableViewCell : UITableViewCell {
             if titleLabel == nil {
                 titleLabel = UILabel(frame: CGRectZero)
                 addSubview(titleLabel!)
-            } else {
-                titleLabel?.text = title
-                titleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 14)
-                if (actionInfo?.actionStyle == ActionStyle.Cancel) {
-                    titleLabel?.textColor = UIColor(hex: 0x42AD48)
-                } else if (actionInfo?.actionStyle == ActionStyle.Destructive) {
-                    titleLabel?.textColor = UIColor(hex: 0xEE2724)
-                } else {
-                    titleLabel?.textColor = UIColor(hex: 0x444444)
-                }
-
-                titleLabel?.snp_removeConstraints()
             }
+            
+            titleLabel?.text = title
+            titleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 14)
+            if (actionInfo?.actionStyle == ActionStyle.Cancel) {
+                titleLabel?.textColor = UIColor(hex: 0x42AD48)
+            } else if (actionInfo?.actionStyle == ActionStyle.Destructive) {
+                titleLabel?.textColor = UIColor(hex: 0xEE2724)
+            } else {
+                titleLabel?.textColor = UIColor(hex: 0x444444)
+            }
+            
+            titleLabel?.snp_removeConstraints()
             
             titleLabel?.snp_makeConstraints(closure: { (make) in
                 make.height.equalTo(16)
@@ -425,7 +452,7 @@ public class WActionCell : WTableViewCell {
 }
 
 public class WHeaderView : UITableViewHeaderFooterView {
-    private var actionInfo : WAction? {
+    private var title : String? {
         didSet {
             commonInit()
         }
@@ -458,7 +485,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
         }
         separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
         
-        if let title = actionInfo?.title {
+        if let title = title {
             if titleLabel == nil {
                 titleLabel = UILabel(frame: CGRectZero)
                 addSubview(titleLabel!)
@@ -467,11 +494,8 @@ public class WHeaderView : UITableViewHeaderFooterView {
             titleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 16)
             titleLabel?.textColor = UIColor(hex: 0x444444)
             
-            titleLabel?.snp_removeConstraints()
-            
-            titleLabel?.snp_makeConstraints(closure: { (make) in
+            titleLabel?.snp_remakeConstraints(closure: { (make) in
                 make.left.equalTo(self).offset(18)
-                make.right.equalTo(self)
                 make.height.equalTo(18)
                 make.centerY.equalTo(self)
             })

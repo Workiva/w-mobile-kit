@@ -123,12 +123,14 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         actionSheet.addAction("Owner", subtitle: "Has full editing rights. May set other users' permissions.")
         actionSheet.addAction("Editor", subtitle: "May view and make changes to the document.")
         actionSheet.addAction("Viewer", subtitle: "May only view and comment on the document.")
-        actionSheet.addAction("None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive)
+        actionSheet.addAction("None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive, handler: { action in
+            NSLog("We have tapped none omg")
+        })
+
         actionSheet.sheetStyle = SheetStyle.Selection
         actionSheet.selectedIndex = 2
         actionSheet.hasCancel = true
-        
-//        actionSheet.popoverPresentationController?.sourceView
+        actionSheet.dismissOnAction = false
         
         self.definesPresentationContext = true
         
