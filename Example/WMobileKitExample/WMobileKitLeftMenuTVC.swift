@@ -3,15 +3,46 @@
 //  WMobileKitExample
 
 import UIKit
+import WMobileKit
 
 class WMobileKitLeftMenuTVC: UITableViewController {
 
-    lazy var vc0 = mainStoryboard.instantiateViewControllerWithIdentifier("vc0")
+    lazy var baseContentVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc0") as! WMobileKitNVC // WSideMenuContentVC
+    lazy var pagingControlExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc1") as! WMobileKitNVC // WMobileKitPagingControlExamplesVC
+    lazy var pagingSelectorVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc3") as! WMobileKitNVC // WPagingSelectorVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            sideMenuController()?.changeMainViewController(vc0)
+            sideMenuController()?.changeMainViewController(baseContentVC)
+            break
+        case 1:
+            sideMenuController()?.changeMainViewController(pagingControlExamples)
+            break
+        case 2:
+            // Create simple VC's to send to pagingSelectorVC
+            let vc1 = WSideMenuContentVC()
+            let vc2 = WSideMenuContentVC()
+            let vc3 = WSideMenuContentVC()
+            let vc4 = mainStoryboard.instantiateViewControllerWithIdentifier("vc4") as! WSideMenuContentVC
+            vc1.view.backgroundColor = UIColor.greenColor()
+            vc2.view.backgroundColor = UIColor.blueColor()
+            vc3.view.backgroundColor = UIColor.redColor()
+
+            if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
+                pagingVC.tabWidth = 90
+
+                let pages = [
+                    WPage(title: "Green VC", viewController: vc1),
+                    WPage(title: "Blue VC", viewController: vc2),
+                    WPage(title: "Red VC", viewController: vc3),
+                    WPage(title: "Text VC", viewController: vc4)
+                ]
+
+                pagingVC.pages = pages
+            }
+
+            sideMenuController()?.changeMainViewController(pagingSelectorVC)
             break
         default:
             break
@@ -27,6 +58,6 @@ class WMobileKitLeftMenuTVC: UITableViewController {
     }
 
     func defaultVC() -> UIViewController {
-        return vc0
+        return baseContentVC
     }
 }

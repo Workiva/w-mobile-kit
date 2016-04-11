@@ -3,6 +3,7 @@
 //  WMobileKit
 
 import UIKit
+import WMobileKit
 
 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
@@ -11,8 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let theme: WTheme = GreenTheme()
+        WThemeManager.globalTheme(theme)
+
         // Override point for customization after application launch.
         return true
     }
