@@ -19,9 +19,5 @@ class WMobileKitSideMenuVC: WSideMenuVC {
 class WMobileKitNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // NOTE: Not sure why this doesn't work with the theme in the app delegate
-        let theme: WTheme = GreenTheme()
-        navigationBar.barTintColor = theme.navigationColor
     }
 }
