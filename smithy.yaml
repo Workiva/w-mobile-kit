@@ -1,7 +1,7 @@
 language: python
 
 before_install:
-  - gem install ocunit2junit
+  - gem install --install-dir ~/.gem ocunit2junit
 
 script:
   - ./smithy.sh

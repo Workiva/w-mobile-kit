@@ -7,9 +7,9 @@ PATH="$(cd ~/; pwd)/.rbenv/shims:$(cd ~/; pwd)/.rbenv/bin:$PATH"
 function run_unit_tests() {
     echo "Starting unit tests."
 
-    #xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -sdk iphonesimulator test
+    xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test
 
-    xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -sdk iphonesimulator test | ocunit2junit
+    #xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test | ocunit2junit
 
     #xcodebuild clean test -workspace Wdesk.xcworkspace -scheme Wdesk -configuration Debug -destination \
     #"platform=iOS Simulator,name=$1,OS=8.4" GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS SMITHY=1' | ocunit2junit
@@ -27,5 +27,3 @@ function unit_test_failure_check {
 ./setup.sh
 
 run_unit_tests
-
-unit_test_failure_check
