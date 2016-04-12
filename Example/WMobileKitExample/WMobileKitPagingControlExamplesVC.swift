@@ -97,7 +97,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         button.tintColor = UIColor.greenColor()
         button.titleLabel?.text = "Action Sheet!"
         button.titleLabel?.textColor = UIColor.whiteColor()
-        button.addTarget(self, action: #selector(WMobileKitPagingControlExamplesVC.presentActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(WMobileKitPagingControlExamplesVC.presentSortActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
         
         view.addSubview(button)
         button.snp_makeConstraints { (make) in
@@ -117,24 +117,100 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
     }
     
     public func presentActionSheet() {
-        let actionSheet = WActionSheetVC()
+        self.definesPresentationContext = true
+        
+        let actionSheet = WActionSheetVC<String>()
         
         actionSheet.titleString = "Jordan Ross"
-        actionSheet.addAction("Owner", subtitle: "Has full editing rights. May set other users' permissions.")
-        actionSheet.addAction("Editor", subtitle: "May view and make changes to the document.")
-        actionSheet.addAction("Viewer", subtitle: "May only view and comment on the document.")
-        actionSheet.addAction("None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive, handler: { action in
-            NSLog("We have tapped none omg")
-        })
+        actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.", image:UIImage(named: "person_1"), data: "", style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheet.deselectAction()
+            actionSheet.setSelectedAction(action)
+        }))
+        actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.", image:UIImage(named: "folder_1"), data: nil, style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheet.deselectAction()
+            actionSheet.setSelectedAction(action)
+        }))
+        actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.", data: nil, style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheet.deselectAction()
+            actionSheet.setSelectedAction(action)
+        }))
+        actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", data: nil, style: ActionStyle.Destructive, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheet.deselectAction()
+            actionSheet.setSelectedAction(action)
+        }))
 
-        actionSheet.sheetStyle = SheetStyle.Selection
-        actionSheet.selectedIndex = 2
+        actionSheet.setSelectedAction(1)
         actionSheet.hasCancel = true
         actionSheet.dismissOnAction = false
         
+        presentViewController(actionSheet, animated: true, completion: nil)
+    }
+    
+    public func presentIconActionSheet() {
         self.definesPresentationContext = true
         
-        presentViewController(actionSheet, animated: true, completion: nil)
+        let actionSheetIcons = WActionSheetVC<String>()
+        
+        actionSheetIcons.titleString = "2015 Revenue Forecasts"
+        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder_1"), style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            //            actionSheet.toggleSelectedAction(action)
+        }))
+        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear_1"), style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            //            actionSheet.toggleSelectedAction(action)
+        }))
+        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person_1"), style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            //            actionSheet.toggleSelectedAction(action)
+        }))
+        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Normal, handler: { action in
+            NSLog("We have tapped " + action.title!)
+            //            actionSheet.toggleSelectedAction(action)
+        }))
+        
+        actionSheetIcons.hasCancel = true
+        actionSheetIcons.dismissOnAction = true
+        
+        presentViewController(actionSheetIcons, animated: true, completion: nil)
+    }
+    
+    public func presentSortActionSheet() {
+        self.definesPresentationContext = true
+        
+        let actionSheetSort = WActionSheetVC<String>()
+        
+        actionSheetSort.titleString = "Sort Files"
+        actionSheetSort.addAction(WAction(title: "Last Opened", handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheetSort.deselectAction()
+            actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Last Modified", handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheetSort.deselectAction()
+            actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Create Date", handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheetSort.deselectAction()
+            actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Name", handler: { action in
+            NSLog("We have tapped " + action.title!)
+            actionSheetSort.deselectAction()
+            actionSheetSort.setSelectedAction(action)
+        }))
+        
+        actionSheetSort.hasCancel = true
+        actionSheetSort.dismissOnAction = true
+        actionSheetSort.setSelectedAction(1)
+        
+        presentViewController(actionSheetSort, animated: true, completion: nil)
     }
     
     public func presentiPad() {
