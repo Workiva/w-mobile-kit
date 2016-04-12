@@ -104,7 +104,7 @@ public class WPagingSelectorControl : UIControl {
     public var tabTextColor:UIColor = UIColor.grayColor() {
         didSet {
             for i in 0..<tabViews.count {
-                var tab:WTabView = tabViews[i]
+                let tab:WTabView = tabViews[i]
                 tab.label.textColor = tabTextColor
             }
         }
@@ -488,7 +488,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         }
     }
     
-    private func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
+    @objc internal func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
         currentPageIndex = tab
     }
 }

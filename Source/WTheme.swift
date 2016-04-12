@@ -1,6 +1,21 @@
 //
 //  WTheme.swift
 //  WMobileKit
+//
+//  WTheme works as a singleton that sets the appearance properties for 
+//  w-mobile-kit components. The current theme should be set during the app delegate's
+//  didFinishLaunchingWithOptions. Example:
+//
+//  let theme: WTheme = CustomTheme()
+//  WThemeManager.sharedInstance.currentTheme = theme
+//
+//  For further customization a subclass of WTheme can be created and the color
+//  values set to custom values. See Custom Theme for an example. 
+//
+//  Once the WThemeManager is created it will set the defaultTheme automatically
+//  which can then be changed by setting the currentTheme. In this way, themes can
+//  be dynamically changed.
+//
 
 import Foundation
 import UIKit
@@ -17,7 +32,6 @@ extension UIColor {
     }
 }
 
-// TODO: Clearly define how the theme works with the app
 public class WTheme {
     public init(){}
 
@@ -25,7 +39,7 @@ public class WTheme {
     public var primaryTextColor: UIColor = UIColor.blackColor()
     public var secondaryTextColor: UIColor = UIColor.grayColor()
 
-    // Applies to theme
+    // Colors that apply directly to theme
 
     // Paging Selector
     public var pagingSelectorControlColor: UIColor = UIColor.lightGrayColor()
@@ -46,7 +60,6 @@ public class GreenTheme: WTheme {
 
         // Override colors here
         navigationBarColor = UIColor(hex: 0x42AD48)
-
         pagingSelectorControlColor = UIColor(hex: 0x6ABD5E)
     }
 }
