@@ -31,6 +31,9 @@ class WMobileKitLeftMenuTVC: UITableViewController {
 
             if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
                 pagingVC.tabWidth = 90
+                pagingVC.tabTextColor = WThemeManager.sharedInstance.currentTheme.secondaryTextColor
+                // Can be changed
+//                pagingVC.pagingControlHeight = 100
 
                 let pages = [
                     WPage(title: "Green VC", viewController: vc1),

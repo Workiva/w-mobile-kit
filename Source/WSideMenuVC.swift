@@ -63,6 +63,9 @@ public class WSideMenuVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Needed for views to not show behind the nav bar
+        UINavigationBar.appearance().translucent = false
+
         setupMenu()
     }
 
@@ -254,6 +257,10 @@ public class WSideMenuVC: UIViewController {
 public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Needed for views to not show behind the nav bar
+        UINavigationBar.appearance().translucent = false
+
         addWSideMenuButtons()
     }
 

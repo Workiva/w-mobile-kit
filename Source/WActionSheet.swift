@@ -8,6 +8,10 @@ import SnapKit
 
 let CANCEL_SEPARATOR_HEIGHT:CGFloat = 6.0
 let ROW_HEIGHT:CGFloat = 50.0
+let POPOVER_WIDTH:CGFloat = 450.0
+
+let ACTION_CELL = "actionCell"
+let HEADER_VIEW = "headerView"
 
 public enum ActionStyle {
     case Cancel
@@ -18,11 +22,11 @@ public enum ActionStyle {
 public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var darkView = UIView(frame: CGRectZero)
     private var containerView = UIView(frame: CGRectZero)
-    private var topLine = UIView(frame: CGRectZero)
+    private var topLine = WTopLine(frame: CGRectZero)
     private var tableView : UITableView?
     private var actions = [Int: Array<WAction<ActionDataType>>]()
-    public var titleString: String?
     
+    public var titleString: String?
     public var selectedIndex : Int?
     public var dismissOnAction = true
     
@@ -33,8 +37,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
                     actions[1] = [WAction<ActionDataType>]()
                 }
                 
-                let cancelCell = WAction<ActionDataType>(title: "Cancel", subtitle: nil, data: nil, style: ActionStyle.Cancel, handler: nil)
-                actions[1]?.insert(cancelCell, atIndex: 0)
+                let cancelAction = WAction<ActionDataType>(title: "Cancel", style: ActionStyle.Cancel)
+                actions[1]?.insert(cancelAction, atIndex: 0)
             }
         }
     }
@@ -42,9 +46,11 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public override var modalPresentationStyle: UIModalPresentationStyle {
         didSet {
             commonInit()
-            preferredContentSize = CGSizeMake(450, heightForActionSheet())
+            preferredContentSize = CGSizeMake(POPOVER_WIDTH, heightForActionSheet())
         }
     }
+    
+    // Initialization
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -59,7 +65,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         
         if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
             modalPresentationStyle = .Popover
-            modalTransitionStyle = .CoverVertical
         } else {
             modalPresentationStyle = .OverFullScreen
             modalTransitionStyle = .CrossDissolve
@@ -83,7 +88,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             darkView.removeFromSuperview()
         }
         
-        let recognizer = UITapGestureRecognizer(target: self, action: "animateOut")
+        let recognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
         darkView.addGestureRecognizer(recognizer)
         
         view.addSubview(containerView)
@@ -99,8 +104,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         tableView?.allowsMultipleSelection = false
         
         tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
-        tableView?.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: "Header")
-        tableView?.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: "ActionCell")
+        tableView?.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
+        tableView?.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)
         
         containerView.addSubview(tableView!)
         
@@ -112,7 +117,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     
     public func setupUI(animated: Bool) {
         let height = heightForActionSheet()
-        preferredContentSize = CGSizeMake(450, height)
+        preferredContentSize = CGSizeMake(POPOVER_WIDTH, height)
         
         containerView.snp_remakeConstraints { (make) in
             if (animated) {
@@ -149,7 +154,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             make.top.equalTo(containerView)
             make.height.equalTo(2)
         }
-        topLine.backgroundColor = UIColor(hex: 0x42AD48)
         
         view.layoutIfNeeded()
         
@@ -172,6 +176,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         }
     }
     
+    // Helper Methods
+    
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions[0]!.count + (hasCancel ? 1 : 0) + (titleString != nil ? 1 : 0)
         let height = (CGFloat(numCells)) * ROW_HEIGHT + (hasCancel ? CANCEL_SEPARATOR_HEIGHT : 0)
@@ -190,18 +196,29 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         animateOut(0)
     }
     
-    public func animateOut(delay: NSTimeInterval) {
+    public func animateOut(delay: NSTimeInterval = 0) {
         if (modalPresentationStyle != .Popover) {
             containerView.snp_remakeConstraints { (make) in
-                make.top.equalTo(view.snp_bottom)
+                make.bottom.equalTo(view).offset(-20)
                 make.left.equalTo(view)
                 make.right.equalTo(view)
+                make.height.equalTo(heightForActionSheet())
             }
-            
-            UIView.animateWithDuration(0.2, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+
+            UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.view.layoutIfNeeded()
             }) { (finished) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.containerView.snp_remakeConstraints { (make) in
+                    make.top.equalTo(self.view.snp_bottom)
+                    make.left.equalTo(self.view)
+                    make.right.equalTo(self.view)
+                }
+
+                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                    self.view.layoutIfNeeded()
+                }) { (finished) in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
             }
         } else {
             dismissViewControllerAnimated(true, completion: nil)
@@ -209,18 +226,21 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     // Actions
+    
     public func addAction(action: WAction<ActionDataType>) {
         if (actions[0] == nil) {
             actions[0] = Array<WAction<ActionDataType>>()
         }
-        var addAction = action
-        addAction.index = actions[0]!.count
-        actions[0]?.append(addAction)
+        var actionCopy = action
+        actionCopy.index = actions[0]!.count
+        actions[0]?.append(actionCopy)
         
         setupUI(false)
         
         tableView?.reloadData()
     }
+    
+    // Action Selection Methods
     
     public func setSelectedAction(action: WAction<ActionDataType>) {
         setSelectedAction(action.index)
@@ -234,7 +254,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         let path = NSIndexPath(forRow: index, inSection: 0)
         let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
         
-        NSLog("setSelectedAction(" + String(index) + "), cell title: " + String(cell.actionInfo!.title!))
         cell.selectBar.hidden = false
         selectedIndex = index
     }
@@ -251,7 +270,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         let path = NSIndexPath(forRow: index, inSection: 0)
         let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
         
-        NSLog("toggleSelectedAction(" + String(index) + "), cell title: " + String(cell.actionInfo?.title))
         cell.selectBar.hidden = !cell.selectBar.hidden
         selectedIndex = cell.selectBar.hidden ? selectedIndex : index
     }
@@ -287,7 +305,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         return actionCells![indexPath.row]
     }
     
-    // Delegate Methods
+    // Table Delegate Methods
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actions[section]!.count
@@ -305,7 +323,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : WTableViewCell<ActionDataType>
         
-        cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as! WTableViewCell
+        cell = tableView.dequeueReusableCellWithIdentifier(ACTION_CELL) as! WTableViewCell
         
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
@@ -317,7 +335,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var header : UITableViewHeaderFooterView?
         if (section == 0) {
-            let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! WHeaderView
+            let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_VIEW) as! WHeaderView
             WHeader.title = titleString
             WHeader.contentView.backgroundColor = UIColor.whiteColor()
             header = WHeader
@@ -355,8 +373,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
 }
 
-// Table Cell
-
 public struct WAction<T> {
     public private(set) var data: T?
     public var title: String?
@@ -375,6 +391,14 @@ public struct WAction<T> {
         self.handler = handler
     }
 }
+
+// Keyline on top of actionSheet, separate class for theming
+
+public class WTopLine : UIView { }
+
+// Table Cell
+
+// Left bar for selection of actionSheet cells, separate class for theming
 
 public class WSelectBar : UIView { }
 
@@ -414,7 +438,6 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
             make.bottom.equalTo(self)
             make.width.equalTo(10)
         }
-        selectBar.backgroundColor = UIColor(hex: 0x0F7F40)
         selectBar.hidden = true
         
         if (!self.subviews.contains(separatorBar)) {
@@ -430,7 +453,6 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
         separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
         
         if let actionInfo = actionInfo {
-            //change
             if let image = actionInfo.image {
                 if iconImageView == nil {
                     iconImageView = UIImageView(image: image)
@@ -454,7 +476,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 }
                 
                 subtitleLabel?.text = subtitle
-                subtitleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 12)
+                subtitleLabel?.font = UIFont.systemFontOfSize(12)
                 if (actionInfo.actionStyle == ActionStyle.Destructive) {
                     subtitleLabel?.textColor = UIColor(hex: 0xEE2724)
                 } else {
@@ -482,13 +504,13 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 }
                 
                 titleLabel?.text = title
-                titleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 14)
+                titleLabel?.font = UIFont.systemFontOfSize(14)
                 if (actionInfo.actionStyle == ActionStyle.Cancel) {
-                    titleLabel?.textColor = UIColor(hex: 0x42AD48)
+                    titleLabel?.textColor = WThemeManager.sharedInstance.currentTheme.actionSheetCancelTextColor
                 } else if (actionInfo.actionStyle == ActionStyle.Destructive) {
                     titleLabel?.textColor = UIColor(hex: 0xEE2724)
                 } else {
-                    titleLabel?.textColor = UIColor(hex: 0x444444)
+                    titleLabel?.textColor = WThemeManager.sharedInstance.currentTheme.primaryTextColor
                 }
                 
                 titleLabel?.snp_removeConstraints()
@@ -521,18 +543,16 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
     }
     
     public override func setSelected(selected: Bool, animated: Bool) {
-        let oldSelectColor = selectBar.backgroundColor
         let oldSeparatorColor = separatorBar.backgroundColor
         super.setSelected(selected, animated: animated)
-        selectBar.backgroundColor = oldSelectColor
+        selectBar.backgroundColor = WThemeManager.sharedInstance.currentTheme.actionSheetSelectColor
         separatorBar.backgroundColor = oldSeparatorColor
     }
     
     public override func setHighlighted(highlighted: Bool, animated: Bool) {
-        let oldSelectColor = selectBar.backgroundColor
         let oldSeparatorColor = separatorBar.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
-        selectBar.backgroundColor = oldSelectColor
+        selectBar.backgroundColor = WThemeManager.sharedInstance.currentTheme.actionSheetSelectColor
         separatorBar.backgroundColor = oldSeparatorColor
     }
 }
@@ -577,7 +597,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
                 addSubview(titleLabel!)
             }
             titleLabel?.text = title
-            titleLabel?.font = UIFont(name: "Sinhala Sangam MN", size: 16)
+            titleLabel?.font = UIFont.systemFontOfSize(16)
             titleLabel?.textColor = UIColor(hex: 0x444444)
             
             titleLabel?.snp_remakeConstraints(closure: { (make) in

@@ -9,87 +9,57 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tabLayout1 = WPagingSelectorVC()
-        let pages1 = [
-            WPage(title: "Recent"),
-            WPage(title: "All Files")
-        ]
-        tabLayout1.pages = pages1
+        let tabLayout1 = WPagingSelectorControl(titles: ["Recent", "All Files"])
         
-        view.addSubview(tabLayout1.view);
-        tabLayout1.view.snp_makeConstraints { (make) in
+        view.addSubview(tabLayout1);
+        tabLayout1.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(view)
         }
         
-        let tabLayout2 = WPagingSelectorVC()
-        let pages2 = [
-            WPage(title: "Recent"),
-            WPage(title: "All Files"),
-            WPage(title: "Snapshots")
-        ]
-        tabLayout2.pages = pages2
+        tabLayout1.layoutSubviews()
+        tabLayout1.tabTextColor = UIColor.redColor()
         
-        view.addSubview(tabLayout2.view);
-        tabLayout2.view.snp_makeConstraints { (make) in
+        let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
+
+        view.addSubview(tabLayout2);
+        tabLayout2.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
-            make.top.equalTo(tabLayout1.view.snp_bottom)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
+            make.top.equalTo(tabLayout1.snp_bottom)
         }
 
-        let tabLayout3 = WPagingSelectorVC()
-        let pages3 = [
-            WPage(title: "Recent"),
-            WPage(title: "All Files"),
-            WPage(title: "Snapshots")
-        ]
-        tabLayout3.pages = pages3
-        tabLayout3.tabWidth = 90
+        let tabLayout3 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"], tabWidth: 90)
         
-        view.addSubview(tabLayout3.view);
-        tabLayout3.view.snp_makeConstraints { (make) in
+        view.addSubview(tabLayout3);
+        tabLayout3.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
-            make.top.equalTo(tabLayout2.view.snp_bottom)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
+            make.top.equalTo(tabLayout2.snp_bottom)
         }
         
-        let tabLayout4 = WPagingSelectorVC()
-        let pages4 = [
-            WPage(title: "Recent"),
-            WPage(title: "All Files"),
-            WPage(title: "Snapshots"),
-            WPage(title: "Cool stuff")
-        ]
-        tabLayout4.pages = pages4
+        let tabLayout4 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff"], tabWidth: 90)
         
-        view.addSubview(tabLayout4.view);
-        tabLayout4.view.snp_makeConstraints { (make) in
+        view.addSubview(tabLayout4);
+        tabLayout4.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
-            make.top.equalTo(tabLayout3.view.snp_bottom)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
+            make.top.equalTo(tabLayout3.snp_bottom)
         }
 
-        let tabLayout5 = WPagingSelectorVC()
-        let pages5 = [
-            WPage(title: "Recent"),
-            WPage(title: "All Files"),
-            WPage(title: "Snapshots"),
-            WPage(title: "Cool stuff"),
-            WPage(title: "Too many")
-        ]
-        tabLayout5.pages = pages5
+        let tabLayout5 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots", "Cool stuff", "Too many"], tabWidth: 90)
         
-        view.addSubview(tabLayout5.view);
-        tabLayout5.view.snp_makeConstraints { (make) in
+        view.addSubview(tabLayout5);
+        tabLayout5.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
-            make.top.equalTo(tabLayout4.view.snp_bottom)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
+            make.top.equalTo(tabLayout4.snp_bottom)
         }
         
         let button = UIButton(type: UIButtonType.RoundedRect)
