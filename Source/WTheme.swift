@@ -79,10 +79,11 @@ public class CustomTheme: WTheme {
     }
 }
 
-public class WThemeManager {
+public class WThemeManager: NSObject {
     public static let sharedInstance = WThemeManager()
 
-    private init() {
+    private override init() {
+        super.init()
         setTheme(currentTheme)
     }
 
