@@ -32,8 +32,8 @@ extension UIColor {
     }
 }
 
-public class WTheme {
-    public init(){}
+public class WTheme: NSObject {
+    public override init(){}
 
     // Accessible Colors
     public var primaryTextColor: UIColor = UIColor.blackColor()
@@ -108,6 +108,9 @@ public class WThemeManager: NSObject {
         UINavigationBar.appearance().barTintColor = theme.navigationBarColor
         UINavigationBar.appearance().tintColor = theme.navigationTintColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.navigationTextColor]
+
+        // Needed for views to not show behind the nav bar
+        UINavigationBar.appearance().translucent = false
     }
 
     private func customizeSideMenuVC(theme: WTheme) {}
