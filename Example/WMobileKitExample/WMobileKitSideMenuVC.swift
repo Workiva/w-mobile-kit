@@ -21,7 +21,7 @@ class WMobileKitNVC: UINavigationController {
         super.viewDidLoad()
 
         // NOTE: Not sure why this doesn't work with the theme in the app delegate
-        let theme: WTheme = GreenTheme()
-        navigationBar.barTintColor = theme.navigationColor
+        let theme: WTheme = WThemeManager.sharedInstance.currentTheme
+        navigationBar.barTintColor = theme.navigationBarColor
     }
 }
