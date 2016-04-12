@@ -24,6 +24,6 @@ function unit_test_failure_check {
     fi
 }
 
-./setup.sh
+#./setup.sh
 
-run_unit_tests
+#run_unit_tests
