@@ -10,6 +10,7 @@ class WMobileKitLeftMenuTVC: UITableViewController {
     lazy var baseContentVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc0") as! WMobileKitNVC // WSideMenuContentVC
     lazy var pagingControlExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc1") as! WMobileKitNVC // WMobileKitPagingControlExamplesVC
     lazy var pagingSelectorVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc3") as! WMobileKitNVC // WPagingSelectorVC
+    lazy var userLogoExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc5") as! WMobileKitNVC // WMobileKitUserLogoExamplesVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -43,6 +44,9 @@ class WMobileKitLeftMenuTVC: UITableViewController {
             }
 
             sideMenuController()?.changeMainViewController(pagingSelectorVC)
+            break
+        case 3:
+            sideMenuController()?.changeMainViewController(userLogoExamples)
             break
         default:
             break

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		55A106331CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106321CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift */; };
+		73A12C6A1CBEC2DE0092A3C2 /* WMobileKitUserLogoExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C691CBEC2DE0092A3C2 /* WMobileKitUserLogoExamplesVC.swift */; };
 		80385E53D084ED5C70EE82DE /* Pods_WMobileKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */; };
 		D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BB81CAB11B70065D106 /* AppDelegate.swift */; };
 		D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */; };
@@ -24,6 +25,7 @@
 		5249D1D1F78B1D0399095335 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		55A106321CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitLeftMenuTVC.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* WMobileKitExample_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMobileKitExample_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73A12C691CBEC2DE0092A3C2 /* WMobileKitUserLogoExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMobileKitUserLogoExamplesVC.swift; sourceTree = "<group>"; };
 		86294297CE93610FE8E6B978 /* Pods-WMobileKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample.release.xcconfig"; sourceTree = "<group>"; };
 		8BFF613940B2D6813A6FAFE6 /* Pods-WMobileKitExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,7 @@
 				D53D0BBF1CAB11B70065D106 /* WMobileKitSideMenuVC.swift */,
 				55A106321CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift */,
 				D5A4F6141CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift */,
+				73A12C691CBEC2DE0092A3C2 /* WMobileKitUserLogoExamplesVC.swift */,
 				D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */,
 			);
 			name = "WMobileKit Example";
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
+				73A12C6A1CBEC2DE0092A3C2 /* WMobileKitUserLogoExamplesVC.swift in Sources */,
 				D5A4F6151CB3305A0041BB98 /* WMobileKitPagingControlExamplesVC.swift in Sources */,
 				55A106331CAC8B5400495BBC /* WMobileKitLeftMenuTVC.swift in Sources */,
 				D53D0BC51CAB11B70065D106 /* WMobileKitSideMenuVC.swift in Sources */,
