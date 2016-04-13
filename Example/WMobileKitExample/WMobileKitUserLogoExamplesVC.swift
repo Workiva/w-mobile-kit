@@ -17,7 +17,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.width.equalTo(80)
             make.height.equalTo(80)
         }
-//        userLogo.setupUI()
+        userLogo.setupUI()
         
         let userLogo2 = WUserLogo(frame: CGRectZero)
         view.addSubview(userLogo2)
@@ -27,7 +27,10 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.width.equalTo(60)
             make.height.equalTo(60)
         }
-//        userLogo2.setupUI()
+        
+        view.layoutIfNeeded()
+        
+        userLogo2.setupUI()
         
         userLogo.initials = "JR"
         
