@@ -4,15 +4,15 @@ before_install:
   - bundle install --path ~/.gem
   - rbenv rehash
   - gem install ocunit2junit --user-install
+  - gem install xcov --user-install
 
 script:
   - ./smithy.sh
 
 artifacts:
-  - dist/**/*.ipa
-  - dist/**/*.tar.gz
-  # - coverage/**/*  ## We do not generate for iOS atm, and this is including doc viewers stuff.
+  - code_coverage/**/*
   - test_reports/*.xml
 
 test_reports:
   - test-reports/*.xml
+  - code_coverage/*.html
