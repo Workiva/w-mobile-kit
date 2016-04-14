@@ -9,7 +9,7 @@ function run_unit_tests() {
 
     # xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test | ocunit2junit
 xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test
-    unit_test_failure_check
+    unit_test_failure_check | ocunit2junit
 }
 
 function run_unit_tests2() {
@@ -18,7 +18,7 @@ function run_unit_tests2() {
     #"platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
 
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
-    "platform=iOS Simulator,name=$1,OS=8.4"
+    "platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
 
 #xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination "platform=iOS Simulator,name=iPad Retina,OS=8.4"
 
