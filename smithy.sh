@@ -48,6 +48,7 @@ open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B
 run_unit_tests2 "iPhone 5"
 
 echo "Generating code coverae report"
-xcov -w WMobileKit.xcworkspace -s WMobileKit -o code_coverage
+xcov -w WMobileKit.xcworkspace -s WMobileKit -o xcov
+zip -r -X code_coverage/coverage.zip xcov
 
 echo "Exiting with status: $?"

@@ -10,9 +10,9 @@ script:
   - ./smithy.sh
 
 artifacts:
-  - code_coverage/**/*
+  - code_coverage/*.zip
   - test_reports/*.xml
 
 test_reports:
   - test-reports/*.xml
-  - code_coverage/*.html
+#  - code_coverage/*.html
