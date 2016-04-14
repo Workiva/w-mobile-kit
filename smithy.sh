@@ -12,6 +12,14 @@ function run_unit_tests() {
     unit_test_failure_check
 }
 
+function run_unit_tests2() {
+    echo "Starting $1 unit tests."
+    xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
+    "platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
+
+    unit_test_failure_check
+}
+
 function unit_test_failure_check {
     # Due to piping the results into ocunit2junit, $? does not represent testing results
     if [ ${PIPESTATUS[0]} -ne 0 ]; then
@@ -27,8 +35,17 @@ function clean_previous_build {
 }
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
+#clean_previous_build
+#open -a Simulator --args -CurrentDeviceUDID 3B6E0ECB-4650-49E5-BBA3-9C4B86D9FA73; sleep 3
+#run_unit_tests
+
+# Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
-open -a Simulator --args -CurrentDeviceUDID 3B6E0ECB-4650-49E5-BBA3-9C4B86D9FA73; sleep 3
-run_unit_tests
+open -a Simulator --args -CurrentDeviceUDID 7BE2512A-6B44-4FFF-96A8-60BF0D7269A1; sleep 3
+run_unit_tests2 "iPad Retina"
+
+clean_previous_build
+open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
+run_unit_tests2 "iPhone 5"
 
 echo "Exiting with status: $?"
