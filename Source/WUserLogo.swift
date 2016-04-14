@@ -10,8 +10,18 @@ public class WUserLogo : UIView {
     
     public var circleLayer = CAShapeLayer()
     
-    public var initials : String? {
+    public var name : String? {
         didSet {
+            setupUI()
+        }
+    }
+    
+    public override var bounds : CGRect {
+        didSet {
+            if (!subviews.contains(initialsLabel)) {
+                commonInit()
+            }
+            
             setupUI()
         }
     }
@@ -28,6 +38,12 @@ public class WUserLogo : UIView {
         commonInit()
     }
     
+    public convenience init(_ name: String) {
+        self.init(frame: CGRectZero)
+        
+        self.name = name
+    }
+    
     public func commonInit() {
         addSubview(initialsLabel)
     }
@@ -40,22 +56,65 @@ public class WUserLogo : UIView {
             make.height.equalTo(self).multipliedBy(0.8)
         }
         
-        if let initials = initials {
-            initialsLabel.text = initials
+        if let name = name {
+            circleLayer.strokeColor = mapNameToColor(name).CGColor
+            
+            let attributedString = NSMutableAttributedString(string: getInitials(name))
+            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: 2))
+            
+            initialsLabel.attributedText = attributedString
             initialsLabel.textAlignment = NSTextAlignment.Center
-            initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2)
+            initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
             initialsLabel.adjustsFontSizeToFitWidth = true
-            initialsLabel.textColor = UIColor.blueColor()
+            initialsLabel.textColor = mapNameToColor(name)
+            
+        } else {
+            circleLayer.strokeColor = UIColor.blueColor().CGColor
         }
         
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
         
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.strokeColor = UIColor.blueColor().CGColor
-        circleLayer.lineWidth = 3.0
+        circleLayer.lineWidth = frame.size.width / 30
         
         layer.addSublayer(circleLayer)
+    }
+    
+    public func mapNameToColor(name: String) -> UIColor {
+        let final = abs((Double(name.hashValue) / M_LOG2E) % 5)
+        
+        switch final {
+        case 0:
+            return UIColor(hex: 0x42AD48)
+        case 1:
+            return UIColor(hex: 0xA71B19)
+        case 2:
+            return UIColor(hex: 0x026DCE)
+        case 3:
+            return UIColor(hex: 0x813296)
+        case 4:
+            return UIColor(hex: 0xF26C21)
+        default:
+            return UIColor.blackColor()
+        }
+    }
+    
+    public func getInitials(name: String) -> String {
+        let spaceRange = name.rangeOfString(" ")
+        
+        if let spaceRange = spaceRange {
+            let firstName = name.substringToIndex(spaceRange.startIndex)
+            let lastName = name.substringFromIndex(spaceRange.endIndex)
+            
+            let firstInitial = firstName.characters.first! as Character
+            let secondInitial = lastName.characters.first! as Character
+            
+            return String(firstInitial) + String(secondInitial)
+        }
+        
+        return name.characters.count > 0 ? String(name.characters.first) : ""
     }
 }
