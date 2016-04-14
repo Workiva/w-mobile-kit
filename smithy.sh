@@ -66,9 +66,9 @@ clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
 run_unit_tests2 "iPhone 5"
 
-echo "Trying other way"
-clean_previous_build
-open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
-run_unit_tests
+#echo "Trying other way"
+#clean_previous_build
+#open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
+#run_unit_tests
 
 echo "Exiting with status: $?"
