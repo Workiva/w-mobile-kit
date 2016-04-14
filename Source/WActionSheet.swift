@@ -27,7 +27,7 @@ public enum SheetSeparatorStyle {
 public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var darkView = UIView(frame: CGRectZero)
     private var containerView = UIView(frame: CGRectZero)
-    private var cancelView = UIButton(frame: CGRectZero)
+    private var cancelButton = UIButton(type: .System)
     private var tableView : UITableView?
     private var actions = [WAction<ActionDataType>]()
     
@@ -77,13 +77,14 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func commonInit() {
         view.addSubview(darkView)
         
-        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
+        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: #selector(WActionSheetVC.animateOut(_:)))
         darkView.addGestureRecognizer(darkViewRecognizer)
-        let cancelViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
-        cancelView.addGestureRecognizer(cancelViewRecognizer)
+        
+        cancelButton.addTarget(self, action: #selector(WActionSheetVC.animateOut(_:)), forControlEvents: .TouchUpInside)
+        cancelButton.tintColor = UIColor.lightGrayColor()
         
         view.addSubview(containerView)
-        view.addSubview(cancelView)
+        view.addSubview(cancelButton)
         
         tableView = UITableView(frame: CGRectZero)
         
@@ -138,19 +139,19 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
         
         if (hasCancel) {
-            cancelView.snp_remakeConstraints { (make) in
+            cancelButton.snp_remakeConstraints { (make) in
                 make.left.equalTo(containerView)
                 make.right.equalTo(containerView)
                 make.height.equalTo(ROW_HEIGHT)
                 make.bottom.equalTo(containerView)
             }
             
-            cancelView.setTitle("Cancel", forState: .Normal)
-            cancelView.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
-            cancelView.titleLabel?.font = UIFont.systemFontOfSize(18)
-            cancelView.backgroundColor = UIColor.whiteColor()
-            cancelView.layer.cornerRadius = 5
-            cancelView.clipsToBounds = true
+            cancelButton.setTitle("Cancel", forState: .Normal)
+            cancelButton.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
+            cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+            cancelButton.backgroundColor = UIColor.whiteColor()
+            cancelButton.layer.cornerRadius = 5
+            cancelButton.clipsToBounds = true
         }
         
         tableView?.snp_remakeConstraints { (make) in
@@ -158,7 +159,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             make.right.equalTo(containerView)
             make.top.equalTo(containerView)
             if (hasCancel) {
-                make.bottom.equalTo(cancelView.snp_top).offset(-CANCEL_SEPARATOR_HEIGHT)
+                make.bottom.equalTo(cancelButton.snp_top).offset(-CANCEL_SEPARATOR_HEIGHT)
             } else {
                 make.bottom.equalTo(containerView)
             }
@@ -350,7 +351,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
         cell.actionInfo = action
-        if (sheetSeparatorStyle == .All || (sheetSeparatorStyle == .DestructiveOnly && action?.actionStyle == ActionStyle.Destructive)) {
+        if ((sheetSeparatorStyle == .All && indexPath.row != 0) || (sheetSeparatorStyle == .DestructiveOnly && action?.actionStyle == ActionStyle.Destructive)) {
             cell.separatorBar.hidden = false
         } else {
             cell.separatorBar.hidden = true

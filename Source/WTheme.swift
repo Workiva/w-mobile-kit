@@ -113,7 +113,6 @@ public class WThemeManager: NSObject {
     
     private func customizeActionSheet(theme: WTheme) {
         WSelectBar.appearance().backgroundColor = theme.actionSheetSelectColor
-        WTopLine.appearance().backgroundColor = theme.actionSheetTopLineColor
     }
 
     private func customizeNavigationBar(theme: WTheme) {
