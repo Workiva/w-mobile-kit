@@ -23,7 +23,7 @@ function clean_previous_build {
     echo "Cleaning up from previous build."
     find . -name "*.gcda" -print0 | xargs -0 rm
     killall "WMobileKit"; sleep 2
-    cd -; osascript reset-sim.applescript; sleep 5; cd -; killall 'Simulator'; sleep 5
+    osascript reset-sim.applescript; sleep 5; killall 'Simulator'; sleep 5
 }
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
