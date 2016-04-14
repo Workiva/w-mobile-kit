@@ -18,7 +18,7 @@ function run_unit_tests2() {
     #"platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
 
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
-    "platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
+    "platform=iOS Simulator,name=$1,OS=8.4" -enableCodeCoverage YES | ocunit2junit
 
 #xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination "platform=iOS Simulator,name=iPad Retina,OS=8.4"
 
