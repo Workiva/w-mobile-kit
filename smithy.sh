@@ -48,6 +48,10 @@ function clean_previous_build {
 
 ./setup.sh
 
+open "WMobileKit.xcworkspace"
+sleep 5
+killall Xcode
+
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 #clean_previous_build
 #open -a Simulator --args -CurrentDeviceUDID 3B6E0ECB-4650-49E5-BBA3-9C4B86D9FA73; sleep 3
@@ -56,10 +60,7 @@ function clean_previous_build {
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 7BE2512A-6B44-4FFF-96A8-60BF0D7269A1; sleep 3
-echo "Simulator open"
-
 run_unit_tests2 "iPad Retina"
-echo "Unit tests done"
 
 clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
