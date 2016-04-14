@@ -39,7 +39,7 @@ public class WScrollView : UIScrollView {
     }
     
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if (!self.dragging) {
+        if (!dragging) {
             nextResponder()?.touchesEnded(touches, withEvent: event)
         } else {
             super.touchesEnded(touches, withEvent: event)
@@ -101,10 +101,10 @@ public class WTabView : UIView {
 
 public class WPagingSelectorControl : UIControl {
     // Accessible properties
-    public var tabTextColor:UIColor = UIColor.grayColor() {
+    public var tabTextColor: UIColor = UIColor.grayColor() {
         didSet {
             for i in 0..<tabViews.count {
-                let tab:WTabView = tabViews[i]
+                let tab: WTabView = tabViews[i]
                 tab.label.textColor = tabTextColor
             }
         }
@@ -121,7 +121,7 @@ public class WPagingSelectorControl : UIControl {
     private var selectionIndicatorView = WSelectionIndicatorView()
     private var selectedContainer: WTabView?
     private var tabViews = Array<WTabView>()
-    private weak var delegate:WPagingSelectorVCDelegate?
+    private weak var delegate: WPagingSelectorVCDelegate?
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -309,7 +309,7 @@ public class WPagingSelectorControl : UIControl {
 
         selectedContainer = newSelectedContainer
         
-        self.scrollView.scrollRectToVisible(self.selectedContainer!.frame, animated: true)
+        scrollView.scrollRectToVisible(selectedContainer!.frame, animated: true)
 
         selectionIndicatorView.moveToSelection(selectedContainer!, numberOfSections: pages.count, contentView: contentView)
 
@@ -323,8 +323,8 @@ public class WPagingSelectorControl : UIControl {
 }
 
 public struct WPage {
-    public var title:String = ""
-    public var viewController:WSideMenuContentVC?
+    public var title: String = ""
+    public var viewController: WSideMenuContentVC?
 
     public init(title: String) {
         self.init(title: title, viewController: nil)
@@ -336,9 +336,9 @@ public struct WPage {
     }
 }
 
-public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
-    public private(set) var pagingSelectorControl:WPagingSelectorControl?
-    public var pagingControlHeight:Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
+public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
+    public private(set) var pagingSelectorControl: WPagingSelectorControl?
+    public var pagingControlHeight: Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
             if (pagingSelectorControl != nil) {
                 pagingSelectorControl!.removeFromSuperview()
@@ -348,13 +348,13 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         }
     }
 
-    public var tabTextColor:UIColor = UIColor.blackColor() {
+    public var tabTextColor: UIColor = UIColor.blackColor() {
         didSet {
             pagingSelectorControl?.tabTextColor = tabTextColor
         }
     }
 
-    private var mainViewController : UIViewController?
+    private var mainViewController: UIViewController?
     private var mainContainerView = UIView(frame: CGRectZero)
     private var currentPageIndex = 0
     
@@ -368,7 +368,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         }
     }
 
-    public var tabWidth:Int? {
+    public var tabWidth: Int? {
         didSet {
             if (pagingSelectorControl != nil) {
                 pagingSelectorControl!.removeFromSuperview()
@@ -400,9 +400,9 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
 
     private func setupUI() {
         if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
-            pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: tabWidth)
+            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth)
         } else {
-            pagingSelectorControl = WPagingSelectorControl(pages:pages, tabWidth: DEFAULT_TAB_WIDTH)
+            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: DEFAULT_TAB_WIDTH)
         }
 
         pagingSelectorControl?.delegate = self

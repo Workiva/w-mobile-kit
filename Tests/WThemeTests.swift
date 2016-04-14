@@ -12,7 +12,6 @@ class WThemeSpec: QuickSpec {
             beforeEach({
                 // Init the theme manager
                 WThemeManager.sharedInstance
-
             })
 
             afterEach({
