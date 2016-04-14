@@ -23,6 +23,9 @@ public struct WSideMenuOptions {
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
     public var statusBarStyle: UIStatusBarStyle = .LightContent
+    public var drawerBorderColor = UIColor.redColor()
+    public var drawerIcon: UIImage?
+    public var backIcon: UIImage?
 }
 
 private enum WSideMenuState {
@@ -40,6 +43,7 @@ public class WSideMenuVC: UIViewController {
     // Internal properties
     private var mainContainerView = UIView(frame: CGRect.zero)
     private var leftSideMenuContainerView = UIView(frame: CGRect.zero)
+    private var leftSideMenuBorderView = UIView()
     private var mainContainerTapRecognizer: UITapGestureRecognizer?
     private var menuState: WSideMenuState = .Closed
     private var statusBarHidden = false
@@ -94,12 +98,21 @@ public class WSideMenuVC: UIViewController {
                                                                 action: #selector(WSideMenuVC.mainContainerViewWasTapped(_:)))
             mainContainerTapRecognizer?.enabled = false
             mainContainerView.addGestureRecognizer(mainContainerTapRecognizer!)
-            addViewControllerToContainer(mainContainerView, viewController: mainViewController)            
+
+            addViewControllerToContainer(mainContainerView, viewController: mainViewController)
+            
+            if let mainViewController = mainViewController as? WSideMenuContentVC {
+                mainViewController.addWSideMenuButtons()
+            } else if let mainViewController = mainViewController as? UINavigationController {
+                if let rootVC = mainViewController.viewControllers[0] as? WSideMenuContentVC {
+                    rootVC.addWSideMenuButtons()
+                }
+            }
         }
 
         if let leftSideMenuViewController = leftSideMenuViewController {
             if options!.useBlur {
-                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight)) as UIVisualEffectView
                 leftSideMenuContainerView.addSubview(blurView)
                 blurView.snp_makeConstraints(closure: { (make) in
                     make.left.equalTo(leftSideMenuContainerView)
@@ -107,6 +120,16 @@ public class WSideMenuVC: UIViewController {
                     make.right.equalTo(leftSideMenuContainerView)
                     make.bottom.equalTo(leftSideMenuContainerView)
                 })
+                
+                leftSideMenuBorderView.backgroundColor = options!.drawerBorderColor
+                leftSideMenuContainerView.addSubview(leftSideMenuBorderView)
+                
+                leftSideMenuBorderView.snp_makeConstraints() { (make) in
+                    make.right.equalTo(leftSideMenuContainerView)
+                    make.bottom.equalTo(leftSideMenuContainerView)
+                    make.top.equalTo(leftSideMenuContainerView)
+                    make.width.equalTo(1)
+                }
 
                 // Add leftSideMenuVc as a sub view of the blurView.contentView
                 // The blur only blurs views under it and nothing in the contentView
@@ -114,6 +137,10 @@ public class WSideMenuVC: UIViewController {
             } else {
                 addViewControllerToContainer(leftSideMenuContainerView, viewController: leftSideMenuViewController)
             }
+            
+            leftSideMenuContainerView.layer.masksToBounds = false
+            leftSideMenuContainerView.layer.shadowOffset = CGSizeMake(5, 0);
+            leftSideMenuContainerView.layer.shadowRadius = 3
         }
     }
     
@@ -169,6 +196,7 @@ public class WSideMenuVC: UIViewController {
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
+                self.leftSideMenuContainerView.layer.shadowOpacity = 0.3
             },
             completion: { finished in
                 self.menuState = .Open
@@ -194,6 +222,7 @@ public class WSideMenuVC: UIViewController {
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
+                self.leftSideMenuContainerView.layer.shadowOpacity = 0
             },
             completion: { finished in
                 if self.options!.showAboveStatusBar {
@@ -220,16 +249,33 @@ public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
     public func addWSideMenuButtons() {
         // Adds a button to open the side menu
         // If this VC is not the first rootVc for its nav controller, add a back button as well
-        let sideMenuButtonItem = UIBarButtonItem(title: "Toggle",
+        var sideMenuButtonItem: UIBarButtonItem = UIBarButtonItem()
+        if let menuIcon = sideMenuController()?.options?.drawerIcon {
+            sideMenuButtonItem = UIBarButtonItem(image: menuIcon,
                                                  style: .Plain,
-                                                 target: self,
-                                                 action: #selector(WSideMenuContentVC.toggleSideMenu))
+                                                target: self,
+                                                action: #selector(WSideMenuContentVC.toggleSideMenu))
+        } else {
+            sideMenuButtonItem = UIBarButtonItem(title: "Toggle",
+                                                 style: .Plain,
+                                                target: self,
+                                                action: #selector(WSideMenuContentVC.toggleSideMenu))
+        }
 
         if (navigationController?.viewControllers.count > 1) {
-            let backMenuButtonItem = UIBarButtonItem(title: "Back",
+            var backMenuButtonItem = UIBarButtonItem()
+            
+            if let backIcon = sideMenuController()?.options?.backIcon {
+                backMenuButtonItem = UIBarButtonItem(image: backIcon,
                                                      style: .Plain,
-                                                     target: self,
-                action:#selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
+                                                    target: self,
+                                                    action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
+            } else {
+                backMenuButtonItem = UIBarButtonItem(title: "Back",
+                                                     style: .Plain,
+                                                    target: self,
+                                                    action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
+            }
             
             navigationItem.leftBarButtonItems = [backMenuButtonItem, sideMenuButtonItem]
         } else {
