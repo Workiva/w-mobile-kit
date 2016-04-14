@@ -7,15 +7,18 @@ PATH="$(cd ~/; pwd)/.rbenv/shims:$(cd ~/; pwd)/.rbenv/bin:$PATH"
 function run_unit_tests() {
     echo "Starting unit tests."
 
-    xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test | ocunit2junit
-
+    # xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test | ocunit2junit
+xcodebuild -workspace WMobileKit.xcworkspace -scheme WMobileKit -enableCodeCoverage YES -sdk iphonesimulator test
     unit_test_failure_check
 }
 
 function run_unit_tests2() {
     echo "Starting $1 unit tests."
+    #xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
+    #"platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
+
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
-    "platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
+    "platform=iOS Simulator,name=$1,OS=8.4"
 
     unit_test_failure_check
 }
@@ -49,5 +52,10 @@ run_unit_tests2 "iPad Retina"
 clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
 run_unit_tests2 "iPhone 5"
+
+echo "Trying other way"
+clean_previous_build
+open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
+run_unit_tests
 
 echo "Exiting with status: $?"
