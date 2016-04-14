@@ -19,4 +19,16 @@ function unit_test_failure_check {
     fi
 }
 
+function clean_previous_build {
+    echo "Cleaning up from previous build."
+    find . -name "*.gcda" -print0 | xargs -0 rm
+    killall "WMobileKit"; sleep 2
+    cd -; osascript reset-sim.applescript; sleep 5; cd -; killall 'Simulator'; sleep 5
+}
+
+# Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
+clean_previous_build
+open -a Simulator --args -CurrentDeviceUDID 3B6E0ECB-4650-49E5-BBA3-9C4B86D9FA73; sleep 3
 run_unit_tests
+
+echo "Exiting with status: $?"
