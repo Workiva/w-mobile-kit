@@ -8,47 +8,39 @@ import SnapKit
 
 let CANCEL_SEPARATOR_HEIGHT:CGFloat = 6.0
 let ROW_HEIGHT:CGFloat = 50.0
-let POPOVER_WIDTH:CGFloat = 450.0
+let HEADER_HEIGHT:CGFloat = 40.0
+let SHEET_WIDTH_IPAD:CGFloat = 450.0
 
 let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
 
 public enum ActionStyle {
-    case Cancel
     case Normal
     case Destructive
+}
+
+public enum SheetSeparatorStyle {
+    case All
+    case DestructiveOnly
 }
 
 public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var darkView = UIView(frame: CGRectZero)
     private var containerView = UIView(frame: CGRectZero)
-    private var topLine = WTopLine(frame: CGRectZero)
+    private var cancelView = UIButton(frame: CGRectZero)
     private var tableView : UITableView?
-    private var actions = [Int: Array<WAction<ActionDataType>>]()
+    private var actions = [WAction<ActionDataType>]()
     
     public var titleString: String?
     public var selectedIndex : Int?
     public var dismissOnAction = true
-    
-    public var hasCancel = false {
+    public var sheetSeparatorStyle = SheetSeparatorStyle.DestructiveOnly {
         didSet {
-            if (hasCancel) {
-                if (actions[1] == nil) {
-                    actions[1] = [WAction<ActionDataType>]()
-                }
-                
-                let cancelAction = WAction<ActionDataType>(title: "Cancel", style: ActionStyle.Cancel)
-                actions[1]?.insert(cancelAction, atIndex: 0)
-            }
+            tableView?.reloadData()
         }
     }
     
-    public override var modalPresentationStyle: UIModalPresentationStyle {
-        didSet {
-            commonInit()
-            preferredContentSize = CGSizeMake(POPOVER_WIDTH, heightForActionSheet())
-        }
-    }
+    public var hasCancel = false
     
     // Initialization
     
@@ -64,11 +56,12 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         super.viewDidLoad()
         
         if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-            modalPresentationStyle = .Popover
+            modalPresentationStyle = .OverCurrentContext
         } else {
             modalPresentationStyle = .OverFullScreen
-            modalTransitionStyle = .CrossDissolve
         }
+        
+        modalTransitionStyle = .CrossDissolve
         
         providesPresentationContextTransitionStyle = true
         
@@ -82,16 +75,15 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func commonInit() {
-        if modalPresentationStyle != .Popover {
-            view.addSubview(darkView)
-        } else {
-            darkView.removeFromSuperview()
-        }
+        view.addSubview(darkView)
         
-        let recognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
-        darkView.addGestureRecognizer(recognizer)
+        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
+        darkView.addGestureRecognizer(darkViewRecognizer)
+        let cancelViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
+        cancelView.addGestureRecognizer(cancelViewRecognizer)
         
         view.addSubview(containerView)
+        view.addSubview(cancelView)
         
         tableView = UITableView(frame: CGRectZero)
         
@@ -109,59 +101,85 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         
         containerView.addSubview(tableView!)
         
-        containerView.addSubview(topLine)
-        containerView.layer.opacity = 0.8
-        
         setupUI(false)
     }
     
     public func setupUI(animated: Bool) {
         let height = heightForActionSheet()
-        preferredContentSize = CGSizeMake(POPOVER_WIDTH, height)
+        preferredContentSize = CGSizeMake(SHEET_WIDTH_IPAD, height)
         
         containerView.snp_remakeConstraints { (make) in
             if (animated) {
                 make.top.equalTo(view.snp_bottom)
             } else {
-                make.bottom.equalTo(view)
+                if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                    make.centerY.equalTo(view)
+                } else {
+                    make.bottom.equalTo(view).offset(-10)
+                }
             }
-            make.left.equalTo(view)
-            make.right.equalTo(view)
+            if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                make.width.equalTo(SHEET_WIDTH_IPAD)
+                make.centerX.equalTo(view)
+            } else {
+                make.left.equalTo(view).offset(10)
+                make.right.equalTo(view).offset(-10)
+            }
             make.height.equalTo(height)
         }
-        containerView.backgroundColor = UIColor.whiteColor()
+        containerView.backgroundColor = UIColor.clearColor()
         
-        if modalPresentationStyle != .Popover {
-            darkView.snp_remakeConstraints { (make) in
-                make.left.equalTo(view)
-                make.right.equalTo(view)
-                make.top.equalTo(view)
-                make.bottom.equalTo(containerView.snp_top)
+        darkView.snp_remakeConstraints { (make) in
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.top.equalTo(view)
+            make.bottom.equalTo(view)
+        }
+        darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        
+        if (hasCancel) {
+            cancelView.snp_remakeConstraints { (make) in
+                make.left.equalTo(containerView)
+                make.right.equalTo(containerView)
+                make.height.equalTo(ROW_HEIGHT)
+                make.bottom.equalTo(containerView)
             }
-            darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+            
+            cancelView.setTitle("Cancel", forState: .Normal)
+            cancelView.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
+            cancelView.titleLabel?.font = UIFont.systemFontOfSize(18)
+            cancelView.backgroundColor = UIColor.whiteColor()
+            cancelView.layer.cornerRadius = 5
+            cancelView.clipsToBounds = true
         }
         
         tableView?.snp_remakeConstraints { (make) in
             make.left.equalTo(containerView)
             make.right.equalTo(containerView)
             make.top.equalTo(containerView)
-            make.bottom.equalTo(containerView)
+            if (hasCancel) {
+                make.bottom.equalTo(cancelView.snp_top).offset(-CANCEL_SEPARATOR_HEIGHT)
+            } else {
+                make.bottom.equalTo(containerView)
+            }
         }
         
-        topLine.snp_remakeConstraints { (make) in
-            make.left.equalTo(containerView)
-            make.right.equalTo(containerView)
-            make.top.equalTo(containerView)
-            make.height.equalTo(2)
-        }
+        tableView?.layer.cornerRadius = 5
+        tableView?.clipsToBounds = true
         
         view.layoutIfNeeded()
         
         if (animated) {
             containerView.snp_remakeConstraints { (make) in
-                make.bottom.equalTo(view)
-                make.left.equalTo(view)
-                make.right.equalTo(view)
+                if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                    make.centerY.equalTo(view)
+                    make.centerX.equalTo(view)
+                    make.width.equalTo(SHEET_WIDTH_IPAD)
+                } else {
+                    make.bottom.equalTo(view).offset(-10)
+                    make.left.equalTo(view).offset(10)
+                    make.right.equalTo(view).offset(-10)
+                }
                 make.height.equalTo(height)
             }
             
@@ -179,17 +197,13 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     // Helper Methods
     
     public func heightForActionSheet() -> CGFloat {
-        let numCells = actions[0]!.count + (hasCancel ? 1 : 0) + (titleString != nil ? 1 : 0)
-        let height = (CGFloat(numCells)) * ROW_HEIGHT + (hasCancel ? CANCEL_SEPARATOR_HEIGHT : 0)
+        let numCells = actions.count
+        let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + ROW_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
         return height
     }
     
     public func animateIn() {
-        if (modalPresentationStyle != .Popover) {
-            setupUI(true);
-        } else {
-            setupUI(false);
-        }
+        setupUI(true);
     }
     
     public func animateOut() {
@@ -197,43 +211,48 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func animateOut(delay: NSTimeInterval = 0) {
-        if (modalPresentationStyle != .Popover) {
-            containerView.snp_remakeConstraints { (make) in
+        containerView.snp_remakeConstraints { (make) in
+            if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                make.centerX.equalTo(view)
+                make.centerY.equalTo(view).offset(-10)
+                make.width.equalTo(SHEET_WIDTH_IPAD)
+            } else {
                 make.bottom.equalTo(view).offset(-20)
-                make.left.equalTo(view)
-                make.right.equalTo(view)
-                make.height.equalTo(heightForActionSheet())
+                make.left.equalTo(view).offset(10)
+                make.right.equalTo(view).offset(-10)
+            }
+            make.height.equalTo(heightForActionSheet())
+        }
+
+        UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            self.containerView.snp_remakeConstraints { (make) in
+                if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                    make.width.equalTo(SHEET_WIDTH_IPAD)
+                    make.centerX.equalTo(self.view)
+                } else {
+                    make.left.equalTo(self.view).offset(10)
+                    make.right.equalTo(self.view).offset(-10)
+                }
+                make.height.equalTo(self.heightForActionSheet())
+                make.top.equalTo(self.view.snp_bottom)
             }
 
-            UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.view.layoutIfNeeded()
             }) { (finished) in
-                self.containerView.snp_remakeConstraints { (make) in
-                    make.top.equalTo(self.view.snp_bottom)
-                    make.left.equalTo(self.view)
-                    make.right.equalTo(self.view)
-                }
-
-                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-                    self.view.layoutIfNeeded()
-                }) { (finished) in
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
-        } else {
-            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     // Actions
     
     public func addAction(action: WAction<ActionDataType>) {
-        if (actions[0] == nil) {
-            actions[0] = Array<WAction<ActionDataType>>()
-        }
         var actionCopy = action
-        actionCopy.index = actions[0]!.count
-        actions[0]?.append(actionCopy)
+        actionCopy.index = actions.count
+        actions.append(actionCopy)
         
         setupUI(false)
         
@@ -247,14 +266,14 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func setSelectedAction(index: Int) {
-        if (index >= actions[0]!.count || index < 0) {
+        if (index >= actions.count || index < 0) {
             return
         }
         
         let path = NSIndexPath(forRow: index, inSection: 0)
         let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
         
-        cell.selectBar.hidden = false
+        cell.setSelectedAction(true)
         selectedIndex = index
     }
     
@@ -263,19 +282,19 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func toggleSelectedAction(index: Int) {
-        if (index >= actions[0]!.count || index < 0) {
+        if (index >= actions.count || index < 0) {
             return
         }
         
         let path = NSIndexPath(forRow: index, inSection: 0)
         let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
         
-        cell.selectBar.hidden = !cell.selectBar.hidden
+        cell.setSelectedAction(!cell.isSelectedAction)
         selectedIndex = cell.selectBar.hidden ? selectedIndex : index
     }
     
     public func deselectAllActions() {
-        for action in actions[0]! {
+        for action in actions {
             deselectAction(action.index)
         }
     }
@@ -283,7 +302,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func deselectAction(index: Int? = nil) {
         var path : NSIndexPath?
         if let index = index {
-            if (index > actions[0]?.count) {
+            if (index > actions.count) {
                 return
             }
             path = NSIndexPath(forRow: index, inSection: 0)
@@ -295,24 +314,27 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         }
         
         let cell = tableView?.cellForRowAtIndexPath(path!) as! WTableViewCell<ActionDataType>
-        cell.selectBar.hidden = true
+        cell.setSelectedAction(false)
     }
     
     // Table Support Methods
     
     public func actionForIndexPath(indexPath: NSIndexPath) -> WAction<ActionDataType>? {
-        let actionCells = actions[indexPath.section]
-        return actionCells![indexPath.row]
+        return actions[indexPath.row]
     }
     
     // Table Delegate Methods
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actions[section]!.count
+        if (section == 0) {
+            return actions.count
+        } else {
+            return 0
+        }
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1 + (hasCancel ? 1 : 0)
+        return 1
     }
     
     
@@ -328,6 +350,15 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
         cell.actionInfo = action
+        if (sheetSeparatorStyle == .All || (sheetSeparatorStyle == .DestructiveOnly && action?.actionStyle == ActionStyle.Destructive)) {
+            cell.separatorBar.hidden = false
+        } else {
+            cell.separatorBar.hidden = true
+        }
+        
+        if (indexPath.row == selectedIndex) {
+            cell.setSelectedAction(true)
+        }
         
         return cell
     }
@@ -337,7 +368,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         if (section == 0) {
             let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_VIEW) as! WHeaderView
             WHeader.title = titleString
-            WHeader.contentView.backgroundColor = UIColor.whiteColor()
+            WHeader.contentView.backgroundColor = UIColor(hex: 0xF3F3F3)
             header = WHeader
         } else {
             header = UITableViewHeaderFooterView(frame: CGRectZero)
@@ -347,11 +378,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) {
-            return ROW_HEIGHT
-        } else {
-            return CANCEL_SEPARATOR_HEIGHT
-        }
+        return HEADER_HEIGHT
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -364,9 +391,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             if (dismissOnAction) {
                 animateOut(0.1)
             }
-        } else {
-            // selected cancel
-            animateOut(0.1)
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -410,10 +434,11 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
     }
     
     private var selectBar = WSelectBar(frame: CGRectZero)
-    private var separatorBar = UIView(frame: CGRectZero)
     private var subtitleLabel : UILabel?
     private var titleLabel : UILabel?
     private var iconImageView : UIImageView?
+    public private(set) var separatorBar = UIView(frame: CGRectZero)
+    public private(set) var isSelectedAction = false
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -436,7 +461,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
             make.left.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
-            make.width.equalTo(10)
+            make.width.equalTo(3)
         }
         selectBar.hidden = true
         
@@ -461,7 +486,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 
                 iconImageView?.snp_removeConstraints()
                 iconImageView?.snp_makeConstraints(closure: { (make) in
-                    make.left.equalTo(self).offset(18)
+                    make.left.equalTo(self).offset(14)
                     make.centerY.equalTo(self)
                     make.width.equalTo(18)
                     make.height.equalTo(18)
@@ -477,23 +502,19 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 
                 subtitleLabel?.text = subtitle
                 subtitleLabel?.font = UIFont.systemFontOfSize(12)
-                if (actionInfo.actionStyle == ActionStyle.Destructive) {
-                    subtitleLabel?.textColor = UIColor(hex: 0xEE2724)
-                } else {
-                    subtitleLabel?.textColor = UIColor(hex: 0x707070)
-                }
+                subtitleLabel?.textColor = UIColor(hex: 0x707070)
                 
                 subtitleLabel?.snp_removeConstraints()
                 
                 subtitleLabel?.snp_makeConstraints(closure: { (make) in
                     if actionInfo.image != nil {
-                        make.left.equalTo(iconImageView!.snp_right).offset(18)
+                        make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
                         make.left.equalTo(self).offset(22)
                     }
                     make.right.equalTo(self)
                     make.height.equalTo(14)
-                    make.bottom.equalTo(self).offset(-12)
+                    make.bottom.equalTo(self).offset(-8)
                 })
             }
             
@@ -504,34 +525,24 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 }
                 
                 titleLabel?.text = title
-                titleLabel?.font = UIFont.systemFontOfSize(14)
-                if (actionInfo.actionStyle == ActionStyle.Cancel) {
-                    titleLabel?.textColor = WThemeManager.sharedInstance.currentTheme.actionSheetCancelTextColor
-                } else if (actionInfo.actionStyle == ActionStyle.Destructive) {
-                    titleLabel?.textColor = UIColor(hex: 0xEE2724)
-                } else {
-                    titleLabel?.textColor = WThemeManager.sharedInstance.currentTheme.primaryTextColor
-                }
+                titleLabel?.font = UIFont.systemFontOfSize(18)
+                titleLabel?.textColor = UIColor(hex: 0x444444)
                 
                 titleLabel?.snp_removeConstraints()
                 
                 titleLabel?.snp_makeConstraints(closure: { (make) in
-                    make.height.equalTo(16)
+                    make.height.equalTo(20)
                     
-                    if (actionInfo.actionStyle == ActionStyle.Cancel) {
-                        make.centerX.equalTo(self)
+                    if actionInfo.image != nil {
+                        make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
-                        if actionInfo.image != nil {
-                            make.left.equalTo(iconImageView!.snp_right).offset(18)
-                        } else {
-                            make.left.equalTo(self).offset(22)
-                        }
-                        
-                        make.right.equalTo(self)
+                        make.left.equalTo(self).offset(22)
                     }
                     
+                    make.right.equalTo(self)
+                    
                     if actionInfo.subtitle != nil {
-                        make.top.equalTo(self).offset(12)
+                        make.top.equalTo(self).offset(8)
                     } else {
                         make.centerY.equalTo(self)
                     }
@@ -554,6 +565,30 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         selectBar.backgroundColor = WThemeManager.sharedInstance.currentTheme.actionSheetSelectColor
         separatorBar.backgroundColor = oldSeparatorColor
+    }
+    
+    public func setSelectedAction(selected: Bool) {
+        if (selected) {
+            selectBar.hidden = false
+            
+            if let titleLabel = titleLabel {
+                titleLabel.font = UIFont.boldSystemFontOfSize(titleLabel.font.pointSize)
+            }
+            if let subtitleLabel = subtitleLabel {
+                subtitleLabel.font = UIFont.boldSystemFontOfSize(subtitleLabel.font.pointSize)
+            }
+        } else {
+            selectBar.hidden = true
+            
+            if let titleLabel = titleLabel {
+                titleLabel.font = UIFont.systemFontOfSize(titleLabel.font.pointSize)
+            }
+            if let subtitleLabel = subtitleLabel {
+                subtitleLabel.font = UIFont.systemFontOfSize(subtitleLabel.font.pointSize)
+            }
+        }
+        
+        isSelectedAction = selected
     }
 }
 
@@ -585,7 +620,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
         separatorBar.snp_removeConstraints()
         separatorBar.snp_makeConstraints { (make) in
             make.left.equalTo(self)
-            make.top.equalTo(self)
+            make.bottom.equalTo(self)
             make.right.equalTo(self)
             make.height.equalTo(0.5)
         }
@@ -596,12 +631,14 @@ public class WHeaderView : UITableViewHeaderFooterView {
                 titleLabel = UILabel(frame: CGRectZero)
                 addSubview(titleLabel!)
             }
+            titleLabel?.textAlignment = .Center
             titleLabel?.text = title
-            titleLabel?.font = UIFont.systemFontOfSize(16)
+            titleLabel?.font = UIFont.systemFontOfSize(14)
             titleLabel?.textColor = UIColor(hex: 0x444444)
             
             titleLabel?.snp_remakeConstraints(closure: { (make) in
-                make.left.equalTo(self).offset(18)
+                make.left.equalTo(self)
+                make.right.equalTo(self)
                 make.height.equalTo(18)
                 make.centerY.equalTo(self)
             })

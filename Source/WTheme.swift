@@ -79,7 +79,6 @@ public class CustomTheme: WTheme {
         pagingSelectorControlColor = UIColor.whiteColor()
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
         
-        actionSheetSelectColor = UIColor(hex: 0x0F7F40)
         actionSheetTopLineColor = UIColor(hex: 0x42AD48)
         actionSheetCancelTextColor = UIColor(hex: 0x42AD48)
 

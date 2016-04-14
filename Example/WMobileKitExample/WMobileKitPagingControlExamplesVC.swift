@@ -167,7 +167,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
             NSLog("We have tapped " + action.title!)
             //            actionSheet.toggleSelectedAction(action)
         }))
-        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Normal, handler: { action in
+        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Destructive, handler: { action in
             NSLog("We have tapped " + action.title!)
             //            actionSheet.toggleSelectedAction(action)
         }))
@@ -184,31 +184,27 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         
         let actionSheetSort = WActionSheetVC<String>()
         
-        actionSheetSort.titleString = "Sort Files"
-        actionSheetSort.addAction(WAction(title: "Last Opened", handler: { action in
+        actionSheetSort.titleString = "Sort Tasks"
+        actionSheetSort.addAction(WAction(title: "Status", handler: { action in
             NSLog("We have tapped " + action.title!)
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Last Modified", handler: { action in
+        actionSheetSort.addAction(WAction(title: "File", handler: { action in
             NSLog("We have tapped " + action.title!)
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Create Date", handler: { action in
-            NSLog("We have tapped " + action.title!)
-            actionSheetSort.deselectAction()
-            actionSheetSort.setSelectedAction(action)
-        }))
-        actionSheetSort.addAction(WAction(title: "Name", handler: { action in
+        actionSheetSort.addAction(WAction(title: "Assigner", handler: { action in
             NSLog("We have tapped " + action.title!)
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
         
-        actionSheetSort.hasCancel = true
+        actionSheetSort.hasCancel = false
         actionSheetSort.dismissOnAction = true
         actionSheetSort.setSelectedAction(1)
+        actionSheetSort.sheetSeparatorStyle = .All
         actionSheetSort.popoverPresentationController?.sourceView = sender
         
         presentViewController(actionSheetSort, animated: true, completion: nil)
