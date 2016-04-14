@@ -19,7 +19,6 @@ public struct WSideMenuOptions {
     // Default WSideMenu options, change before calling super.viewDidLoad()
     public var menuWidth = 300.0
     public var useBlur = true
-    // NOTE: Only works with solid color status bars with translucent = false
     public var showAboveStatusBar = true
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
@@ -43,7 +42,6 @@ public class WSideMenuVC: UIViewController {
     private var leftSideMenuContainerView = UIView(frame: CGRect.zero)
     private var mainContainerTapRecognizer: UITapGestureRecognizer?
     private var menuState: WSideMenuState = .Closed
-    private var statusBarView = UIView()
     private var statusBarHidden = false
 
     public required init?(coder aDecoder: NSCoder) {
@@ -77,27 +75,11 @@ public class WSideMenuVC: UIViewController {
 
         // Initial setup of views
         view.addSubview(mainContainerView)
-        view.insertSubview(leftSideMenuContainerView, aboveSubview: mainContainerView)
-
-        if options!.showAboveStatusBar {
-            view.insertSubview(statusBarView, belowSubview: leftSideMenuContainerView)
-
-            statusBarView.snp_makeConstraints { (make) in
-                make.left.equalTo(view)
-                make.right.equalTo(view)
-                make.height.equalTo(20)
-                make.top.equalTo(view)
-            }
-        }
+        view.addSubview(leftSideMenuContainerView)
 
         mainContainerView.snp_makeConstraints { (make) in
             make.left.equalTo(view)
-            if options!.showAboveStatusBar {
-                make.top.equalTo(statusBarView.snp_bottom)
-            } else {
-                make.top.equalTo(view)
-            }
-
+            make.top.equalTo(view)
             make.right.equalTo(view)
             make.bottom.equalTo(view)
         }
@@ -115,15 +97,7 @@ public class WSideMenuVC: UIViewController {
                                                                 action: #selector(WSideMenuVC.mainContainerViewWasTapped(_:)))
             mainContainerTapRecognizer?.enabled = false
             mainContainerView.addGestureRecognizer(mainContainerTapRecognizer!)
-            addViewControllerToContainer(mainContainerView, viewController: mainViewController)
-
-            if options!.showAboveStatusBar {
-                if let mainViewController = mainViewController as? UINavigationController {
-                    statusBarView.backgroundColor = mainViewController.navigationBar.barTintColor
-                } else {
-                    statusBarView.backgroundColor = mainViewController.view.backgroundColor
-                }
-            }
+            addViewControllerToContainer(mainContainerView, viewController: mainViewController)            
         }
 
         if let leftSideMenuViewController = leftSideMenuViewController {
@@ -153,27 +127,7 @@ public class WSideMenuVC: UIViewController {
         addViewControllerToContainer(mainContainerView, viewController: mainViewController)
         view.layoutIfNeeded()
     }
-
-    public override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-        if let options = options {
-            return options.showAboveStatusBar ? .Slide : .None
-        } else {
-            return .None
-        }
-    }
-
-    public override func prefersStatusBarHidden() -> Bool {
-        if let options = options {
-            if options.showAboveStatusBar {
-                return statusBarHidden
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
-    }
-
+    
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         if let options = options {
             return options.statusBarStyle
@@ -210,11 +164,14 @@ public class WSideMenuVC: UIViewController {
         delegate?.sideMenuWillOpen?()
 
         statusBarHidden = !statusBarHidden
-
+        
+        if options!.showAboveStatusBar {
+            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
+        }
+        
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
-                self.setNeedsStatusBarAppearanceUpdate()
             },
             completion: { finished in
                 self.menuState = .Open
@@ -240,9 +197,12 @@ public class WSideMenuVC: UIViewController {
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
-                self.setNeedsStatusBarAppearanceUpdate()
             },
             completion: { finished in
+                if self.options!.showAboveStatusBar {
+                    UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelNormal
+                }
+                
                 self.menuState = .Closed
                 self.delegate?.sideMenuDidClose?()
             }
