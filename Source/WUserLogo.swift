@@ -16,6 +16,12 @@ public class WUserLogo : UIView {
         }
     }
     
+    public var lineWidth:CGFloat = 1.0 {
+        didSet {
+            setupUI()
+        }
+    }
+    
     public override var bounds : CGRect {
         didSet {
             if (!subviews.contains(initialsLabel)) {
@@ -49,7 +55,7 @@ public class WUserLogo : UIView {
     }
     
     public func setupUI() {
-        initialsLabel.snp_makeConstraints { (make) in
+        initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.width.equalTo(self).multipliedBy(0.8)
@@ -59,7 +65,7 @@ public class WUserLogo : UIView {
         if let name = name {
             circleLayer.strokeColor = mapNameToColor(name).CGColor
             
-            let attributedString = NSMutableAttributedString(string: getInitials(name))
+            let attributedString = NSMutableAttributedString(string: name.getInitials())
             attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: 2))
             
             initialsLabel.attributedText = attributedString
@@ -78,7 +84,7 @@ public class WUserLogo : UIView {
         let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.lineWidth = frame.size.width / 30
+        circleLayer.lineWidth = lineWidth
         
         layer.addSublayer(circleLayer)
     }
@@ -101,13 +107,15 @@ public class WUserLogo : UIView {
             return UIColor.blackColor()
         }
     }
-    
-    public func getInitials(name: String) -> String {
-        let spaceRange = name.rangeOfString(" ")
+}
+
+public extension String {
+    public func getInitials() -> String {
+        let spaceRange = self.rangeOfString(" ")
         
         if let spaceRange = spaceRange {
-            let firstName = name.substringToIndex(spaceRange.startIndex)
-            let lastName = name.substringFromIndex(spaceRange.endIndex)
+            let firstName = self.substringToIndex(spaceRange.startIndex)
+            let lastName = self.substringFromIndex(spaceRange.endIndex)
             
             let firstInitial = firstName.characters.first! as Character
             let secondInitial = lastName.characters.first! as Character
@@ -115,6 +123,6 @@ public class WUserLogo : UIView {
             return String(firstInitial) + String(secondInitial)
         }
         
-        return name.characters.count > 0 ? String(name.characters.first) : ""
+        return self.characters.count > 0 ? String(self.characters.first) : ""
     }
 }

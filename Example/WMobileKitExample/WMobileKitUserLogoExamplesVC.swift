@@ -94,8 +94,8 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
         userLogo5.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
             make.top.equalTo(userLogo4.snp_bottom).offset(20)
-            make.width.equalTo(40)
-            make.height.equalTo(40)
+            make.width.equalTo(120)
+            make.height.equalTo(120)
         }
         
         let userLogoLabel5 = UILabel(frame: CGRectZero)
