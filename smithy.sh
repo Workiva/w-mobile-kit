@@ -20,7 +20,11 @@ function run_unit_tests2() {
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
     "platform=iOS Simulator,name=$1,OS=8.4"
 
+    echo "Unit tests finished running"
+
+echo "Checking for failure"
     unit_test_failure_check
+    echo "End check for failure"
 }
 
 function unit_test_failure_check {
@@ -36,6 +40,7 @@ function clean_previous_build {
     killall "WMobileKit"; sleep 2
     killall 'Simulator'; sleep 5
     xcrun simctl erase all; sleep 5
+    echo "Clean finished"
     #osascript -e reset-sim.applescript; sleep 5; killall 'Simulator'; sleep 5
 }
 
@@ -47,7 +52,9 @@ function clean_previous_build {
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 7BE2512A-6B44-4FFF-96A8-60BF0D7269A1; sleep 3
+echo "Simulator open"
 run_unit_tests2 "iPad Retina"
+echo "Unit tests done"
 
 clean_previous_build
 open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
