@@ -32,10 +32,14 @@ function clean_previous_build {
 }
 
 echo "Setting up project."
+echo
 ./setup.sh
 
 # We need to open the workspace to make sure the schemes have been generated.
+echo
 echo "Generating schemes."
+echo
+killall Xcode
 open "WMobileKit.xcworkspace"
 sleep 5
 killall Xcode
