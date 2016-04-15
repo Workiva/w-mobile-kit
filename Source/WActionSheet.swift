@@ -28,8 +28,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     private var darkView = UIView(frame: CGRectZero)
     private var containerView = UIView(frame: CGRectZero)
     private var cancelButton = UIButton(type: .System)
-    private var tableView : UITableView?
     private var actions = [WAction<ActionDataType>]()
+    var tableView : UITableView?
     
     public var titleString: String?
     public var selectedIndex : Int?
@@ -211,7 +211,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         animateOut(0)
     }
     
-    public func animateOut(delay: NSTimeInterval = 0) {
+    public func animateOut(delay: NSTimeInterval) {
         containerView.snp_remakeConstraints { (make) in
             if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
                 make.centerX.equalTo(view)
@@ -329,9 +329,9 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
             return actions.count
-        } else {
-            return 0
         }
+        
+        return 0
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -365,17 +365,11 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var header : UITableViewHeaderFooterView?
-        if (section == 0) {
-            let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_VIEW) as! WHeaderView
-            WHeader.title = titleString
-            WHeader.contentView.backgroundColor = UIColor(hex: 0xF3F3F3)
-            header = WHeader
-        } else {
-            header = UITableViewHeaderFooterView(frame: CGRectZero)
-            header?.contentView.backgroundColor = UIColor(hex: 0xC3C3C3)
-        }
-        return header!
+        let WHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_VIEW) as! WHeaderView
+        WHeader.title = titleString
+        WHeader.contentView.backgroundColor = UIColor(hex: 0xF3F3F3)
+
+        return WHeader
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -434,7 +428,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
         }
     }
     
-    private var selectBar = WSelectBar(frame: CGRectZero)
+    var selectBar = WSelectBar(frame: CGRectZero)
     private var subtitleLabel : UILabel?
     private var titleLabel : UILabel?
     private var iconImageView : UIImageView?
