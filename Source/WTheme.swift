@@ -1,71 +1,115 @@
 //
 //  WTheme.swift
 //  WMobileKit
+//
+//  WTheme works as a singleton that sets the appearance properties for 
+//  w-mobile-kit components. The current theme should be set during the app delegate's
+//  didFinishLaunchingWithOptions. Example:
+//
+//  let theme: WTheme = CustomTheme()
+//  WThemeManager.sharedInstance.currentTheme = theme
+//
+//  For further customization a subclass of WTheme can be created and the color
+//  values set to custom values. See Custom Theme for an example. 
+//
+//  Once the WThemeManager is created it will set the defaultTheme automatically
+//  which can then be changed by setting the currentTheme. In this way, themes can
+//  be dynamically changed.
+//
 
 import Foundation
 import UIKit
 
 extension UIColor {
-    convenience init(hex: Int) {
-        let components = (
-            R: CGFloat((hex >> 16) & 0xff) / 255,
-            G: CGFloat((hex >> 08) & 0xff) / 255,
-            B: CGFloat((hex >> 00) & 0xff) / 255
-        )
-
-        self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
+    public convenience init(hex: Int, alpha: Double = 1) {
+        self.init(
+            red:   CGFloat((hex >> 16) & 0xff) / 255,
+            green: CGFloat((hex >> 08) & 0xff) / 255,
+            blue:  CGFloat((hex >> 00) & 0xff) / 255,
+            alpha: CGFloat(alpha))
     }
 }
 
-// TODO: Clearly define how the theme works with the app
-public class WTheme {
-    public init(){}
+public class WTheme: NSObject {
+    public override init(){}
 
-    // General
-    public var h1Color = UIColor.init(colorLiteralRed: 0.35, green: 0.858, blue: 0.54, alpha: 1)
-    public var h2Color = UIColor.lightGrayColor()
-    public var h3Color = UIColor.whiteColor()
+    // Accessible Colors
+    public var primaryTextColor: UIColor = UIColor.blackColor()
+    public var secondaryTextColor: UIColor = UIColor.grayColor()
 
-    public var textColor = UIColor.whiteColor()
+    // Colors that apply directly to theme
 
-    public var primaryColor = UIColor.greenColor()
-
-    public var tintColor = UIColor.whiteColor()
-
-    // Specifics
-    public var navigationColor: UIColor = UIColor.blueColor()
+    // Paging Selector
     public var pagingSelectorControlColor: UIColor = UIColor.lightGrayColor()
     public var pagingSelectionIndicatorColor: UIColor = UIColor.whiteColor()
+
+    // Navigation Bar
+    public var navigationBarColor: UIColor = UIColor.blueColor()
+    public var navigationTintColor: UIColor = UIColor.whiteColor()
+    public var navigationTextColor: UIColor = UIColor.whiteColor()
 }
+
+// Theme with all default values
+public class DefaultTheme: WTheme {}
 
 public class GreenTheme: WTheme {
     public override init() {
         super.init()
 
         // Override colors here
-        navigationColor = UIColor.init(hex: 0x42AD48)
-        pagingSelectorControlColor = UIColor.init(hex: 0x6ABD5E)
+        navigationBarColor = UIColor(hex: 0x42AD48)
+        pagingSelectorControlColor = UIColor(hex: 0x6ABD5E)
     }
 }
 
-public class WThemeManager {
-    public static func globalTheme(theme: WTheme) {
+public class CustomTheme: WTheme {
+    public override init() {
+        super.init()
+
+        // Override colors here
+        navigationBarColor = UIColor(hex: 0x42AD48)
+
+        pagingSelectorControlColor = UIColor.whiteColor()
+        pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
+
+        primaryTextColor = UIColor(hex: 0x595959)
+        secondaryTextColor = UIColor(hex: 0x595959)
+    }
+}
+
+public class WThemeManager: NSObject {
+    public static let sharedInstance = WThemeManager()
+
+    private override init() {
+        super.init()
+        setTheme(currentTheme)
+    }
+
+    public var currentTheme: WTheme = DefaultTheme() {
+        didSet {
+            setTheme(currentTheme)
+        }
+    }
+
+    private func setTheme(theme: WTheme) {
         customizePagingSelectorControl(theme)
         customizeNavigationBar(theme)
         customizeSideMenuVC(theme)
     }
 
-    static func customizePagingSelectorControl(theme: WTheme) {
+    private func customizePagingSelectorControl(theme: WTheme) {
         WPagingSelectorControl.appearance().backgroundColor = theme.pagingSelectorControlColor
         WSelectionIndicatorView.appearance().backgroundColor = theme.pagingSelectionIndicatorColor
     }
 
-    static func customizeNavigationBar(theme: WTheme) {
-        UINavigationBar.appearance().barTintColor = theme.navigationColor
-        UINavigationBar.appearance().tintColor = theme.tintColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.textColor]
+    private func customizeNavigationBar(theme: WTheme) {
+        UINavigationBar.appearance().barTintColor = theme.navigationBarColor
+        UINavigationBar.appearance().tintColor = theme.navigationTintColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.navigationTextColor]
+
+        // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().translucent = false
     }
 
-    static func customizeSideMenuVC(theme: WTheme) {}
+    private func customizeSideMenuVC(theme: WTheme) {}
 }
