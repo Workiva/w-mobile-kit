@@ -11,7 +11,7 @@ function run_unit_tests() {
     #"platform=iOS Simulator,name=$1,OS=8.4" -enableCodeCoverage YES | ocunit2junit
 
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
-    "platform=iOS Simulator,name=$1,OS=8.4" | ocunit2junit
+    "platform=iOS Simulator,name=$1,OS=8.4" -enableCodeCoverage YES | ocunit2junit
 
     unit_test_failure_check
 }
@@ -36,13 +36,13 @@ echo
 ./setup.sh
 
 # We need to open the workspace to make sure the schemes have been generated.
-echo
-echo "Generating schemes."
-echo
-killall Xcode
-open "WMobileKit.xcworkspace"
-sleep 5
-killall Xcode
+#echo
+#echo "Generating schemes."
+#echo
+#killall Xcode
+#open "WMobileKit.xcworkspace"
+#sleep 5
+#killall Xcode
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
