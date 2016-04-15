@@ -56,8 +56,9 @@ echo "Starting iPhone Simulator."
 open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
 run_unit_tests "iPhone 5"
 
+echo
 echo "Generating code coverage report"
-xcov -m code_coverage_threshold -w WMobileKit.xcworkspace -s WMobileKit -o xcov
+xcov -m $code_coverage_threshold -w WMobileKit.xcworkspace -s WMobileKit -o xcov
 
 # If code coverage is not at least the minimum, stop here.
 if [ $? -ne 0 ]; then
