@@ -15,11 +15,13 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         tabLayout.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(view)
         }
 
         tabLayout.layoutSubviews()
+
+        tabLayout.tabTextColor = UIColor.redColor()
 
         let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
 
@@ -27,7 +29,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         tabLayout2.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(tabLayout.snp_bottom)
         }
 
@@ -39,7 +41,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         tabLayout3.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(tabLayout2.snp_bottom)
         }
 
@@ -51,7 +53,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         tabLayout4.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(tabLayout3.snp_bottom)
         }
 
@@ -63,7 +65,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         tabLayout5.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(50)
+            make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(tabLayout4.snp_bottom)
         }
 

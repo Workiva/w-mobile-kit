@@ -9,12 +9,11 @@ let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let theme: WTheme = GreenTheme()
-        WThemeManager.globalTheme(theme)
+        let theme: WTheme = CustomTheme()
+        WThemeManager.sharedInstance.currentTheme = theme
 
         // Override point for customization after application launch.
         return true
@@ -41,7 +40,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
