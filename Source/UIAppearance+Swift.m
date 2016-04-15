@@ -6,9 +6,12 @@
 
 @implementation UIView (UIViewAppearance_Swift)
 
-+ (instancetype)appearanceWhenContainedWithin: (NSArray *)containers {
++ (instancetype)appearanceWhenContainedWithin:(NSArray *)containers {
     NSUInteger count = containers.count;
-    NSAssert(count <= 10, @"The count of containers greater than 10 is not supported.");
+
+    if (count > 10) {
+        NSLog(@"Warning appearanceWhenContainedWithin cannot be used with more than 10 containers. Using the first 10.");
+    }
 
     return [self appearanceWhenContainedIn:
             count > 0 ? containers[0] : nil,

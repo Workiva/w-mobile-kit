@@ -6,7 +6,7 @@
 
 @interface UIView (UIViewAppearance_Swift)
 
-// @param containers An array of Class < UIAppearanceContainer >
+// @param containers An array of Class <UIAppearanceContainer > (max 10)
 // http://stackoverflow.com/a/28765193
 + (instancetype)appearanceWhenContainedWithin:(NSArray *)containers;
 
