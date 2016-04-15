@@ -24,10 +24,6 @@ class WSideMenuVCSpec: QuickSpec {
                     expect(sideMenuVC.mainViewController).to(equal(mainViewVC))
                     expect(sideMenuVC.leftSideMenuViewController).to(equal(leftSideMenuVC))
                 }
-
-                it("should fail"){
-                    expect(true).to(beFalsy())
-                }
             }
         }
     }
