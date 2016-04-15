@@ -24,6 +24,7 @@ function print_error {
     echo "$1"
     echo "--------------------------------------------------------------"
     echo "${standard}"
+    echo "Exiting with status: 1"
     exit 1
 }
 
