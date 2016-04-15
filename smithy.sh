@@ -29,9 +29,7 @@ function clean_previous_build {
     xcrun simctl erase all; sleep 5
 }
 
-echo "Setting up project."
-echo
-./setup.sh
+./build.sh
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
