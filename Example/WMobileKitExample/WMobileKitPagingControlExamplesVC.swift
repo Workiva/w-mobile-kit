@@ -70,7 +70,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         
         view.addSubview(button)
         button.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
+            make.bottom.equalTo(view).offset(-48)
             make.centerX.equalTo(view)
             make.width.equalTo(112)
         }
@@ -84,7 +84,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         
         view.addSubview(button2)
         button2.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
+            make.bottom.equalTo(view).offset(-48)
             make.right.equalTo(button.snp_left).offset(-16)
             make.width.equalTo(112)
         }
@@ -98,8 +98,22 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         
         view.addSubview(button3)
         button3.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
+            make.bottom.equalTo(view).offset(-48)
             make.left.equalTo(button.snp_right).offset(16)
+            make.width.equalTo(112)
+        }
+        
+        let toastButton = UIButton(type: UIButtonType.RoundedRect)
+        toastButton.backgroundColor = UIColor.lightGrayColor()
+        toastButton.tintColor = UIColor.greenColor()
+        toastButton.setTitle("Toast!", forState: UIControlState.Normal)
+        toastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        toastButton.addTarget(self, action: #selector(WMobileKitPagingControlExamplesVC.presentToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        view.addSubview(toastButton)
+        toastButton.snp_makeConstraints { (make) in
+            make.bottom.equalTo(view).offset(-16)
+            make.centerX.equalTo(view)
             make.width.equalTo(112)
         }
         
@@ -203,6 +217,10 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         actionSheetSort.popoverPresentationController?.sourceView = sender
         
         presentViewController(actionSheetSort, animated: true, completion: nil)
+    }
+    
+    public func presentToast(sender: UIButton) {
+        WToastManager.sharedInstance.showToast("Test")
     }
 }
 

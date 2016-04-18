@@ -6,7 +6,62 @@ import Foundation
 import UIKit
 import SnapKit
 
-public class WToast : UIView {
+public class WToastManager: NSObject {
+    public static let sharedInstance = WToastManager()
+    
+    public var rootViewController: UIViewController? {
+        get {
+            return UIApplication.sharedApplication().windows.first?.rootViewController
+        }
+    }
+    
+    private override init() {
+        super.init()
+    }
+    
+    public func showToast(message: String) {
+        let toast = WToastView(message)
+        
+        let rootVC = rootViewController
+        let window = UIApplication.sharedApplication().windows.first
+        window!.addSubview(toast)
+        toast.snp_makeConstraints { (make) in
+            make.centerX.equalTo(window!)
+            make.width.equalTo(window!).multipliedBy(0.8)
+            make.top.equalTo(window!.snp_bottom)
+            make.height.equalTo(64)
+        }
+        window!.layoutIfNeeded()
+        
+        toast.snp_remakeConstraints { (make) in
+            make.centerX.equalTo(window!)
+            make.width.equalTo(window!).multipliedBy(0.8)
+            make.bottom.equalTo(window!).offset(-32)
+            make.height.equalTo(64)
+        }
+
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+            window!.layoutIfNeeded()
+            }) { (finished) in
+                UIView.animateWithDuration(0.3, delay: 1.0, options: .CurveEaseInOut, animations: {
+                    toast.snp_remakeConstraints { (make) in
+                        make.centerX.equalTo(window!)
+                        make.width.equalTo(window!).multipliedBy(0.8)
+                        make.top.equalTo(window!.snp_bottom)
+                        make.height.equalTo(64)
+                    }
+                    
+                    window!.layoutIfNeeded()
+                    }, completion: { (finished) in
+                        toast.removeFromSuperview()
+                })
+        }
+        
+        toast.setupUI()
+    }
+}
+
+public class WToastView : UIView {
     private var message = ""
     private var title: String?
     private var icon: UIImage?
@@ -23,9 +78,11 @@ public class WToast : UIView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        commonInit()
     }
     
-    public convenience init(message: String, title: String? = nil, icon: UIImage? = nil) {
+    public convenience init(_ message: String, title: String? = nil, icon: UIImage? = nil) {
         self.init(frame: CGRectZero)
         
         self.message = message
@@ -43,8 +100,6 @@ public class WToast : UIView {
             iconImageView = UIImageView(frame: CGRectZero)
             addSubview(iconImageView!)
         }
-        
-        setupUI()
     }
     
     public func setupUI() {
@@ -77,8 +132,8 @@ public class WToast : UIView {
         
         messageLabel.snp_remakeConstraints { (make) in
             make.left.equalTo(self).offset(18)
-            make.right.equalTo(self).offset(-18)
             make.bottom.equalTo(self).offset(-6)
+            make.right.equalTo(self).offset(-18)
             
             if title != nil || icon != nil {
                 make.top.equalTo(titleLabel!.snp_bottom).offset(12)
@@ -86,8 +141,10 @@ public class WToast : UIView {
                 make.top.equalTo(self).offset(6)
             }
         }
+        messageLabel.numberOfLines = 0
         messageLabel.text = message
         messageLabel.font = UIFont.systemFontOfSize(16)
+        messageLabel.backgroundColor = UIColor.redColor()
         
         layoutIfNeeded()
     }
