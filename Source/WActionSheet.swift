@@ -96,8 +96,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         tableView?.scrollEnabled = true
         tableView?.bounces = false
         tableView?.allowsMultipleSelection = false
+        tableView?.separatorStyle = .None
         
-        tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView?.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
         tableView?.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)
         
@@ -219,7 +219,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
     
     public func animateOut() {
-        animateOut(0)
+        animateOut(0.1)
     }
     
     public func animateOut(delay: NSTimeInterval) {
