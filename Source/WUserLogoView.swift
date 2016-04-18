@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public class WUserLogo : UIView {
+public class WUserLogoView : UIView {
     public var initialsLabel = UILabel(frame: CGRectZero)
     
     public var circleLayer = CAShapeLayer()
@@ -64,9 +64,11 @@ public class WUserLogo : UIView {
         
         if let name = name {
             circleLayer.strokeColor = mapNameToColor(name).CGColor
+
+            let initials:String = name.initials()
             
-            let attributedString = NSMutableAttributedString(string: name.getInitials())
-            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: 2))
+            let attributedString = NSMutableAttributedString(string: initials)
+            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: initials.characters.count))
             
             initialsLabel.attributedText = attributedString
             initialsLabel.textAlignment = NSTextAlignment.Center
@@ -90,9 +92,9 @@ public class WUserLogo : UIView {
     }
     
     public func mapNameToColor(name: String) -> UIColor {
-        let final = abs((Double(name.hashValue) / M_LOG2E) % 5)
-        
-        switch final {
+        let colorMapValue = abs(Double(name.hashValue)) % 5
+
+        switch colorMapValue {
         case 0:
             return UIColor(hex: 0x42AD48)
         case 1:
@@ -110,19 +112,15 @@ public class WUserLogo : UIView {
 }
 
 public extension String {
-    public func getInitials() -> String {
-        let spaceRange = self.rangeOfString(" ")
-        
-        if let spaceRange = spaceRange {
-            let firstName = self.substringToIndex(spaceRange.startIndex)
-            let lastName = self.substringFromIndex(spaceRange.endIndex)
-            
-            let firstInitial = firstName.characters.first! as Character
-            let secondInitial = lastName.characters.first! as Character
-            
-            return String(firstInitial) + String(secondInitial)
+    public func initials() -> String {
+        let range = Range<String.Index>(start: self.startIndex, end: self.endIndex)
+        var initials = String()
+
+        enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, _) -> () in
+            let initial = substring!.characters.first! as Character
+            initials = initials + String(initial)
         }
-        
-        return self.characters.count > 0 ? String(self.characters.first) : ""
+
+        return initials
     }
 }

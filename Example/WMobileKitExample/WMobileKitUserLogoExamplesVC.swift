@@ -9,7 +9,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userLogo = WUserLogo("Jordan Ross")
+        let userLogo = WUserLogoView("Jessica Jones")
         view.addSubview(userLogo)
         userLogo.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-50)
@@ -29,7 +29,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo2 = WUserLogo("Jeff Scaturro")
+        let userLogo2 = WUserLogoView("Steve Rogers")
         view.addSubview(userLogo2)
         userLogo2.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -49,7 +49,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo3 = WUserLogo("Brian Blanchard")
+        let userLogo3 = WUserLogoView("Natasha Romanova")
         view.addSubview(userLogo3)
         userLogo3.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -69,7 +69,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo4 = WUserLogo("Brian Rezende")
+        let userLogo4 = WUserLogoView("Anthony Edward Stark")
         view.addSubview(userLogo4)
         userLogo4.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -89,7 +89,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo5 = WUserLogo("James Romo")
+        let userLogo5 = WUserLogoView("Peter Benjamin Parker")
         view.addSubview(userLogo5)
         userLogo5.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -109,7 +109,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo6 = WUserLogo("Rich Uhl")
+        let userLogo6 = WUserLogoView("Scott Summers")
         view.addSubview(userLogo6)
         userLogo6.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -129,7 +129,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo7 = WUserLogo("Michael Reichstein")
+        let userLogo7 = WUserLogoView("Jean Grey")
         view.addSubview(userLogo7)
         userLogo7.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(50)
@@ -148,7 +148,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo8 = WUserLogo("Bryan Hales")
+        let userLogo8 = WUserLogoView("Matt Murdock")
         view.addSubview(userLogo8)
         userLogo8.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo7)
@@ -167,7 +167,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
         
-        let userLogo9 = WUserLogo("Todd Tarbox")
+        let userLogo9 = WUserLogoView("Gambit")
         view.addSubview(userLogo9)
         userLogo9.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo7)
