@@ -334,7 +334,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         return actions[indexPath.row]
     }
     
-    // MARK: Table Delegate Methods
+    // MARK: - UITableViewDataSource
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
@@ -384,6 +384,8 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return HEADER_HEIGHT
     }
+    
+    // MARK: - UITableViewDelegate
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.section == 0) {            
