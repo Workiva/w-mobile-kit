@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */; };
 		55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106301CAC849300495BBC /* WSideMenuVC.swift */; };
+		73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */; };
+		73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */; };
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
+		D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */; };
 		D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */; };
 		D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */; };
 		D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */; };
@@ -36,8 +39,12 @@
 		12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.debug.xcconfig"; sourceTree = "<group>"; };
 		291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.release.xcconfig"; sourceTree = "<group>"; };
 		55A106301CAC849300495BBC /* WSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVC.swift; sourceTree = "<group>"; };
+		73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheetVCTests.swift; sourceTree = "<group>"; };
+		73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheet.swift; sourceTree = "<group>"; };
 		9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+SwiftTests.m"; sourceTree = "<group>"; };
 		D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVC.swift; sourceTree = "<group>"; };
 		D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVCTests.swift; sourceTree = "<group>"; };
 		D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WThemeTests.swift; sourceTree = "<group>"; };
@@ -99,6 +106,14 @@
 			name = "Page Selector";
 			sourceTree = "<group>";
 		};
+		73A12C701CC010360092A3C2 /* Action Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */,
+			);
+			name = "Action Sheet";
+			sourceTree = "<group>";
+		};
 		B5F40D8A9EA8A5698C7AD136 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +151,7 @@
 				D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */,
 				D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */,
 				D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */,
+				73A12C701CC010360092A3C2 /* Action Sheet */,
 				D5C4B4411CADBBDF009B4104 /* Theme */,
 				55A1062F1CAC847500495BBC /* Side Menu */,
 				7336F61F1CADB9F000E5C984 /* Page Selector */,
@@ -150,8 +166,11 @@
 			children = (
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
+				73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */,
 				D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */,
+				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
 				D53D0BB31CAB0FE60065D106 /* Info.plist */,
+				D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */,
 			);
 			name = WMobileKitTests;
 			path = Tests;
@@ -356,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */,
 				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
 				D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */,
@@ -368,7 +388,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */,
+				D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
+				73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +545,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -536,6 +559,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 			};
 			name = Release;
 		};

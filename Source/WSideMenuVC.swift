@@ -25,7 +25,7 @@ public struct WSideMenuOptions {
     public var statusBarStyle: UIStatusBarStyle = .LightContent
 }
 
-private enum WSideMenuState {
+enum WSideMenuState {
     case Open
     case Closed
 }
@@ -38,11 +38,11 @@ public class WSideMenuVC: UIViewController {
     public weak var delegate: WSideMenuProtocol?
 
     // Internal properties
-    private var mainContainerView = UIView(frame: CGRect.zero)
-    private var leftSideMenuContainerView = UIView(frame: CGRect.zero)
-    private var mainContainerTapRecognizer: UITapGestureRecognizer?
-    private var menuState: WSideMenuState = .Closed
-    private var statusBarHidden = false
+    var mainContainerView = UIView(frame: CGRect.zero)
+    var leftSideMenuContainerView = UIView(frame: CGRect.zero)
+    var mainContainerTapRecognizer: UITapGestureRecognizer?
+    var menuState: WSideMenuState = .Closed
+    var statusBarHidden = false
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -163,7 +163,7 @@ public class WSideMenuVC: UIViewController {
 
         delegate?.sideMenuWillOpen?()
 
-        statusBarHidden = !statusBarHidden
+        statusBarHidden = true
         
         if options!.showAboveStatusBar {
             UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
@@ -192,7 +192,7 @@ public class WSideMenuVC: UIViewController {
 
         delegate?.sideMenuWillClose?()
 
-        statusBarHidden = !statusBarHidden
+        statusBarHidden = false
 
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
@@ -209,6 +209,7 @@ public class WSideMenuVC: UIViewController {
         )
     }
 
+    @objc
     func mainContainerViewWasTapped(sender: AnyObject) {
         closeSideMenu()
     }
