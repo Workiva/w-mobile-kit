@@ -19,7 +19,6 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
             make.top.equalTo(view)
         }
         
-        tabLayout1.layoutSubviews()
         tabLayout1.tabTextColor = UIColor.redColor()
         
         let tabLayout2 = WPagingSelectorControl(titles: ["Recent", "All Files", "Snapshots"])
@@ -157,19 +156,15 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
         actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder_1"), style: ActionStyle.Normal, handler: { action in
             NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
         }))
         actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear_1"), style: ActionStyle.Normal, handler: { action in
             NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
         }))
         actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person_1"), style: ActionStyle.Normal, handler: { action in
             NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
         }))
         actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Destructive, handler: { action in
             NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
         }))
         
         actionSheetIcons.hasCancel = true

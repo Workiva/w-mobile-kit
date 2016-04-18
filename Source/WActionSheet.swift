@@ -6,10 +6,11 @@ import Foundation
 import UIKit
 import SnapKit
 
-let CANCEL_SEPARATOR_HEIGHT:CGFloat = 6.0
-let ROW_HEIGHT:CGFloat = 50.0
-let HEADER_HEIGHT:CGFloat = 40.0
-let SHEET_WIDTH_IPAD:CGFloat = 450.0
+let CANCEL_SEPARATOR_HEIGHT: CGFloat = 6.0
+let ROW_HEIGHT: CGFloat = 50.0
+let HEADER_HEIGHT: CGFloat = 40.0
+let SHEET_WIDTH_IPAD: CGFloat = 450.0
+let SHEET_HEIGHT_MAX: CGFloat = 400.0
 
 let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
@@ -86,14 +87,14 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         view.addSubview(containerView)
         view.addSubview(cancelButton)
         
-        tableView = UITableView(frame: CGRectZero)
+        tableView = UITableView(frame: CGRectZero, style: .Plain)
         
         tableView?.dataSource = self
         tableView?.delegate = self
         tableView?.delaysContentTouches = false
         tableView?.showsHorizontalScrollIndicator = false
-        tableView?.showsVerticalScrollIndicator = false
-        tableView?.scrollEnabled = false
+        tableView?.scrollEnabled = true
+        tableView?.bounces = false
         tableView?.allowsMultipleSelection = false
         
         tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -167,6 +168,10 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         
         tableView?.layer.cornerRadius = 5
         tableView?.clipsToBounds = true
+        tableView?.contentSize = CGSize(width: tableView!.contentSize.width, height: heightForSheetContent())
+        if (titleString != nil) {
+            tableView?.scrollIndicatorInsets = UIEdgeInsets(top: HEADER_HEIGHT, left: 0, bottom: 0, right: 0)
+        }
         
         view.layoutIfNeeded()
         
@@ -195,16 +200,22 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         }
     }
     
-    // Helper Methods
+    // MARK: - Helper Methods
     
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions.count
         let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + ROW_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
+        return min(height, SHEET_HEIGHT_MAX)
+    }
+    
+    public func heightForSheetContent() -> CGFloat {
+        let numCells = actions.count
+        let height = ((CGFloat(numCells)) * ROW_HEIGHT)
         return height
     }
     
     public func animateIn() {
-        setupUI(true);
+        setupUI(true)
     }
     
     public func animateOut() {
@@ -248,7 +259,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         }
     }
     
-    // Actions
+    // MARK: - Actions
     
     public func addAction(action: WAction<ActionDataType>) {
         var actionCopy = action
@@ -260,7 +271,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         tableView?.reloadData()
     }
     
-    // Action Selection Methods
+    // MARK: Action Selection Methods
     
     public func setSelectedAction(action: WAction<ActionDataType>) {
         setSelectedAction(action.index)
@@ -307,7 +318,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
                 return
             }
             path = NSIndexPath(forRow: index, inSection: 0)
-            
         } else if let selectedIndex = selectedIndex {
             path = NSIndexPath(forRow: selectedIndex, inSection: 0)
         } else {
@@ -318,13 +328,13 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         cell.setSelectedAction(false)
     }
     
-    // Table Support Methods
+    // MARK: - Table Methods
     
     public func actionForIndexPath(indexPath: NSIndexPath) -> WAction<ActionDataType>? {
         return actions[indexPath.row]
     }
     
-    // Table Delegate Methods
+    // MARK: Table Delegate Methods
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
@@ -337,7 +347,6 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return ROW_HEIGHT
@@ -401,7 +410,12 @@ public struct WAction<T> {
     private var handler : (WAction -> Void)?
     public var index = 0
     
-    public init(title: String?, subtitle: String? = nil, image: UIImage? = nil, data: T? = nil, style: ActionStyle? = ActionStyle.Normal, handler: (WAction<T> -> Void)? = nil) {
+    public init(title: String?,
+                subtitle: String? = nil,
+                image: UIImage? = nil,
+                data: T? = nil,
+                style: ActionStyle? = ActionStyle.Normal,
+                handler: (WAction<T> -> Void)? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -411,15 +425,7 @@ public struct WAction<T> {
     }
 }
 
-// Keyline on top of actionSheet, separate class for theming
-
-public class WTopLine : UIView { }
-
-// Table Cell
-
-// Left bar for selection of actionSheet cells, separate class for theming
-
-public class WSelectBar : UIView { }
+// MARK: - Table Cell
 
 public class WTableViewCell<ActionDataType> : UITableViewCell {
     private var actionInfo : WAction<ActionDataType>? {
@@ -474,7 +480,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
         
         if let actionInfo = actionInfo {
             if let image = actionInfo.image {
-                if iconImageView == nil {
+                if (iconImageView == nil) {
                     iconImageView = UIImageView(image: image)
                     addSubview(iconImageView!)
                 }
@@ -489,7 +495,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
             }
             
             if let subtitle = actionInfo.subtitle {
-                if subtitleLabel == nil {
+                if (subtitleLabel == nil) {
                     subtitleLabel = UILabel(frame: CGRectZero)
                     subtitleLabel?.adjustsFontSizeToFitWidth = true
                     addSubview(subtitleLabel!)
@@ -502,7 +508,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 subtitleLabel?.snp_removeConstraints()
                 
                 subtitleLabel?.snp_makeConstraints(closure: { (make) in
-                    if actionInfo.image != nil {
+                    if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
                         make.left.equalTo(self).offset(22)
@@ -514,7 +520,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
             }
             
             if let title = actionInfo.title {
-                if titleLabel == nil {
+                if (titleLabel == nil) {
                     titleLabel = UILabel(frame: CGRectZero)
                     addSubview(titleLabel!)
                 }
@@ -528,7 +534,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 titleLabel?.snp_makeConstraints(closure: { (make) in
                     make.height.equalTo(20)
                     
-                    if actionInfo.image != nil {
+                    if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
                         make.left.equalTo(self).offset(22)
@@ -536,7 +542,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                     
                     make.right.equalTo(self)
                     
-                    if actionInfo.subtitle != nil {
+                    if (actionInfo.subtitle != nil) {
                         make.top.equalTo(self).offset(8)
                     } else {
                         make.centerY.equalTo(self)
@@ -563,29 +569,21 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
     }
     
     public func setSelectedAction(selected: Bool) {
-        if (selected) {
-            selectBar.hidden = false
-            
-            if let titleLabel = titleLabel {
-                titleLabel.font = UIFont.boldSystemFontOfSize(titleLabel.font.pointSize)
-            }
-            if let subtitleLabel = subtitleLabel {
-                subtitleLabel.font = UIFont.boldSystemFontOfSize(subtitleLabel.font.pointSize)
-            }
-        } else {
-            selectBar.hidden = true
-            
-            if let titleLabel = titleLabel {
-                titleLabel.font = UIFont.systemFontOfSize(titleLabel.font.pointSize)
-            }
-            if let subtitleLabel = subtitleLabel {
-                subtitleLabel.font = UIFont.systemFontOfSize(subtitleLabel.font.pointSize)
-            }
+        selectBar.hidden = !selected
+        
+        if let titleLabel = titleLabel {
+            titleLabel.font = selected ? UIFont.boldSystemFontOfSize(titleLabel.font.pointSize) : UIFont.systemFontOfSize(titleLabel.font.pointSize)
+        }
+        
+        if let subtitleLabel = subtitleLabel {
+            subtitleLabel.font = selected ? UIFont.boldSystemFontOfSize(subtitleLabel.font.pointSize) : UIFont.systemFontOfSize(subtitleLabel.font.pointSize)
         }
         
         isSelectedAction = selected
     }
 }
+
+// MARK: Header View
 
 public class WHeaderView : UITableViewHeaderFooterView {
     private var title : String? {
@@ -622,7 +620,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
         separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
         
         if let title = title {
-            if titleLabel == nil {
+            if (titleLabel == nil) {
                 titleLabel = UILabel(frame: CGRectZero)
                 addSubview(titleLabel!)
             }
@@ -642,3 +640,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
         layoutIfNeeded()
     }
 }
+
+// MARK: Select Bar
+
+public class WSelectBar : UIView { }
