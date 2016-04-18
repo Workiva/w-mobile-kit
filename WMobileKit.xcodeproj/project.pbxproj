@@ -10,6 +10,7 @@
 		1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */; };
 		55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106301CAC849300495BBC /* WSideMenuVC.swift */; };
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
+		D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */; };
 		D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */; };
 		D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */; };
 		D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */; };
@@ -38,6 +39,8 @@
 		55A106301CAC849300495BBC /* WSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVC.swift; sourceTree = "<group>"; };
 		9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+SwiftTests.m"; sourceTree = "<group>"; };
 		D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVC.swift; sourceTree = "<group>"; };
 		D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVCTests.swift; sourceTree = "<group>"; };
 		D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WThemeTests.swift; sourceTree = "<group>"; };
@@ -151,7 +154,9 @@
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
 				D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */,
+				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
 				D53D0BB31CAB0FE60065D106 /* Info.plist */,
+				D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */,
 			);
 			name = WMobileKitTests;
 			path = Tests;
@@ -368,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */,
+				D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
 			);
@@ -523,6 +529,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -536,6 +543,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 			};
 			name = Release;
 		};

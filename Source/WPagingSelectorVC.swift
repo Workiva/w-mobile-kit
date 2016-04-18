@@ -354,9 +354,9 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
         }
     }
 
-    private var mainViewController: UIViewController?
-    private var mainContainerView = UIView(frame: CGRectZero)
-    private var currentPageIndex = 0
+    var mainViewController: UIViewController?
+    var mainContainerView = UIView(frame: CGRectZero)
+    var currentPageIndex = 0
     
     public var pages:[WPage] = [WPage]() {
         didSet {
