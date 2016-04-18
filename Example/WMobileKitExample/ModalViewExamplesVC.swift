@@ -14,46 +14,57 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        let button = UIButton(type: UIButtonType.RoundedRect)
-        button.backgroundColor = UIColor.lightGrayColor()
-        button.tintColor = UIColor.greenColor()
-        button.setTitle("Selection Sheet!", forState: UIControlState.Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        button.addTarget(self, action: #selector(presentActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let actionSheetLabel = UILabel()
+        actionSheetLabel.text = "Action Sheet Examples"
+        actionSheetLabel.textAlignment = NSTextAlignment.Center
 
-        view.addSubview(button)
-        button.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
+        view.addSubview(actionSheetLabel)
+        actionSheetLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(view.snp_top).offset(32)
             make.centerX.equalTo(view)
-            make.width.equalTo(112)
+            make.width.equalTo(220)
         }
 
-        let button2 = UIButton(type: UIButtonType.RoundedRect)
-        button2.backgroundColor = UIColor.lightGrayColor()
-        button2.tintColor = UIColor.greenColor()
-        button2.setTitle("Icon Sheet!", forState: UIControlState.Normal)
-        button2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        button2.addTarget(self, action: #selector(presentIconActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let permissionsSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        permissionsSheetButton.backgroundColor = UIColor.lightGrayColor()
+        permissionsSheetButton.tintColor = UIColor.greenColor()
+        permissionsSheetButton.setTitle("Selection Cancel Sheet", forState: UIControlState.Normal)
+        permissionsSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        permissionsSheetButton.addTarget(self, action: #selector(presentPermissionsActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-        view.addSubview(button2)
-        button2.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
-            make.right.equalTo(button.snp_left).offset(-16)
-            make.width.equalTo(112)
+        view.addSubview(permissionsSheetButton)
+        permissionsSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(actionSheetLabel.snp_bottom).offset(25)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
         }
 
-        let button3 = UIButton(type: UIButtonType.RoundedRect)
-        button3.backgroundColor = UIColor.lightGrayColor()
-        button3.tintColor = UIColor.greenColor()
-        button3.setTitle("Sort Sheet!", forState: UIControlState.Normal)
-        button3.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        button3.addTarget(self, action: #selector(presentSortActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let iconSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        iconSheetButton.backgroundColor = UIColor.lightGrayColor()
+        iconSheetButton.tintColor = UIColor.greenColor()
+        iconSheetButton.setTitle("Icon Dismiss Cancel Sheet", forState: UIControlState.Normal)
+        iconSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        iconSheetButton.addTarget(self, action: #selector(presentIconActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-        view.addSubview(button3)
-        button3.snp_makeConstraints { (make) in
-            make.bottom.equalTo(view).offset(-32)
-            make.left.equalTo(button.snp_right).offset(16)
-            make.width.equalTo(112)
+        view.addSubview(iconSheetButton)
+        iconSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(permissionsSheetButton.snp_bottom).offset(25)
+            make.centerX.equalTo(view)
+            make.width.equalTo(230)
+        }
+
+        let sortSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        sortSheetButton.backgroundColor = UIColor.lightGrayColor()
+        sortSheetButton.tintColor = UIColor.greenColor()
+        sortSheetButton.setTitle("Selection Dismiss Sheet", forState: UIControlState.Normal)
+        sortSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        sortSheetButton.addTarget(self, action: #selector(presentSortActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(sortSheetButton)
+        sortSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(iconSheetButton.snp_bottom).offset(25)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
         }
 
         view.layoutIfNeeded()
@@ -66,29 +77,29 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         sideMenuController()?.delegate = self
     }
 
-    public func presentActionSheet(sender: UIButton) {
+    public func presentPermissionsActionSheet(sender: UIButton) {
         self.definesPresentationContext = true
 
         let actionSheet = WActionSheetVC<String>()
+        actionSheet.titleString = "User Permissions"
 
-        actionSheet.titleString = "Jordan Ross"
         actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheet.deselectAction()
             actionSheet.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheet.deselectAction()
             actionSheet.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheet.deselectAction()
             actionSheet.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive, handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheet.deselectAction()
             actionSheet.setSelectedAction(action)
         }))
@@ -108,20 +119,16 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
         actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder_1"), style: ActionStyle.Normal, handler: { action in
-            NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
+            NSLog(action.title! + " was tapped")
         }))
         actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear_1"), style: ActionStyle.Normal, handler: { action in
-            NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
+            NSLog(action.title! + " was tapped")
         }))
         actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person_1"), style: ActionStyle.Normal, handler: { action in
-            NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
+            NSLog(action.title! + " was tapped")
         }))
         actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Destructive, handler: { action in
-            NSLog("We have tapped " + action.title!)
-            //            actionSheet.toggleSelectedAction(action)
+            NSLog(action.title! + " was tapped")
         }))
 
         actionSheetIcons.hasCancel = true
@@ -138,17 +145,17 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheetSort.titleString = "Sort Tasks"
         actionSheetSort.addAction(WAction(title: "Status", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "File", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Assigner", handler: { action in
-            NSLog("We have tapped " + action.title!)
+            NSLog(action.title! + " was tapped")
             actionSheetSort.deselectAction()
             actionSheetSort.setSelectedAction(action)
         }))
