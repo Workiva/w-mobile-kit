@@ -42,6 +42,11 @@ public class WTheme: NSObject {
     // Paging Selector
     public var pagingSelectorControlColor: UIColor = UIColor.lightGrayColor()
     public var pagingSelectionIndicatorColor: UIColor = UIColor.whiteColor()
+    
+    // Action Sheet
+    public var actionSheetSelectColor: UIColor = UIColor.blueColor()
+    public var actionSheetTopLineColor: UIColor = UIColor.redColor()
+    public var actionSheetCancelTextColor: UIColor = UIColor.greenColor()
 
     // Navigation Bar
     public var navigationBarColor: UIColor = UIColor.blueColor()
@@ -71,6 +76,9 @@ public class CustomTheme: WTheme {
 
         pagingSelectorControlColor = UIColor.whiteColor()
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
+        
+        actionSheetTopLineColor = UIColor(hex: 0x42AD48)
+        actionSheetCancelTextColor = UIColor(hex: 0x42AD48)
 
         primaryTextColor = UIColor(hex: 0x595959)
         secondaryTextColor = UIColor(hex: 0x595959)
@@ -93,6 +101,7 @@ public class WThemeManager: NSObject {
 
     private func setTheme(theme: WTheme) {
         customizePagingSelectorControl(theme)
+        customizeActionSheet(theme)
         customizeNavigationBar(theme)
         customizeSideMenuVC(theme)
     }
@@ -100,6 +109,10 @@ public class WThemeManager: NSObject {
     private func customizePagingSelectorControl(theme: WTheme) {
         WPagingSelectorControl.appearance().backgroundColor = theme.pagingSelectorControlColor
         WSelectionIndicatorView.appearance().backgroundColor = theme.pagingSelectionIndicatorColor
+    }
+    
+    private func customizeActionSheet(theme: WTheme) {
+        WSelectBar.appearance().backgroundColor = theme.actionSheetSelectColor
     }
 
     private func customizeNavigationBar(theme: WTheme) {
