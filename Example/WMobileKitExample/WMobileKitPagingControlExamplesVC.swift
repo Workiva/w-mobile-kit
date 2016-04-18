@@ -118,7 +118,7 @@ public class WMobileKitPagingControlExamplesVC: WSideMenuContentVC {
         
         let actionSheet = WActionSheetVC<String>()
         
-        actionSheet.titleString = "Jordan Ross"
+        actionSheet.titleString = "User Permissions"
         actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.", handler: { action in
             NSLog("We have tapped " + action.title!)
             actionSheet.deselectAction()
