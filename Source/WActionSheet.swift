@@ -43,7 +43,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     
     public var hasCancel = false
     
-    // Initialization
+    // MARK: - Initialization
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
