@@ -1,11 +1,11 @@
 //
-//  WMobileKitUserLogoExamplesVC.swift
+//  UserLogoViewExamplesVC.swift
 //  WMobileKitExample
 
 import Foundation
 import WMobileKit
 
-public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
+public class UserLogoViewExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,7 +18,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(80)
         }
         
-        let userLogoLabel = UILabel(frame: CGRectZero)
+        let userLogoLabel = UILabel()
         view.addSubview(userLogoLabel)
         userLogoLabel.text = userLogo.name
         userLogoLabel.textAlignment = .Right
@@ -38,7 +38,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(100)
         }
         
-        let userLogoLabel2 = UILabel(frame: CGRectZero)
+        let userLogoLabel2 = UILabel()
         view.addSubview(userLogoLabel2)
         userLogoLabel2.text = userLogo2.name
         userLogoLabel2.textAlignment = .Right
@@ -58,7 +58,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(80)
         }
         
-        let userLogoLabel3 = UILabel(frame: CGRectZero)
+        let userLogoLabel3 = UILabel()
         view.addSubview(userLogoLabel3)
         userLogoLabel3.text = userLogo3.name
         userLogoLabel3.textAlignment = .Right
@@ -78,7 +78,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(60)
         }
         
-        let userLogoLabel4 = UILabel(frame: CGRectZero)
+        let userLogoLabel4 = UILabel()
         view.addSubview(userLogoLabel4)
         userLogoLabel4.text = userLogo4.name
         userLogoLabel4.textAlignment = .Right
@@ -98,7 +98,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(120)
         }
         
-        let userLogoLabel5 = UILabel(frame: CGRectZero)
+        let userLogoLabel5 = UILabel()
         view.addSubview(userLogoLabel5)
         userLogoLabel5.text = userLogo5.name
         userLogoLabel5.textAlignment = .Right
@@ -118,7 +118,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(60)
         }
         
-        let userLogoLabel6 = UILabel(frame: CGRectZero)
+        let userLogoLabel6 = UILabel()
         view.addSubview(userLogoLabel6)
         userLogoLabel6.text = userLogo6.name
         userLogoLabel6.textAlignment = .Right
@@ -138,7 +138,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(80)
         }
         
-        let userLogoLabel7 = UILabel(frame: CGRectZero)
+        let userLogoLabel7 = UILabel()
         view.addSubview(userLogoLabel7)
         userLogoLabel7.text = userLogo7.name
         userLogoLabel7.snp_makeConstraints { (make) in
@@ -157,7 +157,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(80)
         }
         
-        let userLogoLabel8 = UILabel(frame: CGRectZero)
+        let userLogoLabel8 = UILabel()
         view.addSubview(userLogoLabel8)
         userLogoLabel8.text = userLogo8.name
         userLogoLabel8.snp_makeConstraints { (make) in
@@ -176,7 +176,7 @@ public class WMobileKitUserLogoExamplesVC: WSideMenuContentVC {
             make.height.equalTo(100)
         }
         
-        let userLogoLabel9 = UILabel(frame: CGRectZero)
+        let userLogoLabel9 = UILabel()
         view.addSubview(userLogoLabel9)
         userLogoLabel9.text = userLogo9.name
         userLogoLabel9.snp_makeConstraints { (make) in

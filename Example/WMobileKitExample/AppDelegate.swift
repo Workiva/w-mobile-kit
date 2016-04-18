@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  WMobileKit
+//  WMobileKitExample
 
 import UIKit
 import WMobileKit

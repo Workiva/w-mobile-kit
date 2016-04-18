@@ -1,40 +1,44 @@
 //
-//  WMobileKitLeftMenuTVC.swift
+//  LeftMenuVCExample.swift
 //  WMobileKitExample
 
 import UIKit
 import WMobileKit
 
-class WMobileKitLeftMenuTVC: UITableViewController {
+class NavigationVC: UINavigationController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}
 
-    lazy var baseContentVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc0") as! WMobileKitNVC // WSideMenuContentVC
-    lazy var pagingControlExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc1") as! WMobileKitNVC // WMobileKitPagingControlExamplesVC
-    lazy var pagingSelectorVC:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc3") as! WMobileKitNVC // WPagingSelectorVC
-    lazy var userLogoExamples:WMobileKitNVC = mainStoryboard.instantiateViewControllerWithIdentifier("vc5") as! WMobileKitNVC // WMobileKitUserLogoExamplesVC
+class LeftMenuTVCExample: UITableViewController {
+    lazy var pagingControlExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("pagingControlExamplesVC") as! NavigationVC // PagingControlExamplesVC
+    lazy var pagingSelectorVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("pagingSelectorVC") as! NavigationVC // WPagingSelectorVC
+    lazy var userLogoViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("userLogoViewExamplesVC") as! NavigationVC // UserLogoViewExamplesVC
+    lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("modalViewExamplesVC") as! NavigationVC // ModalViewExamplesVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            sideMenuController()?.changeMainViewController(baseContentVC)
+            sideMenuController()?.changeMainViewController(pagingControlExamplesVC)
             break
         case 1:
-            sideMenuController()?.changeMainViewController(pagingControlExamples)
-            break
-        case 2:
             // Create simple VC's to send to pagingSelectorVC
             let vc1 = WSideMenuContentVC()
-            let vc2 = WSideMenuContentVC()
-            let vc3 = WSideMenuContentVC()
-            let vc4 = mainStoryboard.instantiateViewControllerWithIdentifier("vc4") as! WSideMenuContentVC
             vc1.view.backgroundColor = UIColor.greenColor()
+
+            let vc2 = WSideMenuContentVC()
             vc2.view.backgroundColor = UIColor.blueColor()
+
+            let vc3 = WSideMenuContentVC()
             vc3.view.backgroundColor = UIColor.redColor()
+
+            let vc4 = mainStoryboard.instantiateViewControllerWithIdentifier("textVC") as! WSideMenuContentVC
 
             if let pagingVC = pagingSelectorVC.viewControllers[0] as? WPagingSelectorVC {
                 pagingVC.tabWidth = 90
+                pagingVC.pagingControlHeight = 44
                 pagingVC.tabTextColor = WThemeManager.sharedInstance.currentTheme.secondaryTextColor
-                // FIXME: This value can be changed, should be removed or altered before public release
-                // pagingVC.pagingControlHeight = 100
 
                 let pages = [
                     WPage(title: "Green VC", viewController: vc1),
@@ -48,8 +52,11 @@ class WMobileKitLeftMenuTVC: UITableViewController {
 
             sideMenuController()?.changeMainViewController(pagingSelectorVC)
             break
+        case 2:
+            sideMenuController()?.changeMainViewController(userLogoViewExamplesVC)
+            break
         case 3:
-            sideMenuController()?.changeMainViewController(userLogoExamples)
+            sideMenuController()?.changeMainViewController(modalViewExamplesVC)
             break
         default:
             break
@@ -65,6 +72,6 @@ class WMobileKitLeftMenuTVC: UITableViewController {
     }
 
     func defaultVC() -> UIViewController {
-        return baseContentVC
+        return pagingControlExamplesVC
     }
 }
