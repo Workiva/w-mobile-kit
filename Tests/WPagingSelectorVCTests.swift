@@ -1,6 +1,6 @@
 //
 //  WPagingSelectorVCTests.swift
-//  WPagingSelectorVCTests
+//  WMobileKit
 
 import Quick
 import Nimble
