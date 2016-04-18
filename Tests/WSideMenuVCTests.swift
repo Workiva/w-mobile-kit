@@ -96,11 +96,9 @@ class WSideMenuVCSpec: QuickSpec {
 
             describe("controller management") {
                 var newViewController: UIViewController!
-                //var containerView: UIView!
 
                 beforeEach({ 
                     newViewController = UIViewController()
-                  //  containerView = UIView()
                 })
 
                 it("should change to the new main view controller") {
