@@ -1,6 +1,6 @@
 //
 //  WThemeTests.swift
-//  WThemeTests
+//  WMobileKit
 
 import Quick
 import Nimble

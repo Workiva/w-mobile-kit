@@ -5,24 +5,30 @@
 import Foundation
 import UIKit
 
-public class WUserLogoView : UIView {
-    public var initialsLabel = UILabel(frame: CGRectZero)
-    
-    public var circleLayer = CAShapeLayer()
-    
-    public var name : String? {
+public class WUserLogoView: UIView {
+    public var initialsLabel = UILabel()
+    var circleLayer = CAShapeLayer()
+
+    // Overrides the mapped color
+    public var color: UIColor? {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var name: String? {
         didSet {
             setupUI()
         }
     }
     
-    public var lineWidth:CGFloat = 1.0 {
+    public var lineWidth: CGFloat = 1.0 {
         didSet {
             setupUI()
         }
     }
     
-    public override var bounds : CGRect {
+    public override var bounds: CGRect {
         didSet {
             if (!subviews.contains(initialsLabel)) {
                 commonInit()
@@ -63,7 +69,9 @@ public class WUserLogoView : UIView {
         }
         
         if let name = name {
-            circleLayer.strokeColor = mapNameToColor(name).CGColor
+            let mappedColor:UIColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name)
+
+            circleLayer.strokeColor = mappedColor.CGColor
 
             let initials:String = name.initials()
             
@@ -74,7 +82,7 @@ public class WUserLogoView : UIView {
             initialsLabel.textAlignment = NSTextAlignment.Center
             initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
             initialsLabel.adjustsFontSizeToFitWidth = true
-            initialsLabel.textColor = mapNameToColor(name)
+            initialsLabel.textColor = mappedColor
             
         } else {
             circleLayer.strokeColor = UIColor.blueColor().CGColor
@@ -90,8 +98,9 @@ public class WUserLogoView : UIView {
         
         layer.addSublayer(circleLayer)
     }
-    
-    public func mapNameToColor(name: String) -> UIColor {
+
+    // Can be overridden for differnt mappings
+    public class func mapNameToColor(name: String) -> UIColor {
         let colorMapValue = abs(Double(name.hashValue)) % 5
 
         switch colorMapValue {
@@ -113,7 +122,7 @@ public class WUserLogoView : UIView {
 
 public extension String {
     public func initials() -> String {
-        let range = Range<String.Index>(start: self.startIndex, end: self.endIndex)
+        let range = self.startIndex..<self.endIndex
         var initials = String()
 
         enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, _) -> () in
