@@ -14,6 +14,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Action Sheets
         let actionSheetLabel = UILabel()
         actionSheetLabel.text = "Action Sheet Examples"
         actionSheetLabel.textAlignment = NSTextAlignment.Center
@@ -34,7 +35,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(permissionsSheetButton)
         permissionsSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(actionSheetLabel.snp_bottom).offset(25)
+            make.top.equalTo(actionSheetLabel.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -65,6 +66,32 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.top.equalTo(iconSheetButton.snp_bottom).offset(25)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
+        }
+
+        // Toasts
+        let toastLabel = UILabel()
+        toastLabel.text = "Toast Examples"
+        toastLabel.textAlignment = NSTextAlignment.Center
+
+        view.addSubview(toastLabel)
+        toastLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(sortSheetButton.snp_bottom).offset(32)
+            make.centerX.equalTo(view)
+            make.width.equalTo(220)
+        }
+
+        let simpleToastButton = UIButton(type: UIButtonType.RoundedRect)
+        simpleToastButton.backgroundColor = UIColor.lightGrayColor()
+        simpleToastButton.tintColor = UIColor.greenColor()
+        simpleToastButton.setTitle("Simple Toast", forState: UIControlState.Normal)
+        simpleToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        simpleToastButton.addTarget(self, action: #selector(presentSimpleToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(simpleToastButton)
+        simpleToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(toastLabel.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(112)
         }
 
         view.layoutIfNeeded()
@@ -169,8 +196,9 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         presentViewController(actionSheetSort, animated: true, completion: nil)
     }
 
-    public func presentToast(sender: UIButton) {
-        WToastManager.sharedInstance.showToast("Test")
+    public func presentSimpleToast(sender: UIButton) {
+        let toast = WToastView("Simple Toast")
+        WToastManager.sharedInstance.showToast(toast)
     }
 }
 
