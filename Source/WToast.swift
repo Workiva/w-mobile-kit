@@ -22,8 +22,6 @@ public class WToastManager: NSObject {
     }
     
     public func showToast(toast: WToastView) {
-        removeCurrentToast()
-
         currentToast = toast
 
         let rootVC = rootViewController
@@ -64,16 +62,18 @@ public class WToastManager: NSObject {
         
         toast.setupUI()
     }
-
-    public func removeCurrentToast() {
-        currentToast?.removeFromSuperview()
-    }
 }
 
 public class WToastView : UIView {
+    public var toastAlpha: CGFloat = 0.7 {
+        didSet {
+            alpha = toastAlpha
+        }
+    }
+
     public var message = "" {
         didSet {
-            setupUI()
+            messageLabel.text = message
         }
     }
 
@@ -91,7 +91,7 @@ public class WToastView : UIView {
 
     public var toastColor = UIColor.blackColor() {
         didSet {
-            setupUI()
+            backgroundColor = toastColor
         }
     }
     
@@ -101,6 +101,8 @@ public class WToastView : UIView {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+
+        commonInit()
     }
     
     public override init(frame: CGRect) {
@@ -177,9 +179,8 @@ public class WToastView : UIView {
         messageLabel.text = message
         messageLabel.font = UIFont.systemFontOfSize(16)
         messageLabel.textColor = UIColor.whiteColor()
-//        messageLabel.backgroundColor = UIColor.redColor()
 
-        alpha = 0.7
+        alpha = toastAlpha
 
         layoutIfNeeded()
     }
