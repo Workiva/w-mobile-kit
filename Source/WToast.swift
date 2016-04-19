@@ -26,10 +26,8 @@ public class WToastManager: NSObject, WToastViewDelegate {
 
     public static let sharedInstance = WToastManager()
     
-    public var rootWindow: UIWindow? {
-        get {
-            return UIApplication.sharedApplication().windows.first
-        }
+    public static func rootWindow() -> UIWindow {
+        return UIApplication.sharedApplication().windows.first!
     }
     
     private override init() {
@@ -39,34 +37,34 @@ public class WToastManager: NSObject, WToastViewDelegate {
     public func showToast(toast: WToastView) {
         showTimer?.invalidate()
         
+        NSNotificationCenter.defaultCenter().postNotificationName("killAllToasts", object: nil)
+        
         currentToast = toast
         currentToast?.delegate = self
         
-        NSNotificationCenter.defaultCenter().postNotificationName("killAllToasts", object: nil)
-        
-        rootWindow?.addSubview(toast)
+        WToastManager.rootWindow().addSubview(toast)
         toast.snp_makeConstraints { (make) in
-            make.centerX.equalTo(rootWindow!)
-            make.width.equalTo(rootWindow!).multipliedBy(0.8)
-            make.top.equalTo(rootWindow!.snp_bottom)
+            make.centerX.equalTo(WToastManager.rootWindow())
+            make.width.equalTo(WToastManager.rootWindow()).multipliedBy(0.8)
+            make.top.equalTo(WToastManager.rootWindow().snp_bottom)
             make.height.equalTo(64)
         }
-        rootWindow!.layoutIfNeeded()
+        WToastManager.rootWindow().layoutIfNeeded()
         
         toast.snp_remakeConstraints { (make) in
-            make.centerX.equalTo(rootWindow!)
-            make.width.equalTo(rootWindow!).multipliedBy(0.8)
-            make.bottom.equalTo(rootWindow!).offset(-TOAST_OFFSET)
+            make.centerX.equalTo(WToastManager.rootWindow())
+            make.width.equalTo(WToastManager.rootWindow()).multipliedBy(0.8)
+            make.bottom.equalTo(WToastManager.rootWindow()).offset(-TOAST_OFFSET)
             make.height.equalTo(TOAST_HEIGHT)
         }
 
         UIView.animateWithDuration(TOAST_ANIMATION_DURATION, delay: 0, options: .CurveEaseInOut,
             animations: {
-                self.rootWindow?.layoutIfNeeded()
+                WToastManager.rootWindow().layoutIfNeeded()
             },
             completion: { finished in
                 if (toast.toastOptions == .DismissesAfterTime) {
-                    self.showTimer = NSTimer.scheduledTimerWithTimeInterval(TOAST_SHOW_DURATION, target: self, selector: "hideToast", userInfo: toast, repeats: false)
+//                    self.showTimer = NSTimer.scheduledTimerWithTimeInterval(TOAST_SHOW_DURATION, target: self, selector: "hideToast", userInfo: toast, repeats: false)
                 }
             }
         )
@@ -81,15 +79,15 @@ public class WToastManager: NSObject, WToastViewDelegate {
         
         if let currentToast = currentToast {
             currentToast.snp_remakeConstraints { (make) in
-                make.centerX.equalTo(rootWindow!)
-                make.width.equalTo(rootWindow!).multipliedBy(0.8)
-                make.top.equalTo(rootWindow!.snp_bottom)
+                make.centerX.equalTo(WToastManager.rootWindow())
+                make.width.equalTo(WToastManager.rootWindow()).multipliedBy(0.8)
+                make.top.equalTo(WToastManager.rootWindow().snp_bottom)
                 make.height.equalTo(TOAST_HEIGHT)
             }
             
             UIView.animateWithDuration(TOAST_ANIMATION_DURATION,
                 animations: {
-                    self.rootWindow!.layoutIfNeeded()
+                    WToastManager.rootWindow().layoutIfNeeded()
                 },
                 completion: { finished in
                     currentToast.removeFromSuperview()
@@ -120,6 +118,12 @@ public class WToastView: UIView {
     public var toastColor = UIColor.blackColor() {
         didSet {
             backgroundView.backgroundColor = toastColor
+        }
+    }
+    
+    public var rootWindow: UIWindow? {
+        get {
+            return UIApplication.sharedApplication().windows.first
         }
     }
     
@@ -200,10 +204,32 @@ public class WToastView: UIView {
     }
     
     func toastWasTapped(sender: UITapGestureRecognizer) {
-        delegate?.toastWasTapped?(sender)
+//        delegate?.toastWasTapped?(sender)
+        hide()
     }
     
     func hide() {
-        removeFromSuperview()
+        if (WToastManager.sharedInstance.currentToast == self) {
+            //animate out
+            snp_remakeConstraints{ (make) in
+                make.top.equalTo(WToastManager.rootWindow().snp_bottom)
+                make.width.equalTo(WToastManager.rootWindow()).multipliedBy(0.8)
+                make.height.equalTo(TOAST_HEIGHT)
+                make.centerX.equalTo(WToastManager.rootWindow())
+            }
+            
+            UIView.animateWithDuration(TOAST_ANIMATION_DURATION,
+                animations: { 
+                    WToastManager.rootWindow().layoutIfNeeded()
+                },
+                completion: { finished in
+                    self.removeFromSuperview()
+                }
+            )
+            
+        } else {
+            // covered by current toast
+            removeFromSuperview()
+        }
     }
 }
