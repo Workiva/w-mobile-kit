@@ -6,14 +6,29 @@ import Foundation
 import UIKit
 import SnapKit
 
-public class WToastManager: NSObject {
+@objc protocol WToastViewDelegate {
+    optional func toastWasTapped(sender: UITapGestureRecognizer)
+}
+
+public enum WToastHideOptions {
+    case DismissOnTap;
+    case DismissesAfterTime;
+}
+
+let TOAST_HEIGHT = 64
+let TOAST_OFFSET = 32
+let TOAST_SHOW_DURATION = 2.0
+let TOAST_ANIMATION_DURATION = 0.3
+
+public class WToastManager: NSObject, WToastViewDelegate {
     var currentToast: WToastView?
+    var showTimer: NSTimer?
 
     public static let sharedInstance = WToastManager()
     
-    public var rootViewController: UIViewController? {
+    public var rootWindow: UIWindow? {
         get {
-            return UIApplication.sharedApplication().windows.first?.rootViewController
+            return UIApplication.sharedApplication().windows.first
         }
     }
     
@@ -22,82 +37,97 @@ public class WToastManager: NSObject {
     }
     
     public func showToast(toast: WToastView) {
+        showTimer?.invalidate()
+        
         currentToast = toast
-
-        let rootVC = rootViewController
-        let window = UIApplication.sharedApplication().windows.first!
-        window.addSubview(toast)
+        currentToast?.delegate = self
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("killAllToasts", object: nil)
+        
+        rootWindow?.addSubview(toast)
         toast.snp_makeConstraints { (make) in
-            make.centerX.equalTo(window)
-            make.width.equalTo(window).multipliedBy(0.8)
-            make.top.equalTo(window.snp_bottom)
+            make.centerX.equalTo(rootWindow!)
+            make.width.equalTo(rootWindow!).multipliedBy(0.8)
+            make.top.equalTo(rootWindow!.snp_bottom)
             make.height.equalTo(64)
         }
-        window.layoutIfNeeded()
+        rootWindow!.layoutIfNeeded()
         
         toast.snp_remakeConstraints { (make) in
-            make.centerX.equalTo(window)
-            make.width.equalTo(window).multipliedBy(0.8)
-            make.bottom.equalTo(window).offset(-32)
-            make.height.equalTo(64)
+            make.centerX.equalTo(rootWindow!)
+            make.width.equalTo(rootWindow!).multipliedBy(0.8)
+            make.bottom.equalTo(rootWindow!).offset(-TOAST_OFFSET)
+            make.height.equalTo(TOAST_HEIGHT)
         }
 
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-            window.layoutIfNeeded()
-            }) { (finished) in
-                UIView.animateWithDuration(0.3, delay: 1.0, options: .CurveEaseInOut, animations: {
-                    toast.snp_remakeConstraints { (make) in
-                        make.centerX.equalTo(window)
-                        make.width.equalTo(window).multipliedBy(0.8)
-                        make.top.equalTo(window.snp_bottom)
-                        make.height.equalTo(64)
-                    }
-                    
-                    window.layoutIfNeeded()
-                    }, completion: { (finished) in
-                        toast.removeFromSuperview()
-                        self.currentToast = nil
-                })
+        UIView.animateWithDuration(TOAST_ANIMATION_DURATION, delay: 0, options: .CurveEaseInOut,
+            animations: {
+                self.rootWindow?.layoutIfNeeded()
+            },
+            completion: { finished in
+                if (toast.toastOptions == .DismissesAfterTime) {
+                    self.showTimer = NSTimer.scheduledTimerWithTimeInterval(TOAST_SHOW_DURATION, target: self, selector: "hideToast", userInfo: toast, repeats: false)
+                }
+            }
+        )
+        
+        currentToast?.setupUI()
+    }
+    
+    public func hideToast() {
+        if let showTimer = showTimer {
+            showTimer.invalidate()
         }
         
-        toast.setupUI()
+        if let currentToast = currentToast {
+            currentToast.snp_remakeConstraints { (make) in
+                make.centerX.equalTo(rootWindow!)
+                make.width.equalTo(rootWindow!).multipliedBy(0.8)
+                make.top.equalTo(rootWindow!.snp_bottom)
+                make.height.equalTo(TOAST_HEIGHT)
+            }
+            
+            UIView.animateWithDuration(TOAST_ANIMATION_DURATION,
+                animations: {
+                    self.rootWindow!.layoutIfNeeded()
+                },
+                completion: { finished in
+                    currentToast.removeFromSuperview()
+                    self.currentToast = nil
+                }
+            )
+        }
+    }
+    
+    func toastWasTapped(sender: UITapGestureRecognizer) {
+        hideToast()
     }
 }
 
-public class WToastView : UIView {
-    public var toastAlpha: CGFloat = 0.7 {
-        didSet {
-            alpha = toastAlpha
-        }
-    }
-
+public class WToastView: UIView {
     public var message = "" {
         didSet {
             messageLabel.text = message
         }
     }
-
-    public var title: String? {
+    
+    public var rightIcon: UIImage? {
         didSet {
-            setupUI()
-        }
-    }
-
-    public var icon: UIImage? {
-        didSet {
-            setupUI()
-        }
-    }
-
-    public var toastColor = UIColor.blackColor() {
-        didSet {
-            backgroundColor = toastColor
+            iconImageView.image = rightIcon
         }
     }
     
-    private var messageLabel = UILabel(frame: CGRectZero)
-    private var titleLabel: UILabel?
-    private var iconImageView: UIImageView?
+    public var toastColor = UIColor.blackColor() {
+        didSet {
+            backgroundView.backgroundColor = toastColor
+        }
+    }
+    
+    private weak var delegate: WToastViewDelegate?
+    public var toastOptions: WToastHideOptions = .DismissesAfterTime
+    public var messageLabel = UILabel(frame: CGRectZero)
+    public var iconImageView = UIImageView(frame: CGRectZero)
+    public var backgroundView = UIView(frame: CGRectZero)
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -111,77 +141,69 @@ public class WToastView : UIView {
         commonInit()
     }
     
-    public convenience init(_ message: String, title: String? = nil, icon: UIImage? = nil, toastColor: UIColor = UIColor.blackColor()) {
+    public convenience init(message: String, icon: UIImage? = nil, toastColor: UIColor = UIColor.blackColor(), alpha: CGFloat = 0.7) {
         self.init(frame: CGRectZero)
         
         self.message = message
-        self.title = title
-        self.icon = icon
         self.toastColor = toastColor
+        self.backgroundView.alpha = alpha
+        self.rightIcon = icon
+        iconImageView.alpha = alpha
     }
     
     public func commonInit() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hide"), name: "killAllToasts", object: nil)
+        
+        addSubview(backgroundView)
         addSubview(messageLabel)
+        addSubview(iconImageView)
         
-        if title != nil {
-            titleLabel = UILabel(frame: CGRectZero)
-            addSubview(titleLabel!)
-        }
-        
-        if icon != nil {
-            iconImageView = UIImageView(frame: CGRectZero)
-            addSubview(iconImageView!)
-        }
+        let recognizer = UITapGestureRecognizer(target: self, action: Selector("toastWasTapped:"))
+        addGestureRecognizer(recognizer)
     }
     
     public func setupUI() {
-        backgroundColor = toastColor
-
-        layer.cornerRadius = 10.0
+        layer.cornerRadius = 5.0
         clipsToBounds = true
+        backgroundColor = UIColor.clearColor()
         
-        if let icon = icon {
-            iconImageView?.snp_remakeConstraints{ (make) in
-                make.left.equalTo(self).offset(18)
-                make.top.equalTo(self).offset(6)
-                make.width.equalTo(20)
-                make.height.equalTo(20)
-            }
-            iconImageView?.image = icon
+        backgroundView.snp_remakeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.bottom.equalTo(self)
+            make.top.equalTo(self)
         }
+        backgroundView.backgroundColor = toastColor
         
-        if let title = title {
-            titleLabel?.snp_remakeConstraints{ (make) in
-                if icon != nil {
-                    make.left.equalTo(iconImageView!).offset(6)
-                } else {
-                    make.left.equalTo(self).offset(18)
-                }
-                make.top.equalTo(self).offset(6)
-                make.height.equalTo(20)
-                make.right.equalTo(self).offset(-18)
-            }
-            titleLabel?.text = title
-            titleLabel?.font = UIFont.systemFontOfSize(20)
+        iconImageView.snp_remakeConstraints { (make) in
+            make.centerY.equalTo(self)
+            make.right.equalTo(self).offset(-30)
+            make.height.equalTo(14)
+            make.width.equalTo(14)
         }
+        iconImageView.image = rightIcon
         
         messageLabel.snp_remakeConstraints { (make) in
-            make.centerX.equalTo(self)
-            make.bottom.equalTo(self).offset(-6)
-            
-            if title != nil || icon != nil {
-                make.top.equalTo(titleLabel!.snp_bottom).offset(12)
-            } else {
-                make.top.equalTo(self).offset(6)
-            }
+            make.centerY.equalTo(self)
+            make.top.equalTo(self).offset(8)
+            make.bottom.equalTo(self).offset(-8)
+            make.left.equalTo(self).offset(30)
+            make.right.equalTo(self).offset(-30)
         }
-        messageLabel.numberOfLines = 0
+        messageLabel.numberOfLines = 1
         messageLabel.text = message
+        messageLabel.textAlignment = .Center
         messageLabel.font = UIFont.systemFontOfSize(16)
         messageLabel.textColor = UIColor.whiteColor()
 
-        alpha = toastAlpha
-
         layoutIfNeeded()
+    }
+    
+    func toastWasTapped(sender: UITapGestureRecognizer) {
+        delegate?.toastWasTapped?(sender)
+    }
+    
+    func hide() {
+        removeFromSuperview()
     }
 }

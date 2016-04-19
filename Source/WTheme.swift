@@ -45,13 +45,15 @@ public class WTheme: NSObject {
     
     // Action Sheet
     public var actionSheetSelectColor: UIColor = UIColor.blueColor()
-    public var actionSheetTopLineColor: UIColor = UIColor.redColor()
     public var actionSheetCancelTextColor: UIColor = UIColor.greenColor()
 
     // Navigation Bar
     public var navigationBarColor: UIColor = UIColor.blueColor()
     public var navigationTintColor: UIColor = UIColor.whiteColor()
     public var navigationTextColor: UIColor = UIColor.whiteColor()
+    
+    // Toast
+    public var toastBGColor: UIColor = UIColor.greenColor()
 }
 
 // Theme with all default values
@@ -77,11 +79,12 @@ public class CustomTheme: WTheme {
         pagingSelectorControlColor = UIColor.whiteColor()
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
         
-        actionSheetTopLineColor = UIColor(hex: 0x42AD48)
         actionSheetCancelTextColor = UIColor(hex: 0x42AD48)
 
         primaryTextColor = UIColor(hex: 0x595959)
         secondaryTextColor = UIColor(hex: 0x595959)
+        
+        toastBGColor = UIColor(hex: 0x42AD48)
     }
 }
 
@@ -104,6 +107,7 @@ public class WThemeManager: NSObject {
         customizeActionSheet(theme)
         customizeNavigationBar(theme)
         customizeSideMenuVC(theme)
+        customizeToast(theme)
     }
 
     private func customizePagingSelectorControl(theme: WTheme) {
@@ -122,6 +126,10 @@ public class WThemeManager: NSObject {
 
         // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().translucent = false
+    }
+    
+    private func customizeToast(theme: WTheme) {
+        WToastView.appearance().backgroundColor = theme.toastBGColor
     }
 
     private func customizeSideMenuVC(theme: WTheme) {}

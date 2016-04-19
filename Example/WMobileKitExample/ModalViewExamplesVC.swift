@@ -197,7 +197,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     }
 
     public func presentSimpleToast(sender: UIButton) {
-        let toast = WToastView("Simple Toast")
+        let toast = WToastView(message: "Simple Toast", icon: UIImage(named: "close"))
         WToastManager.sharedInstance.showToast(toast)
     }
 }
