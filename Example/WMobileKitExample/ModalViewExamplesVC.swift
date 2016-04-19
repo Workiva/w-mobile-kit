@@ -145,16 +145,16 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheetIcons = WActionSheetVC<String>()
 
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
-        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder_1"), style: ActionStyle.Normal, handler: { action in
+        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal, handler: { action in
             NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear_1"), style: ActionStyle.Normal, handler: { action in
+        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear"), style: ActionStyle.Normal, handler: { action in
             NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person_1"), style: ActionStyle.Normal, handler: { action in
+        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal, handler: { action in
             NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Destructive, handler: { action in
+        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash"), style: ActionStyle.Destructive, handler: { action in
             NSLog(action.title! + " was tapped")
         }))
 

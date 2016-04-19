@@ -491,8 +491,8 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 iconImageView?.snp_makeConstraints(closure: { (make) in
                     make.left.equalTo(self).offset(14)
                     make.centerY.equalTo(self)
-                    make.width.equalTo(18)
-                    make.height.equalTo(18)
+                    make.width.equalTo(25)
+                    make.height.equalTo(25)
                 })
             }
             
