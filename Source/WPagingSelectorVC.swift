@@ -29,7 +29,7 @@ public class WScrollView : UIScrollView {
             super.touchesBegan(touches, withEvent: event)
         }
     }
-    
+
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!dragging) {
             nextResponder()?.touchesMoved(touches, withEvent: event)
@@ -37,7 +37,7 @@ public class WScrollView : UIScrollView {
             super.touchesMoved(touches, withEvent: event)
         }
     }
-    
+
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!dragging) {
             nextResponder()?.touchesEnded(touches, withEvent: event)
@@ -75,14 +75,14 @@ public class WSelectionIndicatorView : UIView {
 public class WTabView : UIView {
     private var title = String()
     private var label = UILabel()
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public init(title text: String) {
         super.init(frame: CGRectZero)
-        
+
         title = text
         label.text = title
         label.textAlignment = NSTextAlignment.Center
@@ -122,12 +122,12 @@ public class WPagingSelectorControl : UIControl {
     private var selectedContainer: WTabView?
     private var tabViews = Array<WTabView>()
     private weak var delegate: WPagingSelectorVCDelegate?
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     public convenience init(titles: Array<String>) {
         self.init(titles: titles, tabWidth: nil)
     }
@@ -178,13 +178,13 @@ public class WPagingSelectorControl : UIControl {
 
         commonInit()
     }
-    
+
     public func commonInit() {
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollEnabled = true
-        
+
         addSubview(scrollView)
         scrollView.snp_makeConstraints { (make) in
             make.left.equalTo(self)
@@ -192,18 +192,18 @@ public class WPagingSelectorControl : UIControl {
             make.bottom.equalTo(self)
             make.top.equalTo(self)
         }
-        
+
         var contentWidth:CGFloat = CGFloat(0)
         if (widthMode == .Static) {
             contentWidth = CGFloat(tabWidth! * pages.count)
         }
-        
+
         scrollView.addSubview(contentView);
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
             make.top.equalTo(scrollView)
             make.height.equalTo(scrollView)
-            
+
             if (widthMode == .Dynamic) {
                 make.width.equalTo(scrollView)
             } else if (contentWidth > UIScreen.mainScreen().bounds.width) {
@@ -212,12 +212,12 @@ public class WPagingSelectorControl : UIControl {
                 make.width.equalTo(scrollView)
             }
         }
-        
+
         contentView.addSubview(tabContainerView)
         tabContainerView.snp_makeConstraints { (make) in
             make.top.equalTo(contentView)
             make.height.equalTo(contentView)
-            
+
             if (widthMode == .Dynamic) {
                 make.left.equalTo(contentView)
                 make.width.equalTo(contentView)
@@ -233,7 +233,7 @@ public class WPagingSelectorControl : UIControl {
                 }
             }
         }
-        
+
         contentView.addSubview(selectionIndicatorView)
 
         opaque = false
@@ -242,14 +242,14 @@ public class WPagingSelectorControl : UIControl {
             for i in 0..<pages.count {
                 let tab = WTabView(title: pages[i].title)
                 tab.label.textColor = tabTextColor
-                                
+
                 tab.tag = i
                 tab.userInteractionEnabled = true
-                
+
                 tabContainerView.addSubview(tab)
-                
+
                 tabViews.append(tab)
-                
+
                 tab.snp_makeConstraints { (make) in
                     if i == 0 {
                         make.left.equalTo(tabContainerView)
@@ -262,14 +262,14 @@ public class WPagingSelectorControl : UIControl {
                     } else {
                         make.width.equalTo(tabWidth!)
                     }
-                    
+
                     make.height.equalTo(tabContainerView)
                     make.top.equalTo(tabContainerView)
                 }
-                
+
                 let recognizer = UITapGestureRecognizer(target: self, action: #selector(WPagingSelectorControl.tappedTabItem(_:)))
                 tab.addGestureRecognizer(recognizer)
-                
+
                 if i == 0 {
                     selectedContainer = tab
                 }
@@ -287,7 +287,7 @@ public class WPagingSelectorControl : UIControl {
             scrollView.contentSize = CGSize(width: CGFloat(tabWidth! * pages.count), height: contentView.frame.size.height)
         }
     }
-    
+
     @objc private func tappedTabItem(recognizer: UITapGestureRecognizer) {
         let index = (recognizer.view?.tag)!
         if (index == selectedContainer!.tag) {
@@ -308,17 +308,18 @@ public class WPagingSelectorControl : UIControl {
         newSelectedContainer.label.font = UIFont.boldSystemFontOfSize(newSelectedContainer.label.font.pointSize)
 
         selectedContainer = newSelectedContainer
-        
+
         scrollView.scrollRectToVisible(selectedContainer!.frame, animated: true)
 
         selectionIndicatorView.moveToSelection(selectedContainer!, numberOfSections: pages.count, contentView: contentView)
 
-        UIView.animateWithDuration(ANIMATION_DURATION, animations: {
-            self.layoutIfNeeded()
-            })
-        { (finished) in
-            self.delegate?.didChangeToTab?(self, tab: tabIndex)
-        }
+        UIView.animateWithDuration(ANIMATION_DURATION,
+            animations: {
+                self.layoutIfNeeded()
+            },
+            completion: { finished in
+                self.delegate?.didChangeToTab?(self, tab: tabIndex)
+        })
     }
 }
 
@@ -357,7 +358,7 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
     var mainViewController: UIViewController?
     var mainContainerView = UIView(frame: CGRectZero)
     var currentPageIndex = 0
-    
+
     public var pages:[WPage] = [WPage]() {
         didSet {
             if let pagingSelectorControl = pagingSelectorControl {
@@ -377,12 +378,12 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
             }
         }
     }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.addSubview(mainContainerView);
-        
+
         mainContainerView.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
@@ -441,7 +442,7 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
         if let newMainViewController = pages[tab].viewController {
             mainViewController = newMainViewController
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
-            
+
             // Animates view controller in left or right
             mainViewController?.view.snp_remakeConstraints(closure: { (make) in
                 if (tab < currentPageIndex) {
@@ -453,18 +454,18 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
                 make.bottom.equalTo(mainContainerView)
                 make.width.equalTo(mainContainerView)
             })
-            
+
             oldMainViewController
-            
+
             mainContainerView.layoutIfNeeded()
-            
+
             mainViewController?.view.snp_remakeConstraints(closure: { (make) in
                 make.left.equalTo(mainContainerView)
                 make.top.equalTo(mainContainerView)
                 make.bottom.equalTo(mainContainerView)
                 make.right.equalTo(mainContainerView)
             })
-            
+
             if oldMainViewController != nil {
                 oldMainViewController?.view.snp_remakeConstraints(closure: { (make) in
                     if (tab > currentPageIndex) {
@@ -478,20 +479,19 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
                 })
             }
             
-            UIView.animateWithDuration(ANIMATION_DURATION, animations: {
-                self.mainContainerView.layoutIfNeeded()
-                }, completion: { (finished) in
+            UIView.animateWithDuration(ANIMATION_DURATION,
+                animations: {
+                    self.mainContainerView.layoutIfNeeded()
+                },
+                completion: { (finished) in
                     if let oldMainViewController = oldMainViewController {
                         self.removeViewControllerFromContainer(oldMainViewController)
                     }
             })
         }
     }
-    
+
     @objc internal func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
         currentPageIndex = tab
     }
 }
-
-
-
