@@ -49,3 +49,9 @@ Pods/
 Carthage/Checkouts
 
 Carthage/Build
+
+# Code Coverage
+code_coverage/
+test-reports/
+xcov/
+xcov_report/

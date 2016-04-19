@@ -1,6 +1,6 @@
 //
 //  WSideMenuVCTests.swift
-//  WSideMenuVCTests
+//  WMobileKit
 
 import Quick
 import Nimble
