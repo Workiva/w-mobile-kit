@@ -28,7 +28,7 @@ public struct WSideMenuOptions {
     public var backIcon: UIImage?
 }
 
-private enum WSideMenuState {
+enum WSideMenuState {
     case Open
     case Closed
 }
@@ -41,12 +41,12 @@ public class WSideMenuVC: UIViewController {
     public weak var delegate: WSideMenuProtocol?
 
     // Internal properties
-    private var mainContainerView = UIView(frame: CGRect.zero)
-    private var leftSideMenuContainerView = UIView(frame: CGRect.zero)
-    private var leftSideMenuBorderView = UIView()
-    private var mainContainerTapRecognizer: UITapGestureRecognizer?
-    private var menuState: WSideMenuState = .Closed
-    private var statusBarHidden = false
+    var mainContainerView = UIView(frame: CGRect.zero)
+    var leftSideMenuContainerView = UIView(frame: CGRect.zero)
+    var leftSideMenuBorderView = UIView()
+    var mainContainerTapRecognizer: UITapGestureRecognizer?
+    var menuState: WSideMenuState = .Closed
+    var statusBarHidden = false
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -64,6 +64,9 @@ public class WSideMenuVC: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Needed for views to not show behind the nav bar
+        UINavigationBar.appearance().translucent = false
 
         setupMenu()
     }
@@ -187,7 +190,7 @@ public class WSideMenuVC: UIViewController {
 
         delegate?.sideMenuWillOpen?()
 
-        statusBarHidden = !statusBarHidden
+        statusBarHidden = true
         
         if options!.showAboveStatusBar {
             UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
@@ -217,7 +220,7 @@ public class WSideMenuVC: UIViewController {
 
         delegate?.sideMenuWillClose?()
 
-        statusBarHidden = !statusBarHidden
+        statusBarHidden = false
 
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
@@ -235,6 +238,7 @@ public class WSideMenuVC: UIViewController {
         )
     }
 
+    @objc
     func mainContainerViewWasTapped(sender: AnyObject) {
         closeSideMenu()
     }
@@ -243,6 +247,10 @@ public class WSideMenuVC: UIViewController {
 public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Needed for views to not show behind the nav bar
+        UINavigationBar.appearance().translucent = false
+
         addWSideMenuButtons()
     }
 
