@@ -189,13 +189,13 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             }
 
             UIView.animateWithDuration(0.35, delay: 0.1,
-                                       usingSpringWithDamping: 0.7,
-                                       initialSpringVelocity: 5.0,
-                                       options: UIViewAnimationOptions.CurveEaseOut,
-                                       animations: {
-                                        self.view.layoutIfNeeded()
+                usingSpringWithDamping: 0.7,
+                initialSpringVelocity: 5.0,
+                options: UIViewAnimationOptions.CurveEaseOut,
+                animations: {
+                    self.view.layoutIfNeeded()
                 },
-                                       completion: nil)
+                completion: nil)
         }
     }
 
@@ -355,11 +355,9 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         let action = actionForIndexPath(indexPath)
         cell.backgroundColor = UIColor.whiteColor()
         cell.actionInfo = action
-        if ((sheetSeparatorStyle == .All && indexPath.row != 0) || (sheetSeparatorStyle == .DestructiveOnly && action?.actionStyle == ActionStyle.Destructive)) {
-            cell.separatorBar.hidden = false
-        } else {
-            cell.separatorBar.hidden = true
-        }
+
+        cell.separatorBar.hidden = !((sheetSeparatorStyle == .All && indexPath.row != 0)
+            || (sheetSeparatorStyle == .DestructiveOnly && action?.actionStyle == ActionStyle.Destructive))
 
         if (indexPath.row == selectedIndex) {
             cell.setSelectedAction(true)
