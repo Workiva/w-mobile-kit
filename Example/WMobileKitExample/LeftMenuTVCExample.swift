@@ -16,6 +16,7 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var pagingSelectorVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("pagingSelectorVC") as! NavigationVC // WPagingSelectorVC
     lazy var userLogoViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("userLogoViewExamplesVC") as! NavigationVC // UserLogoViewExamplesVC
     lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("modalViewExamplesVC") as! NavigationVC // ModalViewExamplesVC
+    lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textFieldExamplesVC") as! NavigationVC // TextFieldExamplesVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -57,6 +58,9 @@ class LeftMenuTVCExample: UITableViewController {
             break
         case 3:
             sideMenuController()?.changeMainViewController(modalViewExamplesVC)
+            break
+        case 4:
+            sideMenuController()?.changeMainViewController(textFieldExamplesVC)
             break
         default:
             break

@@ -72,16 +72,16 @@ public class CustomTheme: WTheme {
         super.init()
 
         // Override colors here
-        navigationBarColor = UIColor(hex: 0x42AD48)
+        navigationBarColor = UIColor(hex: 0x1F82A6)
 
-        pagingSelectorControlColor = UIColor.whiteColor()
+        pagingSelectorControlColor = UIColor(hex: 0x2495BE)
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
         
         actionSheetTopLineColor = UIColor(hex: 0x42AD48)
         actionSheetCancelTextColor = UIColor(hex: 0x42AD48)
 
-        primaryTextColor = UIColor(hex: 0x595959)
-        secondaryTextColor = UIColor(hex: 0x595959)
+        primaryTextColor = UIColor(hex: 0x2DBBEE)
+        secondaryTextColor = UIColor(hex: 0xFFFFFF)
     }
 }
 
