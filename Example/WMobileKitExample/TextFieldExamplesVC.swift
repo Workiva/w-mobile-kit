@@ -101,7 +101,7 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         bothIconTextField.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(bothIconLabel.snp_bottom).offset(4)
-            make.width.equalTo(200)
+            make.width.equalTo(view).offset(-10)
             make.height.equalTo(30)
         }
     }

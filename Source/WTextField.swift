@@ -81,12 +81,6 @@ public class WTextField: UITextField {
     }
 
     // MARK: - Custom Rect Sizings
-    public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-
-        setBottomBorder()
-    }
-
     public override func leftViewRectForBounds(bounds: CGRect) -> CGRect {
         let originY = (bounds.size.height - imageSquareSize) / 2
         return CGRectMake(0, originY, imageSquareSize, imageSquareSize)
@@ -106,6 +100,7 @@ public class WTextField: UITextField {
     }
 
     public override func textRectForBounds(bounds: CGRect) -> CGRect {
+        setBottomBorder()
         return wCustomTextRect(bounds)
     }
 
