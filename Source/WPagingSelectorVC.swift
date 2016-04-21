@@ -314,11 +314,11 @@ public class WPagingSelectorControl : UIControl {
         selectionIndicatorView.moveToSelection(selectedContainer!, numberOfSections: pages.count, contentView: contentView)
 
         UIView.animateWithDuration(ANIMATION_DURATION,
-                                   animations: {
-                                    self.layoutIfNeeded()
+            animations: {
+                self.layoutIfNeeded()
             },
-                                   completion: { finished in
-                                    self.delegate?.didChangeToTab?(self, tab: tabIndex)
+            completion: { finished in
+                self.delegate?.didChangeToTab?(self, tab: tabIndex)
         })
     }
 }
@@ -478,17 +478,19 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
                     make.width.equalTo(mainContainerView)
                 })
             }
-
-            UIView.animateWithDuration(ANIMATION_DURATION, animations: {
-                self.mainContainerView.layoutIfNeeded()
-                }, completion: { (finished) in
+            
+            UIView.animateWithDuration(ANIMATION_DURATION,
+                animations: {
+                    self.mainContainerView.layoutIfNeeded()
+                },
+                completion: { (finished) in
                     if let oldMainViewController = oldMainViewController {
                         self.removeViewControllerFromContainer(oldMainViewController)
                     }
             })
         }
     }
-    
+
     @objc internal func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
         currentPageIndex = tab
     }

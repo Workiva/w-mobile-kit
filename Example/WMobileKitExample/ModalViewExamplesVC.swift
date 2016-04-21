@@ -124,25 +124,29 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheet = WActionSheetVC<String>()
         actionSheet.titleString = "User Permissions"
 
-        actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheet.deselectAction()
-            actionSheet.setSelectedAction(action)
+        actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheet.deselectAction()
+                actionSheet.setSelectedAction(action)
         }))
-        actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheet.deselectAction()
-            actionSheet.setSelectedAction(action)
+        actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheet.deselectAction()
+                actionSheet.setSelectedAction(action)
         }))
-        actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheet.deselectAction()
-            actionSheet.setSelectedAction(action)
+        actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheet.deselectAction()
+                actionSheet.setSelectedAction(action)
         }))
-        actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive, handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheet.deselectAction()
-            actionSheet.setSelectedAction(action)
+        actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheet.deselectAction()
+                actionSheet.setSelectedAction(action)
         }))
 
         actionSheet.setSelectedAction(1)
@@ -159,17 +163,21 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheetIcons = WActionSheetVC<String>()
 
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
-        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal, handler: { action in
-            NSLog(action.title! + " was tapped")
+        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear"), style: ActionStyle.Normal, handler: { action in
-            NSLog(action.title! + " was tapped")
+        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear"), style: ActionStyle.Normal,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal, handler: { action in
-            NSLog(action.title! + " was tapped")
+        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash"), style: ActionStyle.Destructive, handler: { action in
-            NSLog(action.title! + " was tapped")
+        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash"), style: ActionStyle.Destructive,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
         }))
 
         actionSheetIcons.hasCancel = true
@@ -185,20 +193,23 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheetSort = WActionSheetVC<String>()
 
         actionSheetSort.titleString = "Sort Tasks"
-        actionSheetSort.addAction(WAction(title: "Status", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheetSort.deselectAction()
-            actionSheetSort.setSelectedAction(action)
+        actionSheetSort.addAction(WAction(title: "Status",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "File", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheetSort.deselectAction()
-            actionSheetSort.setSelectedAction(action)
+        actionSheetSort.addAction(WAction(title: "File",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Assigner", handler: { action in
-            NSLog(action.title! + " was tapped")
-            actionSheetSort.deselectAction()
-            actionSheetSort.setSelectedAction(action)
+        actionSheetSort.addAction(WAction(title: "Assigner",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
         }))
 
         actionSheetSort.hasCancel = false
@@ -206,7 +217,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         actionSheetSort.setSelectedAction(1)
         actionSheetSort.sheetSeparatorStyle = .All
         actionSheetSort.popoverPresentationController?.sourceView = sender
-
+        
         presentViewController(actionSheetSort, animated: true, completion: nil)
     }
 
