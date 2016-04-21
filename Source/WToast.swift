@@ -215,6 +215,8 @@ public class WToastView: UIView {
         }
 
         if (isVisible()) {
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+
             //animate out
             snp_remakeConstraints{ (make) in
                 make.top.equalTo(WToastManager.sharedInstance.rootWindow!.snp_bottom)
