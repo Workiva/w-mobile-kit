@@ -7,6 +7,7 @@ import UIKit
 public class WTextField: UITextField {
     public var imageSquareSize: CGFloat = 16
     public var paddingBetweenTextAndImage: CGFloat = 8
+    private var bottomLine = CALayer()
 
     public var bottomLineWidth: CGFloat = 1 {
         didSet {
@@ -73,11 +74,13 @@ public class WTextField: UITextField {
     }
 
     public func setBottomBorder() {
-        let bottomLine = CALayer()
         bottomLine.frame = CGRectMake(0, frame.height - bottomLineWidth, frame.width, bottomLineWidth)
         bottomLine.backgroundColor = bottomLineColor.CGColor
 
-        layer.addSublayer(bottomLine)
+        // Only add the layer if it has not yet been added.
+        if (bottomLine.superlayer != layer) {
+            layer.addSublayer(bottomLine)
+        }
     }
 
     // MARK: - Custom Rect Sizings
