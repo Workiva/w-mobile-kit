@@ -17,6 +17,7 @@
 		D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */; };
 		D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
+		D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; };
+		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +137,7 @@
 				D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */,
 				73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */,
 				D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */,
+				D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
+				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */,
 				D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */,
 				55A106331CAC8B5400495BBC /* LeftMenuTVCExample.swift in Sources */,
