@@ -21,7 +21,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(actionSheetLabel)
         actionSheetLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(view.snp_top).offset(32)
+            make.top.equalTo(view.snp_top).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
@@ -49,7 +49,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(iconSheetButton)
         iconSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(permissionsSheetButton.snp_bottom).offset(25)
+            make.top.equalTo(permissionsSheetButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(230)
         }
@@ -63,7 +63,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(sortSheetButton)
         sortSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(iconSheetButton.snp_bottom).offset(25)
+            make.top.equalTo(iconSheetButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -75,23 +75,37 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(toastLabel)
         toastLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(sortSheetButton.snp_bottom).offset(32)
+            make.top.equalTo(sortSheetButton.snp_bottom).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
 
-        let simpleToastButton = UIButton(type: UIButtonType.RoundedRect)
-        simpleToastButton.backgroundColor = UIColor.lightGrayColor()
-        simpleToastButton.tintColor = UIColor.greenColor()
-        simpleToastButton.setTitle("Simple Toast", forState: UIControlState.Normal)
-        simpleToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        simpleToastButton.addTarget(self, action: #selector(presentSimpleToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let autoToastButton = UIButton(type: UIButtonType.RoundedRect)
+        autoToastButton.backgroundColor = UIColor.lightGrayColor()
+        autoToastButton.tintColor = UIColor.greenColor()
+        autoToastButton.setTitle("Auto Dismiss Toast", forState: UIControlState.Normal)
+        autoToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        autoToastButton.addTarget(self, action: #selector(presentAutoToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-        view.addSubview(simpleToastButton)
-        simpleToastButton.snp_makeConstraints { (make) in
+        view.addSubview(autoToastButton)
+        autoToastButton.snp_makeConstraints { (make) in
             make.top.equalTo(toastLabel.snp_bottom).offset(10)
             make.centerX.equalTo(view)
-            make.width.equalTo(112)
+            make.width.equalTo(200)
+        }
+
+        let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
+        tapToastButton.backgroundColor = UIColor.lightGrayColor()
+        tapToastButton.tintColor = UIColor.greenColor()
+        tapToastButton.setTitle("Tap Dismiss Toast", forState: UIControlState.Normal)
+        tapToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(tapToastButton)
+        tapToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
         }
 
         view.layoutIfNeeded()
@@ -196,9 +210,15 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         presentViewController(actionSheetSort, animated: true, completion: nil)
     }
 
-    public func presentSimpleToast(sender: UIButton) {
-        let toast = WToastView(message: "Simple Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+    public func presentAutoToast(sender: UIButton) {
+        let toast = WToastView(message: "Auto Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 3
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    public func presentTapToast(sender: UIButton) {
+        let toast = WToastView(message: "Tap Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.showDuration = 0
         WToastManager.sharedInstance.showToast(toast)
     }
 }
