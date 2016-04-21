@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-@objc protocol WToastViewDelegate {
+@objc public protocol WToastViewDelegate {
     optional func toastWasTapped(sender: UITapGestureRecognizer)
     optional func toastDidHide(toast: WToastView)
 }
@@ -26,7 +26,7 @@ public class WToastManager: NSObject, WToastViewDelegate {
 
     public static let sharedInstance = WToastManager()
 
-    // Custom window can be provided
+    // Custom window can be provided. Default to frontmost window.
     public var rootWindow: UIWindow? = UIApplication.sharedApplication().windows.first
 
     private override init() {
@@ -42,17 +42,18 @@ public class WToastManager: NSObject, WToastViewDelegate {
         toast.show()
     }
 
-    @objc internal func toastWasTapped(sender: UITapGestureRecognizer) { }
+    @objc public func toastWasTapped(sender: UITapGestureRecognizer) { }
 
-    @objc internal func toastDidHide(toast: WToastView) {
+    @objc public func toastDidHide(toast: WToastView) {
         currentToast = nil
     }
 }
 
 public class WToastView: UIView {
     // Public API
-    private weak var delegate: WToastViewDelegate?
+    public weak var delegate: WToastViewDelegate?
 
+    // If 0 or less, options change to dismiss on tap
     public var showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION {
         didSet {
             if showDuration > 0 {
@@ -73,7 +74,7 @@ public class WToastView: UIView {
 
     public var rightIcon: UIImage? {
         didSet {
-            iconImageView.image = rightIcon
+            rightIconImageView.image = rightIcon
         }
     }
 
@@ -84,7 +85,7 @@ public class WToastView: UIView {
     }
 
     public var messageLabel = UILabel()
-    public var iconImageView = UIImageView()
+    public var rightIconImageView = UIImageView()
     public var backgroundView = UIView()
 
     // Private API
@@ -110,7 +111,7 @@ public class WToastView: UIView {
         self.backgroundView.alpha = alpha
         self.rightIcon = icon
         self.showDuration = showDuration
-        iconImageView.alpha = alpha
+        rightIconImageView.alpha = alpha
     }
     
     private func commonInit() {
@@ -118,7 +119,7 @@ public class WToastView: UIView {
         
         addSubview(backgroundView)
         addSubview(messageLabel)
-        addSubview(iconImageView)
+        addSubview(rightIconImageView)
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(WToastViewDelegate.toastWasTapped(_:)))
         addGestureRecognizer(recognizer)
@@ -147,14 +148,14 @@ public class WToastView: UIView {
         }
         backgroundView.backgroundColor = toastColor
         
-        iconImageView.snp_remakeConstraints { (make) in
+        rightIconImageView.snp_remakeConstraints { (make) in
             make.centerY.equalTo(self)
             make.right.equalTo(self).offset(-30)
             make.height.equalTo(14)
             make.width.equalTo(14)
         }
-        iconImageView.image = rightIcon
-        
+        rightIconImageView.image = rightIcon
+
         messageLabel.snp_remakeConstraints { (make) in
             make.centerY.equalTo(self)
             make.top.equalTo(self).offset(8)
@@ -167,7 +168,7 @@ public class WToastView: UIView {
         layoutIfNeeded()
     }
     
-    private func toastWasTapped(sender: UITapGestureRecognizer) {
+    internal func toastWasTapped(sender: UITapGestureRecognizer) {
         delegate?.toastWasTapped?(sender)
         hide()
     }

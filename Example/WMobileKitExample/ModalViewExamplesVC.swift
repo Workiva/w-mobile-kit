@@ -198,6 +198,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
     public func presentSimpleToast(sender: UIButton) {
         let toast = WToastView(message: "Simple Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.showDuration = 3
         WToastManager.sharedInstance.showToast(toast)
     }
 }
