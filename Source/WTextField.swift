@@ -8,6 +8,18 @@ public class WTextField: UITextField {
     public var imageSquareSize: CGFloat = 16
     public var paddingBetweenTextAndImage: CGFloat = 8
 
+    public var bottomLineWidth: CGFloat = 1 {
+        didSet {
+            setBottomBorder()
+        }
+    }
+
+    public var bottomLineColor: UIColor = .whiteColor() {
+        didSet {
+            setBottomBorder()
+        }
+    }
+
     public var leftImage: UIImage? {
         didSet {
             setupUI()
@@ -38,6 +50,8 @@ public class WTextField: UITextField {
         tintColor = .whiteColor()
         backgroundColor = .clearColor()
         autocapitalizationType = .None
+        adjustsFontSizeToFitWidth = true
+        minimumFontSize = 9
 
         borderStyle = .None
     }
@@ -58,10 +72,10 @@ public class WTextField: UITextField {
         }
     }
 
-    public func setBottomBorder(color: UIColor, width: CGFloat) {
+    public func setBottomBorder() {
         let bottomLine = CALayer()
-        bottomLine.frame = CGRectMake(0, frame.height - width, frame.width, width)
-        bottomLine.backgroundColor = UIColor.whiteColor().CGColor
+        bottomLine.frame = CGRectMake(0, frame.height - bottomLineWidth, frame.width, bottomLineWidth)
+        bottomLine.backgroundColor = bottomLineColor.CGColor
 
         layer.addSublayer(bottomLine)
     }
@@ -70,7 +84,7 @@ public class WTextField: UITextField {
     public override func drawRect(rect: CGRect) {
         super.drawRect(rect)
 
-        setBottomBorder(.whiteColor(), width: 1)
+        setBottomBorder()
     }
 
     public override func leftViewRectForBounds(bounds: CGRect) -> CGRect {

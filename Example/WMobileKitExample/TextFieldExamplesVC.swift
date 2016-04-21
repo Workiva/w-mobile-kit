@@ -78,6 +78,8 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
             make.height.equalTo(30)
         }
         rightIconTextField.imageSquareSize = 32
+        rightIconTextField.bottomLineColor = .blackColor()
+        rightIconTextField.bottomLineWidth = 2
 
         // MARK: Text Field with both icons.
         let bothIconLabel = UILabel()
