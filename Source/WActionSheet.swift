@@ -77,10 +77,12 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func commonInit() {
         view.addSubview(darkView)
 
-        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: #selector(WActionSheetVC.animateOut(_:)))
+        // Do not use #selector here, causes issue with iPhone 4S
+        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
         darkView.addGestureRecognizer(darkViewRecognizer)
 
-        cancelButton.addTarget(self, action: #selector(WActionSheetVC.animateOut(_:)), forControlEvents: .TouchUpInside)
+        // Do not use #selector here, causes issue with iPhone 4S
+        cancelButton.addTarget(self, action: Selector("animateOut"), forControlEvents: .TouchUpInside)
         cancelButton.tintColor = UIColor.lightGrayColor()
 
         view.addSubview(containerView)
