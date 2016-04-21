@@ -8,6 +8,7 @@ import SnapKit
 
 let CANCEL_SEPARATOR_HEIGHT: CGFloat = 10.0
 let ROW_HEIGHT: CGFloat = 58.0
+let CANCEL_HEIGHT: CGFloat = 56.0
 let HEADER_HEIGHT: CGFloat = 44.0
 let SHEET_WIDTH_IPAD: CGFloat = 355.0
 let SHEET_HEIGHT_MAX: CGFloat = 400.0
@@ -142,7 +143,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             cancelButton.snp_remakeConstraints { (make) in
                 make.left.equalTo(containerView)
                 make.right.equalTo(containerView)
-                make.height.equalTo(ROW_HEIGHT)
+                make.height.equalTo(CANCEL_HEIGHT)
                 make.bottom.equalTo(containerView)
             }
 
@@ -202,7 +203,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     // MARK: - Helper Methods
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions.count
-        let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + ROW_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
+        let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + CANCEL_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
         return min(height, SHEET_HEIGHT_MAX)
     }
 
