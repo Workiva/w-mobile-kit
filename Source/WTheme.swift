@@ -45,8 +45,6 @@ public class WTheme: NSObject {
     
     // Action Sheet
     public var actionSheetSelectColor: UIColor = UIColor.blueColor()
-    public var actionSheetTopLineColor: UIColor = UIColor.redColor()
-    public var actionSheetCancelTextColor: UIColor = UIColor.greenColor()
 
     // Navigation Bar
     public var navigationBarColor: UIColor = UIColor.blueColor()
@@ -77,8 +75,7 @@ public class CustomTheme: WTheme {
         pagingSelectorControlColor = UIColor.whiteColor()
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
         
-        actionSheetTopLineColor = UIColor(hex: 0x42AD48)
-        actionSheetCancelTextColor = UIColor(hex: 0x42AD48)
+        actionSheetSelectColor = UIColor(hex: 0x0094FF)
 
         primaryTextColor = UIColor(hex: 0x595959)
         secondaryTextColor = UIColor(hex: 0x595959)

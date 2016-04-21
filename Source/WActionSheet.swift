@@ -6,10 +6,10 @@ import Foundation
 import UIKit
 import SnapKit
 
-let CANCEL_SEPARATOR_HEIGHT: CGFloat = 6.0
-let ROW_HEIGHT: CGFloat = 50.0
-let HEADER_HEIGHT: CGFloat = 40.0
-let SHEET_WIDTH_IPAD: CGFloat = 450.0
+let CANCEL_SEPARATOR_HEIGHT: CGFloat = 10.0
+let ROW_HEIGHT: CGFloat = 58.0
+let HEADER_HEIGHT: CGFloat = 44.0
+let SHEET_WIDTH_IPAD: CGFloat = 355.0
 let SHEET_HEIGHT_MAX: CGFloat = 400.0
 
 let ACTION_CELL = "actionCell"
@@ -136,7 +136,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             make.top.equalTo(view)
             make.bottom.equalTo(view)
         }
-        darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
 
         if (hasCancel) {
             cancelButton.snp_remakeConstraints { (make) in
@@ -147,10 +147,10 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             }
 
             cancelButton.setTitle("Cancel", forState: .Normal)
-            cancelButton.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
-            cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+            cancelButton.setTitleColor(UIColor(hex: 0x595959), forState: .Normal)
+            cancelButton.titleLabel?.font = UIFont.systemFontOfSize(20)
             cancelButton.backgroundColor = UIColor.whiteColor()
-            cancelButton.layer.cornerRadius = 5
+            cancelButton.layer.cornerRadius = 4
             cancelButton.clipsToBounds = true
         }
 
@@ -165,7 +165,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             }
         }
 
-        tableView?.layer.cornerRadius = 5
+        tableView?.layer.cornerRadius = 4
         tableView?.clipsToBounds = true
         tableView?.contentSize = CGSize(width: tableView!.contentSize.width, height: heightForSheetContent())
         if (titleString != nil) {
@@ -472,7 +472,7 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
             make.right.equalTo(self)
             make.height.equalTo(0.5)
         }
-        separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
+        separatorBar.backgroundColor = UIColor(hex: 0xDADADE)
 
         if let actionInfo = actionInfo {
             if let image = actionInfo.image {
@@ -522,8 +522,8 @@ public class WTableViewCell<ActionDataType> : UITableViewCell {
                 }
 
                 titleLabel?.text = title
-                titleLabel?.font = UIFont.systemFontOfSize(18)
-                titleLabel?.textColor = UIColor(hex: 0x444444)
+                titleLabel?.font = UIFont.systemFontOfSize(20)
+                titleLabel?.textColor = UIColor(hex: 0x595959)
 
                 titleLabel?.snp_removeConstraints()
 
@@ -612,7 +612,7 @@ public class WHeaderView : UITableViewHeaderFooterView {
             make.right.equalTo(self)
             make.height.equalTo(0.5)
         }
-        separatorBar.backgroundColor = UIColor(hex: 0xC3C3C3)
+        separatorBar.backgroundColor = UIColor(hex: 0xDADADE)
         
         if let title = title {
             if (titleLabel == nil) {
@@ -621,8 +621,8 @@ public class WHeaderView : UITableViewHeaderFooterView {
             }
             titleLabel?.textAlignment = .Center
             titleLabel?.text = title
-            titleLabel?.font = UIFont.systemFontOfSize(14)
-            titleLabel?.textColor = UIColor(hex: 0x444444)
+            titleLabel?.font = UIFont.systemFontOfSize(15)
+            titleLabel?.textColor = UIColor(hex: 0x595959)
             
             titleLabel?.snp_remakeConstraints(closure: { (make) in
                 make.left.equalTo(self)
