@@ -79,6 +79,7 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         }
         rightIconTextField.imageSquareSize = 32
         rightIconTextField.bottomLineColor = .blackColor()
+        rightIconTextField.tintColor = .blackColor()
         rightIconTextField.bottomLineWidth = 2
 
         // MARK: Text Field with both icons.

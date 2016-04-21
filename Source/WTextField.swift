@@ -80,7 +80,7 @@ public class WTextField: UITextField {
         layer.addSublayer(bottomLine)
     }
 
-    // MARK - Rect calculations
+    // MARK: - Custom Rect Sizings
     public override func drawRect(rect: CGRect) {
         super.drawRect(rect)
 
@@ -88,13 +88,13 @@ public class WTextField: UITextField {
     }
 
     public override func leftViewRectForBounds(bounds: CGRect) -> CGRect {
-        let originY = (frame.height - imageSquareSize) / 2
+        let originY = (bounds.size.height - imageSquareSize) / 2
         return CGRectMake(0, originY, imageSquareSize, imageSquareSize)
     }
 
     public override func rightViewRectForBounds(bounds: CGRect) -> CGRect {
-        let originY = (frame.height - imageSquareSize) / 2
-        return CGRectMake(frame.width - imageSquareSize, originY, imageSquareSize, imageSquareSize)
+        let originY = (bounds.size.height - imageSquareSize) / 2
+        return CGRectMake(bounds.size.width - imageSquareSize, originY, imageSquareSize, imageSquareSize)
     }
 
     public override func editingRectForBounds(bounds: CGRect) -> CGRect {
