@@ -138,6 +138,23 @@ class WToastSpec: QuickSpec {
                     let displayTime = ceil(TOAST_ANIMATION_DURATION + showDuration)
                     expect(toastView.isVisible()).toEventually(beFalsy(), timeout: displayTime)
                 }
+                
+                it("should init with coder correctly") {
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("testsToast")
+                    
+                    NSKeyedArchiver.archiveRootObject(toastView, toFile: locToSave)
+                    
+                    let toastView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WToastView
+                    
+                    expect(toastView).toNot(equal(nil))
+                    
+                    // default settings from commonInit
+                    expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
+                    expect(toastView.toastOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.rightIcon).to(beNil())
+                    expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                }
             }
 
             describe("custom property behavior") {
