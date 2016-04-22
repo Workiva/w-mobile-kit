@@ -117,7 +117,7 @@ class WToastSpec: QuickSpec {
 
                     toastView = WToastView()
                     toastView.showDuration = showDuration
-                    toastView.toastColor = UIColor.redColor()
+                    toastView.toastColor = .redColor()
                     toastView.message = message4
                     toastView.rightIcon = image
 

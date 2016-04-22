@@ -1,6 +1,6 @@
 //
 //  WToast.swift
-//  Pods
+//  WMobileKit
 
 import Foundation
 import UIKit
@@ -78,7 +78,7 @@ public class WToastView: UIView {
         }
     }
 
-    public var toastColor = UIColor.blackColor() {
+    public var toastColor: UIColor = .blackColor() {
         didSet {
             backgroundView.backgroundColor = toastColor
         }
@@ -103,7 +103,7 @@ public class WToastView: UIView {
         commonInit()
     }
     
-    public convenience init(message: String, icon: UIImage? = nil, toastColor: UIColor = UIColor.blackColor(), alpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
+    public convenience init(message: String, icon: UIImage? = nil, toastColor: UIColor = .blackColor(), alpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
         self.init(frame: CGRectZero)
         
         self.message = message
@@ -129,11 +129,11 @@ public class WToastView: UIView {
         messageLabel.numberOfLines = 1
         messageLabel.textAlignment = .Center
         messageLabel.font = UIFont.systemFontOfSize(16)
-        messageLabel.textColor = UIColor.whiteColor()
+        messageLabel.textColor = .whiteColor()
 
         layer.cornerRadius = 5.0
         clipsToBounds = true
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = .clearColor()
     }
     
     public func setupUI() {

@@ -25,9 +25,9 @@ class WPagingSelectorVCSpec: QuickSpec {
                 vc2 = WSideMenuContentVC()
                 vc3 = WSideMenuContentVC()
 
-                vc1!.view.backgroundColor = UIColor.greenColor()
-                vc2!.view.backgroundColor = UIColor.blueColor()
-                vc3!.view.backgroundColor = UIColor.redColor()
+                vc1!.view.backgroundColor = .greenColor()
+                vc2!.view.backgroundColor = .blueColor()
+                vc3!.view.backgroundColor = .redColor()
 
                 let window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject

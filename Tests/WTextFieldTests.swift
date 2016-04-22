@@ -91,7 +91,7 @@ class WTextFieldTests: QuickSpec {
                     textField.imageSquareSize = 20
                     textField.paddingBetweenTextAndImage = 10
                     textField.bottomLineWidth = 2
-                    textField.bottomLineColor = UIColor.blueColor()
+                    textField.bottomLineColor = .blueColor()
 
                     subject.view.layoutIfNeeded()
 

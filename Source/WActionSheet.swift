@@ -83,7 +83,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
 
         // Do not use #selector here, causes issue with iPhone 4S
         cancelButton.addTarget(self, action: Selector("animateOut"), forControlEvents: .TouchUpInside)
-        cancelButton.tintColor = UIColor.lightGrayColor()
+        cancelButton.tintColor = .lightGrayColor()
 
         view.addSubview(containerView)
         view.addSubview(cancelButton)
@@ -130,7 +130,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             }
             make.height.equalTo(height)
         }
-        containerView.backgroundColor = UIColor.clearColor()
+        containerView.backgroundColor = .clearColor()
 
         darkView.snp_remakeConstraints { (make) in
             make.left.equalTo(view)
@@ -151,7 +151,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             cancelButton.setTitle("Cancel", forState: .Normal)
             cancelButton.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
             cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18)
-            cancelButton.backgroundColor = UIColor.whiteColor()
+            cancelButton.backgroundColor = .whiteColor()
             cancelButton.layer.cornerRadius = 5
             cancelButton.clipsToBounds = true
         }
@@ -358,7 +358,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
         cell = tableView.dequeueReusableCellWithIdentifier(ACTION_CELL) as! WTableViewCell
 
         let action = actionForIndexPath(indexPath)
-        cell.backgroundColor = UIColor.whiteColor()
+        cell.backgroundColor = .whiteColor()
         cell.actionInfo = action
 
         cell.separatorBar.hidden = !((sheetSeparatorStyle == .All && indexPath.row != 0)
