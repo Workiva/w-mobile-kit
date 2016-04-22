@@ -67,6 +67,20 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
+        let pickerSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        pickerSheetButton.backgroundColor = UIColor.lightGrayColor()
+        pickerSheetButton.tintColor = UIColor.greenColor()
+        pickerSheetButton.setTitle("Picker View Sheet", forState: UIControlState.Normal)
+        pickerSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        pickerSheetButton.addTarget(self, action: #selector(presentPickerActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(pickerSheetButton)
+        pickerSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(sortSheetButton.snp_bottom).offset(25)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
         view.layoutIfNeeded()
     }
 
@@ -178,6 +192,47 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         actionSheetSort.popoverPresentationController?.sourceView = sender
         
         presentViewController(actionSheetSort, animated: true, completion: nil)
+    }
+
+    public func presentPickerActionSheet(sender: UIButton) {
+        self.definesPresentationContext = true
+
+        let actionSheetPicker = WActionSheetVC<String>(isPickerView: true)
+        actionSheetPicker.delegate = self
+
+        actionSheetPicker.addAction(WAction(title: "Option 1",
+            handler: { action in
+                NSLog(action.title! + " was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 2",
+            handler: { action in
+                NSLog(action.title! + " was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 3",
+            handler: { action in
+                NSLog(action.title! + " was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 4",
+            handler: { action in
+                NSLog(action.title! + " was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 5",
+            handler: { action in
+                NSLog(action.title! + " was stopped on.")
+        }))
+        actionSheetPicker.popoverPresentationController?.sourceView = sender
+
+        presentViewController(actionSheetPicker, animated: true, completion: nil)
+    }
+}
+
+extension ModalViewExamplesVC: WActionSheetDelegate {
+    public func pickerViewDoneButtonWasTapped(selectedIndex: Int) {
+        NSLog("The Picker View \"Done\" button was pressed with selected index \(selectedIndex).")
+    }
+
+    public func pickerViewCancelButtonWasTapped() {
+        NSLog("The Pick View \"Cancel\" button was pressed.")
     }
 }
 
