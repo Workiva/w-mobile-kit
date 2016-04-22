@@ -10,7 +10,7 @@ let CANCEL_SEPARATOR_HEIGHT: CGFloat = 6.0
 let ROW_HEIGHT: CGFloat = 50.0
 let HEADER_HEIGHT: CGFloat = 40.0
 let SHEET_WIDTH_IPAD: CGFloat = 450.0
-let SHEET_HEIGHT_MAX: CGFloat = 400.0
+let SHEET_HEIGHT_MAX: CGFloat = 415.0
 
 let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
