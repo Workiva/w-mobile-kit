@@ -29,8 +29,7 @@ public struct WSideMenuOptions {
 }
 
 enum WSideMenuState {
-    case Open
-    case Closed
+    case Open, Closed
 }
 
 public class WSideMenuVC: UIViewController {

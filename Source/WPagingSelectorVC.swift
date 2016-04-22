@@ -12,8 +12,7 @@ let SELECTION_INDICATOR_VIEW_HEIGHT = 3
 public let DEFAULT_PAGING_SELECTOR_HEIGHT = 44
 
 public enum WPagingWidthMode {
-    case Static
-    case Dynamic
+    case Static, Dynamic
 }
 
 @objc protocol WPagingSelectorVCDelegate: class {

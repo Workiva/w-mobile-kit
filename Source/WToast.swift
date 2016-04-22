@@ -12,20 +12,15 @@ import SnapKit
 }
 
 public enum WToastHideOptions {
-    case DismissOnTap;
-    case DismissesAfterTime;
+    case DismissOnTap, DismissesAfterTime
 }
 
 public enum WToastPlacementOptions {
-    case Top;
-    case Bottom;
+    case Top, Bottom
 }
 
 public enum WToastFlyInDirectionOptions {
-    case FromTop;
-    case FromRight;
-    case FromBottom;
-    case FromLeft;
+    case FromTop, FromRight, FromBottom, FromLeft
 }
 
 let TOAST_DEFAULT_HEIGHT = 64

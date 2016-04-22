@@ -16,13 +16,11 @@ let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
 
 public enum ActionStyle {
-    case Normal
-    case Destructive
+    case Normal, Destructive
 }
 
 public enum SheetSeparatorStyle {
-    case All
-    case DestructiveOnly
+    case All, DestructiveOnly
 }
 
 public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDelegate, UITableViewDataSource {
