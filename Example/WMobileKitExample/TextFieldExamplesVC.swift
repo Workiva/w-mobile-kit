@@ -45,7 +45,7 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         }
 
         let leftIconTextField = WTextField()
-        leftIconTextField.leftImage = UIImage(named: "person_1")
+        leftIconTextField.leftImage = UIImage(named: "person")
         view.addSubview(leftIconTextField)
         leftIconTextField.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -67,7 +67,7 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         }
 
         let rightIconTextField = WTextField()
-        rightIconTextField.rightImage = UIImage(named: "gear_1")
+        rightIconTextField.rightImage = UIImage(named: "gear")
         rightIconTextField.textColor = UIColor.blackColor()
         rightIconTextField.placeholder = "This has black text."
         view.addSubview(rightIconTextField)
@@ -95,8 +95,8 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         }
 
         let bothIconTextField = WTextField()
-        bothIconTextField.leftImage = UIImage(named: "person_1")
-        bothIconTextField.rightImage = UIImage(named: "gear_1")
+        bothIconTextField.leftImage = UIImage(named: "person")
+        bothIconTextField.rightImage = UIImage(named: "gear")
         view.addSubview(bothIconTextField)
         bothIconTextField.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)

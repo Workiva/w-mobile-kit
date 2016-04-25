@@ -12,8 +12,7 @@ let SELECTION_INDICATOR_VIEW_HEIGHT = 3
 public let DEFAULT_PAGING_SELECTOR_HEIGHT = 44
 
 public enum WPagingWidthMode {
-    case Static
-    case Dynamic
+    case Static, Dynamic
 }
 
 @objc protocol WPagingSelectorVCDelegate: class {
@@ -101,7 +100,7 @@ public class WTabView : UIView {
 
 public class WPagingSelectorControl : UIControl {
     // Accessible properties
-    public var tabTextColor: UIColor = UIColor.grayColor() {
+    public var tabTextColor: UIColor = .grayColor() {
         didSet {
             for i in 0..<tabViews.count {
                 let tab: WTabView = tabViews[i]
@@ -349,7 +348,7 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
         }
     }
 
-    public var tabTextColor: UIColor = UIColor.blackColor() {
+    public var tabTextColor: UIColor = .blackColor() {
         didSet {
             pagingSelectorControl?.tabTextColor = tabTextColor
         }

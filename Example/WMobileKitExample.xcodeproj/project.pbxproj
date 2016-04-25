@@ -13,9 +13,9 @@
 		D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BB81CAB11B70065D106 /* AppDelegate.swift */; };
 		D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */; };
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
-		D53D0BC31CAB11B70065D106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBD1CAB11B70065D106 /* Images.xcassets */; };
 		D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */; };
 		D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */; };
+		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
 		D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */; };
 /* End PBXBuildFile section */
@@ -34,10 +34,10 @@
 		D53D0BB81CAB11B70065D106 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D53D0BBA1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D53D0BBC1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D53D0BBD1CAB11B70065D106 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuVCExample.swift; sourceTree = "<group>"; };
 		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; };
+		D592B2BC1CC9498E00301C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; };
 		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; };
@@ -112,8 +112,8 @@
 				D53D0BB81CAB11B70065D106 /* AppDelegate.swift */,
 				D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */,
 				D53D0BBB1CAB11B70065D106 /* Main.storyboard */,
-				D53D0BBD1CAB11B70065D106 /* Images.xcassets */,
 				D53D0BBE1CAB11B70065D106 /* Info.plist */,
+				D592B2BC1CC9498E00301C7F /* Images.xcassets */,
 				D592AB731CC5470B00301C7F /* Side Menu */,
 				D592AB741CC5471700301C7F /* Content View Controllers */,
 				D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */,
@@ -203,9 +203,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */,
 				D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */,
 				D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */,
-				D53D0BC31CAB11B70065D106 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
