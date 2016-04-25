@@ -6,6 +6,11 @@ import Foundation
 import UIKit
 
 public class WUserLogoView: UIView {
+    public var initialsLimit = 3 {
+        didSet {
+            setupUI()
+        }
+    }
     public var initialsLabel = UILabel()
     var circleLayer = CAShapeLayer()
 
@@ -17,6 +22,12 @@ public class WUserLogoView: UIView {
     }
 
     public var name: String? {
+        didSet {
+            initials = name?.initials(initialsLimit)
+        }
+    }
+    
+    public var initials: String? {
         didSet {
             setupUI()
         }
@@ -72,11 +83,13 @@ public class WUserLogoView: UIView {
             let mappedColor:UIColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name)
 
             circleLayer.strokeColor = mappedColor.CGColor
-
-            let initials:String = name.initials()
             
-            let attributedString = NSMutableAttributedString(string: initials)
-            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: initials.characters.count))
+            if initials == nil {
+                initials = name.initials(initialsLimit)
+            }
+            
+            let attributedString = NSMutableAttributedString(string: initials!)
+            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: initials!.characters.count))
             
             initialsLabel.attributedText = attributedString
             initialsLabel.textAlignment = NSTextAlignment.Center
@@ -121,13 +134,16 @@ public class WUserLogoView: UIView {
 }
 
 public extension String {
-    public func initials() -> String {
+    public func initials(limit: Int = 3) -> String {
         let range = self.startIndex..<self.endIndex
         var initials = String()
 
-        enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, _) -> () in
+        enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, stop) -> () in
             let initial = substring!.characters.first! as Character
             initials = initials + String(initial)
+            if (initials.characters.count >= limit) {
+                stop = true
+            }
         }
 
         return initials
