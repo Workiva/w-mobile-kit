@@ -7,15 +7,15 @@ import WMobileKit
 
 public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
     var currentProgress: CGFloat = 0
-    let progressSpinner1 = WSpinner(frame: CGRectZero, fillColor: .whiteColor())
-    let progressSpinner2 = WSpinner(frame: CGRectZero, fillColor: .grayColor())
-    let progressSpinner3 = WSpinner(frame: CGRectZero, fillColor: .orangeColor())
+    let progressSpinner1 = WSpinner(frame: CGRectZero)
+    let progressSpinner2 = WSpinner(frame: CGRectZero)
+    let progressSpinner3 = WSpinner(frame: CGRectZero)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         // MARK: Indeterminate spinners.
-        let indeterminateSpinner1 = WSpinner(frame: CGRectZero, fillColor: .clearColor())
+        let indeterminateSpinner1 = WSpinner(frame: CGRectZero)
         view.addSubview(indeterminateSpinner1)
         indeterminateSpinner1.snp_makeConstraints { (make) in
             make.top.equalTo(view).offset(10)
@@ -25,7 +25,7 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         }
         indeterminateSpinner1.indeterminate = true
 
-        let indeterminateSpinner2 = WSpinner(frame: CGRectZero, fillColor: .clearColor())
+        let indeterminateSpinner2 = WSpinner(frame: CGRectZero)
         view.addSubview(indeterminateSpinner2)
         indeterminateSpinner2.snp_makeConstraints { (make) in
             make.centerY.equalTo(indeterminateSpinner1)
@@ -35,8 +35,9 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         }
         indeterminateSpinner2.indeterminate = true
         indeterminateSpinner2.backgroundLineColor = .grayColor()
+        indeterminateSpinner2.progressLineColor = .blueColor()
 
-        let indeterminateSpinner3 = WSpinner(frame: CGRectZero, fillColor: .clearColor())
+        let indeterminateSpinner3 = WSpinner(frame: CGRectZero)
         view.addSubview(indeterminateSpinner3)
         indeterminateSpinner3.snp_makeConstraints { (make) in
             make.centerY.equalTo(indeterminateSpinner1)
@@ -66,7 +67,7 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
             make.height.equalTo(55)
         }
         progressSpinner2.lineWidth = 6
-        progressSpinner2.backgroundLineColor = .cyanColor()
+        progressSpinner2.progressLineColor = .cyanColor()
 
         view.addSubview(progressSpinner3)
         progressSpinner3.snp_makeConstraints { (make) in
@@ -78,7 +79,18 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         progressSpinner3.lineWidth = 2
         progressSpinner3.progressLineColor = .blackColor()
 
-        // Re
+        // MARK: Intended styling.
+        let indeterminateSpinner4 = WSpinner(frame: CGRectZero)
+        indeterminateSpinner4.indeterminate = true
+        view.addSubview(indeterminateSpinner4)
+        indeterminateSpinner4.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(progressSpinner1.snp_bottom).offset(10)
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
+
+        // MARK: Reset progress to allow a better demo.
         let resetProgressButton = UIButton()
         view.addSubview(resetProgressButton)
         resetProgressButton.setTitle("Reset Progress", forState: .Normal)
@@ -100,13 +112,17 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
 
     public func updateProgress(timer: NSTimer) {
         currentProgress += 0.02
-        progressSpinner1.progress = currentProgress
-        progressSpinner2.progress = currentProgress
-        progressSpinner3.progress = currentProgress
+        setProgress(currentProgress)
 
         if (currentProgress >= 1) {
             timer.invalidate()
         }
+    }
+
+    public func setProgress(progress: CGFloat) {
+        progressSpinner1.progress = progress
+        progressSpinner2.progress = progress
+        progressSpinner3.progress = progress
     }
 
     public func startProgress() {
@@ -116,5 +132,9 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
 
     public func resetProgress(sender: AnyObject?) {
         currentProgress = 0
+        setProgress(currentProgress)
+        startProgress()
+
+        view.setNeedsDisplay()
     }
 }

@@ -12,10 +12,9 @@ public class WSpinner: UIControl {
     var backgroundLayer = CAShapeLayer()
     var progressLayer = CAShapeLayer()
     var iconLayer = CALayer()
-    public var indeterminateGapLength: Double? {
+    public var indeterminateSectionLength: Double = 0.5 {
         didSet {
-            // It's
-            indeterminateGapLength! *= 2
+            indeterminateSectionLength *= 2
         }
     }
 
@@ -25,17 +24,17 @@ public class WSpinner: UIControl {
         }
     }
 
-    public var progressLineColor: UIColor? {
+    public var progressLineColor: UIColor = UIColor(hex: 0xffffff, alpha: 0.75) {
         didSet {
-            progressLayer.strokeColor = progressLineColor!.CGColor
+            progressLayer.strokeColor = progressLineColor.CGColor
 
             setNeedsDisplayMainThread()
         }
     }
 
-    public var backgroundLineColor: UIColor? {
+    public var backgroundLineColor: UIColor = UIColor(hex: 0xbfe4ff, alpha: 0.45) {
         didSet {
-            backgroundLayer.strokeColor = backgroundLineColor!.CGColor
+            backgroundLayer.strokeColor = backgroundLineColor.CGColor
 
             setNeedsDisplayMainThread()
         }
@@ -65,14 +64,14 @@ public class WSpinner: UIControl {
             if (indeterminate) {
                 let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
                 rotationAnimation.toValue = M_PI * 2
-                rotationAnimation.duration = 1
+                rotationAnimation.duration = 1.2
                 rotationAnimation.cumulative = true
                 rotationAnimation.repeatCount = HUGE
                 rotationAnimation.removedOnCompletion = false
 
-                backgroundLayer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
+                progressLayer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
             } else {
-                backgroundLayer.removeAllAnimations()
+                progressLayer.removeAllAnimations()
             }
         }
     }
@@ -90,18 +89,10 @@ public class WSpinner: UIControl {
         commonInit()
     }
 
-    public convenience init(frame: CGRect, fillColor: UIColor) {
-        self.init(frame: frame) // Calls commonInit
-
-        backgroundLayer.fillColor = fillColor.CGColor
-        progressLayer.fillColor = fillColor.CGColor
-    }
-
     private func commonInit() {
         backgroundColor = .clearColor()
-        progressLineColor = .whiteColor()
-        backgroundLineColor = .whiteColor()
-        indeterminateGapLength = 0.2
+        progressLayer.strokeColor = progressLineColor.CGColor
+        backgroundLayer.strokeColor = backgroundLineColor.CGColor
 
         setupBackgroundLayer()
         setupProgressLayer()
@@ -110,6 +101,7 @@ public class WSpinner: UIControl {
 
     private func setupBackgroundLayer() {
         backgroundLayer.frame = bounds
+        backgroundLayer.fillColor = UIColor.clearColor().CGColor
         backgroundLayer.lineWidth = lineWidth
         backgroundLayer.lineCap = kCALineCapRound
 
@@ -120,7 +112,9 @@ public class WSpinner: UIControl {
 
     private func setupProgressLayer() {
         progressLayer.frame = bounds
+        progressLayer.fillColor = UIColor.clearColor().CGColor
         progressLayer.lineWidth = lineWidth
+        progressLayer.lineCap = kCALineCapRound
 
         if (progressLayer.superlayer != layer) {
             layer.addSublayer(progressLayer)
@@ -157,25 +151,23 @@ public class WSpinner: UIControl {
     }
 
     public func drawBackgroundCircle() {
-        var endAngle = CGFloat(2 * M_PI) + startAngle
-        if (indeterminate) {
-            endAngle = CGFloat((2 - indeterminateGapLength!) * M_PI) + startAngle
-        }
-
+        let endAngle = CGFloat(2 * M_PI) + startAngle
         let center = CGPointMake(bounds.size.width / 2, bounds.size.height / 2)
         let radius = (bounds.size.width - lineWidth) / 2
 
-        // Draw background
         let processBackgroundPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
 
         backgroundLayer.path = processBackgroundPath.CGPath
     }
 
     public func drawProgress() {
-        let endAngle = (progress * CGFloat(2 * M_PI)) + startAngle
-
+        var endAngle = (progress * CGFloat(2 * M_PI)) + startAngle
         let center = CGPointMake(bounds.size.width / 2, bounds.size.height / 2)
         let radius = (bounds.size.width - lineWidth) / 2
+
+        if indeterminate {
+            endAngle = CGFloat((indeterminateSectionLength) * M_PI) + startAngle
+        }
 
         let processPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         processPath.lineCapStyle = .Round
