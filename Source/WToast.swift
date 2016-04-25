@@ -64,22 +64,14 @@ public class WToastView: UIView {
     // If 0 or less, options change to dismiss on tap
     public var showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION {
         didSet {
-            if showDuration > 0 {
-                hideOptions = .DismissesAfterTime
-            } else {
-                hideOptions = .DismissOnTap
-            }
+            hideOptions = showDuration > 0 ? .DismissesAfterTime : .DismissOnTap
         }
     }
 
     public var hideOptions: WToastHideOptions = .DismissesAfterTime
     public var placement: WToastPlacementOptions = .Bottom {
         didSet {
-            if (placement == .Top) {
-                flyInDirection = .FromTop
-            } else {
-                flyInDirection = .FromBottom
-            }
+            flyInDirection = placement == .Top ? .FromTop : .FromBottom
         }
     }
     public var flyInDirection: WToastFlyInDirectionOptions = .FromBottom
