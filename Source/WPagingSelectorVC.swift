@@ -121,6 +121,7 @@ public class WPagingSelectorControl : UIControl {
     private var selectionIndicatorView = WSelectionIndicatorView()
     private var selectedContainer: WTabView?
     private var tabViews = Array<WTabView>()
+    private var isAnimating = false
     private weak var delegate: WPagingSelectorVCDelegate?
 
     public required init?(coder aDecoder: NSCoder) {
@@ -290,7 +291,7 @@ public class WPagingSelectorControl : UIControl {
 
     @objc private func tappedTabItem(recognizer: UITapGestureRecognizer) {
         let index = (recognizer.view?.tag)!
-        if (index == selectedContainer!.tag) {
+        if (index == selectedContainer!.tag || isAnimating) {
             return
         }
         moveToTabIndex(index)
@@ -313,12 +314,14 @@ public class WPagingSelectorControl : UIControl {
 
         selectionIndicatorView.moveToSelection(selectedContainer!, numberOfSections: pages.count, contentView: contentView)
 
+        isAnimating = true
         UIView.animateWithDuration(ANIMATION_DURATION,
             animations: {
                 self.layoutIfNeeded()
             },
             completion: { finished in
                 self.delegate?.didChangeToTab?(self, tab: tabIndex)
+                self.isAnimating = false
         })
     }
 }
