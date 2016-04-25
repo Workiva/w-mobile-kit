@@ -11,6 +11,9 @@ import Foundation
 import WMobileKit
 
 public class ModalViewExamplesVC: WSideMenuContentVC {
+    var topBanner: WBannerView?
+    var bottomBanner: WBannerView?
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -108,6 +111,48 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
+        view.layoutIfNeeded()
+
+        // Banners
+        let bannerLabel = UILabel()
+        bannerLabel.text = "Banner Examples"
+        bannerLabel.textAlignment = NSTextAlignment.Center
+
+        view.addSubview(bannerLabel)
+        bannerLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(tapToastButton.snp_bottom).offset(15)
+            make.centerX.equalTo(view)
+            make.width.equalTo(220)
+        }
+
+        let topBannerButton = UIButton(type: UIButtonType.RoundedRect)
+        topBannerButton.backgroundColor = UIColor.lightGrayColor()
+        topBannerButton.tintColor = UIColor.greenColor()
+        topBannerButton.setTitle("Top Banner", forState: UIControlState.Normal)
+        topBannerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        topBannerButton.addTarget(self, action: #selector(presentTopBanner(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(topBannerButton)
+        topBannerButton.snp_makeConstraints { (make) in
+            make.top.equalTo(bannerLabel.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
+        let bottomBannerButton = UIButton(type: UIButtonType.RoundedRect)
+        bottomBannerButton.backgroundColor = UIColor.lightGrayColor()
+        bottomBannerButton.tintColor = UIColor.greenColor()
+        bottomBannerButton.setTitle("Bottom Banner", forState: UIControlState.Normal)
+        bottomBannerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        bottomBannerButton.addTarget(self, action: #selector(presentBottomBanner(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(bottomBannerButton)
+        bottomBannerButton.snp_makeConstraints { (make) in
+            make.top.equalTo(topBannerButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+        
         view.layoutIfNeeded()
     }
 
@@ -238,5 +283,30 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         toast.bottomPadding = 100
         WToastManager.sharedInstance.showToast(toast)
     }
-}
 
+    public func presentTopBanner(sender: UIButton) {
+        topBanner?.hide()
+
+        topBanner = WBannerView(rootView: self.view,
+                                 titleMessage: "Top Toast Title",
+                                 titleIcon: UIImage(named: "alert"),
+                                 bodyMessage: "Top Toast Body Top Toast Body Top Toast Body Top Toast Body",
+                                 rightIcon: UIImage(named: "close"),
+                                 bannerColor: UIColor(hex: 0x006400))
+        topBanner!.placement = .Top
+        topBanner!.hideOptions = .DismissOnTap
+
+        topBanner!.show()
+    }
+
+    public func presentBottomBanner(sender: UIButton) {
+        bottomBanner?.hide()
+
+        bottomBanner = WBannerView(rootView: self.view,
+                                 titleMessage: "Bottom Toast Title",
+                                 titleIcon: UIImage(named: "alert"),
+                                 bodyMessage: "Body",
+                                 bannerColor: UIColor(hex: 0x006400))
+        bottomBanner!.show()
+    }
+}
