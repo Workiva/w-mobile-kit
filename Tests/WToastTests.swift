@@ -47,7 +47,7 @@ class WToastSpec: QuickSpec {
 
                     // public properties
                     expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
                     expect(toastView.message).to(equal(message1))
                     expect(toastView.rightIcon).to(beNil())
                     expect(toastView.toastColor).to(equal(UIColor.blackColor()))
@@ -59,7 +59,7 @@ class WToastSpec: QuickSpec {
 
                 it("should successfully add and display a toast view that does not automatically dismiss and manually dismisses") {
                     toastView = WToastView(message: message2)
-                    toastView.toastHideOptions = WToastHideOptions.DismissOnTap
+                    toastView.hideOptions = WToastHideOptions.DismissOnTap
 
                     WToastManager.sharedInstance.showToast(toastView)
 
@@ -68,7 +68,7 @@ class WToastSpec: QuickSpec {
 
                     // public properties
                     expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
                     expect(toastView.message).to(equal(message2))
                     expect(toastView.rightIcon).to(beNil())
                     expect(toastView.toastColor).to(equal(UIColor.blackColor()))
@@ -85,7 +85,7 @@ class WToastSpec: QuickSpec {
 
                 it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap") {
                     toastView = WToastView(message: message3)
-                    toastView.toastHideOptions = WToastHideOptions.DismissOnTap
+                    toastView.hideOptions = WToastHideOptions.DismissOnTap
 
                     WToastManager.sharedInstance.showToast(toastView)
 
@@ -94,7 +94,7 @@ class WToastSpec: QuickSpec {
 
                     // public properties
                     expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
                     expect(toastView.message).to(equal(message3))
                     expect(toastView.rightIcon).to(beNil())
                     expect(toastView.toastColor).to(equal(UIColor.blackColor()))
@@ -128,7 +128,7 @@ class WToastSpec: QuickSpec {
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
                     expect(toastView.message).to(equal(message4))
                     expect(toastView.rightIcon).to(equal(image))
                     expect(toastView.rightIconImageView.image).to(equal(image))
@@ -151,7 +151,7 @@ class WToastSpec: QuickSpec {
                     
                     // default settings from commonInit
                     expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
                     expect(toastView.rightIcon).to(beNil())
                     expect(toastView.toastColor).to(equal(UIColor.blackColor()))
                 }
@@ -162,26 +162,26 @@ class WToastSpec: QuickSpec {
                     let showDuration = 0.0
 
                     toastView = WToastView()
-                    toastView.toastHideOptions = WToastHideOptions.DismissesAfterTime
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    toastView.hideOptions = WToastHideOptions.DismissesAfterTime
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
                     toastView.showDuration = showDuration
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
                 }
 
                 it("should change to DismissOnTap if the duration is set to a negative number") {
                     let showDuration = -99999.0
 
                     toastView = WToastView()
-                    toastView.toastHideOptions = WToastHideOptions.DismissesAfterTime
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    toastView.hideOptions = WToastHideOptions.DismissesAfterTime
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
                     toastView.showDuration = showDuration
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.toastHideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
                 }
             }
         }

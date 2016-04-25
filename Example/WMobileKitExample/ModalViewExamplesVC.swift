@@ -224,18 +224,18 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public func presentAutoToast(sender: UIButton) {
         let toast = WToastView(message: "Auto Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 3
-        toast.toastPlacement = .Top
-        toast.toastWidth = 100
+        toast.placement = .Top
+        toast.width = 250
         WToastManager.sharedInstance.showToast(toast)
     }
 
     public func presentTapToast(sender: UIButton) {
         let toast = WToastView(message: "Tap Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 0
-        toast.toastFlyInDirection = .FromRight
-        toast.toastWidthRatio = 0.65
-        toast.toastRightPadding = 0
-        toast.toastBottomPadding = 100
+        toast.flyInDirection = .FromRight
+        toast.widthRatio = 0.65
+        toast.rightPadding = 50
+        toast.bottomPadding = 100
         WToastManager.sharedInstance.showToast(toast)
     }
 }
