@@ -70,11 +70,13 @@ public class WBaseActionSheet<ActionDataType>: UIViewController{
     public func commonInit() {
         view.addSubview(darkView)
 
-        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: #selector(WBaseActionSheet.animateOut(_:)))
+        // Do not use #selector here, causes issue with iPhone 4S
+        let darkViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
         darkView.addGestureRecognizer(darkViewRecognizer)
 
-        cancelButton.addTarget(self, action: #selector(WBaseActionSheet.animateOut(_:)), forControlEvents: .TouchUpInside)
-        cancelButton.tintColor = UIColor.lightGrayColor()
+        // Do not use #selector here, causes issue with iPhone 4S
+        cancelButton.addTarget(self, action: Selector("animateOut"), forControlEvents: .TouchUpInside)
+        cancelButton.tintColor = .lightGrayColor()
 
         view.addSubview(containerView)
         view.addSubview(cancelButton)
@@ -100,7 +102,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController{
             } else {
                 make.left.equalTo(view).offset(10)
                 make.right.equalTo(view).offset(-10)
-            }
+           }
             make.height.equalTo(height!)
         }
         containerView.backgroundColor = .clearColor()
@@ -116,7 +118,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController{
             cancelButton.setTitle("Cancel", forState: .Normal)
             cancelButton.setTitleColor(UIColor(hex: 0x444444), forState: .Normal)
             cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18)
-            cancelButton.backgroundColor = UIColor.whiteColor()
+            cancelButton.backgroundColor = .whiteColor()
             cancelButton.layer.cornerRadius = 5
             cancelButton.clipsToBounds = true
         }
@@ -417,7 +419,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         cell = tableView.dequeueReusableCellWithIdentifier(ACTION_CELL) as! WTableViewCell
 
         let action = actionForIndexPath(indexPath)
-        cell.backgroundColor = UIColor.whiteColor()
+        cell.backgroundColor = .whiteColor()
         cell.actionInfo = action
 
         cell.separatorBar.hidden = !((sheetSeparatorStyle == .All && indexPath.row != 0)
@@ -522,8 +524,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 iconImageView?.snp_makeConstraints(closure: { (make) in
                     make.left.equalTo(self).offset(14)
                     make.centerY.equalTo(self)
-                    make.width.equalTo(18)
-                    make.height.equalTo(18)
+                    make.width.equalTo(25)
+                    make.height.equalTo(25)
                 })
             }
 

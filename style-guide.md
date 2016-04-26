@@ -89,14 +89,25 @@ class Counter {
 
 ### Enumerations
 
-Use UpperCamelCase for enumeration values:
+Use UpperCamelCase for enumeration values, and if cases are simple they should be kept to one line:
 
 ```swift
 enum Shape {
-  case Rectangle
-  case Square
-  case Triangle
-  case Circle
+    case Rectangle, Square, Triangle, Circle
+}
+```
+
+If they are more complicated or contain raw values, each case should be on its own line:
+```swift
+enum Barcode {
+    case UPCA(Int, Int, Int, Int)
+case QRCode(String)
+}
+
+enum ASCIIControlCharacter: Character {
+    case Tab = "\t"
+    case LineFeed = "\n"
+    case CarriageReturn = "\r"
 }
 ```
 
