@@ -15,57 +15,61 @@ public class PagingControlExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tabLayout1 = WPagingSelectorControl(titles: [tab1Name, tab2Name])
+        let pagingSelectorControl1 = WPagingSelectorControl(titles: [tab1Name, tab2Name])
+        pagingSelectorControl1.tabTextColor = UIColor.redColor()
         
-        view.addSubview(tabLayout1);
-        tabLayout1.snp_makeConstraints { (make) in
+        view.addSubview(pagingSelectorControl1);
+        pagingSelectorControl1.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
             make.top.equalTo(view)
         }
         
-        tabLayout1.layoutSubviews()
-        tabLayout1.tabTextColor = UIColor.redColor()
+        pagingSelectorControl1.layoutSubviews()
         
-        let tabLayout2 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name])
+        let pagingSelectorControl2 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name])
+        pagingSelectorControl2.tabTextColor = UIColor.whiteColor()
 
-        view.addSubview(tabLayout2);
-        tabLayout2.snp_makeConstraints { (make) in
+        view.addSubview(pagingSelectorControl2);
+        pagingSelectorControl2.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(tabLayout1.snp_bottom)
+            make.top.equalTo(pagingSelectorControl1.snp_bottom)
         }
 
-        let tabLayout3 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name], tabWidth: 90)
+        let pagingSelectorControl3 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name], tabWidth: 90)
+        pagingSelectorControl3.tabTextColor = UIColor.cyanColor()
         
-        view.addSubview(tabLayout3);
-        tabLayout3.snp_makeConstraints { (make) in
+        view.addSubview(pagingSelectorControl3);
+        pagingSelectorControl3.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(tabLayout2.snp_bottom)
+            make.top.equalTo(pagingSelectorControl2.snp_bottom)
         }
         
-        let tabLayout4 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name], tabWidth: 90)
+        let pagingSelectorControl4 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name], tabWidth: 90)
+        pagingSelectorControl4.tabTextColor = UIColor.lightGrayColor()
         
-        view.addSubview(tabLayout4);
-        tabLayout4.snp_makeConstraints { (make) in
+        view.addSubview(pagingSelectorControl4);
+        pagingSelectorControl4.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(tabLayout3.snp_bottom)
+            make.top.equalTo(pagingSelectorControl3.snp_bottom)
         }
 
-        let tabLayout5 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name, tab5Name], tabWidth: 90)
+        let pagingSelectorControl5 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name, tab5Name], tabWidth: 90)
+        pagingSelectorControl5.tabTextColor = UIColor.blackColor()
         
-        view.addSubview(tabLayout5);
-        tabLayout5.snp_makeConstraints { (make) in
+        view.addSubview(pagingSelectorControl5);
+        pagingSelectorControl5.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(tabLayout4.snp_bottom)
+            make.top.equalTo(pagingSelectorControl4.snp_bottom)
         }
         
         view.layoutIfNeeded()

@@ -93,7 +93,7 @@ Use UpperCamelCase for enumeration values, and if cases are simple they should b
 
 ```swift
 enum Shape {
-  case Rectangle, Square, Triangle, Circle
+    case Rectangle, Square, Triangle, Circle
 }
 ```
 

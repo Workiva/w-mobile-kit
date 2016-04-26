@@ -4,7 +4,7 @@
 //
 //  Examples of views that appear over the current content
 //
-//  Includes: WActionSheetVC
+//  Includes: WActionSheetVC, WToastManager
 //
 
 import Foundation
@@ -14,13 +14,14 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Action Sheets
         let actionSheetLabel = UILabel()
         actionSheetLabel.text = "Action Sheet Examples"
         actionSheetLabel.textAlignment = NSTextAlignment.Center
 
         view.addSubview(actionSheetLabel)
         actionSheetLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(view.snp_top).offset(32)
+            make.top.equalTo(view.snp_top).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
@@ -34,7 +35,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(permissionsSheetButton)
         permissionsSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(actionSheetLabel.snp_bottom).offset(25)
+            make.top.equalTo(actionSheetLabel.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -48,7 +49,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(iconSheetButton)
         iconSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(permissionsSheetButton.snp_bottom).offset(25)
+            make.top.equalTo(permissionsSheetButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(230)
         }
@@ -62,7 +63,47 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(sortSheetButton)
         sortSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(iconSheetButton.snp_bottom).offset(25)
+            make.top.equalTo(iconSheetButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
+        // Toasts
+        let toastLabel = UILabel()
+        toastLabel.text = "Toast Examples"
+        toastLabel.textAlignment = NSTextAlignment.Center
+
+        view.addSubview(toastLabel)
+        toastLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(sortSheetButton.snp_bottom).offset(15)
+            make.centerX.equalTo(view)
+            make.width.equalTo(220)
+        }
+
+        let autoToastButton = UIButton(type: UIButtonType.RoundedRect)
+        autoToastButton.backgroundColor = UIColor.lightGrayColor()
+        autoToastButton.tintColor = UIColor.greenColor()
+        autoToastButton.setTitle("Auto Dismiss Toast", forState: UIControlState.Normal)
+        autoToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        autoToastButton.addTarget(self, action: #selector(presentAutoToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(autoToastButton)
+        autoToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(toastLabel.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
+        let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
+        tapToastButton.backgroundColor = UIColor.lightGrayColor()
+        tapToastButton.tintColor = UIColor.greenColor()
+        tapToastButton.setTitle("Tap Dismiss Toast", forState: UIControlState.Normal)
+        tapToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(tapToastButton)
+        tapToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -122,19 +163,19 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheetIcons = WActionSheetVC<String>()
 
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
-        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder_1"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear_1"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Properties", image:UIImage(named: "gear"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person_1"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash_1"), style: ActionStyle.Destructive,
+        actionSheetIcons.addAction(WAction(title: "Delete", image:UIImage(named: "trash"), style: ActionStyle.Destructive,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
@@ -178,6 +219,24 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         actionSheetSort.popoverPresentationController?.sourceView = sender
         
         presentViewController(actionSheetSort, animated: true, completion: nil)
+    }
+
+    public func presentAutoToast(sender: UIButton) {
+        let toast = WToastView(message: "Auto Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.showDuration = 3
+        toast.placement = .Top
+        toast.width = 250
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    public func presentTapToast(sender: UIButton) {
+        let toast = WToastView(message: "Tap Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.showDuration = 0
+        toast.flyInDirection = .FromRight
+        toast.widthRatio = 0.65
+        toast.rightPadding = 50
+        toast.bottomPadding = 100
+        WToastManager.sharedInstance.showToast(toast)
     }
 }
 
