@@ -197,8 +197,8 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public func presentPickerActionSheet(sender: UIButton) {
         self.definesPresentationContext = true
 
-        let actionSheetPicker = WActionSheetVC<String>(isPickerView: true)
-        actionSheetPicker.delegate = self
+        let actionSheetPicker = WPickerActionSheet<String>()
+        actionSheetPicker.pickerDelegate = self
 
         actionSheetPicker.addAction(WAction(title: "Option 1",
             handler: { action in
@@ -221,12 +221,13 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                 NSLog(action.title! + " was stopped on.")
         }))
         actionSheetPicker.popoverPresentationController?.sourceView = sender
+        actionSheetPicker.setSelectedAction(2)
 
         presentViewController(actionSheetPicker, animated: true, completion: nil)
     }
 }
 
-extension ModalViewExamplesVC: WActionSheetDelegate {
+extension ModalViewExamplesVC: WPickerActionSheetDelegate {
     public func pickerViewDoneButtonWasTapped(selectedIndex: Int) {
         NSLog("The Picker View \"Done\" button was pressed with selected index \(selectedIndex).")
     }
