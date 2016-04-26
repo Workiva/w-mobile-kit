@@ -244,15 +244,15 @@ public class WBannerView: UIView {
     }
 
     public func hide() {
-        if let timer = showTimer {
-            timer.invalidate()
-            showTimer = nil
-        }
+        showTimer?.invalidate()
+        showTimer = nil
 
-        if (isVisible()) {
+        if isVisible() {
             //animate out
             snp_remakeConstraints{ (make) in
                 make.height.equalTo(height)
+                make.left.equalTo(rootView!)
+                make.right.equalTo(rootView!)
 
                 switch placement {
                 case .Bottom:
@@ -264,17 +264,17 @@ public class WBannerView: UIView {
                     make.centerX.equalTo(rootView!)
                     break;
                 }
-
-                UIView.animateWithDuration(animationDuration,
-                    animations: {
-                        self.rootView!.layoutIfNeeded()
-                    },
-                    completion: { finished in
-                        self.removeFromSuperview()
-                        self.delegate?.bannerDidHide?(self)
-                    }
-                )
             }
+
+            UIView.animateWithDuration(animationDuration,
+                animations: {
+                    self.rootView!.layoutIfNeeded()
+                },
+                completion: { finished in
+                    self.removeFromSuperview()
+                    self.delegate?.bannerDidHide?(self)
+                }
+            )
         }
     }
 }

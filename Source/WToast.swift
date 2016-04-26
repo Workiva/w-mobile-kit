@@ -274,12 +274,10 @@ public class WToastView: UIView {
     }
 
     public func hide() {
-        if let timer = showTimer {
-            timer.invalidate()
-            showTimer = nil
-        }
+        showTimer?.invalidate()
+        showTimer = nil
 
-        if (isVisible()) {
+        if isVisible() {
             NSNotificationCenter.defaultCenter().removeObserver(self)
 
             //animate out
