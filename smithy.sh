@@ -2,7 +2,7 @@
 source ./core.sh
 
 # Will fail if coverage drops below the threshold
-code_coverage_threshold=80
+code_coverage_threshold=90
 
 # Make sure we're using the rbenv version of ruby
 PATH="$(cd ~/; pwd)/.rbenv/shims:$(cd ~/; pwd)/.rbenv/bin:$PATH"
