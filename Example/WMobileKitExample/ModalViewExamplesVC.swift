@@ -10,7 +10,7 @@
 import Foundation
 import WMobileKit
 
-public class ModalViewExamplesVC: WSideMenuContentVC, WBannerViewDelegate {
+public class ModalViewExamplesVC: WSideMenuContentVC {
     var topBanner: WBannerView?
     var bottomBanner: WBannerView?
 
@@ -311,8 +311,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC, WBannerViewDelegate {
         bottomBanner!.delegate = self
         bottomBanner!.show()
     }
+}
 
-    // Mark: - WBannerDelegate
+// Mark: - WBannerDelegate
+extension ModalViewExamplesVC: WBannerViewDelegate {
     public func bannerWasTapped(sender: UITapGestureRecognizer) {
         let bannerView = sender.view as! WBannerView
 
