@@ -76,8 +76,46 @@ class WPagingSelectorVCSpec: QuickSpec {
                 }
             }
 
+            describe("WTabView") {
+                var tabView: WTabView!
+
+                it("should init with coder correctly") {
+                    tabView = WTabView(title: "Tab")
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WTabView")
+
+                    NSKeyedArchiver.archiveRootObject(tabView, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
+                }
+            }
+
+            describe("WSelectionIndicatorView") {
+                var selectionIndicatorView: WSelectionIndicatorView!
+
+                it("should init with coder correctly") {
+                    selectionIndicatorView = WSelectionIndicatorView()
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WSelectionIndicatorView")
+
+                    NSKeyedArchiver.archiveRootObject(selectionIndicatorView, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
+
+                    expect(object).toNot(equal(nil))
+                    
+                    // default settings from commonInit
+                }
+            }
+
             describe("WPagingSelectorControl") {
-                var pagingSelectorControl:WPagingSelectorControl!
+                var pagingSelectorControl: WPagingSelectorControl!
 
                 it("should init with titles") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles)
@@ -95,6 +133,21 @@ class WPagingSelectorVCSpec: QuickSpec {
                     pagingSelectorControl = WPagingSelectorControl(pages: pages)
 
                     expect(pagingSelectorControl).toNot(beNil())
+                }
+
+                it("should init with coder correctly") {
+                    pagingSelectorControl = WPagingSelectorControl(titles: titles)
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WPagingSelectorControl")
+
+                    NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WPagingSelectorControl
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
                 }
             }
         }

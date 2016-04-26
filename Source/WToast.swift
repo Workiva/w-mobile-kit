@@ -102,6 +102,13 @@ public class WToastView: UIView {
         }
     }
 
+    public var toastAlpha: CGFloat = 0.7 {
+        didSet {
+            backgroundView.alpha = toastAlpha
+            rightIconImageView.alpha = toastAlpha
+        }
+    }
+
     public var messageLabel = UILabel()
     public var rightIconImageView = UIImageView()
     public var backgroundView = UIView()
@@ -121,15 +128,15 @@ public class WToastView: UIView {
         commonInit()
     }
     
-    public convenience init(message: String, icon: UIImage? = nil, toastColor: UIColor = .blackColor(), alpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
+    public convenience init(message: String, icon: UIImage? = nil, toastColor: UIColor = .blackColor(), toastAlpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
         self.init(frame: CGRectZero)
         
         self.message = message
         self.toastColor = toastColor
-        self.backgroundView.alpha = alpha
+        self.backgroundView.alpha = toastAlpha
         self.rightIcon = icon
         self.showDuration = showDuration
-        rightIconImageView.alpha = alpha
+        rightIconImageView.alpha = toastAlpha
     }
     
     private func commonInit() {
@@ -182,6 +189,9 @@ public class WToastView: UIView {
             make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
         }
         messageLabel.text = message
+
+        backgroundView.alpha = toastAlpha
+        rightIconImageView.alpha = toastAlpha
 
         layoutIfNeeded()
     }

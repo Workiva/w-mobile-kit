@@ -4,13 +4,13 @@
 //
 //  Examples of views that appear over the current content
 //
-//  Includes: WActionSheetVC, WToastManager
+//  Includes: WActionSheetVC, WToast, WBanner
 //
 
 import Foundation
 import WMobileKit
 
-public class ModalViewExamplesVC: WSideMenuContentVC {
+public class ModalViewExamplesVC: WSideMenuContentVC, WBannerViewDelegate {
     var topBanner: WBannerView?
     var bottomBanner: WBannerView?
 
@@ -293,6 +293,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  bodyMessage: "Top Toast Body Top Toast Body Top Toast Body Top Toast Body",
                                  rightIcon: UIImage(named: "close"),
                                  bannerColor: UIColor(hex: 0x006400))
+        topBanner!.delegate = self
         topBanner!.placement = .Top
         topBanner!.hideOptions = .DismissOnTap
 
@@ -307,6 +308,18 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  titleIcon: UIImage(named: "alert"),
                                  bodyMessage: "Body",
                                  bannerColor: UIColor(hex: 0x006400))
+        bottomBanner!.delegate = self
         bottomBanner!.show()
+    }
+
+    // Mark: - WBannerDelegate
+    public func bannerWasTapped(sender: UITapGestureRecognizer) {
+        let bannerView = sender.view as! WBannerView
+
+        NSLog("Banner '" + bannerView.titleMessageLabel.text! + "' was tapped")
+    }
+
+    public func bannerDidHide(bannerView: WBannerView) {
+        NSLog("Banner '" + bannerView.titleMessageLabel.text! + "' did hide")
     }
 }

@@ -22,7 +22,34 @@ class WTextFieldTests: QuickSpec {
                 subject.endAppearanceTransition()
             })
 
+            afterEach({
+                textField = nil
+            })
+
             describe("when app has been init") {
+                it("should init with coder correctly") {
+                    textField = WTextField()
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WTextField")
+
+                    NSKeyedArchiver.archiveRootObject(textField, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTextField
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
+                    expect(textField.imageSquareSize).to(equal(16))
+                    expect(textField.paddingBetweenTextAndImage).to(equal(8))
+                    expect(textField.bottomLineWidth).to(equal(1))
+                    expect(textField.leftImage).to(beNil())
+                    expect(textField.leftView).to(beNil())
+                    expect(textField.rightImage).to(beNil())
+                    expect(textField.rightView).to(beNil())
+                    expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
+                }
+
                 it("should successfully add and display a text field with default settings") {
                     textField = WTextField()
 

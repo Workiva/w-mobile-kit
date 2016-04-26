@@ -8,7 +8,7 @@ import SnapKit
 
 @objc public protocol WBannerViewDelegate {
     optional func bannerWasTapped(sender: UITapGestureRecognizer)
-    optional func bannerDidHide(banner: WBannerView)
+    optional func bannerDidHide(bannerView: WBannerView)
 }
 
 public enum WBannerHideOptions {
@@ -70,6 +70,13 @@ public class WBannerView: UIView {
         }
     }
 
+    public var bannerAlpha: CGFloat = 0.7 {
+        didSet {
+            backgroundView.alpha = bannerAlpha
+            rightIconImageView.alpha = bannerAlpha
+        }
+    }
+
     public var titleMessageLabel = UILabel()
     public var bodyMessageLabel = UILabel()
     public var titleIconImageView = UIImageView()
@@ -97,7 +104,7 @@ public class WBannerView: UIView {
         self.rootView = rootView
     }
 
-    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), alpha: CGFloat = 0.8) {
+    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 0.8) {
         self.init(frame: CGRectZero)
 
         self.rootView = rootView
@@ -105,9 +112,9 @@ public class WBannerView: UIView {
         self.titleIcon = titleIcon
         self.bodyMessage = bodyMessage
         self.bannerColor = bannerColor
-        self.backgroundView.alpha = alpha
+        self.backgroundView.alpha = bannerAlpha
         self.rightIcon = rightIcon
-        rightIconImageView.alpha = alpha
+        rightIconImageView.alpha = bannerAlpha
     }
 
     private func commonInit() {
@@ -176,6 +183,9 @@ public class WBannerView: UIView {
             make.right.equalTo(rightIconImageView.snp_left).offset(-10)
         }
         bodyMessageLabel.text = bodyMessage
+
+        backgroundView.alpha = bannerAlpha
+        rightIconImageView.alpha = bannerAlpha
 
         layoutIfNeeded()
     }
