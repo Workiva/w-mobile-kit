@@ -37,45 +37,45 @@ class WTextFieldTests: QuickSpec {
                     subject.view.layoutIfNeeded()
 
                     // public properties
-                    expect(textField.imageSquareSize).to(equal(16))
-                    expect(textField.paddingBetweenTextAndImage).to(equal(8))
-                    expect(textField.bottomLineWidth).to(equal(1))
+                    expect(textField.imageSquareSize) == 16
+                    expect(textField.paddingBetweenTextAndImage) == 8
+                    expect(textField.bottomLineWidth) == 1
                     expect(textField.leftImage).to(beNil())
                     expect(textField.leftView).to(beNil())
                     expect(textField.rightImage).to(beNil())
                     expect(textField.rightView).to(beNil())
-                    expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
+                    expect(textField.bottomLineColor) == UIColor.whiteColor()
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
-                    expect(textRect.origin.x).to(equal(0))
-                    expect(textRect.origin.y).to(equal(0))
-                    expect(textRect.width).to(equal(160))
-                    expect(textRect.height).to(equal(30))
+                    expect(textRect.origin.x) == 0
+                    expect(textRect.origin.y) == 0
+                    expect(textRect.width) == 160
+                    expect(textRect.height) == 30
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
-                    expect(placeHolderRect.origin.x).to(equal(0))
-                    expect(placeHolderRect.origin.y).to(equal(0))
-                    expect(placeHolderRect.width).to(equal(160))
-                    expect(placeHolderRect.height).to(equal(30))
+                    expect(placeHolderRect.origin.x) == 0
+                    expect(placeHolderRect.origin.y) == 0
+                    expect(placeHolderRect.width) == 160
+                    expect(placeHolderRect.height) == 30
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
-                    expect(editingRect.origin.x).to(equal(0))
-                    expect(editingRect.origin.y).to(equal(0))
-                    expect(editingRect.width).to(equal(160))
-                    expect(editingRect.height).to(equal(30))
+                    expect(editingRect.origin.x) == 0
+                    expect(editingRect.origin.y) == 0
+                    expect(editingRect.width) == 160
+                    expect(editingRect.height) == 30
 
                     let leftViewRect = textField.leftViewRectForBounds(textField.bounds)
-                    expect(leftViewRect.origin.x).to(equal(0)) // (textField.height - imageSquareSize) / 2 = (30 - 16) / 2
-                    expect(leftViewRect.origin.y).to(equal(7))
-                    expect(leftViewRect.width).to(equal(16))
-                    expect(leftViewRect.height).to(equal(16))
+                    expect(leftViewRect.origin.x) == 0 // (textField.height - imageSquareSize) / 2 = (30 - 16) / 2
+                    expect(leftViewRect.origin.y) == 7
+                    expect(leftViewRect.width) == 16
+                    expect(leftViewRect.height) == 16
 
                     let rightViewRect = textField.rightViewRectForBounds(textField.bounds)
-                    expect(rightViewRect.origin.x).to(equal(144)) // textField.width - imageSquareSize
-                    expect(rightViewRect.origin.y).to(equal(7))
-                    expect(rightViewRect.width).to(equal(16))
-                    expect(rightViewRect.height).to(equal(16))
+                    expect(rightViewRect.origin.x) == 144 // textField.width - imageSquareSize
+                    expect(rightViewRect.origin.y) == 7
+                    expect(rightViewRect.width) == 16
+                    expect(rightViewRect.height) == 16
                 }
 
                 it("should successfully add and display a text field with custom configurations") {
@@ -96,21 +96,21 @@ class WTextFieldTests: QuickSpec {
                     subject.view.layoutIfNeeded()
 
                     // public properties
-                    expect(textField.imageSquareSize).to(equal(20))
-                    expect(textField.paddingBetweenTextAndImage).to(equal(10))
-                    expect(textField.bottomLineWidth).to(equal(2))
-                    expect(textField.bottomLineColor).to(equal(UIColor.blueColor()))
+                    expect(textField.imageSquareSize) == 20
+                    expect(textField.paddingBetweenTextAndImage) == 10
+                    expect(textField.bottomLineWidth) == 2
+                    expect(textField.bottomLineColor) == UIColor.blueColor()
 
                     // rect sizing
                     let leftViewRect = textField.leftViewRectForBounds(textField.bounds)
-                    expect(leftViewRect.width).to(equal(20))
-                    expect(leftViewRect.height).to(equal(20))
+                    expect(leftViewRect.width) == 20
+                    expect(leftViewRect.height) == 20
 
                     let rightViewRect = textField.rightViewRectForBounds(textField.bounds)
-                    expect(rightViewRect.origin.x).to(equal(140)) // textField.width - imageSquareSize
-                    expect(rightViewRect.origin.y).to(equal(5))
-                    expect(rightViewRect.width).to(equal(20))
-                    expect(rightViewRect.height).to(equal(20))
+                    expect(rightViewRect.origin.x) == 140 // textField.width - imageSquareSize
+                    expect(rightViewRect.origin.y) == 5
+                    expect(rightViewRect.width) == 20
+                    expect(rightViewRect.height) == 20
                 }
 
                 it("should successfully add and display a text field with a left icon") {
@@ -131,19 +131,19 @@ class WTextFieldTests: QuickSpec {
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
-                    expect(textRect.origin.x).to(equal(24))
-                    expect(textRect.width).to(equal(136))
-                    expect(textRect.height).to(equal(30))
+                    expect(textRect.origin.x) == 24
+                    expect(textRect.width) == 136
+                    expect(textRect.height) == 30
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
-                    expect(placeHolderRect.origin.x).to(equal(24))
-                    expect(placeHolderRect.width).to(equal(136))
-                    expect(placeHolderRect.height).to(equal(30))
+                    expect(placeHolderRect.origin.x) == 24
+                    expect(placeHolderRect.width) == 136
+                    expect(placeHolderRect.height) == 30
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
-                    expect(editingRect.origin.x).to(equal(24))
-                    expect(editingRect.width).to(equal(136))
-                    expect(editingRect.height).to(equal(30))
+                    expect(editingRect.origin.x) == 24
+                    expect(editingRect.width) == 136
+                    expect(editingRect.height) == 30
                 }
 
                 it("should successfully add and display a text field with a right icon") {
@@ -164,19 +164,19 @@ class WTextFieldTests: QuickSpec {
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
-                    expect(textRect.origin.x).to(equal(0))
-                    expect(textRect.width).to(equal(136))
-                    expect(textRect.height).to(equal(30))
+                    expect(textRect.origin.x) == 0
+                    expect(textRect.width) == 136
+                    expect(textRect.height) == 30
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
-                    expect(placeHolderRect.origin.x).to(equal(0))
-                    expect(placeHolderRect.width).to(equal(136))
-                    expect(placeHolderRect.height).to(equal(30))
+                    expect(placeHolderRect.origin.x) == 0
+                    expect(placeHolderRect.width) == 136
+                    expect(placeHolderRect.height) == 30
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
-                    expect(editingRect.origin.x).to(equal(0))
-                    expect(editingRect.width).to(equal(136))
-                    expect(editingRect.height).to(equal(30))
+                    expect(editingRect.origin.x) == 0
+                    expect(editingRect.width) == 136
+                    expect(editingRect.height) == 30
                 }
 
                 it("should successfully add and display a text field with both icons set") {
@@ -198,19 +198,19 @@ class WTextFieldTests: QuickSpec {
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
-                    expect(textRect.origin.x).to(equal(24))
-                    expect(textRect.width).to(equal(112))
-                    expect(textRect.height).to(equal(30))
-
+                    expect(textRect.origin.x) == 24
+                    expect(textRect.width) == 112
+                    expect(textRect.height) == 30
+                    
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
-                    expect(placeHolderRect.origin.x).to(equal(24))
-                    expect(placeHolderRect.width).to(equal(112))
-                    expect(placeHolderRect.height).to(equal(30))
-
+                    expect(placeHolderRect.origin.x) == 24
+                    expect(placeHolderRect.width) == 112
+                    expect(placeHolderRect.height) == 30
+                    
                     let editingRect = textField.editingRectForBounds(textField.bounds)
-                    expect(editingRect.origin.x).to(equal(24))
-                    expect(editingRect.width).to(equal(112))
-                    expect(editingRect.height).to(equal(30))
+                    expect(editingRect.origin.x) == 24
+                    expect(editingRect.width) == 112
+                    expect(editingRect.height) == 30
                 }
             }
         }
