@@ -10,6 +10,7 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
     let progressSpinner1 = WSpinner(frame: CGRectZero)
     let progressSpinner2 = WSpinner(frame: CGRectZero)
     let progressSpinner3 = WSpinner(frame: CGRectZero)
+    var loadingModal: WLoadingModal? = nil
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,16 +87,37 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         indeterminateSpinner4.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(progressSpinner1.snp_bottom).offset(10)
-            make.width.equalTo(60)
-            make.height.equalTo(60)
+            make.width.equalTo(44)
+            make.height.equalTo(44)
         }
+
+        // MARK: Loading Modal
+        let loadingModalButton = UIButton()
+        view.addSubview(loadingModalButton)
+        loadingModalButton.setTitle("Loading Modal", forState: .Normal)
+        loadingModalButton.setTitleColor(.whiteColor(), forState: .Normal)
+        loadingModalButton.backgroundColor = .clearColor()
+        loadingModalButton.layer.borderColor = UIColor.whiteColor().CGColor
+        loadingModalButton.layer.cornerRadius = 5
+        loadingModalButton.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(indeterminateSpinner4.snp_bottom).offset(10)
+            make.width.equalTo(200)
+            make.height.equalTo(30)
+        }
+
+        let loadingTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoadingAndSpinnersExamplesVC.displayLoadingModal(_:)))
+        loadingTapRecognizer.numberOfTapsRequired = 1
+        loadingModalButton.addGestureRecognizer(loadingTapRecognizer)
 
         // MARK: Reset progress to allow a better demo.
         let resetProgressButton = UIButton()
         view.addSubview(resetProgressButton)
         resetProgressButton.setTitle("Reset Progress", forState: .Normal)
         resetProgressButton.setTitleColor(.whiteColor(), forState: .Normal)
-        resetProgressButton.backgroundColor = .lightGrayColor()
+        resetProgressButton.backgroundColor = .clearColor()
+        resetProgressButton.layer.borderColor = UIColor.whiteColor().CGColor
+        resetProgressButton.layer.cornerRadius = 5
         resetProgressButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.bottom.equalTo(view.snp_bottom).offset(-12)
@@ -103,9 +125,9 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
             make.height.equalTo(30)
         }
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoadingAndSpinnersExamplesVC.resetProgress(_:)))
-        tapRecognizer.numberOfTapsRequired = 1
-        resetProgressButton.addGestureRecognizer(tapRecognizer)
+        let resetTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoadingAndSpinnersExamplesVC.resetProgress(_:)))
+        resetTapRecognizer.numberOfTapsRequired = 1
+        resetProgressButton.addGestureRecognizer(resetTapRecognizer)
 
         startProgress()
     }
@@ -123,6 +145,10 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         progressSpinner1.progress = progress
         progressSpinner2.progress = progress
         progressSpinner3.progress = progress
+
+        if (loadingModal != nil) {
+            loadingModal!.setProgress(progress)
+        }
     }
 
     public func startProgress() {
@@ -136,5 +162,26 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
         startProgress()
 
         view.setNeedsDisplay()
+    }
+
+    public func displayLoadingModal(sender: AnyObject?) {
+        loadingModal = WLoadingModal(.grayColor(),
+                                     title: "Title Text",
+                                     description: "And a short description for this loading modal.")
+
+        loadingModal?.show(self.view, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+
+        let timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(LoadingAndSpinnersExamplesVC.dismissLoadingModal(_:)), userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    }
+
+    public func dismissLoadingModal(sender: AnyObject?) {
+        if (loadingModal != nil) {
+            loadingModal!.removeFromSuperview()
+
+            if let timer = sender as? NSTimer {
+                timer.invalidate()
+            }
+        }
     }
 }

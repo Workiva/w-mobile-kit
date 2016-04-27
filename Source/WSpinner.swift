@@ -9,16 +9,17 @@ let startAngle = -CGFloat(M_PI / 2)
 
 public class WSpinner: UIControl {
     // MARK: - Properties
-    var backgroundLayer = CAShapeLayer()
-    var progressLayer = CAShapeLayer()
-    var iconLayer = CALayer()
+    public var backgroundLayer: CAShapeLayer = CAShapeLayer()
+    public var progressLayer: CAShapeLayer = CAShapeLayer()
+    public var iconLayer: CALayer = CALayer()
+
     public var indeterminateSectionLength: Double = 0.5 {
         didSet {
             indeterminateSectionLength *= 2
         }
     }
 
-    public var icon = UIImage?() {
+    public var icon: UIImage? {
         didSet {
             setNeedsDisplayMainThread()
         }

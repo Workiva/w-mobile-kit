@@ -6,7 +6,7 @@ import Quick
 import Nimble
 @testable import WMobileKit
 
-class WUserLogoViewTests: QuickSpec {
+class WLoadingModalTests: QuickSpec {
     override func spec() {
         describe("WLoadingModalSpec") {
             var subject: UIViewController!
