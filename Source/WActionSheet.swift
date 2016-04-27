@@ -23,14 +23,14 @@ public enum SheetSeparatorStyle {
     case All, DestructiveOnly
 }
 
-public protocol WBaseActionSheetDelegate: class {
+public protocol WBaseActionSheetDelegate {
     func commonInit()
     func setupUI(animated: Bool)
     func heightForActionSheet() -> CGFloat
     func setSelectedAction(index: Int)
 }
 
-public class WBaseActionSheet<ActionDataType>: UIViewController{
+public class WBaseActionSheet<ActionDataType>: UIViewController {
     public var darkView = UIView(frame: CGRectZero)
     public var containerView = UIView(frame: CGRectZero)
     public var cancelButton = UIButton(type: .System)
@@ -686,10 +686,11 @@ public protocol WPickerActionSheetDelegate: class {
 }
 
 public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>, WBaseActionSheetDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-    private var toolbarDoneButton = UIButton()
-    private var toolbarCancelButton = UIButton()
-    private var toolbarContainerView = UIView()
+    internal var toolbarDoneButton = UIButton()
+    internal var toolbarCancelButton = UIButton()
+    internal var toolbarContainerView = UIView()
     internal var pickerView: UIPickerView = UIPickerView()
+    internal let PICKER_VIEW_HEIGHT: CGFloat = 300.0
     public var pickerDelegate: WPickerActionSheetDelegate?
 
     // MARK: - Initialization
@@ -840,7 +841,7 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
         if (actions.count == 0) {
             return CGFloat(0)
         }
-        return CGFloat(200)
+        return CGFloat(PICKER_VIEW_HEIGHT)
     }
 
     // MARK: - UIPickerView Delegate

@@ -176,5 +176,107 @@ class WActionSheetVCSpec: QuickSpec {
                 }
             }
         }
+
+        describe("WPickerActionSheetVCSpec") {
+            var subject: WPickerActionSheet<NSObject>!
+            var action: WAction<NSObject>?
+
+            beforeEach({
+                subject = WPickerActionSheet<NSObject>()
+                action = WAction(title: "Option 1")
+
+                subject.addAction(action!)
+                subject.addAction(WAction(title: "Option 2", image: UIImage()))
+                subject.addAction(WAction(title: "Option 3"))
+                subject.addAction(WAction(title: "Option 4"))
+                subject.addAction(WAction(title: "Option 5"))
+
+                subject.hasCancel = true
+
+                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window.rootViewController = subject
+
+                subject.beginAppearanceTransition(true, animated: false)
+                subject.endAppearanceTransition()
+
+                subject.pickerView.reloadAllComponents()
+            })
+
+            afterEach({
+                subject.animateOut()
+            })
+
+            describe("when app has been init") {
+                it("should have everything initalized properly") {
+                    // Delegate assignment
+                    expect(subject.pickerView.delegate).toNot(beNil())
+                    expect(subject.delegate).toNot(beNil())
+
+                    // Everything exists
+                    expect(subject.toolbarContainerView).toNot(beNil())
+                    expect(subject.toolbarDoneButton).toNot(beNil())
+                    expect(subject.toolbarCancelButton).toNot(beNil())
+                    expect(subject.pickerView).toNot(beNil())
+
+                    // All views added programatically
+                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarCancelButton)).to(beTruthy())
+                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarDoneButton)).to(beTruthy())
+
+                    // Properties are all set up
+                    expect(subject.toolbarCancelButton.titleLabel?.text).to(equal("Cancel"))
+                    expect(subject.toolbarCancelButton.titleLabel?.textColor).to(equal(UIColor.blueColor()))
+                    expect(subject.toolbarCancelButton.allTargets().contains(subject)).to(beTruthy())
+
+                    expect(subject.toolbarDoneButton.titleLabel?.text).to(equal("Done"))
+                    expect(subject.toolbarDoneButton.titleLabel?.textColor).to(equal(UIColor.blueColor()))
+                    expect(subject.toolbarDoneButton.allTargets().contains(subject)) == true
+
+                    expect(subject.toolbarContainerView.backgroundColor).to(equal(UIColor.whiteColor()))
+                    expect(subject.pickerView.backgroundColor).to(equal(UIColor.whiteColor()))
+                }
+
+                it("should have the correct height for having actions") {
+                    expect(subject.heightForActionSheet()).to(equal(subject.PICKER_VIEW_HEIGHT))
+                }
+            }
+
+            describe("pickerview row can be selected") {
+                it("with a valid row") {
+                    subject.pickerView.selectRow(1, inComponent: 0, animated: true)
+                }
+
+                it("with an invlaid row number") {
+                    subject.pickerView.selectRow(9, inComponent: 0, animated: true)
+                }
+            }
+
+            describe("toolbar buttons") {
+                it("should successfully touch done button") {
+                    subject.toolbarDoneButtonWasTouched()
+                }
+
+                it("should successfully touch cancel button") {
+                    subject.toolbarCancelButtonWasTouched()
+                }
+            }
+
+            describe("pickerview delegate method calls") {
+                it("should have the correct number of rows") {
+                    expect(subject.pickerView.numberOfRowsInComponent(0)).to(equal(5))
+                }
+
+                it("should have the correct number of components") {
+                    expect(subject.pickerView.numberOfComponents) == 1
+                }
+
+                it("should select correctly") {
+                    subject.pickerView(subject.pickerView, didSelectRow: 0, inComponent: 0)
+                }
+            }
+
+            describe("when an item is selected") {
+
+            }
+        }
     }
 }
