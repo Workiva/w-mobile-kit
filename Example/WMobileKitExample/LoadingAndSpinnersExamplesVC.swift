@@ -167,7 +167,9 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
     public func displayLoadingModal(sender: AnyObject?) {
         loadingModal = WLoadingModal(.grayColor(),
                                      title: "Title Text",
-                                     description: "And a short description for this loading modal.")
+                                     description: "And a short description for this loading modal. This will go away in 5 seconds.")
+
+        loadingModal?.descriptionLabelHeight = 100
 
         loadingModal?.show(self.view, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
 

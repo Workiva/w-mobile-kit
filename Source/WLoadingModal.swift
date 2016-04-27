@@ -7,8 +7,40 @@ import UIKit
 
 public class WLoadingModal: UIView {
     public var spinnerView: WSpinner = WSpinner()
+
+    public var spinnerSize: CGFloat = 44 {
+        didSet {
+            self.remakeSpinnerConstraints()
+        }
+    }
+
     public var titleLabel: UILabel = UILabel()
+
+    public var titleLabelWidth: CGFloat = 120 {
+        didSet {
+            self.remakeTitleConstraints()
+        }
+    }
+
+    public var titleLabelHeight: CGFloat = 20 {
+        didSet  {
+            self.remakeTitleConstraints()
+        }
+    }
+
     public var descriptionLabel: UILabel = UILabel()
+
+    public var descriptionLabelWidth: CGFloat = 180 {
+        didSet {
+            self.remakeDescriptionConstraints()
+        }
+    }
+
+    public var descriptionLabelHeight: CGFloat = 60 {
+        didSet {
+            self.remakeDescriptionConstraints()
+        }
+    }
 
     // MARK: - Inits
     public convenience init(_ backgroundColor: UIColor, title: String, description: String) {
@@ -38,32 +70,44 @@ public class WLoadingModal: UIView {
 
         spinnerView.indeterminate = true
         addSubview(spinnerView)
-        spinnerView.snp_makeConstraints { (make) in
-            make.top.equalTo(self.snp_top).offset(32)
-            make.centerX.equalTo(self)
-            make.width.equalTo(44)
-            make.height.equalTo(44)
-        }
+        remakeSpinnerConstraints()
 
         titleLabel.textColor = .whiteColor()
         titleLabel.textAlignment = .Center
         addSubview(titleLabel)
-        titleLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(spinnerView.snp_bottom).offset(32)
-            make.centerX.equalTo(self)
-            make.width.equalTo(120)
-            make.height.equalTo(20)
-        }
+        remakeTitleConstraints()
 
         descriptionLabel.textColor = .whiteColor()
         descriptionLabel.textAlignment = .Center
         descriptionLabel.numberOfLines = 0
         addSubview(descriptionLabel)
-        descriptionLabel.snp_makeConstraints { (make) in
+        remakeDescriptionConstraints()
+    }
+
+    private func remakeSpinnerConstraints() {
+        spinnerView.snp_remakeConstraints { (make) in
+            make.top.equalTo(self.snp_top).offset(32)
+            make.centerX.equalTo(self)
+            make.width.equalTo(spinnerSize)
+            make.height.equalTo(spinnerSize)
+        }
+    }
+
+    private func remakeTitleConstraints() {
+        titleLabel.snp_remakeConstraints { (make) in
+            make.top.equalTo(spinnerView.snp_bottom).offset(32)
+            make.centerX.equalTo(self)
+            make.width.equalTo(titleLabelWidth)
+            make.height.equalTo(20)
+        }
+    }
+
+    private func remakeDescriptionConstraints() {
+        descriptionLabel.snp_remakeConstraints { (make) in
             make.top.equalTo(titleLabel.snp_bottom).offset(32)
             make.centerX.equalTo(self)
-            make.width.equalTo(180)
-            make.height.equalTo(60)
+            make.width.equalTo(descriptionLabelWidth)
+            make.height.equalTo(descriptionLabelHeight)
         }
     }
 
