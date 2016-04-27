@@ -39,6 +39,11 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
             tableView?.reloadData()
         }
     }
+    public var maxSheetHeight: CGFloat = SHEET_HEIGHT_MAX {
+        didSet {
+            setupUI(false);
+        }
+    }
 
     public var hasCancel = false
 
@@ -204,7 +209,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions.count
         let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + CANCEL_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
-        return min(height, SHEET_HEIGHT_MAX)
+        return min(height, maxSheetHeight)
     }
 
     public func heightForSheetContent() -> CGFloat {
