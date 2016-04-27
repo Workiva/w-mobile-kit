@@ -379,7 +379,7 @@ public class WActionSheetVC<ActionDataType> : UIViewController, UITableViewDeleg
     }
 
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return HEADER_HEIGHT
+        return titleString != nil ? HEADER_HEIGHT : 0
     }
 
     // MARK: - UITableViewDelegate
