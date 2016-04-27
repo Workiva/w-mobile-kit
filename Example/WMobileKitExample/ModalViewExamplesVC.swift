@@ -163,6 +163,8 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let actionSheetIcons = WActionSheetVC<String>()
 
         actionSheetIcons.titleString = "2015 Revenue Forecasts"
+        actionSheetIcons.maxSheetHeight = 315
+        
         actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
