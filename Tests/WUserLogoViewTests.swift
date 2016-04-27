@@ -53,7 +53,7 @@ class WUserLogoViewTests: QuickSpec {
 
                     // Custom Settings
                     userLogoView.bounds = CGRectMake(0, 0, 100, 100)
-                    userLogoView.color = UIColor.cyanColor()
+                    userLogoView.color = .cyanColor()
                     userLogoView.name = name2
                     userLogoView.lineWidth = 2.0
 

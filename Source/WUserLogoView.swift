@@ -128,7 +128,7 @@ public class WUserLogoView: UIView {
         case 4:
             return UIColor(hex: 0xF26C21)
         default:
-            return UIColor.blackColor()
+            return .blackColor()
         }
     }
 }

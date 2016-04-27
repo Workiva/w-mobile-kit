@@ -23,14 +23,13 @@ public struct WSideMenuOptions {
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
     public var statusBarStyle: UIStatusBarStyle = .LightContent
-    public var drawerBorderColor = UIColor.redColor()
+    public var drawerBorderColor: UIColor = .redColor()
     public var drawerIcon: UIImage?
     public var backIcon: UIImage?
 }
 
 enum WSideMenuState {
-    case Open
-    case Closed
+    case Open, Closed
 }
 
 public class WSideMenuVC: UIViewController {

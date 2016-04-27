@@ -34,22 +34,25 @@ public class WTheme: NSObject {
     public override init(){}
 
     // Accessible Colors
-    public var primaryTextColor: UIColor = UIColor.blackColor()
-    public var secondaryTextColor: UIColor = UIColor.grayColor()
+    public var primaryTextColor: UIColor = .blackColor()
+    public var secondaryTextColor: UIColor = .grayColor()
 
     // Colors that apply directly to theme
 
     // Paging Selector
-    public var pagingSelectorControlColor: UIColor = UIColor.lightGrayColor()
-    public var pagingSelectionIndicatorColor: UIColor = UIColor.whiteColor()
+    public var pagingSelectorControlColor: UIColor = .lightGrayColor()
+    public var pagingSelectionIndicatorColor: UIColor = .whiteColor()
     
     // Action Sheet
-    public var actionSheetSelectColor: UIColor = UIColor.blueColor()
+    public var actionSheetSelectColor: UIColor = .blueColor()
 
     // Navigation Bar
-    public var navigationBarColor: UIColor = UIColor.blueColor()
-    public var navigationTintColor: UIColor = UIColor.whiteColor()
-    public var navigationTextColor: UIColor = UIColor.whiteColor()
+    public var navigationBarColor: UIColor = .blueColor()
+    public var navigationTintColor: UIColor = .whiteColor()
+    public var navigationTextColor: UIColor = .whiteColor()
+    
+    // Toast
+    public var toastBGColor: UIColor = .greenColor()
 }
 
 // Theme with all default values
@@ -79,6 +82,7 @@ public class CustomTheme: WTheme {
 
         primaryTextColor = UIColor(hex: 0x2DBBEE)
         secondaryTextColor = UIColor(hex: 0xFFFFFF)
+        toastBGColor = UIColor(hex: 0x42AD48)
     }
 }
 
@@ -101,6 +105,7 @@ public class WThemeManager: NSObject {
         customizeActionSheet(theme)
         customizeNavigationBar(theme)
         customizeSideMenuVC(theme)
+        customizeToast(theme)
     }
 
     private func customizePagingSelectorControl(theme: WTheme) {
@@ -119,6 +124,10 @@ public class WThemeManager: NSObject {
 
         // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().translucent = false
+    }
+    
+    private func customizeToast(theme: WTheme) {
+        WToastView.appearance().backgroundColor = theme.toastBGColor
     }
 
     private func customizeSideMenuVC(theme: WTheme) {}
