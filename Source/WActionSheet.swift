@@ -160,26 +160,26 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
-            self.containerView.snp_remakeConstraints { (make) in
-                if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                    make.width.equalTo(SHEET_WIDTH_IPAD)
-                    make.centerX.equalTo(self.view)
-                } else {
-                    make.left.equalTo(self.view).offset(10)
-                    make.right.equalTo(self.view).offset(-10)
+                self.containerView.snp_remakeConstraints { (make) in
+                    if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                        make.width.equalTo(SHEET_WIDTH_IPAD)
+                        make.centerX.equalTo(self.view)
+                    } else {
+                        make.left.equalTo(self.view).offset(10)
+                        make.right.equalTo(self.view).offset(-10)
+                    }
+                    make.height.equalTo((self.delegate?.heightForActionSheet())!)
+                    make.top.equalTo(self.view.snp_bottom)
                 }
-                make.height.equalTo((self.delegate?.heightForActionSheet())!)
-                make.top.equalTo(self.view.snp_bottom)
-            }
 
-            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
-                animations: {
-                    self.view.layoutIfNeeded()
-                },
-                completion: { finished in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
+                    animations: {
+                        self.view.layoutIfNeeded()
+                    },
+                    completion: { finished in
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
             })
-        })
     }
 
     // MARK: - Actions
