@@ -6,7 +6,6 @@ import Quick
 import Nimble
 @testable import WMobileKit
 
-
 class WTextViewTests: QuickSpec {
     override func spec() {
         describe("WTextViewSpec") {
@@ -23,11 +22,6 @@ class WTextViewTests: QuickSpec {
             let string5 = "This has no markdown in it"
             let string6 = "This has one [inco]rre(ct) URL with [one correct](URL) URL"
             let parsedString6 = "This has one [inco]rre(ct) URL with one correct URL"
-
-            
-            beforeEach({
-
-            })
             
             describe("when text view has been init") {
                 it("should parse single markdown URL correctly") {
