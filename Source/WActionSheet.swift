@@ -25,7 +25,7 @@ public enum SheetSeparatorStyle {
     case All, DestructiveOnly
 }
 
-public protocol WBaseActionSheetDelegate {
+internal protocol WBaseActionSheetDelegate {
     func commonInit()
     func setupUI(animated: Bool)
     func heightForActionSheet() -> CGFloat
@@ -38,7 +38,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
-    public var delegate: WBaseActionSheetDelegate?
+    internal var delegate: WBaseActionSheetDelegate!
 
     public var titleString: String?
     public var selectedIndex : Int?
@@ -84,8 +84,8 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     }
 
     public func setupUI(animated: Bool) {
-        let height = delegate?.heightForActionSheet()
-        preferredContentSize = CGSizeMake(SHEET_WIDTH_IPAD, height!)
+        let height = delegate.heightForActionSheet()
+        preferredContentSize = CGSizeMake(SHEET_WIDTH_IPAD, height)
 
         containerView.snp_remakeConstraints { (make) in
             if (animated) {
@@ -104,7 +104,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
                 make.left.equalTo(view).offset(10)
                 make.right.equalTo(view).offset(-10)
            }
-            make.height.equalTo(height!)
+            make.height.equalTo(height)
         }
         containerView.backgroundColor = .clearColor()
 
@@ -157,29 +157,29 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         }
 
         UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut,
-                                   animations: {
-                                    self.view.layoutIfNeeded()
+            animations: {
+                self.view.layoutIfNeeded()
             },
-                                   completion: { finished in
-                                    self.containerView.snp_remakeConstraints { (make) in
-                                        if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                                            make.width.equalTo(SHEET_WIDTH_IPAD)
-                                            make.centerX.equalTo(self.view)
-                                        } else {
-                                            make.left.equalTo(self.view).offset(10)
-                                            make.right.equalTo(self.view).offset(-10)
-                                        }
-                                        make.height.equalTo((self.delegate?.heightForActionSheet())!)
-                                        make.top.equalTo(self.view.snp_bottom)
-                                    }
+            completion: { finished in
+            self.containerView.snp_remakeConstraints { (make) in
+                if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                    make.width.equalTo(SHEET_WIDTH_IPAD)
+                    make.centerX.equalTo(self.view)
+                } else {
+                    make.left.equalTo(self.view).offset(10)
+                    make.right.equalTo(self.view).offset(-10)
+                }
+                make.height.equalTo((self.delegate?.heightForActionSheet())!)
+                make.top.equalTo(self.view.snp_bottom)
+            }
 
-                                    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
-                                        animations: {
-                                            self.view.layoutIfNeeded()
-                                        },
-                                        completion: { finished in
-                                            self.dismissViewControllerAnimated(true, completion: nil)
-                                    })
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
+                animations: {
+                    self.view.layoutIfNeeded()
+                },
+                completion: { finished in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+            })
         })
     }
 
@@ -231,10 +231,10 @@ public struct WAction<T> {
 
 // MARK: - Table Action Sheet
 public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBaseActionSheetDelegate, UITableViewDelegate, UITableViewDataSource {
-    internal var tableView: UITableView?
+    internal var tableView: UITableView = UITableView()
     public var sheetSeparatorStyle = SheetSeparatorStyle.DestructiveOnly {
         didSet {
-            tableView?.reloadData()
+            tableView.reloadData()
         }
     }
     public var maxSheetHeight: CGFloat = SHEET_HEIGHT_MAX {
@@ -265,21 +265,19 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
         delegate = self
 
-        tableView = UITableView(frame: CGRectZero, style: .Plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.delaysContentTouches = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.scrollEnabled = true
+        tableView.bounces = false
+        tableView.allowsMultipleSelection = false
+        tableView.separatorStyle = .None
 
-        tableView?.dataSource = self
-        tableView?.delegate = self
-        tableView?.delaysContentTouches = false
-        tableView?.showsHorizontalScrollIndicator = false
-        tableView?.scrollEnabled = true
-        tableView?.bounces = false
-        tableView?.allowsMultipleSelection = false
-        tableView?.separatorStyle = .None
+        tableView.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
+        tableView.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)
 
-        tableView?.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
-        tableView?.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)
-
-        containerView.addSubview(tableView!)
+        containerView.addSubview(tableView)
 
         setupUI(false)
     }
@@ -287,11 +285,11 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
     public override func setupUI(animated: Bool) {
         super.setupUI(animated)
 
-        tableView?.reloadData()
+        tableView.reloadData()
 
         let height = heightForActionSheet()
 
-        tableView?.snp_remakeConstraints { (make) in
+        tableView.snp_remakeConstraints { (make) in
             make.left.equalTo(containerView)
             make.right.equalTo(containerView)
             make.top.equalTo(containerView)
@@ -302,11 +300,11 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
             }
         }
 
-        tableView?.layer.cornerRadius = 4
-        tableView?.clipsToBounds = true
-        tableView?.contentSize = CGSize(width: tableView!.contentSize.width, height: heightForSheetContent())
+        tableView.layer.cornerRadius = 4
+        tableView.clipsToBounds = true
+        tableView.contentSize = CGSize(width: tableView.contentSize.width, height: heightForSheetContent())
         if (titleString != nil) {
-            tableView?.scrollIndicatorInsets = UIEdgeInsets(top: HEADER_HEIGHT, left: 0, bottom: 0, right: 0)
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: HEADER_HEIGHT, left: 0, bottom: 0, right: 0)
         }
 
         view.layoutIfNeeded()
@@ -356,7 +354,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
+        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
         cell.setSelectedAction(true)
         selectedIndex = index
@@ -373,7 +371,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView?.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
+        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
         cell.setSelectedAction(!cell.isSelectedAction)
         selectedIndex = cell.selectBar.hidden ? selectedIndex : index
@@ -398,7 +396,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
             return
         }
 
-        let cell = tableView?.cellForRowAtIndexPath(path!) as! WTableViewCell<ActionDataType>
+        let cell = tableView.cellForRowAtIndexPath(path!) as! WTableViewCell<ActionDataType>
         cell.setSelectedAction(false)
     }
 
@@ -683,7 +681,6 @@ public class WHeaderView: UITableViewHeaderFooterView {
 
 // MARK: Select Bar
 public class WSelectBar: UIView { }
-
 
 // MARK: - PickerView Action Sheet
 public protocol WPickerActionSheetDelegate: class {

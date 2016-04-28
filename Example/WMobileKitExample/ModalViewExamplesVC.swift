@@ -68,7 +68,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
-
         let pickerSheetButton = UIButton(type: UIButtonType.RoundedRect)
         pickerSheetButton.backgroundColor = UIColor.lightGrayColor()
         pickerSheetButton.tintColor = UIColor.greenColor()
@@ -289,6 +288,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     }
 }
 
+// MARK: - WPickerActionSheetDelegate
 extension ModalViewExamplesVC: WPickerActionSheetDelegate {
     public func pickerViewDoneButtonWasTapped(selectedIndex: Int) {
         NSLog("The Picker View \"Done\" button was pressed with selected index \(selectedIndex).")
