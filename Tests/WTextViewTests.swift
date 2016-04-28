@@ -31,32 +31,32 @@ class WTextViewTests: QuickSpec {
             
             describe("when text view has been init") {
                 it("should parse single markdown URL correctly") {
-                    textView = WTextView(text: string1)
+                    textView = WTextView(string1)
                     expect(textView.attributedText.string).to(equal(parsedString1))
                 }
                 
                 it("should parse multiple markdown URLs correctly") {
-                    textView = WTextView(text: string2)
+                    textView = WTextView(string2)
                     expect(textView.attributedText.string).to(equal(parsedString2))
                 }
                 
                 it("should parse complex markdown URLs correctly") {
-                    textView = WTextView(text: string3)
+                    textView = WTextView(string3)
                     expect(textView.attributedText.string).to(equal(parsedString3))
                 }
                 
                 it("should not parse incorrect markdown URLs") {
-                    textView = WTextView(text: string4)
+                    textView = WTextView(string4)
                     expect(textView.attributedText.string).to(equal(string4))
                 }
                 
                 it("should not parse anything if no markdown exists") {
-                    textView = WTextView(text: string5)
+                    textView = WTextView(string5)
                     expect(textView.attributedText.string).to(equal(string5))
                 }
                 
                 it("should parse only correct markdown URLs") {
-                    textView = WTextView(text: string6)
+                    textView = WTextView(string6)
                     expect(textView.attributedText.string).to(equal(parsedString6))
                 }
                 
