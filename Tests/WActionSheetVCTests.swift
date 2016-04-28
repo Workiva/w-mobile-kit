@@ -27,7 +27,7 @@ class WActionSheetVCSpec: QuickSpec {
                 subject.titleString = "Title"
                 subject.hasCancel = true
                 
-                table = subject.tableView!
+                table = subject.tableView
                 cell1 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! WTableViewCell<NSObject>
                 cell2 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0)) as! WTableViewCell<NSObject>
                 cell3 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 0)) as! WTableViewCell<NSObject>
@@ -300,10 +300,6 @@ class WActionSheetVCSpec: QuickSpec {
                 it("should select correctly") {
                     subject.pickerView(subject.pickerView, didSelectRow: 0, inComponent: 0)
                 }
-            }
-
-            describe("when an item is selected") {
-
             }
         }
     }

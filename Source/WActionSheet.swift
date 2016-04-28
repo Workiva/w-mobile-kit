@@ -13,7 +13,6 @@ let HEADER_HEIGHT: CGFloat = 44.0
 let SHEET_WIDTH_IPAD: CGFloat = 355.0
 let SHEET_HEIGHT_MAX: CGFloat = 400.0
 
-
 let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
 
@@ -358,7 +357,6 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
         cell.setSelectedAction(true)
         selectedIndex = index
-
     }
 
     public func toggleSelectedAction(action: WAction<ActionDataType>) {
