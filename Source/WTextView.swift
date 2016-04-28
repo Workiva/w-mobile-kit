@@ -40,22 +40,6 @@ public class WTextView: UITextView, UITextViewDelegate {
         editable = false
         scrollEnabled = false
         delegate = self
-        
-        var mutableArrayOfGestureRecognizers = [UIGestureRecognizer]()
-        if let gestureRecognizers = gestureRecognizers {
-            for recognizer in gestureRecognizers {
-                if (!recognizer.isKindOfClass(UILongPressGestureRecognizer.self)) {
-                    mutableArrayOfGestureRecognizers.append(recognizer)
-                } else {
-                    let longPressRecognizer = recognizer as! UILongPressGestureRecognizer
-                    if (longPressRecognizer.minimumPressDuration < 0.3) {
-                        mutableArrayOfGestureRecognizers.append(recognizer)
-                    }
-                }
-            }
-            
-            self.gestureRecognizers = mutableArrayOfGestureRecognizers
-        }
     }
     
     public func buildTextView(text: String) {
