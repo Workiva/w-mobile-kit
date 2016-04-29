@@ -249,8 +249,6 @@ public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
 
         // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().translucent = false
-
-        addWSideMenuButtons()
     }
 
     public func addWSideMenuButtons() {
@@ -295,6 +293,8 @@ public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
 
         // Set the WSideMenu delegate when the VC appears
         sideMenuController()?.delegate = self
+        
+        addWSideMenuButtons()
     }
 
     public func toggleSideMenu() {
