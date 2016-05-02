@@ -167,7 +167,7 @@ public class LoadingAndSpinnersExamplesVC: WSideMenuContentVC {
     public func displayLoadingModal(sender: AnyObject?) {
         loadingModal = WLoadingModal(.grayColor(),
                                      title: "Title Text",
-                                     description: "And a short description for this loading modal. This will go away in 5 seconds.")
+                                     description: "Short description for this loading modal. This will go away in 5 seconds. Subsequent displays will show indeterminate spinner.")
 
         loadingModal?.descriptionLabelHeight = 100
 
