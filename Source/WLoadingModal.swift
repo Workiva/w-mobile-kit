@@ -14,6 +14,12 @@ public class WLoadingModal: UIView {
         }
     }
 
+    public var verticalPadding: CGFloat = 32 {
+        didSet {
+            self.remakeAllConstraints()
+        }
+    }
+
     public var titleLabel: UILabel = UILabel()
 
     public var titleLabelWidth: CGFloat = 120 {
@@ -84,9 +90,15 @@ public class WLoadingModal: UIView {
         remakeDescriptionConstraints()
     }
 
+    private func remakeAllConstraints() {
+        remakeSpinnerConstraints()
+        remakeTitleConstraints()
+        remakeDescriptionConstraints()
+    }
+
     private func remakeSpinnerConstraints() {
         spinnerView.snp_remakeConstraints { (make) in
-            make.top.equalTo(self.snp_top).offset(32)
+            make.top.equalTo(self.snp_top).offset(verticalPadding)
             make.centerX.equalTo(self)
             make.width.equalTo(spinnerSize)
             make.height.equalTo(spinnerSize)
@@ -95,7 +107,7 @@ public class WLoadingModal: UIView {
 
     private func remakeTitleConstraints() {
         titleLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(spinnerView.snp_bottom).offset(32)
+            make.top.equalTo(spinnerView.snp_bottom).offset(verticalPadding)
             make.centerX.equalTo(self)
             make.width.equalTo(titleLabelWidth)
             make.height.equalTo(20)
@@ -104,7 +116,7 @@ public class WLoadingModal: UIView {
 
     private func remakeDescriptionConstraints() {
         descriptionLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp_bottom).offset(32)
+            make.top.equalTo(titleLabel.snp_bottom).offset(verticalPadding)
             make.centerX.equalTo(self)
             make.width.equalTo(descriptionLabelWidth)
             make.height.equalTo(descriptionLabelHeight)
