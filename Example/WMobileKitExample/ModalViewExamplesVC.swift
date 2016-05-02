@@ -279,7 +279,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         toast.showDuration = 0
         toast.flyInDirection = .FromRight
         toast.widthRatio = 0.65
-        toast.rightPadding = 50
         toast.bottomPadding = 100
         WToastManager.sharedInstance.showToast(toast)
     }
