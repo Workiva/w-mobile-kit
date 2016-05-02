@@ -141,11 +141,7 @@ public class WSpinner: UIControl {
         backgroundLayer.frame = bounds
         progressLayer.frame = bounds
 
-        if (icon != nil) {
-            iconLayer.contents = icon?.CGImage
-        } else {
-            iconLayer.contents = nil
-        }
+        iconLayer.contents = (icon != nil) ? icon?.CGImage : nil
 
         drawBackgroundCircle()
         drawProgress()
