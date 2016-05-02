@@ -691,7 +691,7 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
     internal var toolbarCancelButton = UIButton()
     internal var toolbarContainerView = UIView()
     internal var pickerView: UIPickerView = UIPickerView()
-    internal let PICKER_VIEW_HEIGHT: CGFloat = 300.0
+    internal let PICKER_VIEW_HEIGHT: CGFloat = 258.0
     public var pickerDelegate: WPickerActionSheetDelegate?
 
     // MARK: - Initialization
@@ -774,7 +774,6 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
             make.left.equalTo(containerView)
             make.right.equalTo(containerView)
             make.top.equalTo(containerView)
-            make.height.equalTo(42)
         }
 
         toolbarCancelButton.snp_remakeConstraints { (make) in
