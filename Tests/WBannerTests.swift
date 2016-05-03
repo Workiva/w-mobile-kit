@@ -22,7 +22,7 @@ class WBannerSpec: QuickSpec {
             let bodyMessage = "body"
             let color1 = UIColor.blackColor()
             let color2 = UIColor.cyanColor()
-            let alpha1: CGFloat = 0.7
+            let alpha1: CGFloat = 0.2
             let alpha2: CGFloat = 0.9
             var image1: UIImage!
             var image2: UIImage!
@@ -93,14 +93,14 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.titleIcon).to(beNil())
                     expect(bannerView.rightIcon).to(beNil())
                     expect(bannerView.bannerColor).to(equal(UIColor.blackColor()))
-                    expect(bannerView.bannerAlpha).to(equal(0.7))
+                    expect(bannerView.bannerAlpha).to(equal(1.0))
                     expect(bannerView.titleMessageLabel).toNot(beNil())
                     expect(bannerView.bodyMessageLabel).toNot(beNil())
                     expect(bannerView.titleIconImageView).toNot(beNil())
                     expect(bannerView.rightIconImageView).toNot(beNil())
-                    expect(roundAlpha(bannerView.rightIconImageView.alpha)).to(equal(0.7))
+                    expect(roundAlpha(bannerView.rightIconImageView.alpha)).to(equal(1.0))
                     expect(bannerView.backgroundView).toNot(beNil())
-                    expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(0.7))
+                    expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(1.0))
 
                     // Common init
                     expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
