@@ -43,6 +43,7 @@ class WBannerSpec: QuickSpec {
             })
 
             afterEach({
+                bannerView.hide()
                 bannerView = nil
             })
 
@@ -84,7 +85,7 @@ class WBannerSpec: QuickSpec {
                     // public properties
                     expect(bannerView.rootView).to(equal(subject.view))
                     expect(bannerView.showDuration).to(equal(BANNER_DEFAULT_SHOW_DURATION))
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.NeverDismisses))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.DismissesAfterTime))
                     expect(bannerView.placement).to(equal(WBannerPlacementOptions.Bottom))
                     expect(bannerView.animationDuration).to(equal(BANNER_DEFAULT_ANIMATION_DURATION))
                     expect(bannerView.titleMessage).to(equal(""))
@@ -136,6 +137,7 @@ class WBannerSpec: QuickSpec {
                                              rightIcon: image2,
                                              bannerColor: color1,
                                              bannerAlpha: alpha1)
+                    bannerView.hideOptions = .NeverDismisses
 
                     // Banner is not displayed
                     expect(bannerView.isVisible()).to(beFalsy())
@@ -187,6 +189,7 @@ class WBannerSpec: QuickSpec {
                     bannerView.rightIcon = image2
                     bannerView.bannerColor = color2
                     bannerView.bannerAlpha = alpha2
+                    bannerView.hideOptions = .NeverDismisses
 
                     // Banner is not displayed
                     expect(bannerView.isVisible()).to(beFalsy())

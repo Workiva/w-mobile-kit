@@ -289,9 +289,9 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         topBanner?.hide()
 
         topBanner = WBannerView(rootView: view,
-                                 titleMessage: "Top Toast Title",
+                                 titleMessage: "Top Banner Title",
                                  titleIcon: UIImage(named: "alert"),
-                                 bodyMessage: "Top Toast Body Top Toast Body Top Toast Body Top Toast Body",
+                                 bodyMessage: "This is the top tap to dismiss banner body. Banners can be dismissed by tapping them.",
                                  rightIcon: UIImage(named: "close"),
                                  bannerColor: UIColor(hex: 0x006400))
         topBanner!.delegate = self
@@ -305,9 +305,9 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         bottomBanner?.hide()
 
         bottomBanner = WBannerView(rootView: view,
-                                 titleMessage: "Bottom Toast Title",
+                                 titleMessage: "Bottom Banner Title",
                                  titleIcon: UIImage(named: "alert"),
-                                 bodyMessage: "Body",
+                                 bodyMessage: "Body. Banners can be dismissed on a timer.",
                                  bannerColor: UIColor(hex: 0x006400))
         bottomBanner!.delegate = self
         bottomBanner!.show()

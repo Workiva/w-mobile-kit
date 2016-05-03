@@ -20,7 +20,7 @@ public enum WBannerPlacementOptions {
 }
 
 let BANNER_DEFAULT_HEIGHT = 80
-let BANNER_DEFAULT_SHOW_DURATION = 0.0
+let BANNER_DEFAULT_SHOW_DURATION = 2.0
 let BANNER_DEFAULT_ANIMATION_DURATION = 0.3
 
 public class WBannerView: UIView {
@@ -36,7 +36,7 @@ public class WBannerView: UIView {
         }
     }
 
-    public var hideOptions: WBannerHideOptions = .NeverDismisses
+    public var hideOptions: WBannerHideOptions = .DismissesAfterTime
     public var placement: WBannerPlacementOptions = .Bottom
     public var animationDuration = BANNER_DEFAULT_ANIMATION_DURATION
     public var height = BANNER_DEFAULT_HEIGHT
