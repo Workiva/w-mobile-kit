@@ -10,6 +10,8 @@ class WSideMenuVCSpec: QuickSpec {
     override func spec() {
         describe("WSideMenuVCSpec") {
             var subject: WSideMenuVC!
+            var window: UIWindow!
+            var mainNC: UINavigationController!
             var mainVC: UIViewController!
             var leftSideMenuVC: UIViewController!
 
@@ -19,14 +21,32 @@ class WSideMenuVCSpec: QuickSpec {
 
                 subject = WSideMenuVC(mainViewController: mainVC, leftSideMenuViewController: leftSideMenuVC)
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
+
+                mainNC = UINavigationController(rootViewController: subject)
+
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window.rootViewController = mainNC
 
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
             })
 
             describe("when app has been init") {
+                it("should init with coder correctly") {
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WSideMenuVC")
+
+                    NSKeyedArchiver.archiveRootObject(subject, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSideMenuVC
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
+                }
+
                 it("should have the correct properties set") {
                     // public properties
                     expect(subject.mainViewController).to(equal(mainVC))
@@ -142,11 +162,7 @@ class WSideMenuVCSpec: QuickSpec {
                 beforeEach({
                     sideMenuContentVC = WSideMenuContentVC()
 
-                    subject.addViewControllerToContainer(subject.mainContainerView, viewController: sideMenuContentVC)
-                })
-
-                afterEach({ 
-                    subject.removeViewControllerFromContainer(sideMenuContentVC)
+                    subject.changeMainViewController(sideMenuContentVC)
                 })
 
                 it("should return the side menu controller for the content VC") {
@@ -175,6 +191,46 @@ class WSideMenuVCSpec: QuickSpec {
 
                 it("should respond to the back button item being tapped") {
                     sideMenuContentVC.backButtonItemWasTapped(subject)
+                }
+
+                it("should add side menu buttons for a content VC without a drawer icon") {
+                    subject.options?.drawerIcon = nil
+
+                    sideMenuContentVC.addWSideMenuButtons()
+
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.title) == "Toggle"
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
+                }
+
+                it("should add side menu buttons for a content VC with a drawer icon") {
+                    let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+
+                    subject.options?.drawerIcon = image
+
+                    sideMenuContentVC.addWSideMenuButtons()
+
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image) == image
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
+                }
+
+                it("should add side menu buttons for a content VC with a nav controller with multiple controllers no back icon") {
+                    let additionalController = UIViewController()
+                    mainNC.pushViewController(additionalController, animated: false)
+
+                    subject.options?.drawerIcon = nil
+                    subject.options?.backIcon = nil
+
+                    sideMenuContentVC.addWSideMenuButtons()
+
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].title) == "Back"
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].action) == #selector(WSideMenuContentVC.backButtonItemWasTapped(_:))
+
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
                 }
             }
         }

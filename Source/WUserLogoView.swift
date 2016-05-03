@@ -12,7 +12,7 @@ public class WUserLogoView: UIView {
         }
     }
     public var initialsLabel = UILabel()
-    var circleLayer = CAShapeLayer()
+    internal var circleLayer = CAShapeLayer()
 
     // Overrides the mapped color
     public var color: UIColor? {
@@ -135,7 +135,7 @@ public class WUserLogoView: UIView {
 
 public extension String {
     public func initials(limit: Int = 3) -> String {
-        let range = self.startIndex..<self.endIndex
+        let range = startIndex..<endIndex
         var initials = String()
 
         enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, stop) -> () in

@@ -165,8 +165,27 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CEf-m1-n7s" style="IBUITableViewCellStyleDefault" id="iiB-E4-KmF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="6ED-B0-hl4" style="IBUITableViewCellStyleDefault" id="2tz-9m-bzL">
                                         <rect key="frame" x="0.0" y="300" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2tz-9m-bzL" id="ZmV-FG-ZtC">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="WTextView Examples" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ED-B0-hl4">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="59.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CEf-m1-n7s" style="IBUITableViewCellStyleDefault" id="iiB-E4-KmF">
+                                        <rect key="frame" x="0.0" y="360" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iiB-E4-KmF" id="FjO-ow-v5Y">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
@@ -409,6 +428,41 @@
             <point key="canvasLocation" x="1868" y="3505"/>
         </scene>
         <!--NavigationVC-->
+        <scene sceneID="h1r-Ad-SG9">
+            <objects>
+                <navigationController storyboardIdentifier="textViewExamplesVC" id="46b-89-H7M" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JlG-Pn-oRC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xuu-h1-B23" kind="relationship" relationship="rootViewController" id="Dgo-aw-2G8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XII-MB-4A5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1103" y="4203"/>
+        </scene>
+        <!--Text View ExamplesVC-->
+        <scene sceneID="eGL-vA-uCx">
+            <objects>
+                <viewController id="xuu-h1-B23" customClass="TextViewExamplesVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q5m-PB-LAx"/>
+                        <viewControllerLayoutGuide type="bottom" id="fIS-qr-e4f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K3y-5f-qIF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.1793671167" green="0.65067043530000002" blue="0.86126443610000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="g5m-Ma-umj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fTQ-sr-Xey" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="4203"/>
+        </scene>
+        <!--NavigationVC-->
         <scene sceneID="ezi-qO-czi">
             <objects>
                 <navigationController storyboardIdentifier="loadingAndSpinnersExamplseVC" id="Vyw-GR-LAA" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -422,7 +476,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0VA-3n-D5B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1103" y="4247"/>
+            <point key="canvasLocation" x="1103" y="4894"/>
         </scene>
         <!--Loading And Spinners ExamplesVC-->
         <scene sceneID="R1G-is-6VY">
@@ -441,7 +495,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZq-q7-gVb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1868" y="4247"/>
+            <point key="canvasLocation" x="1868" y="4894"/>
         </scene>
     </scenes>
 </document>
