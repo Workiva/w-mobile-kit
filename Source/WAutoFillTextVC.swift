@@ -54,13 +54,18 @@ public class WAutoFillTextView : UIView {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WAutoFillTextView.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         addSubview(textField)
-        backgroundColor = .lightGrayColor()
+        backgroundColor = UIColor(hex: 0xDDDDDD)
         textField.backgroundColor = .whiteColor()
-        textField.borderStyle = .RoundedRect
+        textField.borderStyle = .None
         textField.bottomLineColor = .clearColor()
-        textField.placeholder = "  Type @ to mention someone"
-        textField.tintColor = nil
-        textField.textColor = .blackColor()
+        textField.placeholder = "Type @ to mention someone"
+        textField.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
+        textField.textColor = .darkGrayColor()
+        textField.layer.borderColor = UIColor.lightGrayColor().CGColor
+        textField.clipsToBounds = true
+        textField.layer.borderWidth = 0.5
+        textField.layer.cornerRadius = 5.0
+        textField.layer.sublayerTransform = CATransform3DMakeTranslation(6, 0, 0)
         
         addSubview(topLineSeparator)
         topLineSeparator.backgroundColor = .darkGrayColor()
