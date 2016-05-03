@@ -47,7 +47,7 @@ class WActionSheetVCSpec: QuickSpec {
             
             describe("when app has been init") {
                 it("should have the correct height with cancel") {
-                    expect(subject.heightForActionSheet()) == (ROW_HEIGHT * 3) + (CANCEL_SEPARATOR_HEIGHT + ROW_HEIGHT) + (HEADER_HEIGHT)
+                    expect(subject.heightForActionSheet()) == (ROW_HEIGHT * 3) + (CANCEL_SEPARATOR_HEIGHT + CANCEL_HEIGHT) + (HEADER_HEIGHT)
                 }
                 
                 it("should have the correct height without cancel") {
@@ -70,6 +70,34 @@ class WActionSheetVCSpec: QuickSpec {
                     cell3 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as! WTableViewCell<NSObject>
                     
                     expect(cell3.separatorBar.hidden).to(equal(false))
+                }
+                
+                it("should init table cell with coder correctly") {
+                    let tableCell = WTableViewCell<NSObject>(frame: CGRectZero)
+                    
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("testsActionSheet")
+                    
+                    NSKeyedArchiver.archiveRootObject(tableCell, toFile: locToSave)
+                    
+                    let newTableCell = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTableViewCell<NSObject>
+                    
+                    expect(newTableCell).toNot(equal(nil))
+                    expect(newTableCell.selectBar.hidden).to(equal(true))
+                    expect(newTableCell.separatorBar).toNot(equal(nil))
+                }
+                
+                it("should init table header with coder correctly") {
+                    let headerView = WHeaderView(frame: CGRectZero)
+                    
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("testsActionSheet")
+                    
+                    NSKeyedArchiver.archiveRootObject(headerView, toFile: locToSave)
+                    
+                    let newHeaderView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WHeaderView
+                    
+                    expect(newHeaderView).toNot(equal(nil))
                 }
             }
             

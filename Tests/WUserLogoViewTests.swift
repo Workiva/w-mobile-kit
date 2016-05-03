@@ -116,6 +116,7 @@ class WUserLogoViewTests: QuickSpec {
 
                 it("should successfully add and display a user logo view with a four word name") {
                     userLogoView = WUserLogoView(name4)
+                    userLogoView.initialsLimit = 4
 
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp_makeConstraints { (make) in
