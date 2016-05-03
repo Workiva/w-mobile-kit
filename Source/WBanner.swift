@@ -204,6 +204,8 @@ public class WBannerView: UIView {
 
     public func show() {
         if rootView == nil {
+            print("Root view needed to show banner")
+
             return
         }
 

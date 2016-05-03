@@ -164,7 +164,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     }
 
     public func presentPermissionsActionSheet(sender: UIButton) {
-        self.definesPresentationContext = true
+        definesPresentationContext = true
 
         let actionSheet = WActionSheetVC<String>()
         actionSheet.titleString = "User Permissions"
@@ -203,7 +203,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     }
 
     public func presentIconActionSheet(sender: UIButton) {
-        self.definesPresentationContext = true
+        definesPresentationContext = true
 
         let actionSheetIcons = WActionSheetVC<String>()
 
@@ -233,7 +233,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     }
 
     public func presentSortActionSheet(sender: UIButton) {
-        self.definesPresentationContext = true
+        definesPresentationContext = true
 
         let actionSheetSort = WActionSheetVC<String>()
 
@@ -286,7 +286,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public func presentTopBanner(sender: UIButton) {
         topBanner?.hide()
 
-        topBanner = WBannerView(rootView: self.view,
+        topBanner = WBannerView(rootView: view,
                                  titleMessage: "Top Toast Title",
                                  titleIcon: UIImage(named: "alert"),
                                  bodyMessage: "Top Toast Body Top Toast Body Top Toast Body Top Toast Body",
@@ -302,7 +302,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
     public func presentBottomBanner(sender: UIButton) {
         bottomBanner?.hide()
 
-        bottomBanner = WBannerView(rootView: self.view,
+        bottomBanner = WBannerView(rootView: view,
                                  titleMessage: "Bottom Toast Title",
                                  titleIcon: UIImage(named: "alert"),
                                  bodyMessage: "Body",

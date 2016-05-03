@@ -122,7 +122,7 @@ public class WUserLogoView: UIView {
 
 public extension String {
     public func initials() -> String {
-        let range = self.startIndex..<self.endIndex
+        let range = startIndex..<endIndex
         var initials = String()
 
         enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, _) -> () in
