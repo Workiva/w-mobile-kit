@@ -10,6 +10,7 @@ class WUserLogoViewTests: QuickSpec {
     override func spec() {
         describe("WUserLogoViewSpec") {
             var subject: UIViewController!
+            var window: UIWindow!
             var userLogoView: WUserLogoView!
 
             // Usernames
@@ -21,14 +22,33 @@ class WUserLogoViewTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
             })
 
+            afterEach({
+                userLogoView = nil
+            })
+
             describe("when app has been init") {
+                it("should init with coder correctly") {
+                    userLogoView = WUserLogoView(name1)
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WUserLogoView")
+
+                    NSKeyedArchiver.archiveRootObject(userLogoView, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WUserLogoView
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
+                }
+
                 it("should successfully add and display a user logo view with default settings") {
                     userLogoView = WUserLogoView(name1)
 
