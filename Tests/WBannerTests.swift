@@ -16,6 +16,7 @@ class WBannerSpec: QuickSpec {
         describe("WBannerSpec") {
             var subject: UIViewController!
             var bannerView: WBannerView!
+            var window: UIWindow!
 
             let titleMessage = "title"
             let bodyMessage = "body"
@@ -29,7 +30,7 @@ class WBannerSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 window.addSubview(subject.view)

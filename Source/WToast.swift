@@ -160,6 +160,10 @@ public class WToastView: UIView {
         clipsToBounds = true
         backgroundColor = .clearColor()
     }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     public func setupUI() {
         // Do not set any defaults here as they will overwrite any custom

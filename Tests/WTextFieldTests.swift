@@ -10,12 +10,13 @@ class WTextFieldTests: QuickSpec {
     override func spec() {
         describe("WTextFieldSpec") {
             var subject: UIViewController!
+            var window: UIWindow!
             var textField: WTextField!
 
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)

@@ -10,6 +10,7 @@ class WSideMenuVCSpec: QuickSpec {
     override func spec() {
         describe("WSideMenuVCSpec") {
             var subject: WSideMenuVC!
+            var window: UIWindow!
             var mainVC: UIViewController!
             var leftSideMenuVC: UIViewController!
 
@@ -19,7 +20,7 @@ class WSideMenuVCSpec: QuickSpec {
 
                 subject = WSideMenuVC(mainViewController: mainVC, leftSideMenuViewController: leftSideMenuVC)
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)

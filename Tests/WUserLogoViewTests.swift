@@ -10,6 +10,7 @@ class WUserLogoViewTests: QuickSpec {
     override func spec() {
         describe("WUserLogoViewSpec") {
             var subject: UIViewController!
+            var window: UIWindow!
             var userLogoView: WUserLogoView!
 
             // Usernames
@@ -21,7 +22,7 @@ class WUserLogoViewTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)

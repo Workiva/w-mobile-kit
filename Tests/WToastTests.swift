@@ -10,6 +10,7 @@ class WToastSpec: QuickSpec {
     override func spec() {
         describe("WToastSpec") {
             var subject: UIViewController!
+            var window: UIWindow!
             var toastView: WToastView!
 
             let message1 = "Message 1"
@@ -20,7 +21,7 @@ class WToastSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 WToastManager.sharedInstance.rootWindow = window
                 window.rootViewController = subject
 

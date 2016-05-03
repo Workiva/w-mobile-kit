@@ -10,6 +10,7 @@ class WPagingSelectorVCSpec: QuickSpec {
     override func spec() {
         describe("WPagingSelectorVCSpec") {
             var subject: WPagingSelectorVC!
+            var window: UIWindow!
 
             var vc1: WSideMenuContentVC?
             var vc2: WSideMenuContentVC?
@@ -29,7 +30,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                 vc2!.view.backgroundColor = .blueColor()
                 vc3!.view.backgroundColor = .redColor()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
