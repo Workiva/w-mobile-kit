@@ -70,7 +70,7 @@ public class WBannerView: UIView {
         }
     }
 
-    public var bannerAlpha: CGFloat = 0.7 {
+    public var bannerAlpha: CGFloat = 0.8 {
         didSet {
             backgroundView.alpha = bannerAlpha
             rightIconImageView.alpha = bannerAlpha
