@@ -18,6 +18,8 @@
 		D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */; };
 		D53D0B9C1CAB09020065D106 /* WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D53D0B911CAB09020065D106 /* WMobileKit.framework */; };
 		D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D5409CE81CCE988000F984D3 /* WBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5409CE71CCE988000F984D3 /* WBanner.swift */; };
+		D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5409CE91CCFD07200F984D3 /* WBannerTests.swift */; };
 		D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */; };
 		D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB771CC57DA000301C7F /* WUserLogoView.swift */; };
 		D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */; };
@@ -66,6 +68,8 @@
 		D53D0BAC1CAB0FD30065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMobileKit.h; sourceTree = "<group>"; };
 		D53D0BB31CAB0FE60065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5409CE71CCE988000F984D3 /* WBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBanner.swift; sourceTree = "<group>"; };
+		D5409CE91CCFD07200F984D3 /* WBannerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBannerTests.swift; sourceTree = "<group>"; };
 		D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVCTests.swift; sourceTree = "<group>"; };
 		D592AB771CC57DA000301C7F /* WUserLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoView.swift; sourceTree = "<group>"; };
 		D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoViewTests.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */,
 				D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */,
 				73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */,
+				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
 				D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */,
 				55A106301CAC849300495BBC /* WSideMenuVC.swift */,
@@ -172,6 +177,7 @@
 			children = (
 				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
 				73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */,
+				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D7CC999B1CC9348E00572B6F /* WTextFieldTests.swift */,
@@ -397,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */,
+				D5409CE81CCE988000F984D3 /* WBanner.swift in Sources */,
 				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
 				D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
@@ -417,9 +424,10 @@
 				D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
 				73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */,
-                D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
+				D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
 				D592AB821CC830E200301C7F /* WToastTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
+				D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

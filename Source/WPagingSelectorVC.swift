@@ -57,8 +57,8 @@ public class WSelectionIndicatorView : UIView {
         self.init(alpha: 0.7)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
     public func moveToSelection(selectionView: UIView, numberOfSections: NSInteger, contentView: UIView) {

@@ -101,7 +101,7 @@ If they are more complicated or contain raw values, each case should be on its o
 ```swift
 enum Barcode {
     case UPCA(Int, Int, Int, Int)
-case QRCode(String)
+    case QRCode(String)
 }
 
 enum ASCIIControlCharacter: Character {
