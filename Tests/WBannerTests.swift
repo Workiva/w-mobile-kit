@@ -25,7 +25,6 @@ class WBannerSpec: QuickSpec {
             let alpha2: CGFloat = 0.9
             var image1: UIImage!
             var image2: UIImage!
-            var image3: UIImage!
 
             beforeEach({
                 subject = UIViewController()
@@ -40,7 +39,6 @@ class WBannerSpec: QuickSpec {
 
                 image1 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
                 image2 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
-                image3 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage3", ofType: "png")!)
             })
 
             afterEach({
