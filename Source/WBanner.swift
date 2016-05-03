@@ -70,7 +70,7 @@ public class WBannerView: UIView {
         }
     }
 
-    public var bannerAlpha: CGFloat = 0.8 {
+    public var bannerAlpha: CGFloat = 1.0 {
         didSet {
             backgroundView.alpha = bannerAlpha
             rightIconImageView.alpha = bannerAlpha
@@ -104,7 +104,7 @@ public class WBannerView: UIView {
         self.rootView = rootView
     }
 
-    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 0.8) {
+    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 1.0) {
         self.init(frame: CGRectZero)
 
         self.rootView = rootView
@@ -112,9 +112,8 @@ public class WBannerView: UIView {
         self.titleIcon = titleIcon
         self.bodyMessage = bodyMessage
         self.bannerColor = bannerColor
-        self.backgroundView.alpha = bannerAlpha
+        self.bannerAlpha = bannerAlpha
         self.rightIcon = rightIcon
-        rightIconImageView.alpha = bannerAlpha
     }
 
     private func commonInit() {

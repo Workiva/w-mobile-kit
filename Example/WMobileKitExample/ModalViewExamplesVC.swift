@@ -294,7 +294,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  bodyMessage: "This is the top tap to dismiss banner body. Banners can be dismissed by tapping them.",
                                  rightIcon: UIImage(named: "close"),
                                  bannerColor: UIColor(hex: 0x006400),
-                                 bannerAlpha: 1.0)
+                                 bannerAlpha: 0.8)
         topBanner!.delegate = self
         topBanner!.placement = .Top
         topBanner!.hideOptions = .DismissOnTap
