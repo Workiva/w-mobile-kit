@@ -70,11 +70,20 @@ public class WTextView: UITextView, UITextViewDelegate {
     public func rangeForMarkdownURL(text: String) -> Array<Dictionary<String, Range<String.Index>>>? {
         var numOpeningBrackets = 0
         var openBracketPos, closeBracketPos, openParenPos, closeParenPos: Int?
+        var foundURLString = false
         
         var markdownArray = [Dictionary<String, Range<String.Index>>]()
         
+        let resetVariables: (Void) -> Void = {
+            openBracketPos = nil
+            closeBracketPos = nil
+            openParenPos = nil
+            closeParenPos = nil
+            numOpeningBrackets = 0
+            foundURLString = false
+        }
+        
         // find end of url string
-        var foundURLString = false
         for (index, char) in text.characters.enumerate() {
             switch char {
             case "[":
@@ -88,12 +97,7 @@ public class WTextView: UITextView, UITextViewDelegate {
                 break;
             case "]":
                 if (foundURLString) {
-                    openBracketPos = nil
-                    closeBracketPos = nil
-                    openParenPos = nil
-                    closeParenPos = nil
-                    numOpeningBrackets = 0
-                    foundURLString = false
+                    resetVariables()
                     
                     break;
                 }
@@ -108,12 +112,7 @@ public class WTextView: UITextView, UITextViewDelegate {
                     continue
                 }
                 if openParenPos != nil {
-                    openBracketPos = nil
-                    closeBracketPos = nil
-                    openParenPos = nil
-                    closeParenPos = nil
-                    numOpeningBrackets = 0
-                    foundURLString = false
+                    resetVariables()
                     
                     break;
                 }
@@ -124,12 +123,7 @@ public class WTextView: UITextView, UITextViewDelegate {
                     continue
                 }
                 if (openParenPos == nil || closeParenPos != nil) {
-                    openBracketPos = nil
-                    closeBracketPos = nil
-                    openParenPos = nil
-                    closeParenPos = nil
-                    numOpeningBrackets = 0
-                    foundURLString = false
+                    resetVariables()
                     
                     break;
                 }
@@ -143,24 +137,14 @@ public class WTextView: UITextView, UITextViewDelegate {
                 let markdownDict = [KEY_RANGE_TOTAL: totalRange, KEY_RANGE_LINK: linkRange, KEY_RANGE_ADDRESS: addressRange]
                 markdownArray.append(markdownDict)
                 
-                openBracketPos = nil
-                closeBracketPos = nil
-                openParenPos = nil
-                closeParenPos = nil
-                numOpeningBrackets = 0
-                foundURLString = false
+                resetVariables()
                 
                 break;
             case " ":
                 break;
             default:
                 if (openParenPos == nil && foundURLString) {
-                    openBracketPos = nil
-                    closeBracketPos = nil
-                    openParenPos = nil
-                    closeParenPos = nil
-                    numOpeningBrackets = 0
-                    foundURLString = false
+                    resetVariables()
                 }
                 break;
             }

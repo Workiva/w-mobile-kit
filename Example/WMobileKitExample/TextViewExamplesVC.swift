@@ -34,6 +34,8 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         let multipleCorrectTextView = WTextView("This WTextView has [multiple]() correct [Markdown]() URLs")
         multipleCorrectTextView.textAlignment = .Center
         multipleCorrectTextView.backgroundColor = .clearColor()
+        multipleCorrectTextView.linkTextAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+                                                      NSForegroundColorAttributeName: UIColor.purpleColor()]
         view.addSubview(multipleCorrectTextView)
         multipleCorrectTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -57,6 +59,8 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         complexTextView.text = "This WTextView has a [co[mpl]ex]   () URL"
         complexTextView.backgroundColor = .clearColor()
         complexTextView.textAlignment = .Center
+        complexTextView.linkTextAttributes = [NSForegroundColorAttributeName: UIColor.yellowColor(),
+                                              NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleThick.rawValue]
         view.addSubview(complexTextView)
         complexTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
