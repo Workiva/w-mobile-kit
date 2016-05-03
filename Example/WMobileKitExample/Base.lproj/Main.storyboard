@@ -165,6 +165,25 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="3iW-uX-SzK" style="IBUITableViewCellStyleDefault" id="N0k-i9-FD7">
+                                        <rect key="frame" x="0.0" y="300" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N0k-i9-FD7" id="kbK-q0-K1E">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="WAutoFillTextField Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3iW-uX-SzK">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="59.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -388,6 +407,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jNf-Pf-rzI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1868" y="3505"/>
+        </scene>
+        <!--NavigationVC-->
+        <scene sceneID="8BY-1I-jEN">
+            <objects>
+                <navigationController storyboardIdentifier="autoFillTextFieldExampleVC" id="OSB-eX-Gzv" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bag-Y6-SPC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vTG-jB-DbT" kind="relationship" relationship="rootViewController" id="ipH-Fa-VPf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XIJ-4p-9QF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1103" y="4245"/>
+        </scene>
+        <!--Auto Fill Text Field ExampleVC-->
+        <scene sceneID="IA8-s0-oQb">
+            <objects>
+                <viewController id="vTG-jB-DbT" customClass="AutoFillTextFieldExampleVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xQi-iO-OeX"/>
+                        <viewControllerLayoutGuide type="bottom" id="joy-fS-5eb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6X4-XL-je8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.081794077847167287" green="0.86126443610000003" blue="0.73775282118137775" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="whZ-2W-0gp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ec6-nK-pbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="4245"/>
         </scene>
     </scenes>
 </document>

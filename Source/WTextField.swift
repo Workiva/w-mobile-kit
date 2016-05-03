@@ -39,6 +39,10 @@ public class WTextField: UITextField {
 
         commonInit()
     }
+    
+    public convenience init() {
+        self.init(frame: CGRectZero)
+    }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
