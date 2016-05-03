@@ -143,7 +143,7 @@ class WBannerSpec: QuickSpec {
                     bannerView.show()
 
                     // Banner is displayed
-//                    expect(bannerView.isVisible()).to(beTruthy())
+                    expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
                     expect(bannerView.titleMessage).to(equal(titleMessage))
@@ -194,7 +194,7 @@ class WBannerSpec: QuickSpec {
                     bannerView.show()
 
                     // Banner is displayed
-//                    expect(bannerView.isVisible()).to(beTruthy())
+                    expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
                     expect(bannerView.titleMessage).to(equal(titleMessage))
@@ -301,6 +301,7 @@ class WBannerSpec: QuickSpec {
 
                 it("should use a dismiss after time banner and tap to dismiss") {
                     bannerView = WBannerView(rootView: subject.view)
+                    bannerView.placement = .Top
                     bannerView.hideOptions = WBannerHideOptions.DismissesAfterTime
                     bannerView.showDuration = 2
 
