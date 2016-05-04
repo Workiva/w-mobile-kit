@@ -227,6 +227,14 @@ class WSpinnerTests: QuickSpec {
                     expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
                     expect(pLayer.strokeEnd) == 0.25
                 }
+
+                it("should set progress to 1 and never above") {
+                    spinnerView = WSpinner()
+
+                    expect(spinnerView.progress) == 0
+                    spinnerView.progress = 1.5
+                    expect(spinnerView.progress) == 1.0
+                }
             }
         }
     }

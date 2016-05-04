@@ -21,6 +21,8 @@ public class WSpinner: UIControl {
 
     public var icon: UIImage? {
         didSet {
+            iconLayer.contents = icon!.CGImage
+
             setNeedsDisplayMainThread()
         }
     }
@@ -86,6 +88,10 @@ public class WSpinner: UIControl {
     }
 
     // MARK: - Inits
+    public convenience init() {
+        self.init(frame: CGRectZero)
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
@@ -148,8 +154,7 @@ public class WSpinner: UIControl {
     public override func drawRect(rect: CGRect) {
         backgroundLayer.frame = bounds
         progressLayer.frame = bounds
-
-        iconLayer.contents = (icon != nil) ? icon?.CGImage : nil
+        iconLayer.frame = bounds
 
         drawBackgroundCircle()
         drawProgress()

@@ -57,6 +57,7 @@ public class WSpinnersExamplesVC: WSideMenuContentVC {
         }
         progressSpinner1.progressLineColor = .grayColor()
         progressSpinner1.backgroundLineColor = .cyanColor()
+        progressSpinner1.icon = UIImage(named: "gear")!
 
         view.addSubview(progressSpinner2)
         progressSpinner2.snp_makeConstraints { (make) in

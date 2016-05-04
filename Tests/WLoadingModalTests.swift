@@ -27,11 +27,47 @@ class WLoadingModalTests: QuickSpec {
             })
 
             describe("when app has been init") {
+                it("should init from coder with default settings") {
+                    let coder = NSCoder()
+
+                    loadingModalView = WLoadingModal()
+
+                    expect(loadingModalView.backgroundColor) == .clearColor()
+                    expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
+
+                    // Verifying properties set
+                    expect(loadingModalView.spinnerSize) == 44
+                    expect(loadingModalView.verticalPadding) == 32
+                    expect(loadingModalView.titleLabelWidth) == 120
+                    expect(loadingModalView.titleLabelHeight) == 20
+                    expect(loadingModalView.descriptionLabelWidth) == 180
+                    expect(loadingModalView.descriptionLabelHeight) == 60
+
+                    let tLabel: UILabel = loadingModalView.titleLabel
+                    expect(tLabel.textColor) == UIColor.whiteColor()
+                    expect(tLabel.textAlignment) == NSTextAlignment.Center
+                    expect(tLabel.text).to(beNil())
+
+                    let dLabel: UILabel = loadingModalView.descriptionLabel
+                    expect(dLabel.textColor) == UIColor.whiteColor()
+                    expect(dLabel.textAlignment) == NSTextAlignment.Center
+                    expect(dLabel.numberOfLines) == 0
+                    expect(dLabel.text).to(beNil())
+                }
+
                 it("should successfully create a loading view with default settings") {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
                     expect(loadingModalView.backgroundColor) == .clearColor()
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
+
+                    // Verifying properties set
+                    expect(loadingModalView.spinnerSize) == 44
+                    expect(loadingModalView.verticalPadding) == 32
+                    expect(loadingModalView.titleLabelWidth) == 120
+                    expect(loadingModalView.titleLabelHeight) == 20
+                    expect(loadingModalView.descriptionLabelWidth) == 180
+                    expect(loadingModalView.descriptionLabelHeight) == 60
 
                     let tLabel: UILabel = loadingModalView.titleLabel
                     expect(tLabel.textColor) == UIColor.whiteColor()
@@ -88,6 +124,24 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView.hide()
 
                     expect(subject.view.subviews.contains(loadingModalView)).to(beFalsy())
+                }
+
+                it("should configure properties correctly") {
+                    loadingModalView = WLoadingModal(frame: subject.view.frame)
+
+                    loadingModalView.spinnerSize = 11
+                    loadingModalView.verticalPadding = 22
+                    loadingModalView.titleLabelWidth = 33
+                    loadingModalView.titleLabelHeight = 44
+                    loadingModalView.descriptionLabelWidth = 55
+                    loadingModalView.descriptionLabelHeight = 66
+
+                    expect(loadingModalView.spinnerSize) == 11
+                    expect(loadingModalView.verticalPadding) == 22
+                    expect(loadingModalView.titleLabelWidth) == 33
+                    expect(loadingModalView.titleLabelHeight) == 44
+                    expect(loadingModalView.descriptionLabelWidth) == 55
+                    expect(loadingModalView.descriptionLabelHeight) == 66
                 }
             }
         }
