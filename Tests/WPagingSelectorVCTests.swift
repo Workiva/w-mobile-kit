@@ -10,6 +10,7 @@ class WPagingSelectorVCSpec: QuickSpec {
     override func spec() {
         describe("WPagingSelectorVCSpec") {
             var subject: WPagingSelectorVC!
+            var window: UIWindow!
 
             var vc1: WSideMenuContentVC?
             var vc2: WSideMenuContentVC?
@@ -29,7 +30,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                 vc2!.view.backgroundColor = .blueColor()
                 vc3!.view.backgroundColor = .redColor()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -76,8 +77,46 @@ class WPagingSelectorVCSpec: QuickSpec {
                 }
             }
 
+            describe("WTabView") {
+                var tabView: WTabView!
+
+                it("should init with coder correctly") {
+                    tabView = WTabView(title: "Tab")
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WTabView")
+
+                    NSKeyedArchiver.archiveRootObject(tabView, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
+                }
+            }
+
+            describe("WSelectionIndicatorView") {
+                var selectionIndicatorView: WSelectionIndicatorView!
+
+                it("should init with coder correctly") {
+                    selectionIndicatorView = WSelectionIndicatorView()
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WSelectionIndicatorView")
+
+                    NSKeyedArchiver.archiveRootObject(selectionIndicatorView, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
+
+                    expect(object).toNot(equal(nil))
+                    
+                    // default settings from commonInit
+                }
+            }
+
             describe("WPagingSelectorControl") {
-                var pagingSelectorControl:WPagingSelectorControl!
+                var pagingSelectorControl: WPagingSelectorControl!
 
                 it("should init with titles") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles)
@@ -95,6 +134,21 @@ class WPagingSelectorVCSpec: QuickSpec {
                     pagingSelectorControl = WPagingSelectorControl(pages: pages)
 
                     expect(pagingSelectorControl).toNot(beNil())
+                }
+
+                it("should init with coder correctly") {
+                    pagingSelectorControl = WPagingSelectorControl(titles: titles)
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WPagingSelectorControl")
+
+                    NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
+
+                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WPagingSelectorControl
+
+                    expect(object).toNot(equal(nil))
+
+                    // default settings from commonInit
                 }
             }
         }
