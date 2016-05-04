@@ -45,6 +45,7 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.rightImage).to(beNil())
                     expect(textField.rightView).to(beNil())
                     expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
+                    expect(textField.placeHolderTextColor).to(equal(UIColor.whiteColor()))
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
@@ -92,6 +93,12 @@ class WTextFieldTests: QuickSpec {
                     textField.paddingBetweenTextAndImage = 10
                     textField.bottomLineWidth = 2
                     textField.bottomLineColor = .blueColor()
+
+                    // Placeholder text should be nil, then when color is set, should be ""
+                    expect(textField.placeholder).to(beNil())
+                    textField.placeHolderTextColor = .blueColor()
+                    textField.placeholder = "placeholder"
+                    expect(textField.placeholder) == ""
 
                     subject.view.layoutIfNeeded()
 

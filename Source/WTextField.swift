@@ -9,6 +9,18 @@ public class WTextField: UITextField {
     public var paddingBetweenTextAndImage: CGFloat = 8
     private var bottomLine = CALayer()
 
+    public var placeHolderTextColor: UIColor = .whiteColor() {
+        didSet {
+            if (self.placeholder != nil) {
+                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+            } else {
+                // We need to set the placeholder to an empty string in this case so that
+                // the color persists when they "set" (now really change) the placeholder text
+                self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+            }
+        }
+    }
+
     public var bottomLineWidth: CGFloat = 1 {
         didSet {
             setBottomBorder()
@@ -49,6 +61,7 @@ public class WTextField: UITextField {
     public func commonInit() {
         textColor = .whiteColor()
         tintColor = .whiteColor()
+        placeHolderTextColor = .whiteColor()
         backgroundColor = .clearColor()
         autocapitalizationType = .None
         adjustsFontSizeToFitWidth = true
