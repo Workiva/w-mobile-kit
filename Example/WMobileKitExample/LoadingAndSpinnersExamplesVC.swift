@@ -15,21 +15,20 @@ public class WSpinnersExamplesVC: WSideMenuContentVC {
         super.viewDidLoad()
 
         // MARK: Indeterminate spinners.
-        let indeterminateSpinner1 = WSpinner(frame: CGRectZero)
-        view.addSubview(indeterminateSpinner1)
-        indeterminateSpinner1.snp_makeConstraints { (make) in
+        let emptyProgressSpinner = WSpinner(frame: CGRectZero)
+        view.addSubview(emptyProgressSpinner)
+        emptyProgressSpinner.snp_makeConstraints { (make) in
             make.top.equalTo(view).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(85)
             make.height.equalTo(85)
         }
-        indeterminateSpinner1.indeterminate = true
 
         let indeterminateSpinner2 = WSpinner(frame: CGRectZero)
         view.addSubview(indeterminateSpinner2)
         indeterminateSpinner2.snp_makeConstraints { (make) in
-            make.centerY.equalTo(indeterminateSpinner1)
-            make.right.equalTo(indeterminateSpinner1.snp_left).offset(-12)
+            make.centerY.equalTo(emptyProgressSpinner)
+            make.right.equalTo(emptyProgressSpinner.snp_left).offset(-12)
             make.width.equalTo(40)
             make.height.equalTo(40)
         }
@@ -40,8 +39,8 @@ public class WSpinnersExamplesVC: WSideMenuContentVC {
         let indeterminateSpinner3 = WSpinner(frame: CGRectZero)
         view.addSubview(indeterminateSpinner3)
         indeterminateSpinner3.snp_makeConstraints { (make) in
-            make.centerY.equalTo(indeterminateSpinner1)
-            make.left.equalTo(indeterminateSpinner1.snp_right).offset(12)
+            make.centerY.equalTo(emptyProgressSpinner)
+            make.left.equalTo(emptyProgressSpinner.snp_right).offset(12)
             make.width.equalTo(60)
             make.height.equalTo(60)
         }
@@ -51,7 +50,7 @@ public class WSpinnersExamplesVC: WSideMenuContentVC {
         // MARK: Progress spinners.
         view.addSubview(progressSpinner1)
         progressSpinner1.snp_makeConstraints { (make) in
-            make.top.equalTo(indeterminateSpinner1.snp_bottom).offset(10)
+            make.top.equalTo(emptyProgressSpinner.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(80)
             make.height.equalTo(80)

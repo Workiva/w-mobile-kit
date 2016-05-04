@@ -69,7 +69,7 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
-                    expect(loadingModalView.spinnerView.progress).to(equal(0))
+                    expect(loadingModalView.spinnerView.progress).to(equal(0.15)) // Progress is set to a constant for indeterminate
 
                     loadingModalView.setProgress(0.6)
 
