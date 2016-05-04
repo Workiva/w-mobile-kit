@@ -7,9 +7,9 @@ import WMobileKit
 
 public class WSpinnersExamplesVC: WSideMenuContentVC {
     var currentProgress: CGFloat = 0
-    let progressSpinner1 = WSpinner(frame: CGRectZero)
-    let progressSpinner2 = WSpinner(frame: CGRectZero)
-    let progressSpinner3 = WSpinner(frame: CGRectZero)
+    let progressSpinner1 = WSpinner()
+    let progressSpinner2 = WSpinner()
+    let progressSpinner3 = WSpinner()
 
     public override func viewDidLoad() {
         super.viewDidLoad()
