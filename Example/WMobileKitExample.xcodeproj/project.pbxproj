@@ -19,6 +19,7 @@
 		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
 		D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */; };
+		D7A022E91CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; };
 		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; };
+		D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingAndSpinnersExamplesVC.swift; sourceTree = "<group>"; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 				D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */,
 				D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */,
 				73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */,
+				D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
+				D7A022E91CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */,
