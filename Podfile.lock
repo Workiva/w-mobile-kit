@@ -5,7 +5,7 @@ PODS:
   - SnapKit (0.20.0)
 
 DEPENDENCIES:
-  - CryptoSwift (= 0.4.0)
+  - CryptoSwift (= 0.4)
   - Nimble (~> 4.0.0)
   - Quick (~> 0.9.1)
   - SnapKit (= 0.20.0)
@@ -16,6 +16,6 @@ SPEC CHECKSUMS:
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
 
-PODFILE CHECKSUM: efb2e04f0ec3afcb08b9d5641fdc8a76327debdd
+PODFILE CHECKSUM: a8052984ebe64e63fec5d2e7fcbbafcdf527dabb
 
 COCOAPODS: 1.0.0.beta.6
