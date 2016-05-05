@@ -39,7 +39,7 @@ class WToastSpec: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     toastView = WToastView(message: message1)
 
                     let path = NSTemporaryDirectory() as NSString

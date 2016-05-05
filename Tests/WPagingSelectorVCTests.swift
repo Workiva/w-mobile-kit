@@ -80,7 +80,11 @@ class WPagingSelectorVCSpec: QuickSpec {
             describe("WTabView") {
                 var tabView: WTabView!
 
-                it("should init with coder correctly") {
+                afterEach({
+                    tabView = nil
+                })
+
+                it("should init with coder correctly and verify commonInit") {
                     tabView = WTabView(title: "Tab")
 
                     let path = NSTemporaryDirectory() as NSString
@@ -88,9 +92,9 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     NSKeyedArchiver.archiveRootObject(tabView, toFile: locToSave)
 
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
+                    let tabView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
 
-                    expect(object).toNot(equal(nil))
+                    expect(tabView).toNot(equal(nil))
 
                     // default settings from commonInit
                 }
@@ -99,7 +103,11 @@ class WPagingSelectorVCSpec: QuickSpec {
             describe("WSelectionIndicatorView") {
                 var selectionIndicatorView: WSelectionIndicatorView!
 
-                it("should init with coder correctly") {
+                afterEach({
+                    selectionIndicatorView = nil
+                })
+
+                it("should init with coder correctly and verify commonInit") {
                     selectionIndicatorView = WSelectionIndicatorView()
 
                     let path = NSTemporaryDirectory() as NSString
@@ -107,9 +115,9 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     NSKeyedArchiver.archiveRootObject(selectionIndicatorView, toFile: locToSave)
 
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
+                    let selectionIndicatorView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
 
-                    expect(object).toNot(equal(nil))
+                    expect(selectionIndicatorView).toNot(equal(nil))
                     
                     // default settings from commonInit
                 }
@@ -117,6 +125,25 @@ class WPagingSelectorVCSpec: QuickSpec {
 
             describe("WPagingSelectorControl") {
                 var pagingSelectorControl: WPagingSelectorControl!
+
+                afterEach({
+                    pagingSelectorControl = nil
+                })
+
+                it("should init with coder correctly and verify commonInit") {
+                    pagingSelectorControl = WPagingSelectorControl(titles: titles)
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WPagingSelectorControl")
+
+                    NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
+
+                    let pagingSelectorControl = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WPagingSelectorControl
+
+                    expect(pagingSelectorControl).toNot(equal(nil))
+                    
+                    // default settings from commonInit
+                }
 
                 it("should init with titles") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles)
@@ -134,21 +161,6 @@ class WPagingSelectorVCSpec: QuickSpec {
                     pagingSelectorControl = WPagingSelectorControl(pages: pages)
 
                     expect(pagingSelectorControl).toNot(beNil())
-                }
-
-                it("should init with coder correctly") {
-                    pagingSelectorControl = WPagingSelectorControl(titles: titles)
-
-                    let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WPagingSelectorControl")
-
-                    NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
-
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WPagingSelectorControl
-
-                    expect(object).toNot(equal(nil))
-
-                    // default settings from commonInit
                 }
             }
         }

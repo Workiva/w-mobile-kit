@@ -34,7 +34,7 @@ class WUserLogoViewTests: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     userLogoView = WUserLogoView(name1)
 
                     let path = NSTemporaryDirectory() as NSString

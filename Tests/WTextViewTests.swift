@@ -24,6 +24,23 @@ class WTextViewTests: QuickSpec {
             let parsedString6 = "This has one [inco]rre(ct) URL with one correct URL"
             
             describe("when text view has been init") {
+                it("should init with coder correctly and verify commonInit") {
+                    textView = WTextView()
+
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WTextView")
+
+                    NSKeyedArchiver.archiveRootObject(textView, toFile: locToSave)
+
+                    let textView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTextView
+
+                    expect(textView).toNot(equal(nil))
+
+                    // default settings from commonInit
+                    expect(textView.editable).to(beFalse())
+                    expect(textView.scrollEnabled).to(beFalse())
+                }
+
                 it("should parse single markdown URL correctly") {
                     textView = WTextView(string1)
                     expect(textView.attributedText.string).to(equal(parsedString1))
@@ -52,21 +69,6 @@ class WTextViewTests: QuickSpec {
                 it("should parse only correct markdown URLs") {
                     textView = WTextView(string6)
                     expect(textView.attributedText.string).to(equal(parsedString6))
-                }
-                
-                it("should init with coder correctly") {
-                    let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("testsTextView")
-                    
-                    textView = WTextView()
-                    
-                    NSKeyedArchiver.archiveRootObject(textView, toFile: locToSave)
-                    
-                    let textView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTextView
-                    
-                    expect(textView).toNot(equal(nil))
-                    expect(textView.editable).to(beFalse())
-                    expect(textView.scrollEnabled).to(beFalse())
                 }
             }
             
