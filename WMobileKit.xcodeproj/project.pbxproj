@@ -16,6 +16,7 @@
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
 		D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */; };
 		D518B1D91CDBEE770058B6A9 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D518B1D81CDBEE770058B6A9 /* String+Extension.swift */; };
+		D518B1DB1CDC08D20058B6A9 /* String+ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D518B1DA1CDC08D20058B6A9 /* String+ExtensionsTests.swift */; };
 		D531DD7E1CDBD7D8009CB2FF /* WEquatables.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C27EE1CDA5E3800189426 /* WEquatables.swift */; };
 		D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */; };
 		D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */; };
@@ -71,6 +72,7 @@
 		D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+SwiftTests.m"; sourceTree = "<group>"; };
 		D518B1D81CDBEE770058B6A9 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		D518B1DA1CDC08D20058B6A9 /* String+ExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+ExtensionsTests.swift"; sourceTree = "<group>"; };
 		D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVC.swift; sourceTree = "<group>"; };
 		D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPagingSelectorVCTests.swift; sourceTree = "<group>"; };
 		D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WThemeTests.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
+				D518B1DA1CDC08D20058B6A9 /* String+ExtensionsTests.swift */,
 				73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */,
 				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
 				D73C27EE1CDA5E3800189426 /* WEquatables.swift */,
@@ -458,6 +461,7 @@
 				73B2B5CA1CD2B1D500053D22 /* WTextViewTests.swift in Sources */,
 				D53356CC1CBD6ACC00D9A6A9 /* WThemeTests.swift in Sources */,
 				D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */,
+				D518B1DB1CDC08D20058B6A9 /* String+ExtensionsTests.swift in Sources */,
 				D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */,
 				D7CC99A01CC95FB000572B6F /* WLoadingModalTests.swift in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
