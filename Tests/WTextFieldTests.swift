@@ -28,7 +28,7 @@ class WTextFieldTests: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     textField = WTextField()
 
                     let path = NSTemporaryDirectory() as NSString

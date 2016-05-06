@@ -27,32 +27,26 @@ class WLoadingModalTests: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init from coder with default settings") {
-                    let coder = NSCoder()
+                it("should init with coder correctly and verify commonInit") {
+                    loadingModalView = WLoadingModal(frame: subject.view.frame)
 
-                    loadingModalView = WLoadingModal()
+                    let path = NSTemporaryDirectory() as NSString
+                    let locToSave = path.stringByAppendingPathComponent("WLoadingModal")
 
+                    NSKeyedArchiver.archiveRootObject(loadingModalView, toFile: locToSave)
+
+                    let loadingModalView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WLoadingModal
+
+                    expect(loadingModalView).toNot(equal(nil))
+
+                    // default settings from commonInit
                     expect(loadingModalView.backgroundColor) == .clearColor()
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
-
-                    // Verifying properties set
-                    expect(loadingModalView.spinnerSize) == 44
-                    expect(loadingModalView.verticalPadding) == 32
-                    expect(loadingModalView.titleLabelWidth) == 120
-                    expect(loadingModalView.titleLabelHeight) == 20
-                    expect(loadingModalView.descriptionLabelWidth) == 180
-                    expect(loadingModalView.descriptionLabelHeight) == 60
-
-                    let tLabel: UILabel = loadingModalView.titleLabel
-                    expect(tLabel.textColor) == UIColor.whiteColor()
-                    expect(tLabel.textAlignment) == NSTextAlignment.Center
-                    expect(tLabel.text).to(beNil())
-
-                    let dLabel: UILabel = loadingModalView.descriptionLabel
-                    expect(dLabel.textColor) == UIColor.whiteColor()
-                    expect(dLabel.textAlignment) == NSTextAlignment.Center
-                    expect(dLabel.numberOfLines) == 0
-                    expect(dLabel.text).to(beNil())
+                    expect(loadingModalView.titleLabel.textColor) == UIColor.whiteColor()
+                    expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.Center
+                    expect(loadingModalView.descriptionLabel.textColor) == UIColor.whiteColor()
+                    expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
+                    expect(loadingModalView.descriptionLabel.numberOfLines) == 0
                 }
 
                 it("should successfully create a loading view with default settings") {

@@ -48,7 +48,7 @@ class WBannerSpec: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     bannerView = WBannerView(rootView: subject.view)
 
                     let path = NSTemporaryDirectory() as NSString
