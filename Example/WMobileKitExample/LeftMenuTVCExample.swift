@@ -17,7 +17,7 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var userLogoViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("userLogoViewExamplesVC") as! NavigationVC // UserLogoViewExamplesVC
     lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("modalViewExamplesVC") as! NavigationVC // ModalViewExamplesVC
     lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textFieldExamplesVC") as! NavigationVC // TextFieldExamplesVC
-    lazy var autoFillTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("autoFillTextFieldExampleVC") as! NavigationVC // AutoFillTextFieldExampleVC
+    lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("autoCompleteTextFieldExampleVC") as! NavigationVC // AutoCompleteTextFieldExampleVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -64,7 +64,7 @@ class LeftMenuTVCExample: UITableViewController {
             sideMenuController()?.changeMainViewController(textFieldExamplesVC)
             break
         case 5:
-            sideMenuController()?.changeMainViewController(autoFillTextFieldExampleVC)
+            sideMenuController()?.changeMainViewController(autoCompleteTextFieldExampleVC)
             break
         default:
             break

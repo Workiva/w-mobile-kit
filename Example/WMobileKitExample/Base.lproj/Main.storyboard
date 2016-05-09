@@ -411,7 +411,7 @@
         <!--NavigationVC-->
         <scene sceneID="8BY-1I-jEN">
             <objects>
-                <navigationController storyboardIdentifier="autoFillTextFieldExampleVC" id="OSB-eX-Gzv" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="autoCompleteTextFieldExampleVC" id="OSB-eX-Gzv" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bag-Y6-SPC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -424,10 +424,10 @@
             </objects>
             <point key="canvasLocation" x="1103" y="4245"/>
         </scene>
-        <!--Auto Fill Text Field ExampleVC-->
+        <!--Auto Complete Text Field ExampleVC-->
         <scene sceneID="IA8-s0-oQb">
             <objects>
-                <viewController id="vTG-jB-DbT" customClass="AutoFillTextFieldExampleVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vTG-jB-DbT" customClass="AutoCompleteTextFieldExampleVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xQi-iO-OeX"/>
                         <viewControllerLayoutGuide type="bottom" id="joy-fS-5eb"/>
