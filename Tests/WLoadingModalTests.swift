@@ -103,6 +103,25 @@ class WLoadingModalTests: QuickSpec {
                     expect(dLabel.text).to(equal("Unit tests are a great resource, and everyone should love them."))
                 }
 
+                it("should successfully create a loading view with custom settings") {
+                    loadingModalView = WLoadingModal(.whiteColor(),
+                                                     title: "Unit Tests")
+
+                    expect(loadingModalView.backgroundColor) == .whiteColor()
+                    expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
+
+                    let tLabel = loadingModalView.titleLabel
+                    expect(tLabel.textColor) == UIColor.whiteColor()
+                    expect(tLabel.textAlignment) == NSTextAlignment.Center
+                    expect(tLabel.text).to(equal("Unit Tests"))
+
+                    let dLabel = loadingModalView.descriptionLabel
+                    expect(dLabel.textColor) == UIColor.whiteColor()
+                    expect(dLabel.textAlignment) == NSTextAlignment.Center
+                    expect(dLabel.numberOfLines) == 0
+                    expect(dLabel.text).to(equal(""))
+                }
+
                 it("should set the progress on the spinner") {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
