@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */; };
 		55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106301CAC849300495BBC /* WSideMenuVC.swift */; };
-		73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */; };
+		73A12C6D1CC00FE70092A3C2 /* WActionSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */; };
 		73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */; };
 		73B2B5CA1CD2B1D500053D22 /* WTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */; };
 		73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */; };
@@ -40,6 +40,7 @@
 		D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7A1CC7D55A00130C7B /* WTextField.swift */; };
 		D73C27EF1CDA5E3800189426 /* WEquatables.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C27EE1CDA5E3800189426 /* WEquatables.swift */; };
 		D73C27F01CDA5EF100189426 /* WLoadingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */; };
+		D77BA8641CDBDF2A0018944A /* WCustomTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */; };
 		D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC999B1CC9348E00572B6F /* WTextFieldTests.swift */; };
 		D7CC99A01CC95FB000572B6F /* WLoadingModalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC999F1CC95FB000572B6F /* WLoadingModalTests.swift */; };
 		D7CC99A21CC960D200572B6F /* WSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC99A11CC960D200572B6F /* WSpinner.swift */; };
@@ -61,7 +62,7 @@
 		12BBAA78AA44BF3D5E5291FA /* Pods-WMobileKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.debug.xcconfig"; sourceTree = "<group>"; };
 		291D45C38158CD4757464AEA /* Pods-WMobileKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit.release.xcconfig"; sourceTree = "<group>"; };
 		55A106301CAC849300495BBC /* WSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVC.swift; sourceTree = "<group>"; };
-		73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheetVCTests.swift; sourceTree = "<group>"; };
+		73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheetTests.swift; sourceTree = "<group>"; };
 		73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheet.swift; sourceTree = "<group>"; };
 		73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextViewTests.swift; sourceTree = "<group>"; };
 		73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextView.swift; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 		D5C4B4441CADBD9A009B4104 /* WTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTheme.swift; sourceTree = "<group>"; };
 		D7310D7A1CC7D55A00130C7B /* WTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextField.swift; sourceTree = "<group>"; };
 		D73C27EE1CDA5E3800189426 /* WEquatables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEquatables.swift; sourceTree = "<group>"; };
+		D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCustomTransitions.swift; sourceTree = "<group>"; };
 		D7CC999B1CC9348E00572B6F /* WTextFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextFieldTests.swift; sourceTree = "<group>"; };
 		D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLoadingModal.swift; sourceTree = "<group>"; };
 		D7CC999F1CC95FB000572B6F /* WLoadingModalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLoadingModalTests.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */,
 				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
+				D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */,
 				D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */,
 				D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */,
 				55A106301CAC849300495BBC /* WSideMenuVC.swift */,
@@ -194,7 +197,7 @@
 			children = (
 				D73C27EE1CDA5E3800189426 /* WEquatables.swift */,
 				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
-				73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */,
+				73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */,
 				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
 				D7CC999F1CC95FB000572B6F /* WLoadingModalTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
@@ -429,6 +432,7 @@
 				D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
 				D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */,
+				D77BA8641CDBDF2A0018944A /* WCustomTransitions.swift in Sources */,
 				73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */,
 				D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */,
 				D73C27F01CDA5EF100189426 /* WLoadingModal.swift in Sources */,
@@ -450,7 +454,7 @@
 				D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */,
 				D7CC99A01CC95FB000572B6F /* WLoadingModalTests.swift in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
-				73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */,
+				73A12C6D1CC00FE70092A3C2 /* WActionSheetTests.swift in Sources */,
 				D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
 				D592AB821CC830E200301C7F /* WToastTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,

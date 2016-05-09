@@ -7,29 +7,27 @@ import UIKit
 public class WTextField: UITextField {
     public var imageSquareSize: CGFloat = 16
     public var paddingBetweenTextAndImage: CGFloat = 8
+
     private var bottomLine = CALayer()
+    public var bottomLineWidth: CGFloat = 1
+    public var bottomLineWidthWithText: CGFloat = 2
+    private var currentBottomLineWidth: CGFloat? // Used to preserve above to values
+
+    public var bottomLineColor: UIColor = .whiteColor() {
+        didSet {
+            setBottomBorder()
+        }
+    }
+
+    public var clearPlacholderOnEditing: Bool = true
 
     public var placeHolderTextColor: UIColor = .whiteColor() {
         didSet {
             if (self.placeholder != nil) {
                 self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
             } else {
-                // We need to set the placeholder to an empty string in this case so that
-                // the color persists when they "set" (now really change) the placeholder text
-                self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+                self.setEmptyPlaceholder()
             }
-        }
-    }
-
-    public var bottomLineWidth: CGFloat = 1 {
-        didSet {
-            setBottomBorder()
-        }
-    }
-
-    public var bottomLineColor: UIColor = .whiteColor() {
-        didSet {
-            setBottomBorder()
         }
     }
 
@@ -59,6 +57,8 @@ public class WTextField: UITextField {
     }
 
     public func commonInit() {
+        delegate = self
+
         textColor = .whiteColor()
         tintColor = .whiteColor()
         placeHolderTextColor = .whiteColor()
@@ -87,13 +87,21 @@ public class WTextField: UITextField {
     }
 
     public func setBottomBorder() {
-        bottomLine.frame = CGRectMake(0, frame.height - bottomLineWidth, frame.width, bottomLineWidth)
+        currentBottomLineWidth = (text == nil && text!.isEmpty) ? bottomLineWidth : bottomLineWidthWithText
+
+        bottomLine.frame = CGRectMake(0, frame.height - bottomLineWidth, frame.width, currentBottomLineWidth!)
         bottomLine.backgroundColor = bottomLineColor.CGColor
 
         // Only add the layer if it has not yet been added.
         if (bottomLine.superlayer != layer) {
             layer.addSublayer(bottomLine)
         }
+    }
+
+    private func setEmptyPlaceholder() {
+        // We need to set the placeholder to an empty string in this case so that
+        // the color persists when they "set" (now really change) the placeholder text
+        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
     }
 
     // MARK: - Custom Rect Sizings
@@ -135,5 +143,24 @@ public class WTextField: UITextField {
         }
 
         return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height)
+    }
+}
+
+extension WTextField: UITextFieldDelegate {
+    public func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        return true
+    }
+
+    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        setBottomBorder()
+
+        return true
+    }
+
+    // Clear placeholder text on begin editing if set.
+    public func textFieldDidBeginEditing(textField: UITextField) {
+        if (clearPlacholderOnEditing) {
+            setEmptyPlaceholder()
+        }
     }
 }

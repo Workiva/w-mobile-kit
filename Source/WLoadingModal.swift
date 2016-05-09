@@ -123,6 +123,10 @@ public class WLoadingModal: UIView {
         }
     }
 
+    public func show(view: UIView) {
+        self.show(view, insets: UIEdgeInsetsMake(0, 0, 0, 0))
+    }
+
     public func show(view: UIView, insets: UIEdgeInsets) {
         hide()
 

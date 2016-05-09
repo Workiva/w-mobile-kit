@@ -353,9 +353,11 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
-        cell.setSelectedAction(true)
+        // Cell may not be visible yet.
+        if let cell = tableView.cellForRowAtIndexPath(path) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(true)
+        }
         selectedIndex = index
     }
 
@@ -369,10 +371,12 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
-        cell.setSelectedAction(!cell.isSelectedAction)
-        selectedIndex = cell.selectBar.hidden ? selectedIndex : index
+        // Cell may not be visible yet.
+        if let cell = tableView.cellForRowAtIndexPath(path) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(!cell.isSelectedAction)
+            selectedIndex = cell.selectBar.hidden ? selectedIndex : index
+        }
     }
 
     public func deselectAllActions() {
@@ -394,8 +398,10 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
             return
         }
 
-        let cell = tableView.cellForRowAtIndexPath(path!) as! WTableViewCell<ActionDataType>
-        cell.setSelectedAction(false)
+        // The selected cell may no longer be visible / in memory
+        if let cell = tableView.cellForRowAtIndexPath(path!) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(false)
+        }
     }
 
     // MARK: - UITableViewDataSource
