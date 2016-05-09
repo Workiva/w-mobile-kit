@@ -58,12 +58,14 @@ pod "WMobileKit"
 #### pod lib lint
 
 Error:
+```ruby
  -> WMobileKit (0.0.1)
     - ERROR | [iOS] xcodebuild: Returned an unsuccessful exit code. You can use `--verbose` for more information.
     - NOTE  | [iOS] xcodebuild:  error: /Users/<username>/Library/Developer/Xcode/DerivedData/App-duleyrsezkvsavdltyhdceybcwgx/Build/Products/Release-iphonesimulator/WMobileKit/WMobileKit.bundle: No such file or directory
 
 [!] WMobileKit did not pass validation, due to 1 error.
 You can use the `--no-clean` option to inspect any issue.
+```
 
 There is a bug with cocoapods version 1.0.0.beta.6 that affects our build: https://github.com/CocoaPods/CocoaPods/issues/5034
 
@@ -74,8 +76,10 @@ Solution:
 #### use_frameworks missing
 
 Error:
+```ruby
 [!] Pods written in Swift can only be integrated as frameworks; this feature is still in beta. Add `use_frameworks!` to your Podfile or target to opt into using it. The Swift Pod being used is: WMobileKit
     Warning: Command failed:  Use --force to continue.
+```
 
 Solution:
 - Add `use_frameworks` to the top of your Podfile

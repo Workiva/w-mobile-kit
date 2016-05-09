@@ -478,9 +478,9 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
     }
 
     var selectBar = WSelectBar(frame: CGRectZero)
-    private var subtitleLabel : UILabel?
-    private var titleLabel : UILabel?
-    private var iconImageView : UIImageView?
+    internal var subtitleLabel : UILabel?
+    internal var titleLabel : UILabel?
+    internal var iconImageView : UIImageView?
     public private(set) var separatorBar = UIView(frame: CGRectZero)
     public private(set) var isSelectedAction = false
 

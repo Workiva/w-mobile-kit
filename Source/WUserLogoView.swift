@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import CryptoSwift
 
 public class WUserLogoView: UIView {
     public var initialsLimit = 3 {
@@ -114,38 +115,20 @@ public class WUserLogoView: UIView {
 
     // Can be overridden for differnt mappings
     public class func mapNameToColor(name: String) -> UIColor {
-        let colorMapValue = abs(Double(name.hashValue)) % 5
+        // CRC32 decimal
+        let colorMapValue = name.crc32int() % 5
 
         switch colorMapValue {
         case 0:
-            return UIColor(hex: 0x42AD48)
+            return UIColor(hex: 0x42AD48) // Green
         case 1:
-            return UIColor(hex: 0xA71B19)
+            return UIColor(hex: 0xA71B19) // Red
         case 2:
-            return UIColor(hex: 0x026DCE)
+            return UIColor(hex: 0x026DCE) // Blue
         case 3:
-            return UIColor(hex: 0x813296)
-        case 4:
-            return UIColor(hex: 0xF26C21)
+            return UIColor(hex: 0x813296) // Purple
         default:
-            return .blackColor()
+            return UIColor(hex: 0xF26C21) // Orange
         }
-    }
-}
-
-public extension String {
-    public func initials(limit: Int = 3) -> String {
-        let range = startIndex..<endIndex
-        var initials = String()
-
-        enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, stop) -> () in
-            let initial = substring!.characters.first! as Character
-            initials = initials + String(initial)
-            if (initials.characters.count >= limit) {
-                stop = true
-            }
-        }
-
-        return initials
     }
 }

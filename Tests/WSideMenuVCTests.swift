@@ -34,15 +34,15 @@ class WSideMenuVCSpec: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     let path = NSTemporaryDirectory() as NSString
                     let locToSave = path.stringByAppendingPathComponent("WSideMenuVC")
 
                     NSKeyedArchiver.archiveRootObject(subject, toFile: locToSave)
 
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSideMenuVC
+                    let sideMenuVC = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSideMenuVC
 
-                    expect(object).toNot(equal(nil))
+                    expect(sideMenuVC).toNot(equal(nil))
 
                     // default settings from commonInit
                 }

@@ -18,6 +18,8 @@ class WUserLogoViewTests: QuickSpec {
             let name2 = "Jessica Jones"
             let name3 = "Peter Benjamin Parker"
             let name4 = "Anthony Tony Edward Stark"
+            let name5 = "Natasha Romanova"
+            let name6 = "Matt Murdock"
 
             beforeEach({
                 subject = UIViewController()
@@ -34,7 +36,7 @@ class WUserLogoViewTests: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should init with coder correctly") {
+                it("should init with coder correctly and verify commonInit") {
                     userLogoView = WUserLogoView(name1)
 
                     let path = NSTemporaryDirectory() as NSString
@@ -133,6 +135,28 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.name).to(equal(name4))
                     expect(userLogoView.lineWidth).to(equal(1.0))
                 }
+
+                it("should work correctly if the initials label has been removed") {
+                    userLogoView = WUserLogoView(name5)
+                    userLogoView.initialsLimit = 1
+                    userLogoView.initialsLabel.removeFromSuperview()
+                    userLogoView.bounds = CGRectMake(0, 0, 80, 80)
+
+                    subject.view.addSubview(userLogoView)
+                    userLogoView.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(80)
+                        make.height.equalTo(80)
+                    }
+
+                    subject.view.layoutIfNeeded()
+
+                    // public properties
+                    expect(userLogoView.initialsLabel.text).to(equal("N"))
+                    expect(userLogoView.name).to(equal(name5))
+                    expect(userLogoView.lineWidth).to(equal(1.0))
+                }
             }
 
             describe("mapping name to color") {
@@ -156,6 +180,16 @@ class WUserLogoViewTests: QuickSpec {
                     let color8 = WUserLogoView.mapNameToColor(name4)
 
                     expect(color7).to(equal(color8))
+
+                    let color9 = WUserLogoView.mapNameToColor(name5)
+                    let color10 = WUserLogoView.mapNameToColor(name5)
+
+                    expect(color9).to(equal(color10))
+
+                    let color11 = WUserLogoView.mapNameToColor(name6)
+                    let color12 = WUserLogoView.mapNameToColor(name6)
+
+                    expect(color11).to(equal(color12))
                 }
             }
         }
