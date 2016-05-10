@@ -63,4 +63,8 @@ extension AutoCompleteTextFieldExampleVC : WAutoCompleteTextViewDelegate {
             searchResults.append(word.stringByAppendingString(String(i)))
         }
     }
+    
+    public func didSelectAutoCompletion(word: String) {
+        // Word was chosen, called after word has been replaced
+    }
 }
