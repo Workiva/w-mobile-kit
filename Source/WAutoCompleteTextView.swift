@@ -11,6 +11,7 @@ let TABLE_HEIGHT_ROW: CGFloat = 30
 @objc public protocol WAutoCompleteTextViewDelegate : class {
     optional func didChangeAutoCompletionPrefix(prefix: String, word: String)
     optional func didSelectAutoCompletion(word: String)
+    optional func heightForAutoCompleteTable() -> CGFloat
 }
 
 public class WAutoCompleteTextView : UIView {
@@ -113,7 +114,7 @@ public class WAutoCompleteTextView : UIView {
         textField.layer.cornerRadius = 5.0
         textField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
         textField.autoCompleteDelegate = self
-        textField.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: .EditingChanged)
+        textField.addTarget(self, action: #selector(WAutoCompleteTextView.textFieldDidChange(_:)), forControlEvents: .EditingChanged)
         
         addSubview(topLineSeparator)
         topLineSeparator.backgroundColor = .lightGrayColor()
@@ -160,12 +161,15 @@ public class WAutoCompleteTextView : UIView {
         autoCompleteTable.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView)
             make.right.equalTo(backgroundView)
+            make.bottom.equalTo(backgroundView.snp_top)
             if (animateIn) {
-                make.height.equalTo(maxAutoCompleteHeight)
-                make.top.equalTo(self)
+                if let setHeight = delegate?.heightForAutoCompleteTable?() {
+                    make.height.equalTo(min(setHeight, maxAutoCompleteHeight))
+                } else {
+                    make.height.equalTo(maxAutoCompleteHeight)
+                }
             } else {
                 make.height.equalTo(0)
-                make.top.equalTo(backgroundView)
             }
         }
         
@@ -239,12 +243,13 @@ public class WAutoCompleteTextView : UIView {
 
 extension WAutoCompleteTextView : UITableViewDelegate {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        showAutoCompleteView(false)
-        
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             acceptAutoCompletionWithString(cell.textLabel!.text!)
             delegate?.didSelectAutoCompletion?(cell.textLabel!.text!)
         }
+        
+        showAutoCompleteView(false)
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

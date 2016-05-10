@@ -48,13 +48,17 @@ extension AutoCompleteTextFieldExampleVC : UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return searchResults.count
     }
 }
 
 // MARK: Auto Complete Text View Delegate
 //       Must be implemented for auto completion
 extension AutoCompleteTextFieldExampleVC : WAutoCompleteTextViewDelegate {
+    public func heightForAutoCompleteTable() -> CGFloat {
+        return CGFloat(searchResults.count * 40)
+    }
+    
     public func didChangeAutoCompletionPrefix(prefix: String, word: String) {
         searchResults.removeAll()
         

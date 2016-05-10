@@ -20,6 +20,7 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
             beforeEach({
                 subject = AutoCompleteTestViewController()
                 textView = WAutoCompleteTextView()
+                textView.delegate = subject
                 textView.dataSource = subject
                 
                 window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -61,6 +62,16 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
                 
                 it("should have properties set properly") {
                     subject.view.addSubview(textView)
+                    
+                    textView.rowHeight = 50
+                    textView.maxAutoCompleteHeight = 150
+                    textView.showAutoCompleteView()
+                    
+                    expect(textView.autoCompleteTable.frame.size.height).toEventually(equal(100), timeout: 0.3)
+                }
+                
+                it("should have properties set properly without delegate") {
+                    textView = WAutoCompleteTextView()
                     
                     textView.rowHeight = 50
                     textView.maxAutoCompleteHeight = 150
@@ -165,6 +176,7 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
                 }
                 
                 it("should dismiss auto complete when table cell is selected") {
+                    textView.autoCompleteTable.reloadData()
                     textView.tableView(textView.autoCompleteTable, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
                     textView.showAutoCompleteView()
                     
@@ -194,14 +206,18 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
     }
 }
 
-class AutoCompleteTestViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+class AutoCompleteTestViewController: UIViewController, WAutoCompleteTextViewDelegate, UITableViewDataSource {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
         cell.textLabel?.text = "Test"
         return cell
+    }
+    
+    func heightForAutoCompleteTable() -> CGFloat {
+        return 100
     }
 }
