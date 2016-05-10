@@ -30,10 +30,10 @@ class WLoadingModalTests: QuickSpec {
                 let verifyDefaultSettings: (Void) -> (Void) = {
                     // Verifying properties set
                     expect(loadingModalView.spinnerSize) == 44
-                    expect(loadingModalView.verticalPadding) == 32
-                    expect(loadingModalView.titleLabelWidth) == 120
+                    expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 32
+                    expect(loadingModalView.paddingBetweenTitleAndSpinner) == 32
+                    expect(loadingModalView.paddingBetweenDescriptionAndTitle) == 32
                     expect(loadingModalView.titleLabelHeight) == 20
-                    expect(loadingModalView.descriptionLabelWidth) == 180
                     expect(loadingModalView.descriptionLabelHeight) == 60
                 }
 
@@ -50,7 +50,7 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(loadingModalView.backgroundColor) == .clearColor()
+                    expect(loadingModalView.backgroundColor) == UIColor(hex: 0x595959, alpha: 0.85)
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
                     expect(loadingModalView.titleLabel.textColor) == UIColor.whiteColor()
                     expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.Center
@@ -65,7 +65,7 @@ class WLoadingModalTests: QuickSpec {
                     let path = NSTemporaryDirectory() as NSString
                     let locToSave = path.stringByAppendingPathComponent("WLoadingModal")
 
-                    NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
+                    NSKeyedArchiver.archiveRootObject(loadingModalView, toFile: locToSave)
 
                     let loadingModalView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WLoadingModal
                     
@@ -77,16 +77,22 @@ class WLoadingModalTests: QuickSpec {
                 it("should successfully create a loading view with default settings") {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
-                    expect(loadingModalView.backgroundColor) == .clearColor()
+                    expect(loadingModalView.backgroundColor) == UIColor(hex: 0x595959, alpha: 0.85)
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
+
+                    verifyDefaultSettings()
+                }
+
+                it("should successfully create a loading view with default settings") {
+                    loadingModalView = WLoadingModal("Testing just title init.")
 
                     verifyDefaultSettings()
                 }
 
                 it("should successfully create a loading view with custom settings") {
                     loadingModalView = WLoadingModal(.whiteColor(),
-                                                     title: "Unit Tests",
-                                                     description: "Unit tests are a great resource, and everyone should love them.")
+                        title: "Unit Tests",
+                        description: "Unit tests are a great resource, and everyone should love them.")
 
                     expect(loadingModalView.backgroundColor) == .whiteColor()
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
@@ -104,8 +110,7 @@ class WLoadingModalTests: QuickSpec {
                 }
 
                 it("should successfully create a loading view with custom settings") {
-                    loadingModalView = WLoadingModal(.whiteColor(),
-                                                     title: "Unit Tests")
+                    loadingModalView = WLoadingModal(.whiteColor(), title: "Unit Tests")
 
                     expect(loadingModalView.backgroundColor) == .whiteColor()
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
@@ -151,17 +156,17 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
                     loadingModalView.spinnerSize = 11
-                    loadingModalView.verticalPadding = 22
-                    loadingModalView.titleLabelWidth = 33
+                    loadingModalView.paddingBetweenViewTopAndSpinner = 100
+                    loadingModalView.paddingBetweenTitleAndSpinner = 50
+                    loadingModalView.paddingBetweenDescriptionAndTitle = 30
                     loadingModalView.titleLabelHeight = 44
-                    loadingModalView.descriptionLabelWidth = 55
                     loadingModalView.descriptionLabelHeight = 66
 
                     expect(loadingModalView.spinnerSize) == 11
-                    expect(loadingModalView.verticalPadding) == 22
-                    expect(loadingModalView.titleLabelWidth) == 33
+                    expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 100
+                    expect(loadingModalView.paddingBetweenTitleAndSpinner) == 50
+                    expect(loadingModalView.paddingBetweenDescriptionAndTitle) == 30
                     expect(loadingModalView.titleLabelHeight) == 44
-                    expect(loadingModalView.descriptionLabelWidth) == 55
                     expect(loadingModalView.descriptionLabelHeight) == 66
                 }
             }

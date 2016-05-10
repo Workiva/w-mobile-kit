@@ -267,7 +267,6 @@ class WTextFieldTests: QuickSpec {
                     
                     expect(textField.bottomLineWidth) == 1
                     expect(textField.bottomLineWidthWithText) == 2
-//                    expect(textField.subviews[textField.subviews.count].layer.bounds.height) == 1
                 }
             }
         }

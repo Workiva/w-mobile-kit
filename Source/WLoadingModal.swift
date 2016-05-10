@@ -14,7 +14,7 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public var paddingBetweenViewTopAndSpinner: CGFloat = 170 {
+    public var paddingBetweenViewTopAndSpinner: CGFloat = 32 {
         didSet {
             self.remakeAllConstraints()
         }
