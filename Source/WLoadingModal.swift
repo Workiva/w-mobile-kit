@@ -82,26 +82,6 @@ public class WLoadingModal: UIView {
     private func commonInit() {
         backgroundColor = UIColor(hex: 0x595959, alpha: 0.85)
 
-//        let backdrop = UIView()
-//        backdrop.backgroundColor = UIColor(hex: 0x595959, alpha: 0.85)
-//        addSubview(backdrop)
-//        backdrop.snp_remakeConstraints { (make) in
-//            make.top.equalTo(self)
-//            make.right.equalTo(self)
-//            make.bottom.equalTo(self)
-//            make.left.equalTo(self)
-//        }
-//
-//        let blurEffect = UIBlurEffect(style: .Light)
-//        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-//        addSubview(blurredEffectView)
-//        blurredEffectView.snp_remakeConstraints { (make) in
-//            make.top.equalTo(self)
-//            make.right.equalTo(self)
-//            make.bottom.equalTo(self)
-//            make.left.equalTo(self)
-//        }
-
         spinnerView.indeterminate = true
         addSubview(spinnerView)
         remakeSpinnerConstraints()
