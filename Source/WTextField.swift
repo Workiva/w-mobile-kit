@@ -21,7 +21,7 @@ public class WTextField: UITextField {
 
     public var clearPlacholderOnEditing: Bool = true
 
-    public var placeHolderTextColor: UIColor = .whiteColor() {
+    public var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
         didSet {
             if (self.placeholder != nil) {
                 self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
@@ -59,7 +59,7 @@ public class WTextField: UITextField {
     public func commonInit() {
         textColor = .whiteColor()
         tintColor = .whiteColor()
-        placeHolderTextColor = .whiteColor()
+        placeHolderTextColor = UIColor(hex: 0xFFFFFF, alpha: 0.55)
         backgroundColor = .clearColor()
         autocapitalizationType = .None
         adjustsFontSizeToFitWidth = true

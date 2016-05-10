@@ -74,8 +74,8 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.leftView).to(beNil())
                     expect(textField.rightImage).to(beNil())
                     expect(textField.rightView).to(beNil())
-                    expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
-                    expect(textField.placeHolderTextColor).to(equal(UIColor.whiteColor()))
+                    expect(textField.bottomLineColor) == UIColor.whiteColor()
+                    expect(textField.placeHolderTextColor) == UIColor(hex: 0xFFFFFF, alpha: 0.55)
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
