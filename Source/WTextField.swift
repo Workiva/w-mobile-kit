@@ -57,8 +57,6 @@ public class WTextField: UITextField {
     }
 
     public func commonInit() {
-        delegate = self
-
         textColor = .whiteColor()
         tintColor = .whiteColor()
         placeHolderTextColor = .whiteColor()
@@ -143,24 +141,5 @@ public class WTextField: UITextField {
         }
 
         return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height)
-    }
-}
-
-extension WTextField: UITextFieldDelegate {
-    public func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        return true
-    }
-
-    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        setBottomBorder()
-
-        return true
-    }
-
-    // Clear placeholder text on begin editing if set.
-    public func textFieldDidBeginEditing(textField: UITextField) {
-        if (clearPlacholderOnEditing) {
-            setEmptyPlaceholder()
-        }
     }
 }
