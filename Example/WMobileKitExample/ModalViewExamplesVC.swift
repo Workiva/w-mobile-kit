@@ -30,10 +30,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         }
 
         let permissionsSheetButton = UIButton(type: UIButtonType.RoundedRect)
-        permissionsSheetButton.backgroundColor = UIColor.lightGrayColor()
-        permissionsSheetButton.tintColor = UIColor.greenColor()
+        permissionsSheetButton.backgroundColor = .lightGrayColor()
+        permissionsSheetButton.tintColor = .greenColor()
         permissionsSheetButton.setTitle("Selection Cancel Sheet", forState: UIControlState.Normal)
-        permissionsSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        permissionsSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         permissionsSheetButton.addTarget(self, action: #selector(presentPermissionsActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(permissionsSheetButton)
@@ -44,10 +44,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         }
 
         let iconSheetButton = UIButton(type: UIButtonType.RoundedRect)
-        iconSheetButton.backgroundColor = UIColor.lightGrayColor()
-        iconSheetButton.tintColor = UIColor.greenColor()
+        iconSheetButton.backgroundColor = .lightGrayColor()
+        iconSheetButton.tintColor = .greenColor()
         iconSheetButton.setTitle("Icon Dismiss Cancel Sheet", forState: UIControlState.Normal)
-        iconSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        iconSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         iconSheetButton.addTarget(self, action: #selector(presentIconActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(iconSheetButton)
@@ -58,15 +58,29 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         }
 
         let sortSheetButton = UIButton(type: UIButtonType.RoundedRect)
-        sortSheetButton.backgroundColor = UIColor.lightGrayColor()
-        sortSheetButton.tintColor = UIColor.greenColor()
+        sortSheetButton.backgroundColor = .lightGrayColor()
+        sortSheetButton.tintColor = .greenColor()
         sortSheetButton.setTitle("Selection Dismiss Sheet", forState: UIControlState.Normal)
-        sortSheetButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        sortSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         sortSheetButton.addTarget(self, action: #selector(presentSortActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(sortSheetButton)
         sortSheetButton.snp_makeConstraints { (make) in
             make.top.equalTo(iconSheetButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
+        let pickerSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        pickerSheetButton.backgroundColor = .lightGrayColor()
+        pickerSheetButton.tintColor = .greenColor()
+        pickerSheetButton.setTitle("Picker View Sheet", forState: UIControlState.Normal)
+        pickerSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        pickerSheetButton.addTarget(self, action: #selector(presentPickerActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(pickerSheetButton)
+        pickerSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(sortSheetButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -78,16 +92,16 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(toastLabel)
         toastLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(sortSheetButton.snp_bottom).offset(15)
+            make.top.equalTo(pickerSheetButton.snp_bottom).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
 
         let autoToastButton = UIButton(type: UIButtonType.RoundedRect)
-        autoToastButton.backgroundColor = UIColor.lightGrayColor()
-        autoToastButton.tintColor = UIColor.greenColor()
+        autoToastButton.backgroundColor = .lightGrayColor()
+        autoToastButton.tintColor = .greenColor()
         autoToastButton.setTitle("Auto Dismiss Toast", forState: UIControlState.Normal)
-        autoToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        autoToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         autoToastButton.addTarget(self, action: #selector(presentAutoToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(autoToastButton)
@@ -98,10 +112,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         }
 
         let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
-        tapToastButton.backgroundColor = UIColor.lightGrayColor()
-        tapToastButton.tintColor = UIColor.greenColor()
+        tapToastButton.backgroundColor = .lightGrayColor()
+        tapToastButton.tintColor = .greenColor()
         tapToastButton.setTitle("Tap Dismiss Toast", forState: UIControlState.Normal)
-        tapToastButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        tapToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(tapToastButton)
@@ -268,6 +282,38 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         presentViewController(actionSheetSort, animated: true, completion: nil)
     }
 
+    public func presentPickerActionSheet(sender: UIButton) {
+        self.definesPresentationContext = true
+
+        let actionSheetPicker = WPickerActionSheet<String>()
+        actionSheetPicker.pickerDelegate = self
+
+        actionSheetPicker.addAction(WAction(title: "Option 1",
+            handler: { action in
+                print("\(action.title!) was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 2",
+            handler: { action in
+                print("\(action.title!) was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 3",
+            handler: { action in
+                print("\(action.title!) was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 4",
+            handler: { action in
+                print("\(action.title!) was stopped on.")
+        }))
+        actionSheetPicker.addAction(WAction(title: "Option 5",
+            handler: { action in
+                print("\(action.title!) was stopped on.")
+        }))
+        actionSheetPicker.popoverPresentationController?.sourceView = sender
+        actionSheetPicker.setSelectedAction(2)
+
+        presentViewController(actionSheetPicker, animated: true, completion: nil)
+    }
+
     public func presentAutoToast(sender: UIButton) {
         let toast = WToastView(message: "Auto Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 3
@@ -312,6 +358,17 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  bannerColor: UIColor(hex: 0x006400))
         bottomBanner!.delegate = self
         bottomBanner!.show()
+    }
+}
+
+// MARK: - WPickerActionSheetDelegate
+extension ModalViewExamplesVC: WPickerActionSheetDelegate {
+    public func pickerViewDoneButtonWasTapped(selectedIndex: Int) {
+        NSLog("The Picker View \"Done\" button was pressed with selected index \(selectedIndex).")
+    }
+
+    public func pickerViewCancelButtonWasTapped() {
+        NSLog("The Pick View \"Cancel\" button was pressed.")
     }
 }
 

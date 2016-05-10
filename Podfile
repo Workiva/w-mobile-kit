@@ -3,6 +3,7 @@ use_frameworks!
 
 def common_pods
   pod 'SnapKit', '0.20.0'
+  pod 'CryptoSwift', ‘0.4’
 end
 
 target 'WMobileKit' do

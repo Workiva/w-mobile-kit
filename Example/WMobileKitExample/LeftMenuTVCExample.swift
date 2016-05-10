@@ -18,6 +18,9 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("modalViewExamplesVC") as! NavigationVC // ModalViewExamplesVC
     lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textFieldExamplesVC") as! NavigationVC // TextFieldExamplesVC
     lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("autoCompleteTextFieldExampleVC") as! NavigationVC // AutoCompleteTextFieldExampleVC
+    lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textViewExamplesVC") as! NavigationVC // TextViewExamplesVC
+    lazy var WSpinnersExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSpinnersExamplesVC") as! NavigationVC // WSpinnersExamplesVC
+    lazy var WLoadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WLoadingModalsExamplesVC") as! NavigationVC // WLoadingModalsExamplesVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -64,6 +67,15 @@ class LeftMenuTVCExample: UITableViewController {
             sideMenuController()?.changeMainViewController(textFieldExamplesVC)
             break
         case 5:
+            sideMenuController()?.changeMainViewController(textViewExamplesVC)
+            break
+        case 6:
+            sideMenuController()?.changeMainViewController(WSpinnersExamplesVC)
+            break
+        case 7:
+            sideMenuController()?.changeMainViewController(WLoadingModalExamplesVC)
+            break
+        case 8:
             sideMenuController()?.changeMainViewController(autoCompleteTextFieldExampleVC)
             break
         default:
