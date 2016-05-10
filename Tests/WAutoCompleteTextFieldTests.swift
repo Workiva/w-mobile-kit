@@ -60,7 +60,7 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
                     textView.textFieldDidChange(textField)
                     textView.reloadInputViews()
 
-                    let range = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.beginningOfDocument)
+                    let range = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.endOfDocument)
                     textField.selectedTextRange = range
                     
                     textView.processWordAtCursor(textField)

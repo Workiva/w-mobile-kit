@@ -25,6 +25,11 @@ public class WAutoCompleteTextView : UIView {
     public var numCharactersBeforeAutoComplete = 1
     public var controlPrefix: String?
     public weak var delegate: WAutoCompleteTextViewDelegate?
+    public weak var dataSource: UITableViewDataSource? {
+        didSet {
+            autoCompleteTable.dataSource = dataSource
+        }
+    }
     
     public var maxAutoCompleteHeight: CGFloat = TABLE_HEIGHT_MAX {
         didSet {
@@ -81,7 +86,6 @@ public class WAutoCompleteTextView : UIView {
         
         addSubview(autoCompleteTable)
         autoCompleteTable.hidden = true
-        autoCompleteTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         autoCompleteTable.scrollEnabled = true
         autoCompleteTable.delegate = self
         
