@@ -104,7 +104,7 @@ public class WBannerView: UIView {
         self.rootView = rootView
     }
 
-    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 1.0) {
+    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 1.0, titleColor: UIColor = .whiteColor(), bodyColor: UIColor = .whiteColor()) {
         self.init(frame: CGRectZero)
 
         self.rootView = rootView
@@ -114,6 +114,9 @@ public class WBannerView: UIView {
         self.bannerColor = bannerColor
         self.bannerAlpha = bannerAlpha
         self.rightIcon = rightIcon
+        
+        titleMessageLabel.textColor = titleColor
+        bodyMessageLabel.textColor = bodyColor        
     }
 
     private func commonInit() {
@@ -131,12 +134,10 @@ public class WBannerView: UIView {
         titleMessageLabel.numberOfLines = 1
         titleMessageLabel.textAlignment = .Left
         titleMessageLabel.font = UIFont.systemFontOfSize(16)
-        titleMessageLabel.textColor = .whiteColor()
 
         bodyMessageLabel.numberOfLines = 2
         bodyMessageLabel.textAlignment = .Left
         bodyMessageLabel.font = UIFont.systemFontOfSize(16)
-        bodyMessageLabel.textColor = .whiteColor()
     }
 
     public func setupUI() {
