@@ -12,15 +12,16 @@ class NavigationVC: UINavigationController {
 }
 
 class LeftMenuTVCExample: UITableViewController {
-    lazy var pagingControlExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("pagingControlExamplesVC") as! NavigationVC // PagingControlExamplesVC
-    lazy var pagingSelectorVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("pagingSelectorVC") as! NavigationVC // WPagingSelectorVC
-    lazy var userLogoViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("userLogoViewExamplesVC") as! NavigationVC // UserLogoViewExamplesVC
-    lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("modalViewExamplesVC") as! NavigationVC // ModalViewExamplesVC
-    lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textFieldExamplesVC") as! NavigationVC // TextFieldExamplesVC
-    lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("autoCompleteTextFieldExampleVC") as! NavigationVC // AutoCompleteTextFieldExampleVC
-    lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textViewExamplesVC") as! NavigationVC // TextViewExamplesVC
-    lazy var WSpinnersExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSpinnersExamplesVC") as! NavigationVC // WSpinnersExamplesVC
-    lazy var WLoadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WLoadingModalsExamplesVC") as! NavigationVC // WLoadingModalsExamplesVC
+    // Use the class name as the identifier
+    lazy var pagingControlExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("PagingControlExamplesVC") as! NavigationVC
+    lazy var pagingSelectorVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WPagingSelectorVC") as! NavigationVC
+    lazy var userLogoViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("UserLogoViewExamplesVC") as! NavigationVC
+    lazy var modalViewExamplesVC:NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("ModalViewExamplesVC") as! NavigationVC
+    lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextFieldExamplesVC") as! NavigationVC
+    lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextViewExamplesVC") as! NavigationVC
+    lazy var spinnerExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SpinnerExamplesVC") as! NavigationVC
+    lazy var loadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("LoadingModalExamplesVC") as! NavigationVC
+    lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextFieldExampleVC") as! NavigationVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -70,10 +71,10 @@ class LeftMenuTVCExample: UITableViewController {
             sideMenuController()?.changeMainViewController(textViewExamplesVC)
             break
         case 6:
-            sideMenuController()?.changeMainViewController(WSpinnersExamplesVC)
+            sideMenuController()?.changeMainViewController(spinnerExamplesVC)
             break
         case 7:
-            sideMenuController()?.changeMainViewController(WLoadingModalExamplesVC)
+            sideMenuController()?.changeMainViewController(loadingModalExamplesVC)
             break
         case 8:
             sideMenuController()?.changeMainViewController(autoCompleteTextFieldExampleVC)

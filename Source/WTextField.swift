@@ -4,7 +4,7 @@
 
 import UIKit
 
-@objc public protocol WAutoCompleteTextFieldDelegate : UITextFieldDelegate {
+@objc public protocol WAutoCompleteTextFieldDelegate: UITextFieldDelegate {
     func textFieldDidChangeSelection(textField: UITextField)
 }
 
