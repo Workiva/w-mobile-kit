@@ -9,8 +9,6 @@ import Nimble
 class StringExtensionsSpec: QuickSpec {
     override func spec() {
         describe("String+ExtensionsSpec") {
-            var subject: String!
-
             let name1 = "John"
             let name2 = "John Smith"
             let name3 = "John Smith Man"
