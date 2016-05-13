@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -27,7 +27,7 @@
         <!--NavigationVC-->
         <scene sceneID="QMM-QT-Yid">
             <objects>
-                <navigationController storyboardIdentifier="modalViewExamplesVC" id="sFk-Z5-gD5" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ModalViewExamplesVC" id="sFk-Z5-gD5" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VBH-01-ERP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -222,6 +222,25 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="tTD-nz-rzx" style="IBUITableViewCellStyleDefault" id="U4w-or-TPg">
+                                        <rect key="frame" x="0.0" y="480" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U4w-or-TPg" id="RoS-By-eGl">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="WAutoCompleteTextView Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tTD-nz-rzx">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="59.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -239,7 +258,7 @@
         <!--NavigationVC-->
         <scene sceneID="L6G-b3-L2S">
             <objects>
-                <navigationController storyboardIdentifier="pagingControlExamplesVC" id="Kbk-al-6rh" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PagingControlExamplesVC" id="Kbk-al-6rh" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="UOg-Ex-zrP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -274,7 +293,7 @@
         <!--NavigationVC-->
         <scene sceneID="ufy-El-uIi">
             <objects>
-                <navigationController storyboardIdentifier="pagingSelectorVC" id="8L7-LU-ViS" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="WPagingSelectorVC" id="8L7-LU-ViS" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yMH-Ck-7U5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -352,7 +371,7 @@
         <!--NavigationVC-->
         <scene sceneID="TsH-V1-0wF">
             <objects>
-                <navigationController storyboardIdentifier="userLogoViewExamplesVC" id="E8m-mn-4Kg" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="UserLogoViewExamplesVC" id="E8m-mn-4Kg" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ucS-vo-P6j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -387,7 +406,7 @@
         <!--NavigationVC-->
         <scene sceneID="9Gi-D2-Z4L">
             <objects>
-                <navigationController storyboardIdentifier="textFieldExamplesVC" id="8Yf-RF-cjq" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TextFieldExamplesVC" id="8Yf-RF-cjq" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lZM-CJ-Ixg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -449,7 +468,7 @@
         <!--NavigationVC-->
         <scene sceneID="h1r-Ad-SG9">
             <objects>
-                <navigationController storyboardIdentifier="textViewExamplesVC" id="46b-89-H7M" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TextViewExamplesVC" id="46b-89-H7M" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JlG-Pn-oRC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -484,7 +503,7 @@
         <!--NavigationVC-->
         <scene sceneID="ezi-qO-czi">
             <objects>
-                <navigationController storyboardIdentifier="WSpinnersExamplesVC" id="Vyw-GR-LAA" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SpinnerExamplesVC" id="Vyw-GR-LAA" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6wp-CO-rYu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -497,10 +516,10 @@
             </objects>
             <point key="canvasLocation" x="1103" y="4894"/>
         </scene>
-        <!--Spinners ExamplesVC-->
+        <!--Spinner ExamplesVC-->
         <scene sceneID="R1G-is-6VY">
             <objects>
-                <viewController id="3zW-74-FKd" customClass="WSpinnersExamplesVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3zW-74-FKd" customClass="SpinnerExamplesVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lPz-r6-gDe"/>
                         <viewControllerLayoutGuide type="bottom" id="iKR-fx-5tf"/>
@@ -519,7 +538,7 @@
         <!--NavigationVC-->
         <scene sceneID="laz-Li-UNf">
             <objects>
-                <navigationController storyboardIdentifier="WLoadingModalsExamplesVC" id="rrq-lu-Erj" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoadingModalExamplesVC" id="rrq-lu-Erj" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8Oh-9V-bfW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -535,7 +554,7 @@
         <!--Loading Modal ExamplesVC-->
         <scene sceneID="43r-78-x85">
             <objects>
-                <viewController id="H8i-oT-JHh" customClass="WLoadingModalExamplesVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="H8i-oT-JHh" customClass="LoadingModalExamplesVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c9q-JP-weP"/>
                         <viewControllerLayoutGuide type="bottom" id="2da-MM-aT0"/>
@@ -550,6 +569,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6c0-AR-EId" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1868" y="5590"/>
+        </scene>
+        <!--NavigationVC-->
+        <scene sceneID="iKe-Y1-geA">
+            <objects>
+                <navigationController storyboardIdentifier="AutoCompleteTextFieldExampleVC" id="Fkx-XM-Urm" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="I5e-CN-gkp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fCc-Wf-TOc" kind="relationship" relationship="rootViewController" id="G3J-1P-0Kj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PJF-Hk-Yqr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1103" y="6282"/>
+        </scene>
+        <!--Auto Complete Text Field ExampleVC-->
+        <scene sceneID="r9Y-9w-xI6">
+            <objects>
+                <viewController id="fCc-Wf-TOc" customClass="AutoCompleteTextFieldExampleVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sAN-g7-aFl"/>
+                        <viewControllerLayoutGuide type="bottom" id="1QC-NJ-G1w"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d32-ZB-qa2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.1793671167" green="0.65067043530000002" blue="0.86126443610000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Jbi-ZI-SBQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WXj-d6-iwT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1868" y="6282"/>
         </scene>
     </scenes>
 </document>

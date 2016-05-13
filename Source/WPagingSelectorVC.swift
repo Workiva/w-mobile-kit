@@ -20,7 +20,7 @@ public enum WPagingWidthMode {
     optional func didChangeToTab(sender: WPagingSelectorControl, tab: Int)
 }
 
-public class WScrollView : UIScrollView {
+public class WScrollView: UIScrollView {
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!dragging) {
             nextResponder()?.touchesBegan(touches, withEvent: event)
@@ -46,7 +46,7 @@ public class WScrollView : UIScrollView {
     }
 }
 
-public class WSelectionIndicatorView : UIView {
+public class WSelectionIndicatorView: UIView {
     public init(alpha: CGFloat) {
         super.init(frame: CGRectZero)
 
@@ -71,7 +71,7 @@ public class WSelectionIndicatorView : UIView {
     }
 }
 
-public class WTabView : UIView {
+public class WTabView: UIView {
     private var title = String()
     private var label = UILabel()
 
@@ -98,7 +98,7 @@ public class WTabView : UIView {
     }
 }
 
-public class WPagingSelectorControl : UIControl {
+public class WPagingSelectorControl: UIControl {
     // Accessible properties
     public var tabTextColor: UIColor = .grayColor() {
         didSet {
@@ -339,7 +339,7 @@ public struct WPage {
     }
 }
 
-public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
+public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
     public var pagingControlHeight: Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
@@ -358,7 +358,7 @@ public class WPagingSelectorVC : WSideMenuContentVC, WPagingSelectorVCDelegate {
     }
 
     var mainViewController: UIViewController?
-    var mainContainerView = UIView(frame: CGRectZero)
+    var mainContainerView = UIView()
     var currentPageIndex = 0
 
     public var pages:[WPage] = [WPage]() {
