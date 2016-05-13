@@ -14,6 +14,9 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let label2 = UILabel()
     let label3 = UILabel()
     
+    @IBOutlet var storyboardSwitch: WSwitch!
+    @IBOutlet var storyboardLabel: UILabel!
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +73,10 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         switch1.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchWasTapped(_:)), forControlEvents: .ValueChanged)
         switch2.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchWasTapped(_:)), forControlEvents: .ValueChanged)
         switch3.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchWasTapped(_:)), forControlEvents: .ValueChanged)
+    }
+    
+    @IBAction func storyboardSwitchWasTapped(sender: WSwitch) {
+        storyboardLabel.text = sender.on ? "On" : "Off"
     }
     
     public func switchWasTapped(sender: WSwitch) {
