@@ -9,8 +9,8 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let switch1 = WSwitch()
     let switch2 = WSwitch(false)
     
-    let label1 = UILabel()
-    let label2 = UILabel()
+    let switchLabel1 = UILabel()
+    let switchLabel2 = UILabel()
     
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
@@ -25,14 +25,14 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         switch1.tag = 1
         
-        view.addSubview(label1)
-        label1.snp_makeConstraints { (make) in
+        view.addSubview(switchLabel1)
+        switchLabel1.snp_makeConstraints { (make) in
             make.centerY.equalTo(switch1)
             make.right.equalTo(switch1.snp_left).offset(-10)
             make.left.equalTo(view).offset(10)
         }
-        label1.text = "On"
-        label1.textAlignment = .Right
+        switchLabel1.text = "On"
+        switchLabel1.textAlignment = .Right
         
         view.addSubview(switch2)
         switch2.snp_makeConstraints { (make) in
@@ -41,14 +41,14 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         switch2.tag = 2
         
-        view.addSubview(label2)
-        label2.snp_makeConstraints { (make) in
+        view.addSubview(switchLabel2)
+        switchLabel2.snp_makeConstraints { (make) in
             make.centerY.equalTo(switch2)
             make.right.equalTo(switch2.snp_left).offset(-10)
             make.left.equalTo(view).offset(10)
         }
-        label2.text = "Off"
-        label2.textAlignment = .Right
+        switchLabel2.text = "Off"
+        switchLabel2.textAlignment = .Right
         
         view.layoutIfNeeded()
         
@@ -63,9 +63,9 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     public func switchValueChanged(sender: WSwitch) {
         switch sender.tag {
         case 1:
-            label1.text = sender.on ? "On" : "Off"
+            switchLabel1.text = sender.on ? "On" : "Off"
         case 2:
-            label2.text = sender.on ? "On" : "Off"
+            switchLabel2.text = sender.on ? "On" : "Off"
         default:
             break
         }
