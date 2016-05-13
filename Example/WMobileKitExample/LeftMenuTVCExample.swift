@@ -20,6 +20,7 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("textViewExamplesVC") as! NavigationVC // TextViewExamplesVC
     lazy var WSpinnersExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSpinnersExamplesVC") as! NavigationVC // WSpinnersExamplesVC
     lazy var WLoadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WLoadingModalsExamplesVC") as! NavigationVC // WLoadingModalsExamplesVC
+    lazy var WSwitchAndWRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WSwitchAndWRadioExamplesVC") as! NavigationVC // WLoadingModalsExamplesVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -74,6 +75,8 @@ class LeftMenuTVCExample: UITableViewController {
         case 7:
             sideMenuController()?.changeMainViewController(WLoadingModalExamplesVC)
             break
+        case 8:
+            sideMenuController()?.changeMainViewController(WSwitchAndWRadioExamplesVC)
         default:
             break
         }
