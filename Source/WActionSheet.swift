@@ -40,7 +40,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     internal var delegate: WBaseActionSheetDelegate!
 
     public var titleString: String?
-    public var selectedIndex : Int?
+    public var selectedIndex: Int?
     public var dismissOnAction = true
     public var hasCancel = false
 
@@ -465,16 +465,16 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
 // MARK: - Table Cell
 public class WTableViewCell<ActionDataType>: UITableViewCell {
-    private var actionInfo : WAction<ActionDataType>? {
+    private var actionInfo: WAction<ActionDataType>? {
         didSet {
             commonInit()
         }
     }
 
     var selectBar = WSelectBar(frame: CGRectZero)
-    internal var subtitleLabel : UILabel?
-    internal var titleLabel : UILabel?
-    internal var iconImageView : UIImageView?
+    internal var subtitleLabel: UILabel?
+    internal var titleLabel: UILabel?
+    internal var iconImageView: UIImageView?
     public private(set) var separatorBar = UIView(frame: CGRectZero)
     public private(set) var isSelectedAction = false
 
@@ -622,14 +622,14 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
 // MARK: Header View
 public class WHeaderView: UITableViewHeaderFooterView {
-    private var title : String? {
+    private var title: String? {
         didSet {
             commonInit()
         }
     }
 
     private var separatorBar = UIView(frame: CGRectZero)
-    private var titleLabel : UILabel?
+    private var titleLabel: UILabel?
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

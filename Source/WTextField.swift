@@ -4,10 +4,22 @@
 
 import UIKit
 
+@objc public protocol WAutoCompleteTextFieldDelegate: UITextFieldDelegate {
+    func textFieldDidChangeSelection(textField: UITextField)
+}
+
 public class WTextField: UITextField {
     public var imageSquareSize: CGFloat = 16
     public var paddingBetweenTextAndImage: CGFloat = 8
     private var bottomLine = CALayer()
+    
+    public weak var autoCompleteDelegate: WAutoCompleteTextFieldDelegate?
+        
+    public override var selectedTextRange: UITextRange? {
+        didSet {
+            autoCompleteDelegate?.textFieldDidChangeSelection(self)
+        }
+    }
 
     public var bottomLineWidth: CGFloat = 1 {
         didSet {
@@ -38,6 +50,10 @@ public class WTextField: UITextField {
         super.init(frame: frame)
 
         commonInit()
+    }
+    
+    public convenience init() {
+        self.init(frame: CGRectZero)
     }
 
     public required init?(coder aDecoder: NSCoder) {
