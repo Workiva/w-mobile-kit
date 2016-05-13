@@ -149,9 +149,8 @@
 				D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */,
 				D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */,
 				73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */,
-				D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */,
-				730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */,
 				D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */,
+				730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */,
 				D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */,
 				73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */,
 			);
@@ -282,7 +281,6 @@
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
 				730364EB1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift in Sources */,
-				D7A022E91CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */,
