@@ -6,231 +6,205 @@ import Foundation
 import UIKit
 import SnapKit
 
-public class WRadioButton: UIButton {
+let MIN_INDICATOR_RADIUS: CGFloat = 1.0
+let MIN_RADIO_CIRCLE: CGFloat = 2.0
 
-    // radio size
-    // indicator size
+public class WRadioCircleView: UIView { }
+public class WRadioIndicatorView: UIView { }
 
-    // text padding
-    // button line width
+public class WRadioButton: UIControl {
+    public var radioCircle = WRadioCircleView()
+    public var indicatorView = WRadioIndicatorView()
+    public var pressRecognizer: UILongPressGestureRecognizer!
 
+    public var groupID: Int = 0
 
-    var iconSize: CGFloat = 30
-    var iconColor: UIColor = UIColor.whiteColor()
-    var iconStrokeWidth: CGFloat = 2.0
-    var indicatorSize: CGFloat = 5.0
-    var indicatorColor: UIColor = UIColor.blueColor()
-    var marginWidth: CGFloat = 1.0
-    var iconOnRight: Bool = false
-    var iconSquare: Bool = false
-    var multipleSelectionEnabled: Bool = false
-
-    let kDefaulIconSize = 15.0;
-    let kDefaultMarginWidth = 5.0
-    let kGeneratedIconName = "Generated Icon"
-    let groupModifing = false
-
-    public var icon: UIImage? {
+    public var buttonColor: UIColor = .whiteColor() {
         didSet {
-            setImage(icon, forState: UIControlState.Normal)
+            setupUI()
         }
     }
 
-    public var iconSelected: UIImage? {
+    public var highlightColor: UIColor = .grayColor() {
         didSet {
-            setImage(iconSelected, forState: UIControlState.Selected)
-            setImage(iconSelected, forState: UIControlState.Highlighted)
+            setupUI()
         }
     }
 
-    internal func drawButton() {
-        if icon != nil || icon?.accessibilityIdentifier == kGeneratedIconName {
-            drawIconWithSelection(false)
+    public var indicatorColor: UIColor = .darkGrayColor() {
+        didSet {
+            setupUI()
         }
+    }
 
-        if iconSelected != nil || iconSelected?.accessibilityIdentifier == kGeneratedIconName {
-            drawIconWithSelection(true)
+    public var borderColor: UIColor = .lightGrayColor() {
+        didSet {
+            setupUI()
         }
+    }
 
-        let marginWidth: CGFloat = self.marginWidth != 0 ? self.marginWidth : CGFloat(kDefaultMarginWidth)
-        var isRightToLeftLayout = false
-
-        if #available(iOS 9.0, *) {
-            isRightToLeftLayout = UIView.userInterfaceLayoutDirectionForSemanticContentAttribute(semanticContentAttribute) == UIUserInterfaceLayoutDirection.RightToLeft
-        } else {
-            // Fallback on earlier versions
+    public var borderWidth: CGFloat = 2 {
+        didSet {
+            setupUI()
         }
+    }
 
-        if iconOnRight {
-            imageEdgeInsets = isRightToLeftLayout ?
-                EdgeInsetsMake(0, left: 0, bottom: 0, right: self.frame.size.width - self.icon!.size.width) :
-                EdgeInsetsMake(0, left:self.frame.size.width - self.icon!.size.width, bottom: 0, right: 0)
-            titleEdgeInsets = isRightToLeftLayout ?
-                EdgeInsetsMake(0, left: marginWidth + self.icon!.size.width, bottom: 0, right: -self.icon!.size.width) :
-                EdgeInsetsMake(0, left: -self.icon!.size.width, bottom: 0, right: marginWidth + self.icon!.size.width)
-        } else {
-            if (isRightToLeftLayout) {
-                imageEdgeInsets = EdgeInsetsMake(0, left: marginWidth, bottom: 0, right: 0)
-            } else {
-                titleEdgeInsets = EdgeInsetsMake(0, left: marginWidth, bottom: 0, right: 0)
+    public var buttonRadius: CGFloat = 12.0 {
+        didSet {
+            // Lower bounds
+            self.indicatorRadius = max(MIN_RADIO_CIRCLE, buttonRadius)
+
+            setupUI()
+        }
+    }
+
+    public var indicatorRadius: CGFloat = 6.0 {
+        didSet {
+            // Upper bounds
+            indicatorRadius = min(indicatorRadius, (buttonRadius-1))
+
+            // Lower bounds
+            indicatorRadius = max(MIN_INDICATOR_RADIUS, indicatorRadius)
+
+            setupUI()
+        }
+    }
+
+    public var on: Bool = false {
+        didSet {
+            setupUI()
+            if (oldValue != on) {
+                sendActionsForControlEvents(.ValueChanged)
             }
         }
     }
-    //
-    internal func drawIconWithSelection(selected: Bool) {
-    }
-    //        UIColor *defaulColor = selected ? [self titleColorForState:UIControlStateSelected | UIControlStateHighlighted] : [self titleColorForState:UIControlStateNormal];
-    //        UIColor *iconColor = self.iconColor ? self.iconColor : defaulColor;
-    //        UIColor *indicatorColor = self.indicatorColor ? self.indicatorColor : defaulColor;
-    //        CGFloat iconSize = self.iconSize ? self.iconSize : kDefaulIconSize;
-    //        CGFloat iconStrokeWidth = self.iconStrokeWidth ? self.iconStrokeWidth : iconSize / 9;
-    //        CGFloat indicatorSize = self.indicatorSize ? self.indicatorSize : iconSize * 0.5;
-    //
-    //        CGRect rect = CGRectMake(0, 0, iconSize, iconSize);
-    //        CGContextRef context = UIGraphicsGetCurrentContext();
-    //        UIGraphicsPushContext(context);
-    //        UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
-    //
-    //        // draw icon
-    //        UIBezierPath* iconPath;
-    //        CGRect iconRect = CGRectMake(iconStrokeWidth / 2, iconStrokeWidth / 2, iconSize - iconStrokeWidth, iconSize - iconStrokeWidth);
-    //        if (self.isIconSquare) {
-    //            iconPath = [UIBezierPath bezierPathWithRect:iconRect];
-    //        } else {
-    //            iconPath = [UIBezierPath bezierPathWithOvalInRect:iconRect];
-    //        }
-    //        [iconColor setStroke];
-    //        iconPath.lineWidth = iconStrokeWidth;
-    //        [iconPath stroke];
-    //        CGContextAddPath(context, iconPath.CGPath);
-    //
-    //        // draw indicator
-    //        if (selected) {
-    //            UIBezierPath* indicatorPath;
-    //            CGRect indicatorRect = CGRectMake((iconSize - indicatorSize) / 2, (iconSize - indicatorSize) / 2, indicatorSize, indicatorSize);
-    //            if (self.isIconSquare) {
-    //                indicatorPath = [UIBezierPath bezierPathWithRect:indicatorRect];
-    //            } else {
-    //                indicatorPath = [UIBezierPath bezierPathWithOvalInRect:indicatorRect];
-    //            }
-    //            [indicatorColor setFill];
-    //            [indicatorPath fill];
-    //            CGContextAddPath(context, indicatorPath.CGPath);
-    //        }
-    //
-    //        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    //        UIGraphicsPopContext();
-    //        UIGraphicsEndImageContext();
-    //
-    //        image.accessibilityIdentifier = kGeneratedIconName;
-    //        return image;
-    //    }
 
-    func touchDown() {
-        //        selected(true)
-    }
-
-    func initRadioButton() {
-        addTarget(self, action: #selector(touchDown), forControlEvents: UIControlEvents.TouchUpInside)
-    }
-
-    public override func prepareForInterfaceBuilder() {
-        initRadioButton()
-        drawButton()
-    }
-
-
-    //    #pragma mark - DLRadiobutton
-    //
-    //    + (void)groupModifing:(BOOL)chaining {
-    //    _groupModifing = chaining;
-    //    }
-    //
-    //    + (BOOL)isGroupModifing {
-    //    return _groupModifing;
-    //    }
-
-    //    - (void)deselectOtherButtons {
-    //    for (UIButton *button in self.otherButtons) {
-    //    [button setSelected:NO];
-    //    }
-    //    }
-
-//    - (DLRadioButton *)selectedButton {
-//    if (!self.isMultipleSelectionEnabled) {
-//    if (self.selected) {
-//    return self;
-//    } else {
-//    for (DLRadioButton *radioButton in self.otherButtons) {
-//    if (radioButton.selected) {
-//    return radioButton;
-//    }
-//    }
-//    }
-//    }
-//    return nil;
-//    }
-//
-//    - (NSArray *)selectedButtons {
-//    NSMutableArray *selectedButtons = [[NSMutableArray alloc] init];
-//    if (self.selected) {
-//    [selectedButtons addObject:self];
-//    }
-//    for (DLRadioButton *radioButton in self.otherButtons) {
-//    if (radioButton.selected) {
-//    [selectedButtons addObject:radioButton];
-//    }
-//    }
-//    return selectedButtons;
-//    }
-
-//    #pragma mark - UIButton
-
-//    - (UIColor *)titleColorForState:(UIControlState)state {
-//    UIColor *normalColor = [super titleColorForState:UIControlStateNormal];
-//    if (state == (UIControlStateSelected | UIControlStateHighlighted)) {
-//    UIColor *selectedOrHighlightedColor = [super titleColorForState:UIControlStateSelected | UIControlStateHighlighted];
-//    if (selectedOrHighlightedColor == normalColor || selectedOrHighlightedColor == nil) {
-//    selectedOrHighlightedColor = [super titleColorForState:UIControlStateSelected];
-//    }
-//    if (selectedOrHighlightedColor == normalColor || selectedOrHighlightedColor == nil) {
-//    selectedOrHighlightedColor = [super titleColorForState:UIControlStateHighlighted];
-//    }
-//    [self setTitleColor:selectedOrHighlightedColor forState:UIControlStateSelected | UIControlStateHighlighted];
-//    }
-//
-//    return [super titleColorForState:state];
-//    }
-
-//    #pragma mark - UIControl
-
-    func selected(selected: Bool) {
-        super.selected = selected
-
-        if selected {
-            //deselect others
-        }
-    }
-
-
-//    #pragma mark - UIView
-
-
-    public required override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        initRadioButton()
-    }
+    private var animatedFlag = false
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        initRadioButton()
+        commonInit()
+        setupUI()
     }
 
-    public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    public override init(frame: CGRect) {
+        let newFrame = CGRect(origin: frame.origin, size: CGSize(width: buttonRadius * 2, height: buttonRadius * 2))
+        super.init(frame: newFrame)
 
-        drawButton()
+        commonInit()
+        setupUI()
+    }
+
+    public convenience init(_ on: Bool) {
+        self.init(frame: CGRectZero)
+
+        self.on = on
+        setupUI()
+    }
+
+    public convenience init() {
+        self.init(true)
+
+        setupUI()
+    }
+
+    public func commonInit() {
+        addSubview(radioCircle)
+        radioCircle.backgroundColor = buttonColor
+
+        addSubview(indicatorView)
+        indicatorView.backgroundColor = indicatorColor
+
+        pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
+        pressRecognizer.minimumPressDuration = 0.001
+        addGestureRecognizer(pressRecognizer)
+
+        bounds = CGRect(origin: bounds.origin, size: CGSize(width: buttonRadius * 2, height: buttonRadius * 2))
+
+        radioCircle.clipsToBounds = true
+        radioCircle.layer.borderWidth = borderWidth
+        radioCircle.layer.borderColor = borderColor.CGColor
+
+        indicatorView.clipsToBounds = true
+    }
+
+    public func setupUI() {
+        radioCircle.snp_remakeConstraints { make in
+            make.height.equalTo(buttonRadius * 2)
+            make.width.equalTo(buttonRadius * 2)
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(self)
+        }
+
+        indicatorView.snp_remakeConstraints { make in
+            make.centerX.equalTo(radioCircle)
+            make.centerY.equalTo(radioCircle)
+            make.height.equalTo(indicatorRadius * 2)
+            make.width.equalTo(indicatorRadius * 2)
+        }
+
+        let startingBlock: (Void) -> Void = {
+            if (self.on) {
+                self.indicatorView.alpha = 1.0
+            } else {
+                self.indicatorView.alpha = 0.0
+            }
+        }
+
+        let finishedBlock: (Void) -> Void = {
+            if (!self.on) {
+                self.indicatorView.hidden = true
+            }
+        }
+
+        indicatorView.hidden = false
+
+        if (animatedFlag) {
+            animatedFlag = false
+            UIView.animateWithDuration(0.2, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
+                                       animations: {
+                                        self.layoutIfNeeded()
+                                        startingBlock()
+                },
+                                       completion: { finished in
+                                        finishedBlock()
+                }
+            )
+        } else {
+            startingBlock()
+            layoutIfNeeded()
+            finishedBlock()
+        }
+
+        radioCircle.layer.cornerRadius = radioCircle.frame.size.height / 2
+
+        indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
+    }
+
+    public func setOn(on: Bool, animated: Bool) {
+        animatedFlag = animated
+        self.on = on
+
+        if on {
+            // Send selection notification with group id
+        }
+    }
+
+    public func buttonWasPressed(sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .Began:
+            radioCircle.backgroundColor = highlightColor
+            break
+        case .Ended:
+            radioCircle.backgroundColor = buttonColor
+            setOn(!on, animated: true)
+        default:
+            break
+        }
+    }
+    
+    public override func intrinsicContentSize() -> CGSize {
+        return CGSize(width: buttonRadius * 2, height: buttonRadius * 2)
     }
 }

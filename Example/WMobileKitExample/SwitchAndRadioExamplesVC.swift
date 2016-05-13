@@ -8,16 +8,19 @@ import WMobileKit
 public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let switch1 = WSwitch()
     let switch2 = WSwitch(false)
+    let radio1 = WRadioButton()
     
     let label1 = UILabel()
     let label2 = UILabel()
+    let label3 = UILabel()
     
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Switches
         view.addSubview(switch1)
         switch1.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -49,6 +52,14 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         label2.text = "Off"
         label2.textAlignment = .Right
+
+        // Radios
+        view.addSubview(radio1)
+        radio1.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(switch2.snp_bottom).offset(50)
+        }
+        radio1.tag = 0
         
         view.layoutIfNeeded()
         
