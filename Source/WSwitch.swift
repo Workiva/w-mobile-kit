@@ -7,7 +7,6 @@ import UIKit
 import SnapKit
 
 public class WSwitch: UIControl {
-    public var gestureCatcherView = UIView()
     public var barView = WSwitchBarView()
     public var backCircle = WSwitchOutlineCircleView()
     public var frontCircle = UIView()
@@ -34,7 +33,9 @@ public class WSwitch: UIControl {
     public var on: Bool = false {
         didSet {
             setupUI()
-            sendActionsForControlEvents(.ValueChanged)
+            if (oldValue != on) {
+                sendActionsForControlEvents(.ValueChanged)
+            }
         }
     }
     
@@ -56,10 +57,16 @@ public class WSwitch: UIControl {
         setupUI()
     }
     
-    public convenience init(_ on: Bool = true) {
+    public convenience init(_ on: Bool) {
         self.init(frame: CGRectZero)
         
         self.on = on
+        setupUI()
+    }
+    
+    public convenience init() {
+        self.init(true)
+        
         setupUI()
     }
 
@@ -110,6 +117,14 @@ public class WSwitch: UIControl {
             make.width.equalTo(backCircle).offset(-2)
         }
         
+        let startingBlock: (Void) -> Void = {
+            if (self.on) {
+                self.frontCircle.alpha = 1.0
+            } else {
+                self.frontCircle.alpha = 0.0
+            }
+        }
+        
         let finishedBlock: (Void) -> Void = {
             if (!self.on) {
                 self.frontCircle.hidden = true
@@ -123,17 +138,14 @@ public class WSwitch: UIControl {
             UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
                 animations: {
                     self.layoutIfNeeded()
-                    if (self.on) {
-                        self.frontCircle.alpha = 1.0
-                    } else {
-                        self.frontCircle.alpha = 0.0
-                    }
+                    startingBlock()
                 },
                 completion: { finished in
                     finishedBlock()
                 }
             )
         } else {
+            startingBlock()
             layoutIfNeeded()
             finishedBlock()
         }
@@ -147,15 +159,13 @@ public class WSwitch: UIControl {
         frontCircle.layer.cornerRadius = frontCircle.frame.size.width / 2
     }
     
-    public func setOn(_ on: Bool, animated: Bool) {
+    public func setOn(on: Bool, animated: Bool) {
         animatedFlag = animated
         self.on = on
     }
     
     public func switchWasPressed(sender: UILongPressGestureRecognizer) {
         switch sender.state {
-        case .Began:
-            break;
         case .Changed:
             if (sender.locationInView(self).x > frame.size.width / 2 && !on) {
                 setOn(true, animated: true)
