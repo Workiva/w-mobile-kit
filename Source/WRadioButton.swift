@@ -70,12 +70,9 @@ public class WRadioButton: UIControl {
         }
     }
 
-    public var on: Bool = false {
+    public override var selected: Bool {
         didSet {
             setupUI()
-            if (oldValue != on) {
-                sendActionsForControlEvents(.ValueChanged)
-            }
         }
     }
 
@@ -96,15 +93,16 @@ public class WRadioButton: UIControl {
         setupUI()
     }
 
-    public convenience init(_ on: Bool) {
+    public convenience init(_ selected: Bool) {
         self.init(frame: CGRectZero)
 
-        self.on = on
+        self.selected = selected
         setupUI()
     }
 
     public convenience init() {
-        self.init(true)
+        // Default to not selected
+        self.init(false)
 
         setupUI()
     }
@@ -144,8 +142,10 @@ public class WRadioButton: UIControl {
             make.width.equalTo(indicatorRadius * 2)
         }
 
+        indicatorView.hidden = !selected
+
         let startingBlock: (Void) -> Void = {
-            if (self.on) {
+            if (self.selected) {
                 self.indicatorView.alpha = 1.0
             } else {
                 self.indicatorView.alpha = 0.0
@@ -153,12 +153,10 @@ public class WRadioButton: UIControl {
         }
 
         let finishedBlock: (Void) -> Void = {
-            if (!self.on) {
+            if (!self.selected) {
                 self.indicatorView.hidden = true
             }
         }
-
-        indicatorView.hidden = false
 
         if (animatedFlag) {
             animatedFlag = false
@@ -178,15 +176,14 @@ public class WRadioButton: UIControl {
         }
 
         radioCircle.layer.cornerRadius = radioCircle.frame.size.height / 2
-
         indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
     }
 
-    public func setOn(on: Bool, animated: Bool) {
+    public func setSelected(selected: Bool, animated: Bool) {
         animatedFlag = animated
-        self.on = on
+        self.selected = selected
 
-        if on {
+        if selected {
             // Send selection notification with group id
         }
     }
@@ -198,7 +195,7 @@ public class WRadioButton: UIControl {
             break
         case .Ended:
             radioCircle.backgroundColor = buttonColor
-            setOn(!on, animated: true)
+            setSelected(!selected, animated: true)
         default:
             break
         }

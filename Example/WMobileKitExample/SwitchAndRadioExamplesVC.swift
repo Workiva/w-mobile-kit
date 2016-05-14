@@ -8,12 +8,16 @@ import WMobileKit
 public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let switch1 = WSwitch()
     let switch2 = WSwitch(false)
-    let radio1 = WRadioButton()
     
     let label1 = UILabel()
     let label2 = UILabel()
     let label3 = UILabel()
-    
+
+    let radio1 = WRadioButton()
+    let radio2 = WRadioButton()
+    let radio3 = WRadioButton()
+    let radio4 = WRadioButton()
+
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
     
@@ -53,13 +57,39 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         label2.text = "Off"
         label2.textAlignment = .Right
 
-        // Radios
-        view.addSubview(radio1)
-        radio1.snp_makeConstraints { (make) in
-            make.centerX.equalTo(view)
+        // Radio Buttons
+        view.addSubview(radio2)
+        radio2.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view).offset(-20)
             make.top.equalTo(switch2.snp_bottom).offset(50)
         }
-        radio1.tag = 0
+        radio2.tag = 2
+        radio2.groupID = 1
+        radio2.selected = true
+
+        view.addSubview(radio1)
+        radio1.snp_makeConstraints { (make) in
+            make.top.equalTo(radio2.snp_top)
+            make.right.equalTo(radio2.snp_left).offset(-10)
+        }
+        radio1.tag = 1
+        radio1.groupID = 1
+
+        view.addSubview(radio3)
+        radio3.snp_makeConstraints { (make) in
+            make.top.equalTo(radio2.snp_top)
+            make.left.equalTo(radio2.snp_right).offset(10)
+        }
+        radio3.tag = 3
+        radio3.groupID = 1
+
+        view.addSubview(radio4)
+        radio4.snp_makeConstraints { (make) in
+            make.top.equalTo(radio2.snp_top)
+            make.left.equalTo(radio3.snp_right).offset(10)
+        }
+        radio4.tag = 4
+        radio4.groupID = 1
         
         view.layoutIfNeeded()
         
