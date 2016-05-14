@@ -15,7 +15,6 @@ public class WRadioIndicatorView: UIView { }
 public class WRadioButton: UIControl {
     public var radioCircle = WRadioCircleView()
     public var indicatorView = WRadioIndicatorView()
-    public var pressRecognizer: UILongPressGestureRecognizer!
 
     public var groupID: Int = 0
 
@@ -114,7 +113,7 @@ public class WRadioButton: UIControl {
         addSubview(indicatorView)
         indicatorView.backgroundColor = indicatorColor
 
-        pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
+        var pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
         addGestureRecognizer(pressRecognizer)
 
