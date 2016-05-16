@@ -8,6 +8,7 @@ import SnapKit
 
 let MIN_INDICATOR_RADIUS: CGFloat = 1.0
 let MIN_RADIO_CIRCLE: CGFloat = 2.0
+let wRadioButtonSelected = "wRadioButtonSelected"
 
 public class WRadioCircleView: UIView { }
 public class WRadioIndicatorView: UIView { }
@@ -17,6 +18,7 @@ public class WRadioButton: UIControl {
     public var indicatorView = WRadioIndicatorView()
 
     public var groupID: Int = 0
+    public var buttonID: Int = 0
 
     public var buttonColor: UIColor = .whiteColor() {
         didSet {
@@ -72,6 +74,10 @@ public class WRadioButton: UIControl {
     public override var selected: Bool {
         didSet {
             setupUI()
+
+            if (oldValue != selected) {
+                sendActionsForControlEvents(.ValueChanged)
+            }
         }
     }
 
@@ -106,6 +112,10 @@ public class WRadioButton: UIControl {
         setupUI()
     }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
     public func commonInit() {
         addSubview(radioCircle)
         radioCircle.backgroundColor = buttonColor
@@ -124,6 +134,11 @@ public class WRadioButton: UIControl {
         radioCircle.layer.borderColor = borderColor.CGColor
 
         indicatorView.clipsToBounds = true
+
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(WRadioButton.radioButtonSelected(_:)),
+                                                         name: wRadioButtonSelected,
+                                                         object: nil)
     }
 
     public func setupUI() {
@@ -160,12 +175,12 @@ public class WRadioButton: UIControl {
         if (animatedFlag) {
             animatedFlag = false
             UIView.animateWithDuration(0.2, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
-                                       animations: {
-                                        self.layoutIfNeeded()
-                                        startingBlock()
+                animations: {
+                    self.layoutIfNeeded()
+                    startingBlock()
                 },
-                                       completion: { finished in
-                                        finishedBlock()
+                completion: { finished in
+                    finishedBlock()
                 }
             )
         } else {
@@ -178,12 +193,24 @@ public class WRadioButton: UIControl {
         indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
     }
 
+    public func radioButtonSelected(notification: NSNotification) {
+        let sende: WRadioButton? = notification.object as! WRadioButton?
+
+        if groupID == sende?.groupID {
+            if !(buttonID == sende?.buttonID) {
+                setSelected(false, animated: true)
+            }
+        }
+    }
+
     public func setSelected(selected: Bool, animated: Bool) {
         animatedFlag = animated
         self.selected = selected
 
         if selected {
             // Send selection notification with group id
+            NSNotificationCenter.defaultCenter().postNotificationName(wRadioButtonSelected,
+                                                                      object: self)
         }
     }
 
@@ -194,7 +221,7 @@ public class WRadioButton: UIControl {
             break
         case .Ended:
             radioCircle.backgroundColor = buttonColor
-            setSelected(!selected, animated: true)
+            setSelected(true, animated: true)
         default:
             break
         }

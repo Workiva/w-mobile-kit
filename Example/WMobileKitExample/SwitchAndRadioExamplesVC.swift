@@ -13,10 +13,23 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let label2 = UILabel()
     let label3 = UILabel()
 
+    // Group 1
     let radio1 = WRadioButton()
     let radio2 = WRadioButton()
     let radio3 = WRadioButton()
     let radio4 = WRadioButton()
+
+    // Group 2
+    let radio5 = WRadioButton()
+    let radio6 = WRadioButton()
+    let radio7 = WRadioButton()
+    let radio8 = WRadioButton()
+
+    // Group 3
+    let radio9 = WRadioButton()
+    let radio10 = WRadioButton()
+    let radio11 = WRadioButton()
+    let radio12 = WRadioButton()
 
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
@@ -57,13 +70,17 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         label2.text = "Off"
         label2.textAlignment = .Right
 
+        switch1.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchValueChanged(_:)), forControlEvents: .ValueChanged)
+        switch2.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchValueChanged(_:)), forControlEvents: .ValueChanged)
+
         // Radio Buttons
+        // Group1
         view.addSubview(radio2)
         radio2.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-20)
             make.top.equalTo(switch2.snp_bottom).offset(50)
         }
-        radio2.tag = 2
+        radio2.buttonID = 2
         radio2.groupID = 1
         radio2.selected = true
 
@@ -72,7 +89,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
             make.top.equalTo(radio2.snp_top)
             make.right.equalTo(radio2.snp_left).offset(-10)
         }
-        radio1.tag = 1
+        radio1.buttonID = 1
         radio1.groupID = 1
 
         view.addSubview(radio3)
@@ -80,7 +97,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
             make.top.equalTo(radio2.snp_top)
             make.left.equalTo(radio2.snp_right).offset(10)
         }
-        radio3.tag = 3
+        radio3.buttonID = 3
         radio3.groupID = 1
 
         view.addSubview(radio4)
@@ -88,13 +105,78 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
             make.top.equalTo(radio2.snp_top)
             make.left.equalTo(radio3.snp_right).offset(10)
         }
-        radio4.tag = 4
+        radio4.buttonID = 4
         radio4.groupID = 1
+
+        // Group2
+        view.addSubview(radio6)
+        radio6.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view).offset(-20)
+            make.top.equalTo(radio2.snp_bottom).offset(50)
+        }
+        radio6.buttonID = 6
+        radio6.groupID = 2
+        radio6.selected = true
+
+        view.addSubview(radio5)
+        radio5.snp_makeConstraints { (make) in
+            make.top.equalTo(radio6.snp_top)
+            make.right.equalTo(radio6.snp_left).offset(-10)
+        }
+        radio5.buttonID = 5
+        radio5.groupID = 2
+
+        view.addSubview(radio7)
+        radio7.snp_makeConstraints { (make) in
+            make.top.equalTo(radio6.snp_top)
+            make.left.equalTo(radio6.snp_right).offset(10)
+        }
+        radio7.buttonID = 7
+        radio7.groupID = 2
+
+        view.addSubview(radio8)
+        radio8.snp_makeConstraints { (make) in
+            make.top.equalTo(radio6.snp_top)
+            make.left.equalTo(radio7.snp_right).offset(10)
+        }
+        radio8.buttonID = 8
+        radio8.groupID = 2
+
+        // Group3
+        view.addSubview(radio10)
+        radio10.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view).offset(-20)
+            make.top.equalTo(radio6.snp_bottom).offset(50)
+        }
+        radio10.buttonID = 10
+        radio10.groupID = 3
+        radio10.selected = true
+
+        view.addSubview(radio9)
+        radio9.snp_makeConstraints { (make) in
+            make.top.equalTo(radio10.snp_top)
+            make.right.equalTo(radio10.snp_left).offset(-10)
+        }
+        radio9.buttonID = 9
+        radio9.groupID = 3
+
+        view.addSubview(radio11)
+        radio11.snp_makeConstraints { (make) in
+            make.top.equalTo(radio10.snp_top)
+            make.left.equalTo(radio10.snp_right).offset(10)
+        }
+        radio11.buttonID = 11
+        radio11.groupID = 3
+
+        view.addSubview(radio12)
+        radio12.snp_makeConstraints { (make) in
+            make.top.equalTo(radio10.snp_top)
+            make.left.equalTo(radio11.snp_right).offset(10)
+        }
+        radio12.buttonID = 12
+        radio12.groupID = 3
         
         view.layoutIfNeeded()
-        
-        switch1.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchValueChanged(_:)), forControlEvents: .ValueChanged)
-        switch2.addTarget(self, action: #selector(SwitchAndRadioExamplesVC.switchValueChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     @IBAction func storyboardSwitchValueChanged(sender: WSwitch) {
