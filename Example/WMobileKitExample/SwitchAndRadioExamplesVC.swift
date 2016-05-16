@@ -15,6 +15,11 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
 
+    @IBOutlet var storyboardRadio1: WRadioButton!
+    @IBOutlet var storyboardRadio2: WRadioButton!
+    @IBOutlet var storyboardRadio3: WRadioButton!
+    @IBOutlet var storyboardRadio4: WRadioButton!
+
     // Group 1
     let radio1 = WRadioButton()
     let radio2 = WRadioButton()
@@ -28,10 +33,10 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let radio8 = WRadioButton()
 
     // Group 3
-    let radio9 = WRadioButton()
-    let radio10 = WRadioButton()
-    let radio11 = WRadioButton()
-    let radio12 = WRadioButton()
+//    let radio9 = WRadioButton()
+//    let radio10 = WRadioButton()
+//    let radio11 = WRadioButton()
+//    let radio12 = WRadioButton()
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +45,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         view.addSubview(switch1)
         switch1.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(view).offset(210)
+            make.top.equalTo(view).offset(280)
         }
         switch1.tag = 1
         
@@ -143,39 +148,53 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio8.groupID = 2
 
         // Group3
-        view.addSubview(radio10)
-        radio10.snp_makeConstraints { (make) in
-            make.centerX.equalTo(view).offset(-20)
-            make.top.equalTo(radio6.snp_bottom).offset(50)
-        }
-        radio10.buttonID = 10
-        radio10.groupID = 3
-        radio10.selected = true
+//        view.addSubview(radio10)
+//        radio10.snp_makeConstraints { (make) in
+//            make.centerX.equalTo(view).offset(-20)
+//            make.top.equalTo(radio6.snp_bottom).offset(50)
+//        }
+//        radio10.buttonID = 10
+//        radio10.groupID = 3
+//        radio10.selected = true
+//
+//        view.addSubview(radio9)
+//        radio9.snp_makeConstraints { (make) in
+//            make.top.equalTo(radio10.snp_top)
+//            make.right.equalTo(radio10.snp_left).offset(-10)
+//        }
+//        radio9.buttonID = 9
+//        radio9.groupID = 3
+//
+//        view.addSubview(radio11)
+//        radio11.snp_makeConstraints { (make) in
+//            make.top.equalTo(radio10.snp_top)
+//            make.left.equalTo(radio10.snp_right).offset(10)
+//        }
+//        radio11.buttonID = 11
+//        radio11.groupID = 3
+//
+//        view.addSubview(radio12)
+//        radio12.snp_makeConstraints { (make) in
+//            make.top.equalTo(radio10.snp_top)
+//            make.left.equalTo(radio11.snp_right).offset(10)
+//        }
+//        radio12.buttonID = 12
+//        radio12.groupID = 3
 
-        view.addSubview(radio9)
-        radio9.snp_makeConstraints { (make) in
-            make.top.equalTo(radio10.snp_top)
-            make.right.equalTo(radio10.snp_left).offset(-10)
-        }
-        radio9.buttonID = 9
-        radio9.groupID = 3
+        // Storyboard group
+        storyboardRadio1.buttonID = 9
+        storyboardRadio1.groupID = 3
+        storyboardRadio1.selected = true
 
-        view.addSubview(radio11)
-        radio11.snp_makeConstraints { (make) in
-            make.top.equalTo(radio10.snp_top)
-            make.left.equalTo(radio10.snp_right).offset(10)
-        }
-        radio11.buttonID = 11
-        radio11.groupID = 3
+        storyboardRadio2.buttonID = 10
+        storyboardRadio2.groupID = 3
 
-        view.addSubview(radio12)
-        radio12.snp_makeConstraints { (make) in
-            make.top.equalTo(radio10.snp_top)
-            make.left.equalTo(radio11.snp_right).offset(10)
-        }
-        radio12.buttonID = 12
-        radio12.groupID = 3
-        
+        storyboardRadio3.buttonID = 11
+        storyboardRadio3.groupID = 3
+
+        storyboardRadio4.buttonID = 12
+        storyboardRadio4.groupID = 3
+
         view.layoutIfNeeded()
     }
     
