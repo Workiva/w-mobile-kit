@@ -4,6 +4,10 @@
 
 import UIKit
 
+@objc public protocol WAutoCompleteTextFieldDelegate: UITextFieldDelegate {
+    func textFieldDidChangeSelection(textField: UITextField)
+}
+
 public class WTextField: UITextField {
     public var imageSquareSize: CGFloat = 16
     public var paddingBetweenTextAndImage: CGFloat = 8
@@ -12,6 +16,14 @@ public class WTextField: UITextField {
     public var bottomLineWidth: CGFloat = 1
     public var bottomLineWidthWithText: CGFloat = 2
     private var currentBottomLineWidth: CGFloat? // Used to preserve above to values
+    
+    public weak var autoCompleteDelegate: WAutoCompleteTextFieldDelegate?
+        
+    public override var selectedTextRange: UITextRange? {
+        didSet {
+            autoCompleteDelegate?.textFieldDidChangeSelection(self)
+        }
+    }
 
     public var bottomLineColor: UIColor = .whiteColor() {
         didSet {
@@ -48,6 +60,10 @@ public class WTextField: UITextField {
         super.init(frame: frame)
 
         commonInit()
+    }
+    
+    public convenience init() {
+        self.init(frame: CGRectZero)
     }
 
     public required init?(coder aDecoder: NSCoder) {

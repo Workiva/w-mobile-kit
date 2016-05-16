@@ -32,15 +32,15 @@ internal protocol WBaseActionSheetDelegate {
 }
 
 public class WBaseActionSheet<ActionDataType>: UIViewController {
-    public var darkView = UIView(frame: CGRectZero)
-    public var containerView = UIView(frame: CGRectZero)
+    public var darkView = UIView()
+    public var containerView = UIView()
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
     internal var delegate: WBaseActionSheetDelegate!
 
     public var titleString: String?
-    public var selectedIndex : Int?
+    public var selectedIndex: Int?
     public var dismissOnAction = true
     public var hasCancel = false
 
@@ -471,17 +471,17 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
 // MARK: - Table Cell
 public class WTableViewCell<ActionDataType>: UITableViewCell {
-    private var actionInfo : WAction<ActionDataType>? {
+    private var actionInfo: WAction<ActionDataType>? {
         didSet {
             commonInit()
         }
     }
 
-    var selectBar = WSelectBar(frame: CGRectZero)
-    internal var subtitleLabel : UILabel?
-    internal var titleLabel : UILabel?
-    internal var iconImageView : UIImageView?
-    public private(set) var separatorBar = UIView(frame: CGRectZero)
+    var selectBar = WSelectBar()
+    internal var subtitleLabel: UILabel?
+    internal var titleLabel: UILabel?
+    internal var iconImageView: UIImageView?
+    public private(set) var separatorBar = UIView()
     public private(set) var isSelectedAction = false
 
     public required init?(coder aDecoder: NSCoder) {
@@ -539,7 +539,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
             if let subtitle = actionInfo.subtitle {
                 if (subtitleLabel == nil) {
-                    subtitleLabel = UILabel(frame: CGRectZero)
+                    subtitleLabel = UILabel()
                     subtitleLabel?.adjustsFontSizeToFitWidth = true
                     addSubview(subtitleLabel!)
                 }
@@ -564,7 +564,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
             if let title = actionInfo.title {
                 if (titleLabel == nil) {
-                    titleLabel = UILabel(frame: CGRectZero)
+                    titleLabel = UILabel()
                     addSubview(titleLabel!)
                 }
 
@@ -628,14 +628,14 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
 // MARK: Header View
 public class WHeaderView: UITableViewHeaderFooterView {
-    private var title : String? {
+    private var title: String? {
         didSet {
             commonInit()
         }
     }
 
-    private var separatorBar = UIView(frame: CGRectZero)
-    private var titleLabel : UILabel?
+    private var separatorBar = UIView()
+    private var titleLabel: UILabel?
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -663,7 +663,7 @@ public class WHeaderView: UITableViewHeaderFooterView {
         
         if let title = title {
             if (titleLabel == nil) {
-                titleLabel = UILabel(frame: CGRectZero)
+                titleLabel = UILabel()
                 addSubview(titleLabel!)
             }
             titleLabel?.textAlignment = .Center

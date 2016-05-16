@@ -11,6 +11,9 @@
 		73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */; };
 		73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */; };
 		80385E53D084ED5C70EE82DE /* Pods_WMobileKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */; };
+		D50149E31CE3D90600E5263E /* AutoCompleteTextFieldExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */; };
+		D50149E41CE3D90A00E5263E /* LoadingModalExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */; };
+		D50149E51CE3D90D00E5263E /* SpinnerExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */; };
 		D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BB81CAB11B70065D106 /* AppDelegate.swift */; };
 		D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */; };
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
@@ -19,7 +22,6 @@
 		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
 		D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */; };
-		D7A022E91CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +33,11 @@
 		607FACD01AFB9204008FA782 /* WMobileKitExample_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMobileKitExample_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; };
 		73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewExamplesVC.swift; sourceTree = "<group>"; };
+		73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextFieldExampleVC.swift; sourceTree = "<group>"; };
 		86294297CE93610FE8E6B978 /* Pods-WMobileKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample.release.xcconfig"; sourceTree = "<group>"; };
 		8BFF613940B2D6813A6FAFE6 /* Pods-WMobileKitExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerExamplesVC.swift; sourceTree = "<group>"; };
 		D53D0BB81CAB11B70065D106 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D53D0BBA1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D53D0BBC1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +48,7 @@
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; };
 		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; };
-		D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingAndSpinnersExamplesVC.swift; sourceTree = "<group>"; };
+		D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingModalExamplesVC.swift; sourceTree = "<group>"; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,7 +147,9 @@
 				D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */,
 				D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */,
 				73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */,
-				D7A022E81CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift */,
+				D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */,
+				D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */,
+				73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -271,13 +277,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
-				D7A022E91CCA8ACE00CC12E0 /* LoadingAndSpinnersExamplesVC.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */,
+				D50149E51CE3D90D00E5263E /* SpinnerExamplesVC.swift in Sources */,
+				D50149E41CE3D90A00E5263E /* LoadingModalExamplesVC.swift in Sources */,
 				73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */,
 				D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */,
 				55A106331CAC8B5400495BBC /* LeftMenuTVCExample.swift in Sources */,
+				D50149E31CE3D90600E5263E /* AutoCompleteTextFieldExampleVC.swift in Sources */,
 				D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
