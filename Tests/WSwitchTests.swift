@@ -128,10 +128,10 @@ class WSwitchSpec: QuickSpec {
                     pressRecognizer.testState = .Ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
-                    expect(switchControl.on).toEventually(equal(false), timeout: 0.3)
+                    expect(switchControl.on) == false
                 }
                 
-                it("should switch value when sliding") {
+                it("should switch value to false when sliding left") {
                     switchControl = WSwitch()
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
@@ -140,7 +140,20 @@ class WSwitchSpec: QuickSpec {
                     pressRecognizer.testState = .Changed
                     switchControl.switchWasPressed(pressRecognizer)
                     
-                    expect(switchControl.on).toEventually(equal(false), timeout: 0.3)
+                    expect(switchControl.on) == false
+                }
+                
+                it("should switch value to true when sliding right") {
+                    switchControl = WSwitch(false)
+                    subject.view.addSubview(switchControl)
+                    switchControl.setupUI()
+                    
+                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Changed
+                    pressRecognizer.slideLeft = false
+                    switchControl.switchWasPressed(pressRecognizer)
+                    
+                    expect(switchControl.on) == true
                 }
                 
                 it("should not switch value after press if switch has been slid") {
@@ -155,7 +168,19 @@ class WSwitchSpec: QuickSpec {
                     pressRecognizer.testState = .Ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
-                    expect(switchControl.on).toEventually(equal(false), timeout: 0.3)
+                    expect(switchControl.on) == false
+                }
+                
+                it("should not react to press if not expected state") {
+                    switchControl = WSwitch()
+                    subject.view.addSubview(switchControl)
+                    switchControl.setupUI()
+                    
+                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Cancelled
+                    switchControl.switchWasPressed(pressRecognizer)
+                    
+                    expect(switchControl.on) == true
                 }
             }
         }
@@ -164,12 +189,17 @@ class WSwitchSpec: QuickSpec {
 
 public class UILongPressGestureRecognizerTest : UILongPressGestureRecognizer {
     public var testState: UIGestureRecognizerState!
+    public var slideLeft: Bool = true
     
     public override var state: UIGestureRecognizerState {
         return testState
     }
     
     public override func locationInView(view: UIView?) -> CGPoint {
+        if (view != nil && !slideLeft) {
+            return CGPoint(x: view!.frame.origin.x + view!.frame.size.width, y: view!.frame.origin.y)
+        }
+        
         return CGPointZero
     }
 }
