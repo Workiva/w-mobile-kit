@@ -10,7 +10,6 @@ public class WSwitch: UIControl {
     public var barView = WSwitchBarView()
     public var backCircle = WSwitchOutlineCircleView()
     public var frontCircle = UIView()
-    public var pressRecognizer: UILongPressGestureRecognizer!
     
     public var barWidth: CGFloat = 44.0 {
         didSet {
@@ -41,6 +40,7 @@ public class WSwitch: UIControl {
     
     private var animatedFlag = false
     private var didSlideSwitch = false
+    internal var pressRecognizer: UILongPressGestureRecognizer!
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
