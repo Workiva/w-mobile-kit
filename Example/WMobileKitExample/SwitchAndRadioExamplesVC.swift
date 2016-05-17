@@ -132,6 +132,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio5.buttonID = 5
         radio5.groupID = 2
         radio5.buttonRadius = 20
+        radio5.buttonColor = .yellowColor()
         radio5.borderWidth = 5
         radio5.borderColor = .purpleColor()
         radio5.highlightColor = .blackColor()
@@ -160,6 +161,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio8.buttonID = 8
         radio8.groupID = 2
         radio8.buttonRadius = 20
+        radio8.buttonColor = .lightGrayColor()
         radio8.borderWidth = 5
         radio8.borderColor = .greenColor()
         radio8.highlightColor = .yellowColor()

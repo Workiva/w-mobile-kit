@@ -20,6 +20,8 @@ public class WRadioButton: UIControl {
     public var groupID: Int = 0
     public var buttonID: Int = 0
 
+    internal var pressRecognizer: UILongPressGestureRecognizer!
+
     public var buttonColor: UIColor = .whiteColor() {
         didSet {
             setupUI()
@@ -75,38 +77,36 @@ public class WRadioButton: UIControl {
 
     public override var selected: Bool {
         didSet {
-            let startingBlock: (Void) -> Void = {
-                if (oldValue) {
-                    self.indicatorView.alpha = 1.0
-                } else {
-                    self.indicatorView.alpha = 0.0
-                }
-            }
-
-            let finishedBlock: (Void) -> Void = {
-                if (self.selected) {
-                    self.indicatorView.alpha = 1.0
-                } else {
-                    self.indicatorView.alpha = 0.0
-                }
-            }
-            UIView.animateWithDuration(animationTime, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
-                                       animations: {
-                                        startingBlock()
-                },
-                                       completion: { finished in
-                                        finishedBlock()
-                                        self.layoutIfNeeded()
-                }
-            )
-
             if (oldValue != selected) {
                 sendActionsForControlEvents(.ValueChanged)
             }
+
+            if selected {
+                // Send selection notification with group id
+                NSNotificationCenter.defaultCenter().postNotificationName(wRadioButtonSelected,
+                                                                          object: self)
+            }
+
+            UIView.animateWithDuration(animationTime, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
+                animations: {
+                    if (oldValue) {
+                        self.indicatorView.alpha = 1.0
+                    } else {
+                        self.indicatorView.alpha = 0.0
+                    }
+                },
+                completion: { finished in
+                    if (self.selected) {
+                        self.indicatorView.alpha = 1.0
+                    } else {
+                        self.indicatorView.alpha = 0.0
+                    }
+
+                    self.layoutIfNeeded()
+                }
+            )
         }
     }
-
-    private var animatedFlag = false
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -140,26 +140,24 @@ public class WRadioButton: UIControl {
 
     public func commonInit() {
         addSubview(radioCircle)
-        radioCircle.backgroundColor = buttonColor
-
         addSubview(indicatorView)
 
-        var pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
+        pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
         addGestureRecognizer(pressRecognizer)
-
-        bounds = CGRect(origin: bounds.origin, size: CGSize(width: buttonRadius * 2, height: buttonRadius * 2))
 
         radioCircle.clipsToBounds = true
         indicatorView.clipsToBounds = true
 
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(WRadioButton.radioButtonSelected(_:)),
-                                                         name: wRadioButtonSelected,
-                                                         object: nil)
+            selector: #selector(WRadioButton.radioButtonSelected(_:)),
+            name: wRadioButtonSelected,
+            object: nil)
     }
 
     public func setupUI() {
+        bounds = CGRect(origin: bounds.origin, size: CGSize(width: buttonRadius * 2, height: buttonRadius * 2))
+
         radioCircle.snp_remakeConstraints { make in
             make.height.equalTo(buttonRadius * 2)
             make.width.equalTo(buttonRadius * 2)
@@ -174,6 +172,7 @@ public class WRadioButton: UIControl {
             make.width.equalTo(indicatorRadius * 2)
         }
 
+        radioCircle.backgroundColor = buttonColor
         radioCircle.layer.borderWidth = borderWidth
         radioCircle.layer.borderColor = borderColor.CGColor
 
@@ -192,19 +191,8 @@ public class WRadioButton: UIControl {
 
         if groupID == sender?.groupID {
             if !(buttonID == sender?.buttonID) {
-                setSelected(false, animated: true)
+                selected = false
             }
-        }
-    }
-
-    public func setSelected(selected: Bool, animated: Bool) {
-        animatedFlag = animated
-        self.selected = selected
-
-        if selected {
-            // Send selection notification with group id
-            NSNotificationCenter.defaultCenter().postNotificationName(wRadioButtonSelected,
-                                                                      object: self)
         }
     }
 
@@ -215,7 +203,7 @@ public class WRadioButton: UIControl {
             break
         case .Ended:
             radioCircle.backgroundColor = buttonColor
-            setSelected(true, animated: true)
+            selected = true
         default:
             break
         }

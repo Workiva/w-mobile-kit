@@ -15,10 +15,6 @@ class StringExtensionsSpec: QuickSpec {
             let name4 = "John Smith Man Anderson"
             let name5 = "John Smith Man Anderson Paul"
 
-            beforeEach({
-                subject = String()
-            })
-
             describe("initials") {
                 it("should get the initials for names for the default initial length") {
                     let initials1 = name1.initials()

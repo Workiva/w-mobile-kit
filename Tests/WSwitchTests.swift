@@ -124,7 +124,7 @@ class WSwitchSpec: QuickSpec {
                 it("should toggle from tap") {
                     switchControl = WSwitch()
                     
-                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
@@ -136,7 +136,7 @@ class WSwitchSpec: QuickSpec {
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
                     
-                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Changed
                     switchControl.switchWasPressed(pressRecognizer)
                     
@@ -148,7 +148,7 @@ class WSwitchSpec: QuickSpec {
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
                     
-                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Changed
                     pressRecognizer.slideLeft = false
                     switchControl.switchWasPressed(pressRecognizer)
@@ -161,7 +161,7 @@ class WSwitchSpec: QuickSpec {
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
                     
-                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Changed
                     switchControl.switchWasPressed(pressRecognizer)
                     
@@ -176,7 +176,7 @@ class WSwitchSpec: QuickSpec {
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
                     
-                    let pressRecognizer = UILongPressGestureRecognizerTest(target: switchControl, action: nil)
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Cancelled
                     switchControl.switchWasPressed(pressRecognizer)
                     
@@ -184,22 +184,5 @@ class WSwitchSpec: QuickSpec {
                 }
             }
         }
-    }
-}
-
-public class UILongPressGestureRecognizerTest : UILongPressGestureRecognizer {
-    public var testState: UIGestureRecognizerState!
-    public var slideLeft: Bool = true
-    
-    public override var state: UIGestureRecognizerState {
-        return testState
-    }
-    
-    public override func locationInView(view: UIView?) -> CGPoint {
-        if (view != nil && !slideLeft) {
-            return CGPoint(x: view!.frame.origin.x + view!.frame.size.width, y: view!.frame.origin.y)
-        }
-        
-        return CGPointZero
     }
 }

@@ -29,6 +29,8 @@
 		D53D0BB11CAB0FD30065D106 /* WMobileKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D53D0BAE1CAB0FD30065D106 /* WMobileKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D5409CE81CCE988000F984D3 /* WBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5409CE71CCE988000F984D3 /* WBanner.swift */; };
 		D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5409CE91CCFD07200F984D3 /* WBannerTests.swift */; };
+		D545B3661CEB7FB000615281 /* WRadioButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */; };
+		D545B3681CEBD4E600615281 /* WTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545B3671CEBD4E600615281 /* WTestUtils.swift */; };
 		D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */; };
 		D565A4451CE243A0007077F4 /* WRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D565A4441CE243A0007077F4 /* WRadioButton.swift */; };
 		D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB771CC57DA000301C7F /* WUserLogoView.swift */; };
@@ -92,6 +94,8 @@
 		D53D0BB31CAB0FE60065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5409CE71CCE988000F984D3 /* WBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBanner.swift; sourceTree = "<group>"; };
 		D5409CE91CCFD07200F984D3 /* WBannerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBannerTests.swift; sourceTree = "<group>"; };
+		D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButtonTests.swift; sourceTree = "<group>"; };
+		D545B3671CEBD4E600615281 /* WTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTestUtils.swift; sourceTree = "<group>"; };
 		D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVCTests.swift; sourceTree = "<group>"; };
 		D565A4441CE243A0007077F4 /* WRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButton.swift; sourceTree = "<group>"; };
 		D592AB771CC57DA000301C7F /* WUserLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoView.swift; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 				D73C27EE1CDA5E3800189426 /* WEquatables.swift */,
 				D7CC999F1CC95FB000572B6F /* WLoadingModalTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
+				D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */,
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D7CC99A31CC9614B00572B6F /* WSpinnerTests.swift */,
 				730364EE1CE641B300F8F3D8 /* WSwitchTests.swift */,
@@ -234,6 +239,7 @@
 				D53356CA1CBD6ACC00D9A6A9 /* WThemeTests.swift */,
 				D592AB811CC830E200301C7F /* WToastTests.swift */,
 				D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */,
+				D545B3671CEBD4E600615281 /* WTestUtils.swift */,
 				D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */,
 				D53D0BB31CAB0FE60065D106 /* Info.plist */,
 				D592B2A81CC943AF00301C7F /* Test Images */,
@@ -481,6 +487,7 @@
 				D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */,
 				D518B1DB1CDC08D20058B6A9 /* String+ExtensionsTests.swift in Sources */,
 				D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */,
+				D545B3681CEBD4E600615281 /* WTestUtils.swift in Sources */,
 				D7CC99A01CC95FB000572B6F /* WLoadingModalTests.swift in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
 				73A12C6D1CC00FE70092A3C2 /* WActionSheetVCTests.swift in Sources */,
@@ -488,6 +495,7 @@
 				D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
 				D592AB821CC830E200301C7F /* WToastTests.swift in Sources */,
 				D531DD7E1CDBD7D8009CB2FF /* WEquatables.swift in Sources */,
+				D545B3661CEB7FB000615281 /* WRadioButtonTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
 				D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */,
 				73B81F191CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift in Sources */,
