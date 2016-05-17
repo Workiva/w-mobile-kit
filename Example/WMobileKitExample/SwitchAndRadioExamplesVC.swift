@@ -15,11 +15,6 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     @IBOutlet var storyboardSwitch: WSwitch!
     @IBOutlet var storyboardLabel: UILabel!
 
-    @IBOutlet var storyboardRadio1: WRadioButton!
-    @IBOutlet var storyboardRadio2: WRadioButton!
-    @IBOutlet var storyboardRadio3: WRadioButton!
-    @IBOutlet var storyboardRadio4: WRadioButton!
-
     // Group 1
     let radio1 = WRadioButton()
     let radio2 = WRadioButton()
@@ -33,10 +28,10 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
     let radio8 = WRadioButton()
 
     // Group 3
-//    let radio9 = WRadioButton()
-//    let radio10 = WRadioButton()
-//    let radio11 = WRadioButton()
-//    let radio12 = WRadioButton()
+    @IBOutlet var storyboardRadio1: WRadioButton!
+    @IBOutlet var storyboardRadio2: WRadioButton!
+    @IBOutlet var storyboardRadio3: WRadioButton!
+    @IBOutlet var storyboardRadio4: WRadioButton!
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +78,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         view.addSubview(radio2)
         radio2.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-20)
-            make.top.equalTo(switch2.snp_bottom).offset(50)
+            make.top.equalTo(switch2.snp_bottom).offset(25)
         }
         radio2.buttonID = 2
         radio2.groupID = 1
@@ -117,10 +112,16 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         view.addSubview(radio6)
         radio6.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-20)
-            make.top.equalTo(radio2.snp_bottom).offset(50)
+            make.top.equalTo(radio2.snp_bottom).offset(25)
         }
         radio6.buttonID = 6
         radio6.groupID = 2
+        radio6.buttonRadius = 20
+        radio6.borderWidth = 5
+        radio6.borderColor = .redColor()
+        radio6.highlightColor = .blueColor()
+        radio6.indicatorColor = .redColor()
+        radio6.indicatorRadius = 8
         radio6.selected = true
 
         view.addSubview(radio5)
@@ -130,6 +131,12 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         radio5.buttonID = 5
         radio5.groupID = 2
+        radio5.buttonRadius = 20
+        radio5.borderWidth = 5
+        radio5.borderColor = .purpleColor()
+        radio5.highlightColor = .blackColor()
+        radio5.indicatorColor = .blueColor()
+        radio5.indicatorRadius = 9
 
         view.addSubview(radio7)
         radio7.snp_makeConstraints { (make) in
@@ -138,6 +145,12 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         radio7.buttonID = 7
         radio7.groupID = 2
+        radio7.buttonRadius = 20
+        radio7.borderWidth = 5
+        radio7.borderColor = .blueColor()
+        radio7.highlightColor = .redColor()
+        radio7.indicatorColor = .magentaColor()
+        radio7.indicatorRadius = 7
 
         view.addSubview(radio8)
         radio8.snp_makeConstraints { (make) in
@@ -146,42 +159,14 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         radio8.buttonID = 8
         radio8.groupID = 2
+        radio8.buttonRadius = 20
+        radio8.borderWidth = 5
+        radio8.borderColor = .greenColor()
+        radio8.highlightColor = .yellowColor()
+        radio8.indicatorColor = .blackColor()
+        radio8.indicatorRadius = 6
 
-        // Group3
-//        view.addSubview(radio10)
-//        radio10.snp_makeConstraints { (make) in
-//            make.centerX.equalTo(view).offset(-20)
-//            make.top.equalTo(radio6.snp_bottom).offset(50)
-//        }
-//        radio10.buttonID = 10
-//        radio10.groupID = 3
-//        radio10.selected = true
-//
-//        view.addSubview(radio9)
-//        radio9.snp_makeConstraints { (make) in
-//            make.top.equalTo(radio10.snp_top)
-//            make.right.equalTo(radio10.snp_left).offset(-10)
-//        }
-//        radio9.buttonID = 9
-//        radio9.groupID = 3
-//
-//        view.addSubview(radio11)
-//        radio11.snp_makeConstraints { (make) in
-//            make.top.equalTo(radio10.snp_top)
-//            make.left.equalTo(radio10.snp_right).offset(10)
-//        }
-//        radio11.buttonID = 11
-//        radio11.groupID = 3
-//
-//        view.addSubview(radio12)
-//        radio12.snp_makeConstraints { (make) in
-//            make.top.equalTo(radio10.snp_top)
-//            make.left.equalTo(radio11.snp_right).offset(10)
-//        }
-//        radio12.buttonID = 12
-//        radio12.groupID = 3
-
-        // Storyboard group
+        // Group3: Storyboard group
         storyboardRadio1.buttonID = 9
         storyboardRadio1.groupID = 3
         storyboardRadio1.selected = true

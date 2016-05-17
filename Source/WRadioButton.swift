@@ -53,7 +53,7 @@ public class WRadioButton: UIControl {
     public var buttonRadius: CGFloat = 12.0 {
         didSet {
             // Lower bounds
-            self.indicatorRadius = max(MIN_RADIO_CIRCLE, buttonRadius)
+            self.buttonRadius = max(MIN_RADIO_CIRCLE, buttonRadius)
 
             setupUI()
         }
@@ -71,9 +71,34 @@ public class WRadioButton: UIControl {
         }
     }
 
+    public var animationTime: NSTimeInterval = 0.2
+
     public override var selected: Bool {
         didSet {
-            setupUI()
+            let startingBlock: (Void) -> Void = {
+                if (oldValue) {
+                    self.indicatorView.alpha = 1.0
+                } else {
+                    self.indicatorView.alpha = 0.0
+                }
+            }
+
+            let finishedBlock: (Void) -> Void = {
+                if (self.selected) {
+                    self.indicatorView.alpha = 1.0
+                } else {
+                    self.indicatorView.alpha = 0.0
+                }
+            }
+            UIView.animateWithDuration(animationTime, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
+                                       animations: {
+                                        startingBlock()
+                },
+                                       completion: { finished in
+                                        finishedBlock()
+                                        self.layoutIfNeeded()
+                }
+            )
 
             if (oldValue != selected) {
                 sendActionsForControlEvents(.ValueChanged)
@@ -102,14 +127,11 @@ public class WRadioButton: UIControl {
         self.init(frame: CGRectZero)
 
         self.selected = selected
-        setupUI()
     }
 
     public convenience init() {
         // Default to not selected
         self.init(false)
-
-        setupUI()
     }
 
     deinit {
@@ -121,7 +143,6 @@ public class WRadioButton: UIControl {
         radioCircle.backgroundColor = buttonColor
 
         addSubview(indicatorView)
-        indicatorView.backgroundColor = indicatorColor
 
         var pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WRadioButton.buttonWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
@@ -130,9 +151,6 @@ public class WRadioButton: UIControl {
         bounds = CGRect(origin: bounds.origin, size: CGSize(width: buttonRadius * 2, height: buttonRadius * 2))
 
         radioCircle.clipsToBounds = true
-        radioCircle.layer.borderWidth = borderWidth
-        radioCircle.layer.borderColor = borderColor.CGColor
-
         indicatorView.clipsToBounds = true
 
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -156,48 +174,24 @@ public class WRadioButton: UIControl {
             make.width.equalTo(indicatorRadius * 2)
         }
 
-        indicatorView.hidden = !selected
+        radioCircle.layer.borderWidth = borderWidth
+        radioCircle.layer.borderColor = borderColor.CGColor
 
-        let startingBlock: (Void) -> Void = {
-            if (self.selected) {
-                self.indicatorView.alpha = 1.0
-            } else {
-                self.indicatorView.alpha = 0.0
-            }
-        }
+        indicatorView.alpha = selected ? 1.0 : 0.0
+        indicatorView.backgroundColor = indicatorColor
 
-        let finishedBlock: (Void) -> Void = {
-            if (!self.selected) {
-                self.indicatorView.hidden = true
-            }
-        }
-
-        if (animatedFlag) {
-            animatedFlag = false
-            UIView.animateWithDuration(0.2, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
-                animations: {
-                    self.layoutIfNeeded()
-                    startingBlock()
-                },
-                completion: { finished in
-                    finishedBlock()
-                }
-            )
-        } else {
-            startingBlock()
-            layoutIfNeeded()
-            finishedBlock()
-        }
+        // Need to set the frame first or will result in square
+        layoutIfNeeded()
 
         radioCircle.layer.cornerRadius = radioCircle.frame.size.height / 2
         indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
     }
 
     public func radioButtonSelected(notification: NSNotification) {
-        let sende: WRadioButton? = notification.object as! WRadioButton?
+        let sender: WRadioButton? = notification.object as! WRadioButton?
 
-        if groupID == sende?.groupID {
-            if !(buttonID == sende?.buttonID) {
+        if groupID == sender?.groupID {
+            if !(buttonID == sender?.buttonID) {
                 setSelected(false, animated: true)
             }
         }
