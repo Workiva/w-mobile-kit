@@ -1,5 +1,5 @@
 //
-//  WToastTests.swift
+//  WSwitchTests.swift
 //  WMobileKit
 
 import Quick

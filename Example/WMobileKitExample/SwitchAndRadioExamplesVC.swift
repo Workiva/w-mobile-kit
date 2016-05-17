@@ -1,5 +1,5 @@
 //
-//  RadioAndSwitchExamplesVC.swift
+//  SwitchAndRadioExamplesVC.swift
 //  WMobileKitExample
 
 import Foundation
