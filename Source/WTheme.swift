@@ -53,6 +53,9 @@ public class WTheme: NSObject {
     
     // Toast
     public var toastBGColor: UIColor = .greenColor()
+
+    // Loading Modal
+    public var loadingModalBackgroundColor: UIColor = UIColor(hex: 0x595959, alpha: 0.85)
 }
 
 // Theme with all default values

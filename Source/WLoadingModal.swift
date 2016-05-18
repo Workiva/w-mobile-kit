@@ -50,11 +50,20 @@ public class WLoadingModal: UIView {
 
     // MARK: - Inits
     public convenience init(_ title: String) {
-        self.init(UIColor(hex: 0x595959, alpha: 0.85), title: title, description: "")
+        self.init()
+
+        commonInit()
+
+        titleLabel.text = title
     }
 
     public convenience init(_ backgroundColor: UIColor, title: String) {
-        self.init(backgroundColor, title: title, description: "")
+        self.init()
+
+        commonInit()
+
+        self.backgroundColor = backgroundColor
+        titleLabel.text = title
     }
 
     public convenience init(_ backgroundColor: UIColor, title: String, description: String) {
@@ -80,7 +89,7 @@ public class WLoadingModal: UIView {
     }
 
     private func commonInit() {
-        backgroundColor = UIColor(hex: 0x595959, alpha: 0.85)
+        backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
         spinnerView.indeterminate = true
         addSubview(spinnerView)
