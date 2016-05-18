@@ -216,7 +216,6 @@
 				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
 				D518B1DA1CDC08D20058B6A9 /* String+ExtensionsTests.swift */,
 				73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */,
-				73A12C6B1CC00F970092A3C2 /* WActionSheetVCTests.swift */,
 				73B81F181CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift */,
 				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
 				D73C27EE1CDA5E3800189426 /* WEquatables.swift */,
