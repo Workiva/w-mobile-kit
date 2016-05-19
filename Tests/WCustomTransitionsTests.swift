@@ -35,8 +35,18 @@ class WCustomTransitionsTests: QuickSpec {
                     expect(animationController.transitionDuration(nil)) == 1.0
                 }
 
-                it("should perform our animation on navigation controller") {
+                it("should perform animation without crash when presenting") {
                     animationController = SlideAnimationController()
+
+                    // All the views have to be set up in WCustomTransitioningContext in
+                    // order to hit coverage requirement, this just verifies we do not crash.
+                    let transitioningContext = WCustomTransitioningContext()
+                    animationController.animateTransition(transitioningContext)
+                }
+
+                it("should perform animation without crash when disappearing") {
+                    animationController = SlideAnimationController()
+                    animationController.presenting = false
 
                     // All the views have to be set up in WCustomTransitioningContext in
                     // order to hit coverage requirement, this just verifies we do not crash.
