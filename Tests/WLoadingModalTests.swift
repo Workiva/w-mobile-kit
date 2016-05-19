@@ -124,7 +124,7 @@ class WLoadingModalTests: QuickSpec {
                     expect(dLabel.textColor) == UIColor.whiteColor()
                     expect(dLabel.textAlignment) == NSTextAlignment.Center
                     expect(dLabel.numberOfLines) == 0
-                    expect(dLabel.text).to(equal(""))
+                    expect(dLabel.text).to(beNil())
                 }
 
                 it("should set the progress on the spinner") {
