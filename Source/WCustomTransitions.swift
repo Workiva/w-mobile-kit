@@ -54,7 +54,6 @@ public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransit
             animations: {
                 fromView.transform = self.presenting ? offScreenLeft : offScreenRight
                 toView.transform = CGAffineTransformIdentity
-
                 },
             completion: { finished in
                 transitionContext.completeTransition(true)
