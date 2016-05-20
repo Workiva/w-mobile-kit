@@ -25,38 +25,36 @@
 import UIKit
 
 public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
-    public var presenting = true // Presenting or Dismissing
+    public var presenting = true // Presenting or Dismissing (== push or pop)
 
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        // get reference to our fromView, toView and the container view that we should perform the transition in
+        // If the reference to these views does not exist, we cannot animate a transition.
         guard let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey),
             let container = transitionContext.containerView(),
             let toView = transitionContext.viewForKey(UITransitionContextToViewKey) else {
                 return
         }
 
-        // set up from 2D transforms that we'll use in the animation
-        let offScreenRight = CGAffineTransformMakeTranslation(container.frame.width, 0)
-        let offScreenLeft = CGAffineTransformMakeTranslation(-container.frame.width, 0)
+        // Transforms we will use in the animations.
+        let fromOffScreenOnRight = CGAffineTransformMakeTranslation(container.frame.width, 0)
+        let fromOffScreenOnLeft = CGAffineTransformMakeTranslation(-container.frame.width, 0)
 
-        toView.transform = self.presenting ? offScreenRight : offScreenLeft
+        toView.transform = presenting ? fromOffScreenOnRight : fromOffScreenOnLeft
 
         container.addSubview(toView)
-        container.addSubview(fromView)
 
-        let duration = self.transitionDuration(transitionContext)
-
-        UIView.animateWithDuration(duration,
+        UIView.animateWithDuration(self.transitionDuration(transitionContext),
             delay: 0.0,
             usingSpringWithDamping: 1,
             initialSpringVelocity: 1,
             options: .CurveEaseInOut,
             animations: {
-                fromView.transform = self.presenting ? offScreenLeft : offScreenRight
+                fromView.transform = self.presenting ? fromOffScreenOnLeft : fromOffScreenOnRight
                 toView.transform = CGAffineTransformIdentity
-                },
+            },
             completion: { finished in
                 transitionContext.completeTransition(true)
+                fromView.transform = CGAffineTransformIdentity
             })
     }
 
