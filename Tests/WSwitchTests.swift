@@ -86,9 +86,11 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.intrinsicContentSize()) == CGSize(width: switchControl.barWidth, height: switchControl.circleRadius * 2)
                 }
                 
-                it("should not crash when trying to setup UI without barView subview") {
+                it("should not crash when trying to setup UI without having commonInit") {
                     switchControl = WSwitch()
                     switchControl.barView.removeFromSuperview()
+                    switchControl.backCircle.removeFromSuperview()
+                    switchControl.didCommonInit = false
                     switchControl.setupUI()
                     
                     expect(switchControl).toNot(beNil())

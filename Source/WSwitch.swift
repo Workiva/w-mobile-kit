@@ -38,6 +38,7 @@ public class WSwitch: UIControl {
     
     private var animatedFlag = false
     private var didSlideSwitch = false
+    internal var didCommonInit = false
     internal var pressRecognizer: UILongPressGestureRecognizer!
     
     public required init?(coder aDecoder: NSCoder) {
@@ -82,10 +83,12 @@ public class WSwitch: UIControl {
         addGestureRecognizer(pressRecognizer)
         
         bounds = CGRect(origin: bounds.origin, size: CGSize(width: barWidth, height: circleRadius * 2))
+        
+        didCommonInit = true
     }
 
     public func setupUI() {
-        if (!subviews.contains(barView)) {
+        if (!didCommonInit) {
             return
         }
         
