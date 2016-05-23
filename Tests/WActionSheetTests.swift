@@ -6,9 +6,9 @@ import Quick
 import Nimble
 @testable import WMobileKit
 
-class WActionSheetVCSpec: QuickSpec {
+class WActionSheetSpec: QuickSpec {
     override func spec() {
-        describe("WActionSheetVCSpec") {
+        describe("WActionSheetSpec") {
             var subject: WActionSheetVC<NSObject>!
             var action: WAction<NSObject>?
             var table: UITableView!
