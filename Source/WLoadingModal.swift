@@ -14,19 +14,25 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public var verticalPadding: CGFloat = 32 {
+    public var paddingBetweenViewTopAndSpinner: CGFloat = 32 {
         didSet {
             self.remakeAllConstraints()
         }
     }
 
-    public var titleLabel: UILabel = UILabel()
-
-    public var titleLabelWidth: CGFloat = 120 {
+    public var paddingBetweenTitleAndSpinner: CGFloat = 32 {
         didSet {
             self.remakeTitleConstraints()
         }
     }
+
+    public var paddingBetweenDescriptionAndTitle: CGFloat = 32 {
+        didSet {
+            self.remakeDescriptionConstraints()
+        }
+    }
+
+    public var titleLabel: UILabel = UILabel()
 
     public var titleLabelHeight: CGFloat = 20 {
         didSet  {
@@ -36,12 +42,6 @@ public class WLoadingModal: UIView {
 
     public var descriptionLabel: UILabel = UILabel()
 
-    public var descriptionLabelWidth: CGFloat = 180 {
-        didSet {
-            self.remakeDescriptionConstraints()
-        }
-    }
-
     public var descriptionLabelHeight: CGFloat = 60 {
         didSet {
             self.remakeDescriptionConstraints()
@@ -49,6 +49,23 @@ public class WLoadingModal: UIView {
     }
 
     // MARK: - Inits
+    public convenience init(_ title: String) {
+        self.init()
+
+        commonInit()
+
+        titleLabel.text = title
+    }
+
+    public convenience init(_ backgroundColor: UIColor, title: String) {
+        self.init()
+
+        commonInit()
+
+        self.backgroundColor = backgroundColor
+        titleLabel.text = title
+    }
+
     public convenience init(_ backgroundColor: UIColor, title: String, description: String) {
         self.init()
 
@@ -72,7 +89,7 @@ public class WLoadingModal: UIView {
     }
 
     private func commonInit() {
-        backgroundColor = .clearColor()
+        backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
         spinnerView.indeterminate = true
         addSubview(spinnerView)
@@ -98,7 +115,7 @@ public class WLoadingModal: UIView {
 
     private func remakeSpinnerConstraints() {
         spinnerView.snp_remakeConstraints { (make) in
-            make.top.equalTo(self.snp_top).offset(verticalPadding)
+            make.top.equalTo(self.snp_top).offset(paddingBetweenViewTopAndSpinner)
             make.centerX.equalTo(self)
             make.width.equalTo(spinnerSize)
             make.height.equalTo(spinnerSize)
@@ -107,20 +124,26 @@ public class WLoadingModal: UIView {
 
     private func remakeTitleConstraints() {
         titleLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(spinnerView.snp_bottom).offset(verticalPadding)
+            make.top.equalTo(spinnerView.snp_bottom).offset(paddingBetweenTitleAndSpinner)
             make.centerX.equalTo(self)
-            make.width.equalTo(titleLabelWidth)
+            make.left.equalTo(self)
+            make.right.equalTo(self)
             make.height.equalTo(20)
         }
     }
 
     private func remakeDescriptionConstraints() {
         descriptionLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp_bottom).offset(verticalPadding)
+            make.top.equalTo(titleLabel.snp_bottom).offset(paddingBetweenDescriptionAndTitle)
             make.centerX.equalTo(self)
-            make.width.equalTo(descriptionLabelWidth)
+            make.left.equalTo(self)
+            make.right.equalTo(self)
             make.height.equalTo(descriptionLabelHeight)
         }
+    }
+
+    public func show(view: UIView) {
+        self.show(view, insets: UIEdgeInsetsMake(0, 0, 0, 0))
     }
 
     public func show(view: UIView, insets: UIEdgeInsets) {

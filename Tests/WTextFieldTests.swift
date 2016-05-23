@@ -41,9 +41,10 @@ class WTextFieldTests: QuickSpec {
                     expect(object).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(textField.imageSquareSize).to(equal(16))
-                    expect(textField.paddingBetweenTextAndImage).to(equal(8))
-                    expect(textField.bottomLineWidth).to(equal(1))
+                    expect(textField.imageSquareSize) == 16
+                    expect(textField.paddingBetweenTextAndImage) == 8
+                    expect(textField.bottomLineWidth) == 1
+                    expect(textField.bottomLineWidthWithText) == 2
                     expect(textField.leftImage).to(beNil())
                     expect(textField.leftView).to(beNil())
                     expect(textField.rightImage).to(beNil())
@@ -68,11 +69,13 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.imageSquareSize) == 16
                     expect(textField.paddingBetweenTextAndImage) == 8
                     expect(textField.bottomLineWidth) == 1
+                    expect(textField.bottomLineWidthWithText) == 2
                     expect(textField.leftImage).to(beNil())
                     expect(textField.leftView).to(beNil())
                     expect(textField.rightImage).to(beNil())
                     expect(textField.rightView).to(beNil())
                     expect(textField.bottomLineColor) == UIColor.whiteColor()
+                    expect(textField.placeHolderTextColor) == UIColor(hex: 0xFFFFFF, alpha: 0.55)
 
                     // rect sizing
                     let textRect = textField.textRectForBounds(textField.bounds)
@@ -119,7 +122,14 @@ class WTextFieldTests: QuickSpec {
                     textField.imageSquareSize = 20
                     textField.paddingBetweenTextAndImage = 10
                     textField.bottomLineWidth = 2
+                    textField.bottomLineWidthWithText = 3
                     textField.bottomLineColor = .blueColor()
+
+                    // Placeholder text should be nil, then when color is set, should be ""
+                    expect(textField.placeholder).to(beNil())
+                    textField.placeHolderTextColor = .blueColor()
+                    textField.placeholder = "placeholder"
+                    expect(textField.placeholder) == "placeholder"
 
                     subject.view.layoutIfNeeded()
 
@@ -127,6 +137,7 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.imageSquareSize) == 20
                     expect(textField.paddingBetweenTextAndImage) == 10
                     expect(textField.bottomLineWidth) == 2
+                    expect(textField.bottomLineWidthWithText) == 3
                     expect(textField.bottomLineColor) == UIColor.blueColor()
 
                     // rect sizing
@@ -239,6 +250,23 @@ class WTextFieldTests: QuickSpec {
                     expect(editingRect.origin.x) == 24
                     expect(editingRect.width) == 112
                     expect(editingRect.height) == 30
+                }
+
+                it("should update bottom border with text change") {
+                    textField = WTextField()
+
+                    subject.view.addSubview(textField)
+                    textField.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(160)
+                        make.height.equalTo(30)
+                    }
+
+                    subject.view.layoutIfNeeded()
+                    
+                    expect(textField.bottomLineWidth) == 1
+                    expect(textField.bottomLineWidthWithText) == 2
                 }
             }
         }

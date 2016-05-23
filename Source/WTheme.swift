@@ -57,6 +57,9 @@ public class WTheme: NSObject {
     // Switch
     public var switchOutlineColor: UIColor = .blueColor()
     public var switchBarColor: UIColor = .blueColor()
+
+    // Loading Modal
+    public var loadingModalBackgroundColor: UIColor = UIColor(hex: 0x595959, alpha: 0.85)
 }
 
 // Theme with all default values
