@@ -32,9 +32,7 @@ public class WSwitch: UIControl {
     public var on: Bool = false {
         didSet {
             setupUI()
-            if (oldValue != on) {
-                sendActionsForControlEvents(.ValueChanged)
-            }
+            sendActionsForControlEvents(.ValueChanged)
         }
     }
     
@@ -118,11 +116,7 @@ public class WSwitch: UIControl {
         }
         
         let startingBlock: (Void) -> Void = {
-            if (self.on) {
-                self.frontCircle.alpha = 1.0
-            } else {
-                self.frontCircle.alpha = 0.0
-            }
+            self.frontCircle.alpha = self.on ? 1.0 : 0.0
         }
         
         let finishedBlock: (Void) -> Void = {

@@ -38,29 +38,29 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl).toNot(equal(nil))
                     
                     // default settings from commonInit
-                    expect(switchControl.barView.alpha) == 0.45
+                    expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 0.0
                     expect(switchControl.frontCircle.hidden) == true
                 }
                 
-                it("should init properly without initializer parameters") {
+                it("should init and setup UI properly without initializer parameters") {
                     switchControl = WSwitch()
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
                     
-                    // default settings from commonInit
-                    expect(switchControl.barView.alpha) == 0.45
+                    // verify UI is setup correctly
+                    expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 1.0
                     expect(switchControl.frontCircle.hidden) == false
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x + switchControl.barView.frame.size.width - switchControl.backCircle.frame.size.width
                 }
                 
-                it("should init properly with false initializer parameter") {
+                it("should init and setup UI properly with false initializer parameter") {
                     switchControl = WSwitch(false)
                     subject.view.addSubview(switchControl)
                     
-                    // default settings from commonInit
-                    expect(switchControl.barView.alpha) == 0.45
+                    // verify UI is setup correctly
+                    expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 0.0
                     expect(switchControl.frontCircle.hidden) == true
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x
