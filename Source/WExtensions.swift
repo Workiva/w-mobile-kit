@@ -29,7 +29,14 @@ public extension String {
 }
 
 public extension CGPoint {
-    func distanceToPoint(point: CGPoint) -> CGFloat{
-        return sqrt(pow(x-point.x,2)+pow(y-point.y,2));
+    func distanceToPoint(point: CGPoint) -> CGFloat {
+        return sqrt(pow(x-point.x, 2) + pow(y-point.y, 2));
+    }
+}
+
+public extension UILongPressGestureRecognizer {
+    func cancelGesture() {
+        enabled = false
+        enabled = true
     }
 }

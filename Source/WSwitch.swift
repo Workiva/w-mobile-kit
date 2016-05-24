@@ -165,8 +165,8 @@ public class WSwitch: UIControl {
         case .Changed:
             let distance: CGFloat = sender.locationInView(superview).distanceToPoint(center)
             if distance > touchThreshold {
-                sender.enabled = false
-                sender.enabled = true
+                // User has dragged too far. Cancelling touch gesture.
+                sender.cancelGesture()
                 break
             }
 
