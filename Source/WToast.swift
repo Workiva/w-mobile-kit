@@ -224,11 +224,9 @@ public class WToastView: UIView {
                 case .FromBottom:
                     make.top.equalTo(WToastManager.sharedInstance.rootWindow!.snp_bottom)
                     make.centerX.equalTo(WToastManager.sharedInstance.rootWindow!)
-                    break;
                 case .FromTop:
                     make.bottom.equalTo(WToastManager.sharedInstance.rootWindow!.snp_top)
                     make.centerX.equalTo(WToastManager.sharedInstance.rootWindow!)
-                    break;
                 case .FromLeft:
                     make.right.equalTo(WToastManager.sharedInstance.rootWindow!.snp_left)
                     if (placement == .Bottom) {
@@ -236,7 +234,6 @@ public class WToastView: UIView {
                     } else {
                         make.top.equalTo(WToastManager.sharedInstance.rootWindow!).offset(topPadding)
                     }
-                    break;
                 case .FromRight:
                     make.left.equalTo(WToastManager.sharedInstance.rootWindow!.snp_right)
                     if (placement == .Bottom) {
@@ -244,7 +241,6 @@ public class WToastView: UIView {
                     } else {
                         make.top.equalTo(WToastManager.sharedInstance.rootWindow!).offset(topPadding)
                     }
-                    break;
             }
         }
         WToastManager.sharedInstance.rootWindow!.layoutIfNeeded()
@@ -308,11 +304,9 @@ public class WToastView: UIView {
                 case .FromBottom:
                     make.top.equalTo(WToastManager.sharedInstance.rootWindow!.snp_bottom)
                     make.centerX.equalTo(WToastManager.sharedInstance.rootWindow!)
-                    break;
                 case .FromTop:
                     make.bottom.equalTo(WToastManager.sharedInstance.rootWindow!.snp_top)
                     make.centerX.equalTo(WToastManager.sharedInstance.rootWindow!)
-                    break;
                 case .FromLeft:
                     make.right.equalTo(WToastManager.sharedInstance.rootWindow!.snp_left)
                     if (placement == .Bottom) {
@@ -320,7 +314,6 @@ public class WToastView: UIView {
                     } else {
                         make.top.equalTo(WToastManager.sharedInstance.rootWindow!).offset(topPadding)
                     }
-                    break;
                 case .FromRight:
                     make.left.equalTo(WToastManager.sharedInstance.rootWindow!.snp_right)
                     if (placement == .Bottom) {
@@ -328,7 +321,6 @@ public class WToastView: UIView {
                     } else {
                         make.top.equalTo(WToastManager.sharedInstance.rootWindow!).offset(topPadding)
                     }
-                    break;
                 }
             }
 

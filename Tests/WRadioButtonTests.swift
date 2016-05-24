@@ -30,7 +30,7 @@ class WRadioButtonSpec: QuickSpec {
             let verifyCommonInit = {
                 expect(radioButton.selected) == false
                 expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
-                                                     size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
+                    size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
                 expect(radioButton.radioCircle.clipsToBounds) == true
                 expect(radioButton.indicatorView.clipsToBounds) == true
                 expect(radioButton.groupID) == 0
@@ -113,7 +113,7 @@ class WRadioButtonSpec: QuickSpec {
                     // settings from commonInit/setupUI
                     expect(radioButton.selected) == true
                     expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
-                                                         size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
+                        size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
                     expect(radioButton.radioCircle.clipsToBounds) == true
                     expect(radioButton.indicatorView.clipsToBounds) == true
                     expect(radioButton.groupID) == 1

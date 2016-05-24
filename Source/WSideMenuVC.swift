@@ -166,10 +166,8 @@ public class WSideMenuVC: UIViewController {
         switch menuState {
         case .Closed:
             openSideMenu()
-            break
         case .Open:
             closeSideMenu()
-            break
         }
     }
 

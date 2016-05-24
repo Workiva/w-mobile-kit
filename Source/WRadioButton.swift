@@ -75,6 +75,9 @@ public class WRadioButton: UIControl {
 
     public var animationTime: NSTimeInterval = 0.2
 
+    // Threshold for touch up events registering
+    public var touchThreshold: CGFloat = 25.0
+
     public override var selected: Bool {
         didSet {
             if (oldValue != selected) {
@@ -89,18 +92,10 @@ public class WRadioButton: UIControl {
 
             UIView.animateWithDuration(animationTime, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
                 animations: {
-                    if (oldValue) {
-                        self.indicatorView.alpha = 1.0
-                    } else {
-                        self.indicatorView.alpha = 0.0
-                    }
+                    self.indicatorView.alpha = oldValue ? 1.0 : 0.0
                 },
                 completion: { finished in
-                    if (self.selected) {
-                        self.indicatorView.alpha = 1.0
-                    } else {
-                        self.indicatorView.alpha = 0.0
-                    }
+                    self.indicatorView.alpha = self.selected ? 1.0 : 0.0
 
                     self.layoutIfNeeded()
                 }
@@ -196,14 +191,29 @@ public class WRadioButton: UIControl {
         }
     }
 
+    /* Highlight will occur on touch start and as long as the press is
+        within the touch threshold and will unhighlight if no longer in
+        the threadhold, but will re-highlight if the press moves back in.
+     Selection will only occur if the touch up is within the threshold.
+     */
     public func buttonWasPressed(sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .Began:
             radioCircle.backgroundColor = highlightColor
-            break
+        case .Changed:
+            let distance: CGFloat = sender.locationInView(superview).distanceToPoint(center)
+
+            if distance < touchThreshold {
+                radioCircle.backgroundColor = highlightColor
+            } else {
+                radioCircle.backgroundColor = buttonColor
+            }
         case .Ended:
-            radioCircle.backgroundColor = buttonColor
-            selected = true
+            // Currently highlighted
+            if radioCircle.backgroundColor == highlightColor {
+                radioCircle.backgroundColor = buttonColor
+                selected = true
+            }
         default:
             break
         }

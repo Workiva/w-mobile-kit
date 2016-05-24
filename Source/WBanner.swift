@@ -218,11 +218,9 @@ public class WBannerView: UIView {
             case .Bottom:
                 make.top.equalTo(rootView!.snp_bottom)
                 make.centerX.equalTo(rootView!)
-                break;
             case .Top:
                 make.bottom.equalTo(rootView!.snp_top)
                 make.centerX.equalTo(rootView!)
-                break;
             }
         }
         rootView!.layoutIfNeeded()
@@ -269,11 +267,8 @@ public class WBannerView: UIView {
                 case .Bottom:
                     make.top.equalTo(rootView!.snp_bottom)
                     make.centerX.equalTo(rootView!)
-                    break;
                 case .Top:
                     make.bottom.equalTo(rootView!.snp_top)
-                    make.centerX.equalTo(rootView!)
-                    break;
                 }
             }
 

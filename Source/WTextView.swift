@@ -94,38 +94,32 @@ public class WTextView: UITextView, UITextViewDelegate {
                     openBracketPos = index
                 }
                 numOpeningBrackets += 1
-                break;
             case "]":
                 if (foundURLString) {
                     resetVariables()
-                    
-                    break;
+                    break
                 }
                 numOpeningBrackets -= 1
                 if (numOpeningBrackets <= 0) {
                     closeBracketPos = index
                     foundURLString = true
                 }
-                break;
             case "(":
                 if (!foundURLString) {
                     continue
                 }
                 if openParenPos != nil {
                     resetVariables()
-                    
-                    break;
+                    break
                 }
                 openParenPos = index
-                break;
             case ")":
                 if (!foundURLString) {
                     continue
                 }
                 if (openParenPos == nil || closeParenPos != nil) {
                     resetVariables()
-                    
-                    break;
+                    break
                 }
                 closeParenPos = index
 
@@ -138,15 +132,12 @@ public class WTextView: UITextView, UITextViewDelegate {
                 markdownArray.append(markdownDict)
                 
                 resetVariables()
-                
-                break;
             case " ":
                 break;
             default:
                 if (openParenPos == nil && foundURLString) {
                     resetVariables()
                 }
-                break;
             }
         }
         

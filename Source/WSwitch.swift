@@ -35,6 +35,9 @@ public class WSwitch: UIControl {
             sendActionsForControlEvents(.ValueChanged)
         }
     }
+
+    // Threshold for touch up events registering
+    public var touchThreshold: CGFloat = 25.0
     
     private var animatedFlag = false
     private var didSlideSwitch = false
@@ -122,13 +125,7 @@ public class WSwitch: UIControl {
             self.frontCircle.alpha = self.on ? 1.0 : 0.0
         }
         
-        let finishedBlock: (Void) -> Void = {
-            if (!self.on) {
-                self.frontCircle.hidden = true
-            }
-        }
-        
-        frontCircle.hidden = false
+        let finishedBlock: (Void) -> Void = { }
 
         if (animatedFlag) {
             animatedFlag = false
@@ -163,19 +160,34 @@ public class WSwitch: UIControl {
     
     public func switchWasPressed(sender: UILongPressGestureRecognizer) {
         switch sender.state {
+        case .Began:
+            frontCircle.alpha = 0.5
         case .Changed:
-            if (sender.locationInView(self).x > frame.size.width / 2 && !on) {
+            let distance: CGFloat = sender.locationInView(superview).distanceToPoint(center)
+            if distance > touchThreshold {
+                sender.enabled = false
+                sender.enabled = true
+                break
+            }
+
+            if (sender.locationInView(self).x > ((frame.size.width / 2) + 5) && !on) {
                 setOn(true, animated: true)
                 didSlideSwitch = true
-            } else if (sender.locationInView(self).x < frame.size.width / 2 && on) {
+            } else if (sender.locationInView(self).x < ((frame.size.width / 2) - 5) && on) {
                 setOn(false, animated: true)
                 didSlideSwitch = true
+            } else {
+                frontCircle.alpha = 0.5
             }
-            break
         case .Ended:
             if (!didSlideSwitch) {
                 setOn(!on, animated: true)
+            } else {
+                frontCircle.alpha = on ? 1.0 : 0.0
+                didSlideSwitch = false
             }
+        case .Cancelled, .Failed:
+            frontCircle.alpha = on ? 1.0 : 0.0
             didSlideSwitch = false
         default:
             break

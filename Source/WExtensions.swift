@@ -1,5 +1,5 @@
 //
-//  String+Extension.swift
+//  WExtensions.swift
 //  WMobileKit
 //
 
@@ -25,5 +25,11 @@ public extension String {
     // Returns the CRC32 checksum for a string as an int
     public func crc32int() -> UInt {
         return strtoul(crc32(), nil, 16)
+    }
+}
+
+public extension CGPoint {
+    func distanceToPoint(point: CGPoint) -> CGFloat{
+        return sqrt(pow(x-point.x,2)+pow(y-point.y,2));
     }
 }

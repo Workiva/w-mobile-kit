@@ -1,14 +1,14 @@
 //
-//  String+ExtensionsTests.swift
+//  WExtensionsTests.swift
 //  WMobileKit
 
 import Quick
 import Nimble
 @testable import WMobileKit
 
-class StringExtensionsSpec: QuickSpec {
+class WExtensionsSpec: QuickSpec {
     override func spec() {
-        describe("String+ExtensionsSpec") {
+        describe("WExtensionsSpec") {
             let name1 = "John"
             let name2 = "John Smith"
             let name3 = "John Smith Man"
