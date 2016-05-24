@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		55A106331CAC8B5400495BBC /* LeftMenuTVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */; };
+		730364EB1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */; };
 		73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */; };
 		73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */; };
 		80385E53D084ED5C70EE82DE /* Pods_WMobileKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */; };
@@ -31,6 +32,7 @@
 		5249D1D1F78B1D0399095335 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuTVCExample.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* WMobileKitExample_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMobileKitExample_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchAndRadioExamplesVC.swift; sourceTree = "<group>"; };
 		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; };
 		73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewExamplesVC.swift; sourceTree = "<group>"; };
 		73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextFieldExampleVC.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */,
 				73B2B5CD1CD2BB7000053D22 /* TextViewExamplesVC.swift */,
 				D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */,
+				730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */,
 				D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */,
 				73BE4C981CD94D4B0025E34E /* AutoCompleteTextFieldExampleVC.swift */,
 			);
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
+				730364EB1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */,

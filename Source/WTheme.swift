@@ -53,6 +53,10 @@ public class WTheme: NSObject {
     
     // Toast
     public var toastBGColor: UIColor = .greenColor()
+    
+    // Switch
+    public var switchOutlineColor: UIColor = .blueColor()
+    public var switchBarColor: UIColor = .blueColor()
 
     // Loading Modal
     public var loadingModalBackgroundColor: UIColor = UIColor(hex: 0x595959, alpha: 0.85)
@@ -86,6 +90,9 @@ public class CustomTheme: WTheme {
         primaryTextColor = UIColor(hex: 0x2DBBEE)
         secondaryTextColor = UIColor(hex: 0xFFFFFF)
         toastBGColor = UIColor(hex: 0x42AD48)
+        
+        switchOutlineColor = UIColor(hex: 0xBFE4FF)
+        switchBarColor = UIColor(hex: 0xBFE4FF)
     }
 }
 
@@ -109,6 +116,7 @@ public class WThemeManager: NSObject {
         customizeNavigationBar(theme)
         customizeSideMenuVC(theme)
         customizeToast(theme)
+        customizeSwitch(theme)
     }
 
     private func customizePagingSelectorControl(theme: WTheme) {
@@ -131,6 +139,11 @@ public class WThemeManager: NSObject {
     
     private func customizeToast(theme: WTheme) {
         WToastView.appearance().backgroundColor = theme.toastBGColor
+    }
+    
+    private func customizeSwitch(theme: WTheme) {
+        WSwitchOutlineCircleView.appearance().backgroundColor = theme.switchOutlineColor
+        WSwitchBarView.appearance().backgroundColor = theme.switchBarColor
     }
 
     private func customizeSideMenuVC(theme: WTheme) {}
