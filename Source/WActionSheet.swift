@@ -32,8 +32,8 @@ internal protocol WBaseActionSheetDelegate {
 }
 
 public class WBaseActionSheet<ActionDataType>: UIViewController {
-    public var darkView = UIView(frame: CGRectZero)
-    public var containerView = UIView(frame: CGRectZero)
+    public var darkView = UIView()
+    public var containerView = UIView()
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
@@ -353,9 +353,11 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
-        cell.setSelectedAction(true)
+        // Cell may not be visible yet.
+        if let cell = tableView.cellForRowAtIndexPath(path) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(true)
+        }
         selectedIndex = index
     }
 
@@ -369,10 +371,12 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         }
 
         let path = NSIndexPath(forRow: index, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(path) as! WTableViewCell<ActionDataType>
 
-        cell.setSelectedAction(!cell.isSelectedAction)
-        selectedIndex = cell.selectBar.hidden ? selectedIndex : index
+        // Cell may not be visible yet.
+        if let cell = tableView.cellForRowAtIndexPath(path) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(!cell.isSelectedAction)
+            selectedIndex = cell.selectBar.hidden ? selectedIndex : index
+        }
     }
 
     public func deselectAllActions() {
@@ -394,8 +398,10 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
             return
         }
 
-        let cell = tableView.cellForRowAtIndexPath(path!) as! WTableViewCell<ActionDataType>
-        cell.setSelectedAction(false)
+        // The selected cell may no longer be visible / in memory
+        if let cell = tableView.cellForRowAtIndexPath(path!) as? WTableViewCell<ActionDataType> {
+            cell.setSelectedAction(false)
+        }
     }
 
     // MARK: - UITableViewDataSource
@@ -471,11 +477,11 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
         }
     }
 
-    var selectBar = WSelectBar(frame: CGRectZero)
+    var selectBar = WSelectBar()
     internal var subtitleLabel: UILabel?
     internal var titleLabel: UILabel?
     internal var iconImageView: UIImageView?
-    public private(set) var separatorBar = UIView(frame: CGRectZero)
+    public private(set) var separatorBar = UIView()
     public private(set) var isSelectedAction = false
 
     public required init?(coder aDecoder: NSCoder) {
@@ -533,7 +539,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
             if let subtitle = actionInfo.subtitle {
                 if (subtitleLabel == nil) {
-                    subtitleLabel = UILabel(frame: CGRectZero)
+                    subtitleLabel = UILabel()
                     subtitleLabel?.adjustsFontSizeToFitWidth = true
                     addSubview(subtitleLabel!)
                 }
@@ -558,7 +564,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
 
             if let title = actionInfo.title {
                 if (titleLabel == nil) {
-                    titleLabel = UILabel(frame: CGRectZero)
+                    titleLabel = UILabel()
                     addSubview(titleLabel!)
                 }
 
@@ -628,7 +634,7 @@ public class WHeaderView: UITableViewHeaderFooterView {
         }
     }
 
-    private var separatorBar = UIView(frame: CGRectZero)
+    private var separatorBar = UIView()
     private var titleLabel: UILabel?
 
     public required init?(coder aDecoder: NSCoder) {
@@ -657,7 +663,7 @@ public class WHeaderView: UITableViewHeaderFooterView {
         
         if let title = title {
             if (titleLabel == nil) {
-                titleLabel = UILabel(frame: CGRectZero)
+                titleLabel = UILabel()
                 addSubview(titleLabel!)
             }
             titleLabel?.textAlignment = .Center
