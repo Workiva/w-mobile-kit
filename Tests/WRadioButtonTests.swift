@@ -26,7 +26,28 @@ class WRadioButtonSpec: QuickSpec {
             afterEach({
                 radioButton = nil
             })
-            
+
+            let commonInitDefaultTests = {(radioButton: WRadioButton) -> Void in
+                expect(radioButton.selected) == false
+                expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
+                                                     size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
+                expect(radioButton.radioCircle.clipsToBounds) == true
+                expect(radioButton.indicatorView.clipsToBounds) == true
+                expect(radioButton.groupID) == 0
+                expect(radioButton.buttonID) == 0
+                expect(radioButton.buttonColor) == UIColor.whiteColor()
+                expect(radioButton.highlightColor) == UIColor.grayColor()
+                expect(radioButton.indicatorColor) == UIColor.darkGrayColor()
+                expect(radioButton.borderColor) == UIColor.lightGrayColor()
+                expect(radioButton.borderWidth) == 2.0
+                expect(radioButton.buttonRadius) == 12.0
+                expect(radioButton.indicatorRadius) == 6
+                expect(radioButton.animationTime) == 0.2
+                expect(radioButton.indicatorView.alpha) == 0.0
+                expect(radioButton.radioCircle.layer.cornerRadius) == radioButton.radioCircle.frame.size.height / 2
+                expect(radioButton.indicatorView.layer.cornerRadius) == radioButton.indicatorView.frame.size.height / 2
+            }
+
             describe("when app has been init") {
                 it("should init with coder correctly and verify commonInit") {
                     radioButton = WRadioButton()
@@ -42,24 +63,7 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton).toNot(equal(nil))
                     
                     // default settings from commonInit and default var values
-                    expect(radioButton.selected) == false
-                    expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
-                                                         size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
-                    expect(radioButton.radioCircle.clipsToBounds) == true
-                    expect(radioButton.indicatorView.clipsToBounds) == true
-                    expect(radioButton.groupID) == 0
-                    expect(radioButton.buttonID) == 0
-                    expect(radioButton.buttonColor) == UIColor.whiteColor()
-                    expect(radioButton.highlightColor) == UIColor.grayColor()
-                    expect(radioButton.indicatorColor) == UIColor.darkGrayColor()
-                    expect(radioButton.borderColor) == UIColor.lightGrayColor()
-                    expect(radioButton.borderWidth) == 2.0
-                    expect(radioButton.buttonRadius) == 12.0
-                    expect(radioButton.indicatorRadius) == 6
-                    expect(radioButton.animationTime) == 0.2
-                    expect(radioButton.indicatorView.alpha) == 0.0
-                    expect(radioButton.radioCircle.layer.cornerRadius) == radioButton.radioCircle.frame.size.height / 2
-                    expect(radioButton.indicatorView.layer.cornerRadius) == radioButton.indicatorView.frame.size.height / 2
+                    commonInitDefaultTests(radioButton)
                 }
                 
                 it("should init and setupUI properly without initializer parameters") {
@@ -68,24 +72,7 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton.setupUI()
                     
                     // default settings from commonInit/setupUI
-                    expect(radioButton.selected) == false
-                    expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
-                                                         size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
-                    expect(radioButton.radioCircle.clipsToBounds) == true
-                    expect(radioButton.indicatorView.clipsToBounds) == true
-                    expect(radioButton.groupID) == 0
-                    expect(radioButton.buttonID) == 0
-                    expect(radioButton.buttonColor) == UIColor.whiteColor()
-                    expect(radioButton.highlightColor) == UIColor.grayColor()
-                    expect(radioButton.indicatorColor) == UIColor.darkGrayColor()
-                    expect(radioButton.borderColor) == UIColor.lightGrayColor()
-                    expect(radioButton.borderWidth) == 2.0
-                    expect(radioButton.buttonRadius) == 12.0
-                    expect(radioButton.indicatorRadius) == 6
-                    expect(radioButton.animationTime) == 0.2
-                    expect(radioButton.indicatorView.alpha) == 0.0
-                    expect(radioButton.radioCircle.layer.cornerRadius) == radioButton.radioCircle.frame.size.height / 2
-                    expect(radioButton.indicatorView.layer.cornerRadius) == radioButton.indicatorView.frame.size.height / 2
+                    commonInitDefaultTests(radioButton)
                 }
                 
                 it("should init properly with true initializer parameter") {
@@ -123,7 +110,7 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton.animationTime = 0.1
                     radioButton.selected = true
 
-                    // default settings from commonInit/setupUI
+                    // settings from commonInit/setupUI
                     expect(radioButton.selected) == true
                     expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
                                                          size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
