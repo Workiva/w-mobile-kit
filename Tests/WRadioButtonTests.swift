@@ -200,8 +200,14 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton.selected) == false
                 }
 
-                it("should handle button presses on touch ended") {
+                it("should handle button presses on touch ended and set selected if currently highlighted") {
                     radioButton = WRadioButton()
+
+                    let pressRecognizerStart = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
+                    pressRecognizerStart.testState = .Began
+                    radioButton.buttonWasPressed(pressRecognizerStart)
+
+                    expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
                     pressRecognizer.testState = .Ended
@@ -209,6 +215,43 @@ class WRadioButtonSpec: QuickSpec {
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
                     expect(radioButton.selected) == true
+                }
+
+                it("should handle button presses on touch ended and not set selected if currently not highlighted") {
+                    radioButton = WRadioButton()
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
+                    pressRecognizer.testState = .Ended
+                    radioButton.buttonWasPressed(pressRecognizer)
+
+                    // Currently not highlighted so not within the threshold
+                    expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
+                    expect(radioButton.selected) == false
+                }
+
+                it("should handle button presses on touch changed when at or below threshold") {
+                    radioButton = WRadioButton()
+                    radioButton.center = CGPointMake(radioButton.touchThreshold, 0)
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
+                    pressRecognizer.testState = .Changed
+                    // LocationInView set to CGPointZero for mock
+                    radioButton.buttonWasPressed(pressRecognizer)
+
+                    expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
+                    expect(radioButton.selected) == false
+                }
+                it("should handle button presses on touch changed when over threshold") {
+                    radioButton = WRadioButton()
+                    radioButton.center = CGPointMake(radioButton.touchThreshold+1, 0)
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
+                    pressRecognizer.testState = .Changed
+                    // LocationInView set to CGPointZero for mock
+                    radioButton.buttonWasPressed(pressRecognizer)
+
+                    expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
+                    expect(radioButton.selected) == false
                 }
 
                 it("should handle button presses on other events") {

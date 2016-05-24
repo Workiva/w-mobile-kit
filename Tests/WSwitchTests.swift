@@ -67,7 +67,6 @@ class WSwitchSpec: QuickSpec {
                     // verify UI is setup correctly
                     expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 0.0
-                    expect(switchControl.frontCircle.hidden) == true
                     expect(switchControl.frontCircle.backgroundColor) == UIColor.whiteColor()
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x
                 }
@@ -129,13 +128,27 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.backCircle.frame.origin.x).toEventually(equal(switchControl.barView.frame.origin.x), timeout: 0.3)
                 }
                 
-                it("should toggle from tap") {
+                it("should toggle from tap from starting off and not sliding") {
                     switchControl = WSwitch()
+                    switchControl.on = false
+                    switchControl.didSlideSwitch = false
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
+                    expect(switchControl.on) == true
+                }
+
+                it("should toggle from tap from starting on and not sliding") {
+                    switchControl = WSwitch()
+                    switchControl.on = true
+                    switchControl.didSlideSwitch = false
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Ended
+                    switchControl.switchWasPressed(pressRecognizer)
+
                     expect(switchControl.on) == false
                 }
                 
@@ -164,18 +177,121 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.on) == true
                 }
                 
-                it("should not switch value after press if switch has been slid") {
+                it("should not switch value on after press if switch has been slid") {
                     switchControl = WSwitch()
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
-                    
+                    switchControl.on = false
+                    switchControl.didSlideSwitch = true
+
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Changed
-                    switchControl.switchWasPressed(pressRecognizer)
-                    
                     pressRecognizer.testState = .Ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
+                    expect(switchControl.on) == false
+                }
+
+                it("should not switch value off after press if switch has been slid") {
+                    switchControl = WSwitch()
+                    subject.view.addSubview(switchControl)
+                    switchControl.setupUI()
+                    switchControl.on = true
+                    switchControl.didSlideSwitch = true
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Ended
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.on) == true
+                }
+
+                it("should handle button presses on touch began") {
+                    switchControl = WSwitch()
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Began
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 0.5
+                }
+
+                it("should handle button presses on touch changed when over threshold starting on") {
+                    switchControl = WSwitch()
+                    switchControl.on = true
+                    switchControl.center = CGPointMake(switchControl.touchThreshold+1, 0)
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Changed
+                    // LocationInView set to CGPointZero for mock
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 1.0
+                    expect(switchControl.didSlideSwitch) == false
+                    expect(switchControl.on) == true
+                }
+
+                it("should handle button presses on touch changed when over threshold starting off") {
+                    switchControl = WSwitch()
+                    switchControl.on = false
+                    switchControl.center = CGPointMake(switchControl.touchThreshold+1, 0)
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Changed
+                    // LocationInView set to CGPointZero for mock
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 0.0
+                    expect(switchControl.didSlideSwitch) == false
+                    expect(switchControl.on) == false
+                }
+
+                it("should handle cancelled and failed correctly to reset the switch to the correct state when on") {
+                    switchControl = WSwitch()
+
+                    // when switch is on
+                    switchControl.on = true
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+
+                    // Cancelled
+                    pressRecognizer.testState = .Cancelled
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 1.0
+                    expect(switchControl.didSlideSwitch) == false
+                    expect(switchControl.on) == true
+
+                    // Finished
+                    pressRecognizer.testState = .Failed
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 1.0
+                    expect(switchControl.didSlideSwitch) == false
+                    expect(switchControl.on) == true
+                }
+
+                it("should handle cancelled and failed correctly to reset the switch to the correct state when off") {
+                    switchControl = WSwitch()
+
+                    // when switch is off
+                    switchControl.on = false
+
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+
+                    // Cancelled
+                    pressRecognizer.testState = .Cancelled
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 0.0
+                    expect(switchControl.didSlideSwitch) == false
+                    expect(switchControl.on) == false
+
+                    // Finished
+                    pressRecognizer.testState = .Failed
+                    switchControl.switchWasPressed(pressRecognizer)
+
+                    expect(switchControl.frontCircle.alpha) == 0.0
+                    expect(switchControl.didSlideSwitch) == false
                     expect(switchControl.on) == false
                 }
                 
@@ -185,7 +301,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.setupUI()
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Cancelled
+                    pressRecognizer.testState = .Possible
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true

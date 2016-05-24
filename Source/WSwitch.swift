@@ -40,7 +40,7 @@ public class WSwitch: UIControl {
     public var touchThreshold: CGFloat = 25.0
     
     private var animatedFlag = false
-    private var didSlideSwitch = false
+    internal var didSlideSwitch = false
     internal var didCommonInit = false
     internal var pressRecognizer: UILongPressGestureRecognizer!
     

@@ -203,10 +203,10 @@ public class WRadioButton: UIControl {
         case .Changed:
             let distance: CGFloat = sender.locationInView(superview).distanceToPoint(center)
 
-            if distance < touchThreshold {
-                radioCircle.backgroundColor = highlightColor
-            } else {
+            if distance > touchThreshold {
                 radioCircle.backgroundColor = buttonColor
+            } else {
+                radioCircle.backgroundColor = highlightColor
             }
         case .Ended:
             // Currently highlighted
