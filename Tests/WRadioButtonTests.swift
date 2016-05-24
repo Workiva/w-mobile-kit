@@ -241,6 +241,7 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
                     expect(radioButton.selected) == false
                 }
+
                 it("should handle button presses on touch changed when over threshold") {
                     radioButton = WRadioButton()
                     radioButton.center = CGPointMake(radioButton.touchThreshold+1, 0)

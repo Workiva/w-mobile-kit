@@ -25,7 +25,6 @@ public class UILongPressGestureRecognizerMock : UILongPressGestureRecognizer {
             }
         }
 
-        // Default behavior
-        return super.locationInView(view)
+        return CGPointZero
     }
 }
