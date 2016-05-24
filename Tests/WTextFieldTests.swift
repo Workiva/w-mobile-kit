@@ -28,6 +28,18 @@ class WTextFieldTests: QuickSpec {
             })
 
             describe("when app has been init") {
+                let verifyCommonInit = {
+                    expect(textField.imageSquareSize) == 16
+                    expect(textField.paddingBetweenTextAndImage) == 8
+                    expect(textField.bottomLineWidth) == 1
+                    expect(textField.bottomLineWidthWithText) == 2
+                    expect(textField.leftImage).to(beNil())
+                    expect(textField.leftView).to(beNil())
+                    expect(textField.rightImage).to(beNil())
+                    expect(textField.rightView).to(beNil())
+                    expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
+                }
+
                 it("should init with coder correctly and verify commonInit") {
                     textField = WTextField()
 
@@ -41,15 +53,7 @@ class WTextFieldTests: QuickSpec {
                     expect(object).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(textField.imageSquareSize) == 16
-                    expect(textField.paddingBetweenTextAndImage) == 8
-                    expect(textField.bottomLineWidth) == 1
-                    expect(textField.bottomLineWidthWithText) == 2
-                    expect(textField.leftImage).to(beNil())
-                    expect(textField.leftView).to(beNil())
-                    expect(textField.rightImage).to(beNil())
-                    expect(textField.rightView).to(beNil())
-                    expect(textField.bottomLineColor).to(equal(UIColor.whiteColor()))
+                    verifyCommonInit()
                 }
 
                 it("should successfully add and display a text field with default settings") {
@@ -66,15 +70,7 @@ class WTextFieldTests: QuickSpec {
                     subject.view.layoutIfNeeded()
 
                     // public properties
-                    expect(textField.imageSquareSize) == 16
-                    expect(textField.paddingBetweenTextAndImage) == 8
-                    expect(textField.bottomLineWidth) == 1
-                    expect(textField.bottomLineWidthWithText) == 2
-                    expect(textField.leftImage).to(beNil())
-                    expect(textField.leftView).to(beNil())
-                    expect(textField.rightImage).to(beNil())
-                    expect(textField.rightView).to(beNil())
-                    expect(textField.bottomLineColor) == UIColor.whiteColor()
+                    verifyCommonInit()
                     expect(textField.placeHolderTextColor) == UIColor(hex: 0xFFFFFF, alpha: 0.55)
 
                     // rect sizing

@@ -24,6 +24,13 @@ class WSwitchSpec: QuickSpec {
             })
             
             describe("when app has been init") {
+                let verifyCommonInit = {
+                    expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
+                    expect(switchControl.frontCircle.alpha) == 1.0
+                    expect(switchControl.frontCircle.hidden) == false
+                    expect(switchControl.frontCircle.backgroundColor) == UIColor.whiteColor()
+                }
+
                 it("should init with coder correctly and verify commonInit") {
                     switchControl = WSwitch(true)
                     subject.view.addSubview(switchControl)
@@ -38,9 +45,7 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl).toNot(equal(nil))
                     
                     // default settings from commonInit
-                    expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
-                    expect(switchControl.frontCircle.alpha) == 0.0
-                    expect(switchControl.frontCircle.hidden) == true
+                    verifyCommonInit()
                 }
                 
                 it("should init and setup UI properly without initializer parameters") {
@@ -63,6 +68,7 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 0.0
                     expect(switchControl.frontCircle.hidden) == true
+                    expect(switchControl.frontCircle.backgroundColor) == UIColor.whiteColor()
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x
                 }
                 

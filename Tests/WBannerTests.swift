@@ -47,6 +47,17 @@ class WBannerSpec: QuickSpec {
                 bannerView = nil
             })
 
+            let verifyCommonInit = {
+                expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
+                expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
+                expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
+                expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
+                expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
+                expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
+                expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+            }
+
             describe("when app has been init") {
                 it("should init with coder correctly and verify commonInit") {
                     bannerView = WBannerView(rootView: subject.view)
@@ -61,14 +72,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
-                    expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
-                    expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                    verifyCommonInit()
                 }
 
                 it("should successfully add and display a banner view with default settings") {
@@ -102,15 +106,8 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(1.0))
 
-                    // Common init
-                    expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
-                    expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
-                    expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                    // default settings from commonInit
+                    verifyCommonInit()
                 }
 
                 it("should not show if there is no root view") {
@@ -169,15 +166,8 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha1))
 
-                    // Common init
-                    expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
-                    expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
-                    expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                    // default settings from commonInit
+                    verifyCommonInit()
                 }
 
                 it("should use the basic init and manually set custom properties") {
@@ -221,15 +211,8 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha2))
 
-                    // Common init
-                    expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
-                    expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
-                    expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                    expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
-                    expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                    // default settings from commonInit
+                    verifyCommonInit()
                 }
 
                 it("should use a tap to dismiss banner") {

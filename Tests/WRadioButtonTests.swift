@@ -27,7 +27,7 @@ class WRadioButtonSpec: QuickSpec {
                 radioButton = nil
             })
 
-            let commonInitDefaultTests = {(radioButton: WRadioButton) -> Void in
+            let verifyCommonInit = {
                 expect(radioButton.selected) == false
                 expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
                                                      size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
@@ -63,7 +63,7 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton).toNot(equal(nil))
                     
                     // default settings from commonInit and default var values
-                    commonInitDefaultTests(radioButton)
+                    verifyCommonInit()
                 }
                 
                 it("should init and setupUI properly without initializer parameters") {
@@ -72,7 +72,7 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton.setupUI()
                     
                     // default settings from commonInit/setupUI
-                    commonInitDefaultTests(radioButton)
+                    verifyCommonInit()
                 }
                 
                 it("should init properly with true initializer parameter") {

@@ -27,7 +27,17 @@ class WLoadingModalTests: QuickSpec {
             })
 
             describe("when app has been init") {
-                let verifyDefaultSettings: (Void) -> (Void) = {
+                let verifyCommonInit = {
+                    expect(loadingModalView.backgroundColor) == UIColor(hex: 0x595959, alpha: 0.85)
+                    expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
+                    expect(loadingModalView.titleLabel.textColor) == UIColor.whiteColor()
+                    expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.Center
+                    expect(loadingModalView.descriptionLabel.textColor) == UIColor.whiteColor()
+                    expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
+                    expect(loadingModalView.descriptionLabel.numberOfLines) == 0
+                }
+
+                let verifyDefaultSettings = {
                     // Verifying properties set
                     expect(loadingModalView.spinnerSize) == 44
                     expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 32
@@ -50,13 +60,7 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(loadingModalView.backgroundColor) == UIColor(hex: 0x595959, alpha: 0.85)
-                    expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
-                    expect(loadingModalView.titleLabel.textColor) == UIColor.whiteColor()
-                    expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.Center
-                    expect(loadingModalView.descriptionLabel.textColor) == UIColor.whiteColor()
-                    expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
-                    expect(loadingModalView.descriptionLabel.numberOfLines) == 0
+                    verifyCommonInit()
                 }
 
                 it("should init with coder correctly and verify commonInit") {

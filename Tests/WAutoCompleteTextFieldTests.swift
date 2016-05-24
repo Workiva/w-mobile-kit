@@ -38,6 +38,12 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
             })
             
             describe("when app has been init") {
+                let verifyCommonInit = {
+                    expect(textView.numCharactersBeforeAutoComplete) == 1
+                    expect(textView.addSpaceAfterReplacement) == true
+                    expect(textView.replacesControlPrefix) == false
+                }
+
                 it("should init with coder correctly") {
                     let path = NSTemporaryDirectory() as NSString
                     let locToSave = path.stringByAppendingPathComponent("WAutoCompleteTextView")
@@ -49,9 +55,7 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
                     expect(object).toNot(equal(nil))
                     
                     // default settings from commonInit
-                    expect(textView.numCharactersBeforeAutoComplete) == 1
-                    expect(textView.addSpaceAfterReplacement) == true
-                    expect(textView.replacesControlPrefix) == false
+                    verifyCommonInit()
                 }
                 
                 it("should fit the superview it is added to") {
