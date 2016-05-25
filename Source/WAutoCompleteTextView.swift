@@ -82,7 +82,7 @@ public class WAutoCompleteTextView : UIView {
             snp_remakeConstraints { (make) in
                 make.left.equalTo(newSuperview)
                 make.right.equalTo(newSuperview)
-                make.bottom.equalTo(newSuperview)
+                self.bottomConstraint = make.bottom.equalTo(newSuperview).constraint
                 make.height.equalTo(TEXT_VIEW_HEIGHT)
             }
             newSuperview.layoutIfNeeded()
@@ -127,7 +127,7 @@ public class WAutoCompleteTextView : UIView {
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.height.equalTo(TEXT_VIEW_HEIGHT)
-            self.bottomConstraint = make.bottom.equalTo(self).constraint
+            make.bottom.equalTo(self).constraint
         }
         textField.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView).offset(8)
