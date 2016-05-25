@@ -121,11 +121,9 @@ public class WSwitch: UIControl {
             make.width.equalTo(backCircle).offset(-2)
         }
         
-        let startingBlock: (Void) -> Void = {
+        let startingBlock = {
             self.frontCircle.alpha = self.on ? 1.0 : 0.0
         }
-        
-        let finishedBlock: (Void) -> Void = { }
 
         if (animatedFlag) {
             animatedFlag = false
@@ -134,14 +132,11 @@ public class WSwitch: UIControl {
                     self.layoutIfNeeded()
                     startingBlock()
                 },
-                completion: { finished in
-                    finishedBlock()
-                }
+                completion: nil
             )
         } else {
             startingBlock()
             layoutIfNeeded()
-            finishedBlock()
         }
         
         backCircle.clipsToBounds = true
