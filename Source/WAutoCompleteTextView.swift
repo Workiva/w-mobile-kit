@@ -124,15 +124,7 @@ public class WAutoCompleteTextView : UIView {
     }
     
     public func setupUI() {
-        if let superview = superview {
-            snp_remakeConstraints { (make) in
-                make.left.equalTo(superview)
-                make.right.equalTo(superview)
-                make.bottom.equalTo(superview).offset(bottomConstraintOffset)
-                make.height.equalTo(TEXT_VIEW_HEIGHT)
-            }
-            superview.layoutIfNeeded()
-        }
+        
         
         backgroundView.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
@@ -158,8 +150,21 @@ public class WAutoCompleteTextView : UIView {
             make.height.equalTo(0)
             make.top.equalTo(backgroundView)
         }
-        UIView.performWithoutAnimation { 
-            self.layoutIfNeeded()
+        
+        if let superview = superview {
+            snp_remakeConstraints { (make) in
+                make.left.equalTo(superview)
+                make.right.equalTo(superview)
+                make.bottom.equalTo(superview).offset(bottomConstraintOffset)
+                make.height.equalTo(TEXT_VIEW_HEIGHT)
+            }
+            UIView.performWithoutAnimation {
+                superview.layoutIfNeeded()
+            }
+        } else {
+            UIView.performWithoutAnimation {
+                self.layoutIfNeeded()
+            }
         }
     }
     
