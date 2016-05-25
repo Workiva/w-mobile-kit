@@ -155,7 +155,7 @@ public class WAutoCompleteTextView : UIView {
             snp_remakeConstraints { (make) in
                 make.left.equalTo(superview)
                 make.right.equalTo(superview)
-                make.bottom.equalTo(superview).offset(bottomConstraintOffset)
+                make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
                 make.height.equalTo(TEXT_VIEW_HEIGHT)
             }
             UIView.performWithoutAnimation {
