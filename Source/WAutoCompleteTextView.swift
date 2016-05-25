@@ -56,15 +56,7 @@ public class WAutoCompleteTextView : UIView {
             autoCompleteTable.reloadData()
         }
     }
-    
-    public override var bounds: CGRect {
-        didSet {
-            if (!CGRectEqualToRect(bounds, CGRectZero)) {
-                setupUI()
-            }
-        }
-    }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -85,9 +77,7 @@ public class WAutoCompleteTextView : UIView {
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
-        if (!CGRectEqualToRect(bounds, CGRectZero)) {
-            setupUI()
-        }
+        setupUI()
     }
     
     private func commonInit() {
@@ -124,8 +114,6 @@ public class WAutoCompleteTextView : UIView {
     }
     
     public func setupUI() {
-        
-        
         backgroundView.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.right.equalTo(self)
