@@ -24,6 +24,11 @@ class WTextViewTests: QuickSpec {
             let parsedString6 = "This has one [inco]rre(ct) URL with one correct URL"
             
             describe("when text view has been init") {
+                let verifyCommonInit = {
+                    expect(textView.editable).to(beFalse())
+                    expect(textView.scrollEnabled).to(beFalse())
+                }
+
                 it("should init with coder correctly and verify commonInit") {
                     textView = WTextView()
 
@@ -37,8 +42,7 @@ class WTextViewTests: QuickSpec {
                     expect(textView).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(textView.editable).to(beFalse())
-                    expect(textView.scrollEnabled).to(beFalse())
+                    verifyCommonInit()
                 }
 
                 it("should parse single markdown URL correctly") {

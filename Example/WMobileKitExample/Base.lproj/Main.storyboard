@@ -667,7 +667,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This was created in the storyboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6c-lz-1Oa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These were created in the storyboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6c-lz-1Oa">
                                 <rect key="frame" x="80" y="127" width="440" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="dLB-4P-nBZ"/>
@@ -677,7 +677,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These were created programmatically" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3YD-Ym-WFs">
-                                <rect key="frame" x="80" y="212" width="440" height="55"/>
+                                <rect key="frame" x="80" y="270" width="440" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="IlH-GK-1J3"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="WkW-MI-C2q"/>
@@ -685,6 +685,11 @@
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="textColor" red="0.9248404777" green="0.9248404777" blue="0.9248404777" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="WkW-MI-C2q"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v2h-8d-iKM" customClass="WSwitch" customModule="WMobileKit">
                                 <rect key="frame" x="278" y="186" width="44" height="20"/>
@@ -702,32 +707,91 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eyO-mV-rg1" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="248" y="221" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="S4q-dC-v9W"/>
+                                    <constraint firstAttribute="width" constant="44" placeholder="YES" id="xW7-eL-Hoh"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tJ1-6l-hqe" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="306" y="221" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" placeholder="YES" id="X7b-Ot-07j"/>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="fWs-WU-m8B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sb8-eU-o12" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="190" y="221" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" placeholder="YES" id="CiZ-e7-Xg6"/>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="r8G-lN-StA"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3In-hJ-JK6" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="364" y="221" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" placeholder="YES" id="6sO-xR-3lW"/>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="KH5-cn-xZe"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.26376107409999999" green="0.7853874783" blue="0.86126443610000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3YD-Ym-WFs" firstAttribute="top" secondItem="B6c-lz-1Oa" secondAttribute="bottom" constant="30" id="174-Uc-whg"/>
+                            <constraint firstItem="tJ1-6l-hqe" firstAttribute="top" secondItem="sb8-eU-o12" secondAttribute="top" id="4lL-tL-hBo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Wn-7s-a28" secondAttribute="trailing" constant="10" id="4pZ-RD-cja"/>
                             <constraint firstItem="3YD-Ym-WFs" firstAttribute="centerX" secondItem="x1Q-5f-GRU" secondAttribute="centerX" id="5EN-ER-pJ7"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="leading" secondItem="sb8-eU-o12" secondAttribute="trailing" constant="14" id="6ed-1S-Fnn"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="leading" secondItem="0rm-Vd-ctj" secondAttribute="leading" id="8Ng-Wo-cne"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3YD-Ym-WFs" secondAttribute="trailing" constant="60" id="AvA-HW-1x2"/>
                             <constraint firstItem="3YD-Ym-WFs" firstAttribute="leading" secondItem="x1Q-5f-GRU" secondAttribute="leadingMargin" constant="60" id="CjR-TT-v9c"/>
+                            <constraint firstItem="3YD-Ym-WFs" firstAttribute="top" secondItem="eyO-mV-rg1" secondAttribute="bottom" constant="8" id="Igj-La-4gJ"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="top" secondItem="sb8-eU-o12" secondAttribute="top" id="Kqg-7Z-R4z"/>
                             <constraint firstItem="B6c-lz-1Oa" firstAttribute="leading" secondItem="x1Q-5f-GRU" secondAttribute="leadingMargin" constant="60" id="LT6-h1-y7f"/>
+                            <constraint firstItem="3YD-Ym-WFs" firstAttribute="top" secondItem="eyO-mV-rg1" secondAttribute="bottom" constant="5" id="MAQ-zr-FTh"/>
                             <constraint firstItem="3Wn-7s-a28" firstAttribute="centerX" secondItem="x1Q-5f-GRU" secondAttribute="centerX" id="Mgm-Hw-JUx"/>
                             <constraint firstItem="0rm-Vd-ctj" firstAttribute="leading" secondItem="x1Q-5f-GRU" secondAttribute="leadingMargin" id="Tdu-ID-vbK"/>
                             <constraint firstItem="v2h-8d-iKM" firstAttribute="top" secondItem="B6c-lz-1Oa" secondAttribute="bottom" constant="4" id="Uec-p9-4XK"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="centerX" secondItem="x1Q-5f-GRU" secondAttribute="centerX" constant="-30" id="WuH-5u-YJu"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="top" secondItem="0rm-Vd-ctj" secondAttribute="top" id="b2N-iJ-7g8"/>
                             <constraint firstItem="3Wn-7s-a28" firstAttribute="leading" secondItem="x1Q-5f-GRU" secondAttribute="leadingMargin" constant="10" id="bCT-Yw-D8W"/>
                             <constraint firstItem="3Wn-7s-a28" firstAttribute="top" secondItem="Ktz-Ir-oxb" secondAttribute="bottom" constant="10" id="bYW-kr-6gt"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="top" secondItem="Ktz-Ir-oxb" secondAttribute="bottom" constant="10" id="c5c-DA-AEa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="B6c-lz-1Oa" secondAttribute="trailing" constant="60" id="htp-1n-OZV"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="top" secondItem="0rm-Vd-ctj" secondAttribute="top" id="i0e-Ta-psW"/>
                             <constraint firstItem="0rm-Vd-ctj" firstAttribute="top" secondItem="B6c-lz-1Oa" secondAttribute="bottom" constant="4" id="os2-Eq-JJg"/>
+                            <constraint firstItem="3In-hJ-JK6" firstAttribute="top" secondItem="sb8-eU-o12" secondAttribute="top" id="ou3-Qa-0yf"/>
+                            <constraint firstItem="tJ1-6l-hqe" firstAttribute="leading" secondItem="eyO-mV-rg1" secondAttribute="trailing" constant="14" id="tWJ-Uv-EYs"/>
                             <constraint firstItem="B6c-lz-1Oa" firstAttribute="centerX" secondItem="x1Q-5f-GRU" secondAttribute="centerX" id="tXA-6V-DeM"/>
                             <constraint firstItem="v2h-8d-iKM" firstAttribute="centerX" secondItem="x1Q-5f-GRU" secondAttribute="centerX" id="u8v-Fh-WIZ"/>
                             <constraint firstItem="B6c-lz-1Oa" firstAttribute="top" secondItem="3Wn-7s-a28" secondAttribute="bottom" constant="3" id="uV1-pB-j0L"/>
-                            <constraint firstItem="3YD-Ym-WFs" firstAttribute="top" secondItem="0rm-Vd-ctj" secondAttribute="bottom" constant="6" id="xII-Ng-QS7"/>
+                            <constraint firstItem="3In-hJ-JK6" firstAttribute="leading" secondItem="tJ1-6l-hqe" secondAttribute="trailing" constant="14" id="vZI-iN-UpB"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="leading" secondItem="x1Q-5f-GRU" secondAttribute="leadingMargin" id="wCj-Mo-cq6"/>
+                            <constraint firstItem="3YD-Ym-WFs" firstAttribute="top" secondItem="0rm-Vd-ctj" secondAttribute="bottom" constant="60" id="xII-Ng-QS7"/>
+                            <constraint firstItem="eyO-mV-rg1" firstAttribute="top" secondItem="0rm-Vd-ctj" secondAttribute="bottom" constant="15" id="yzI-NC-bxV"/>
                             <constraint firstItem="v2h-8d-iKM" firstAttribute="leading" secondItem="0rm-Vd-ctj" secondAttribute="trailing" constant="15" id="zWT-SL-xPl"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="174-Uc-whg"/>
+                                <exclude reference="Igj-La-4gJ"/>
+                                <exclude reference="xII-Ng-QS7"/>
+                                <exclude reference="8Ng-Wo-cne"/>
+                                <exclude reference="b2N-iJ-7g8"/>
+                                <exclude reference="c5c-DA-AEa"/>
+                                <exclude reference="i0e-Ta-psW"/>
+                                <exclude reference="wCj-Mo-cq6"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="iU7-A1-aR3"/>
                     <connections>
                         <outlet property="storyboardLabel" destination="0rm-Vd-ctj" id="t3N-8O-kCR"/>
+                        <outlet property="storyboardRadio1" destination="sb8-eU-o12" id="c7B-c7-I7r"/>
+                        <outlet property="storyboardRadio2" destination="eyO-mV-rg1" id="xn3-01-eyL"/>
+                        <outlet property="storyboardRadio3" destination="tJ1-6l-hqe" id="heg-x8-XI0"/>
+                        <outlet property="storyboardRadio4" destination="3In-hJ-JK6" id="rb6-1L-rcS"/>
                         <outlet property="storyboardSwitch" destination="v2h-8d-iKM" id="ASs-Is-mrh"/>
                     </connections>
                 </viewController>

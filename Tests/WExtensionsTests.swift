@@ -1,25 +1,19 @@
 //
-//  String+ExtensionsTests.swift
+//  WExtensionsTests.swift
 //  WMobileKit
 
 import Quick
 import Nimble
 @testable import WMobileKit
 
-class StringExtensionsSpec: QuickSpec {
+class WExtensionsSpec: QuickSpec {
     override func spec() {
-        describe("String+ExtensionsSpec") {
-            var subject: String!
-
+        describe("WExtensionsSpec") {
             let name1 = "John"
             let name2 = "John Smith"
             let name3 = "John Smith Man"
             let name4 = "John Smith Man Anderson"
             let name5 = "John Smith Man Anderson Paul"
-
-            beforeEach({
-                subject = String()
-            })
 
             describe("initials") {
                 it("should get the initials for names for the default initial length") {

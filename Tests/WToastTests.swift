@@ -39,6 +39,13 @@ class WToastSpec: QuickSpec {
             })
 
             describe("when app has been init") {
+                let verifyCommonInit = {
+                    expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.rightIcon).to(beNil())
+                    expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                }
+
                 it("should init with coder correctly and verify commonInit") {
                     toastView = WToastView(message: message1)
 
@@ -52,10 +59,7 @@ class WToastSpec: QuickSpec {
                     expect(toastView).toNot(equal(nil))
 
                     // default settings from commonInit
-                    expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
-                    expect(toastView.rightIcon).to(beNil())
-                    expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                    verifyCommonInit()
                 }
 
                 it("should successfully add and display a toast view with default settings") {
@@ -67,11 +71,8 @@ class WToastSpec: QuickSpec {
                     expect(toastView.isVisible()).to(beTruthy())
 
                     // public properties
-                    expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    verifyCommonInit()
                     expect(toastView.message).to(equal(message1))
-                    expect(toastView.rightIcon).to(beNil())
-                    expect(toastView.toastColor).to(equal(UIColor.blackColor()))
                     expect(toastView.toastAlpha).to(equal(0.7))
 
                     // Verify the toast disappears
