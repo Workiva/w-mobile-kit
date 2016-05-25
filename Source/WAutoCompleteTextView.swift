@@ -3,6 +3,7 @@
 //  WMobileKit
 
 import UIKit
+import SnapKit
 
 let TEXT_VIEW_HEIGHT: CGFloat = 48
 let TABLE_HEIGHT_MAX: CGFloat = 90
@@ -26,6 +27,7 @@ public class WAutoCompleteTextView : UIView {
     public var addSpaceAfterReplacement = true
     public var numCharactersBeforeAutoComplete = 1
     public var controlPrefix: String?
+    public var bottomConstraint: Constraint?
     public weak var delegate: WAutoCompleteTextViewDelegate?
     public weak var dataSource: UITableViewDataSource? {
         didSet {
@@ -125,7 +127,7 @@ public class WAutoCompleteTextView : UIView {
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.height.equalTo(TEXT_VIEW_HEIGHT)
-            make.bottom.equalTo(self)
+            self.bottomConstraint = make.bottom.equalTo(self).constraint
         }
         textField.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView).offset(8)
@@ -187,12 +189,12 @@ public class WAutoCompleteTextView : UIView {
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
         if let currentSuperview = superview {
-            snp_remakeConstraints(closure: { (make) in
-                make.bottom.equalTo(currentSuperview).offset(-height)
+            snp_remakeConstraints { (make) in
+                self.bottomConstraint = make.bottom.equalTo(currentSuperview).offset(-height).constraint
                 make.left.equalTo(currentSuperview)
                 make.right.equalTo(currentSuperview)
                 make.height.equalTo(TEXT_VIEW_HEIGHT + maxAutoCompleteHeight)
-            })
+            }
             
             currentSuperview.layoutIfNeeded()
         }
