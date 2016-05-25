@@ -27,18 +27,11 @@ public class WAutoCompleteTextView : UIView {
     public var addSpaceAfterReplacement = true
     public var numCharactersBeforeAutoComplete = 1
     public var controlPrefix: String?
+    public var bottomConstraintOffset: CGFloat = 0
     public weak var delegate: WAutoCompleteTextViewDelegate?
     public weak var dataSource: UITableViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
-        }
-    }
-    
-    public var bottomConstraintOffset: CGFloat = 0 {
-        didSet {
-            if (!CGRectEqualToRect(bounds, CGRectZero)) {
-                setupUI()
-            }
         }
     }
     
