@@ -40,10 +40,16 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         view.addSubview(switch1)
         switch1.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(view).offset(280)
+            make.top.equalTo(view).offset(250)
         }
         switch1.tag = 1
-        
+        switch1.barWidth = 100
+        switch1.barHeight = 20
+        switch1.circleRadius = 18.0
+        switch1.frontCircle.backgroundColor = .yellowColor()
+        switch1.backCircle.backgroundColor = .lightGrayColor()
+        switch1.barView.backgroundColor = .cyanColor()
+
         view.addSubview(switchLabel1)
         switchLabel1.snp_makeConstraints { (make) in
             make.centerY.equalTo(switch1)
@@ -56,9 +62,15 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         view.addSubview(switch2)
         switch2.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(switch1.snp_bottom).offset(10)
+            make.top.equalTo(switch1.snp_bottom).offset(20)
         }
         switch2.tag = 2
+        switch2.barHeight = 30
+        switch2.barWidth = 40
+        switch2.circleRadius = 12.0
+        switch2.frontCircle.backgroundColor = .greenColor()
+        switch2.backCircle.backgroundColor = .purpleColor()
+        switch2.barView.backgroundColor = .whiteColor()
         
         view.addSubview(switchLabel2)
         switchLabel2.snp_makeConstraints { (make) in
@@ -131,13 +143,13 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         }
         radio5.buttonID = 5
         radio5.groupID = 2
+        radio5.indicatorColor = .blueColor()
+        radio5.indicatorRadius = 9
         radio5.buttonRadius = 20
         radio5.buttonColor = .yellowColor()
         radio5.borderWidth = 5
         radio5.borderColor = .purpleColor()
         radio5.highlightColor = .blackColor()
-        radio5.indicatorColor = .blueColor()
-        radio5.indicatorRadius = 9
 
         view.addSubview(radio7)
         radio7.snp_makeConstraints { (make) in

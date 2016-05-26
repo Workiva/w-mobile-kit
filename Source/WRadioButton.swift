@@ -179,6 +179,8 @@ public class WRadioButton: UIControl {
 
         radioCircle.layer.cornerRadius = radioCircle.frame.size.height / 2
         indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
+
+        invalidateIntrinsicContentSize()
     }
 
     public func radioButtonSelected(notification: NSNotification) {
@@ -218,7 +220,8 @@ public class WRadioButton: UIControl {
             break
         }
     }
-    
+
+    // Must have a invalidateIntrinsicContentSize() call in setupUI()
     public override func intrinsicContentSize() -> CGSize {
         return CGSize(width: buttonRadius * 2, height: buttonRadius * 2)
     }
