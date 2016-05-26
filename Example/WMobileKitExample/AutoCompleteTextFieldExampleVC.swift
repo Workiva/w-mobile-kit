@@ -35,7 +35,7 @@ public class AutoCompleteTextFieldExampleVC: WSideMenuContentVC {
 
 // MARK: Table View Data Source
 //       Must be implemented for auto completion
-extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
+extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Auto completion cells show data from search results
         let cell = tableView.dequeueReusableCellWithIdentifier(autoCellIdentifier)!
@@ -50,11 +50,7 @@ extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
-}
 
-// MARK: Auto Complete Text View Delegate
-//       Must be implemented for auto completion
-extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDelegate {
     public func heightForAutoCompleteTable() -> CGFloat {
         return CGFloat(searchResults.count * 40)
     }
@@ -67,7 +63,11 @@ extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDelegate {
             searchResults.append(word.stringByAppendingString(String(i)))
         }
     }
-    
+}
+
+// MARK: Auto Complete Text View Delegate
+//       Must be implemented for auto completion
+extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDelegate {
     public func didSelectAutoCompletion(word: String) {
         // Word was chosen, called after word has been replaced
     }

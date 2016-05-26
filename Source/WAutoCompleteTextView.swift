@@ -10,8 +10,11 @@ let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
 @objc public protocol WAutoCompleteTextViewDelegate : class {
-    optional func didChangeAutoCompletionPrefix(prefix: String, word: String)
     optional func didSelectAutoCompletion(word: String)
+}
+
+@objc public protocol WAutoCompleteTextViewDataSource : UITableViewDataSource {
+    optional func didChangeAutoCompletionPrefix(prefix: String, word: String)
     optional func heightForAutoCompleteTable() -> CGFloat
 }
 
@@ -29,7 +32,7 @@ public class WAutoCompleteTextView : UIView {
     public var controlPrefix: String?
     public var bottomConstraintOffset: CGFloat = 0
     public weak var delegate: WAutoCompleteTextViewDelegate?
-    public weak var dataSource: UITableViewDataSource? {
+    public weak var dataSource: WAutoCompleteTextViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
         }
@@ -162,7 +165,7 @@ public class WAutoCompleteTextView : UIView {
             make.right.equalTo(backgroundView)
             make.bottom.equalTo(backgroundView.snp_top)
             if (animateIn) {
-                if let setHeight = delegate?.heightForAutoCompleteTable?() {
+                if let setHeight = dataSource?.heightForAutoCompleteTable?() {
                     make.height.equalTo(min(setHeight, maxAutoCompleteHeight))
                 } else {
                     make.height.equalTo(maxAutoCompleteHeight)
@@ -302,7 +305,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
             if let range = wordRangeAtCursor(textField) {
                 if let word = textField.text?.substringWithRange(range) {
                     if let prefix = controlPrefix {
-                        if (word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) {
+                        if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
                             let offset = text.startIndex.distanceTo(range.startIndex)
                             let pos = textField.positionFromPosition(textField.beginningOfDocument, offset: offset)
                             let wordWithoutPrefix = word.substringFromIndex(word.startIndex.advancedBy(prefix.characters.count))
@@ -310,7 +313,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
                                 showAutoCompleteView(true)
                                 autoCompleteRange = range
                                 
-                                delegate?.didChangeAutoCompletionPrefix?(prefix, word: wordWithoutPrefix)
+                                dataSource?.didChangeAutoCompletionPrefix?(prefix, word: wordWithoutPrefix)
                                 
                                 return
                             }
