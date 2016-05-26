@@ -47,6 +47,7 @@
 		D5A4F5FE1CAEDA290041BB98 /* UIAppearance+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */; };
 		D5C4B4451CADBD9A009B4104 /* WTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4B4441CADBD9A009B4104 /* WTheme.swift */; };
+		D5F7A6521CF6401500636AB4 /* WBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7A6511CF6401500636AB4 /* WBadge.swift */; };
 		D71E55DE1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */; };
 		D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7A1CC7D55A00130C7B /* WTextField.swift */; };
 		D73C27F01CDA5EF100189426 /* WLoadingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */; };
@@ -114,6 +115,7 @@
 		D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; };
 		D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		D5C4B4441CADBD9A009B4104 /* WTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTheme.swift; sourceTree = "<group>"; };
+		D5F7A6511CF6401500636AB4 /* WBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadge.swift; sourceTree = "<group>"; };
 		D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCustomTransitionsTests.swift; sourceTree = "<group>"; };
 		D7310D7A1CC7D55A00130C7B /* WTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextField.swift; sourceTree = "<group>"; };
 		D73C27EE1CDA5E3800189426 /* WEquatables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEquatables.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				D518B1D71CDBEE3D0058B6A9 /* Extensions */,
 				73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */,
 				73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */,
+				D5F7A6511CF6401500636AB4 /* WBadge.swift */,
 				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
 				D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */,
@@ -465,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */,
+				D5F7A6521CF6401500636AB4 /* WBadge.swift in Sources */,
 				730364ED1CE6419F00F8F3D8 /* WSwitch.swift in Sources */,
 				73B81F1C1CE13DA1009A9D73 /* WAutoCompleteTextView.swift in Sources */,
 				D5409CE81CCE988000F984D3 /* WBanner.swift in Sources */,
