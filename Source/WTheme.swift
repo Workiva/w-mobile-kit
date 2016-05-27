@@ -38,6 +38,7 @@ public class WTheme: NSObject {
     public var secondaryTextColor: UIColor = .grayColor()
 
     // Colors that apply directly to theme
+    public var backgroundColor: UIColor = UIColor(hex: 0x32B0CA) // teal
 
     // Paging Selector
     public var pagingSelectorControlColor: UIColor = .lightGrayColor()

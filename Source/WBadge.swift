@@ -30,7 +30,7 @@ public class WBadge: UIView {
         }
     }
 
-    public var fontSize: CGFloat = 12 {
+    public var fontSize: CGFloat = 12.0 {
         didSet {
             font = UIFont(name:font.fontName, size:fontSize)!
             setupUI()
@@ -47,7 +47,7 @@ public class WBadge: UIView {
 
     public var countLabel = UILabel()
 
-    public var badgeColor = UIColor(hex: 0x0094FF) {
+    public var badgeColor = UIColor(hex: 0x0094FF) { //blue
         didSet {
             setupUI()
         }
@@ -59,38 +59,34 @@ public class WBadge: UIView {
         }
     }
 
-    public override var bounds: CGRect {
-        didSet {
-            if (!subviews.contains(countLabel)) {
-                commonInit()
-            }
-
-            setupUI()
-        }
-    }
-
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         commonInit()
+        setupUI()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
         commonInit()
+        setupUI()
     }
 
     public convenience init(_ count: Int) {
         self.init(frame: CGRectZero)
 
         self.count = count
+
+        setupUI()
     }
 
     public func commonInit() {
         addSubview(badgeView)
         badgeView.addSubview(countLabel)
     }
+
+    private var labelSize: CGSize = CGSizeZero
 
     public func setupUI() {
         let countString = String(count)
@@ -101,67 +97,49 @@ public class WBadge: UIView {
         countLabel.attributedText = attributedString
         countLabel.textAlignment = NSTextAlignment.Center
         countLabel.font = font
-//        countLabel.adjustsFontSizeToFitWidth = true
         countLabel.textColor = countColor
 
-        let size = sizeForString(countString)
+        countLabel.sizeToFit()
+        layoutIfNeeded()
 
-//        let newString: NSString = countString as NSString
-//        let size: CGSize = newString.sizeWithAttributes([NSFontAttributeName: font])
+        labelSize = countLabel.frame.size
 
-//        CGSize textStringSize = [countString sizeWithFont:font
-//            constrainedToSize:9999
-//            lineBreakMode:self.dateLabel.lineBreakMode];
+//        let size = sizeForString(countString)
 
         badgeView.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
-//            make.width.equalTo(size.width).offset(padding) // height of text
-//            make.height.equalTo(size.height).offset(padding) // width of text
-            make.width.equalTo(0).offset(size.width+widthPadding)
-            make.height.equalTo(0).offset(size.height+heightPadding)
-//            make.width.equalTo(size.width)
-//            make.height.equalTo(size.height)
-
+            make.width.equalTo(0).offset(labelSize.width+widthPadding)
+            make.height.equalTo(0).offset(labelSize.height+heightPadding)
         }
-
-        layoutIfNeeded()
-        layoutSubviews()
-        layoutIfNeeded()
 
         countLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
-//            make.width.equalTo(size.width)
-//            make.height.equalTo(size.height)
-//            make.width.equalTo(size.width).offset(padding) // height of text
-//            make.height.equalTo(size.height).offset(padding) // width of text
-            make.width.equalTo(0).offset(size.width)
-            make.height.equalTo(0).offset(size.height)
+            make.width.equalTo(0).offset(labelSize.width)
+            make.height.equalTo(0).offset(labelSize.height)
         }
 
-//        clipsToBounds = true
-//
-//        layer.cornerRadius = (cornerRadius != nil) ? cornerRadius! : (frame.size.height / 2)
-//        backgroundColor = badgeColor
+        layoutIfNeeded()
+        invalidateIntrinsicContentSize()
 
         badgeView.clipsToBounds = true
-        badgeView.layer.cornerRadius = (cornerRadius != nil) ? cornerRadius! : (frame.size.height / 2)
+        badgeView.layer.cornerRadius = (cornerRadius != nil) ? cornerRadius! : (labelSize.height / 2)
+//        badgeView.layer.cornerRadius = 10
         badgeView.backgroundColor = badgeColor
-
-        layoutIfNeeded()
-        layoutSubviews()
-        layoutIfNeeded()
-
     }
 
-    func sizeForString(string: String) -> CGSize {
-//        return (string as NSString).sizeWithAttributes([NSFontAttributeName: font])
+//    func sizeForString(string: String) -> CGSize {
+//        return (string as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(fontSize + 3)])
+//    }
+//
+//    func sizeForBadge() -> CGSize {
+//        return sizeForString(String(count))
+//    }
 
-        return (string as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(fontSize+3)])
-
-//        return size
-
-//        return CGSizeMake(1, 1)
+    // Must have a invalidateIntrinsicContentSize() call in setupUI()
+    public override func intrinsicContentSize() -> CGSize {
+//        let size = sizeForBadge()
+        return CGSize(width: labelSize.width+widthPadding, height: labelSize.height+heightPadding)
     }
 }

@@ -6,8 +6,8 @@ import Foundation
 import WMobileKit
 
 public class BadgeExamplesVC: WSideMenuContentVC {
-    let badge1 = WBadge()
-    let label1 = UILabel()
+
+
     //    let switch2 = WSwitch(false)
     //
     //    let switchLabel1 = UILabel()
@@ -37,25 +37,50 @@ public class BadgeExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        badge1.count = 9
-
-//        badge1.badgeColor = UIColor.greenColor()
+        let badge1 = WBadge()
 
         view.addSubview(badge1)
         badge1.snp_makeConstraints { (make) in
-            make.centerX.equalTo(view)
-            make.height.equalTo(20)
-            make.width.equalTo(50)
+            make.centerX.equalTo(view).offset(-60)
             make.top.equalTo(view).offset(30)
         }
 
+        let label1 = UILabel()
         label1.text = "Default:"
+        label1.sizeToFit()
         view.addSubview(label1)
         label1.snp_makeConstraints { (make) in
-            make.right.equalTo(badge1.snp_left).offset(-10)
-            make.height.equalTo(20)
-            make.width.equalTo(70)
+            make.right.equalTo(badge1.snp_left).offset(-4)
             make.top.equalTo(badge1.snp_top)
+        }
+
+        let badge2 = WBadge(21)
+        view.addSubview(badge2)
+        badge2.snp_makeConstraints { (make) in
+            make.left.equalTo(badge1.snp_right).offset(4)
+            make.top.equalTo(badge1.snp_top)
+        }
+
+
+        let badge3 = WBadge(111)
+        view.addSubview(badge3)
+        badge3.snp_makeConstraints { (make) in
+            make.left.equalTo(badge2.snp_right).offset(4)
+            make.top.equalTo(badge2.snp_top)
+        }
+
+        let badge4 = WBadge(8888)
+        view.addSubview(badge4)
+        badge4.snp_makeConstraints { (make) in
+            make.left.equalTo(badge3.snp_right).offset(4)
+            make.top.equalTo(badge3.snp_top)
+        }
+
+        let badge5 = WBadge(58693324)
+        view.addSubview(badge5)
+        badge5.snp_makeConstraints { (make) in
+            make.left.equalTo(badge4.snp_right).offset(4)
+            make.top.equalTo(badge4.snp_top)
         }
 
         //

@@ -19,6 +19,7 @@
 		D53D0BC11CAB11B70065D106 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BB91CAB11B70065D106 /* LaunchScreen.xib */; };
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
 		D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */; };
+		D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0141CF7B515000893C1 /* MobileKitVC.swift */; };
 		D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */; };
 		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
@@ -46,6 +47,7 @@
 		D53D0BBC1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuVCExample.swift; sourceTree = "<group>"; };
+		D56DF0141CF7B515000893C1 /* MobileKitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileKitVC.swift; sourceTree = "<group>"; };
 		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; };
 		D592B2BC1CC9498E00301C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		D592AB741CC5471700301C7F /* Content View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D56DF0141CF7B515000893C1 /* MobileKitVC.swift */,
 				D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */,
 				73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */,
 				D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */,
@@ -289,6 +292,7 @@
 				73B2B5CE1CD2BB7000053D22 /* TextViewExamplesVC.swift in Sources */,
 				D50149E51CE3D90D00E5263E /* SpinnerExamplesVC.swift in Sources */,
 				D50149E41CE3D90A00E5263E /* LoadingModalExamplesVC.swift in Sources */,
+				D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */,
 				73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */,
 				D5F7A6541CF640F800636AB4 /* BadgeExamplesVC.swift in Sources */,
 				D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */,
