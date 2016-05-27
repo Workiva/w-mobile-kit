@@ -45,7 +45,7 @@ public class WBadge: UIView {
 
     internal var badgeView = UIView()
 
-    public var countLabel = UILabel()
+    internal var countLabel = UILabel()
 
     public var badgeColor = UIColor(hex: 0x0094FF) { //blue
         didSet {
@@ -89,28 +89,13 @@ public class WBadge: UIView {
     private var labelSize: CGSize = CGSizeZero
 
     public func setupUI() {
-        let countString = String(count)
-
-        let attributedString = NSMutableAttributedString(string: countString)
-        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: countString.characters.count))
-
-        countLabel.attributedText = attributedString
-        countLabel.textAlignment = NSTextAlignment.Center
-        countLabel.font = font
-        countLabel.textColor = countColor
-
-        countLabel.sizeToFit()
-        layoutIfNeeded()
-
-        labelSize = countLabel.frame.size
-
-//        let size = sizeForString(countString)
+        setBadgeCount(count)
 
         badgeView.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
-            make.width.equalTo(0).offset(labelSize.width+widthPadding)
-            make.height.equalTo(0).offset(labelSize.height+heightPadding)
+            make.width.equalTo(0).offset(sizeForBadge().width)
+            make.height.equalTo(0).offset(sizeForBadge().height)
         }
 
         countLabel.snp_remakeConstraints { (make) in
@@ -125,21 +110,33 @@ public class WBadge: UIView {
 
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = (cornerRadius != nil) ? cornerRadius! : (labelSize.height / 2)
-//        badgeView.layer.cornerRadius = 10
         badgeView.backgroundColor = badgeColor
     }
 
-//    func sizeForString(string: String) -> CGSize {
-//        return (string as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(fontSize + 3)])
-//    }
-//
-//    func sizeForBadge() -> CGSize {
-//        return sizeForString(String(count))
-//    }
+    internal func sizeForBadge() -> CGSize {
+        return CGSizeMake(labelSize.width+widthPadding, labelSize.height+heightPadding)
+    }
+
+    internal func setBadgeCount(count: Int) {
+        let countString = String(count)
+
+        let attributedString = NSMutableAttributedString(string: countString)
+        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: countString.characters.count))
+
+        countLabel.attributedText = attributedString
+        countLabel.textAlignment = NSTextAlignment.Center
+        countLabel.font = font
+        countLabel.textColor = countColor
+        countLabel.sizeToFit()
+
+        // Layout to get frame
+        layoutIfNeeded()
+        labelSize = countLabel.frame.size
+    }
 
     // Must have a invalidateIntrinsicContentSize() call in setupUI()
+    // Adjusts the size of the enclosing view (user should not modify the height/width)
     public override func intrinsicContentSize() -> CGSize {
-//        let size = sizeForBadge()
-        return CGSize(width: labelSize.width+widthPadding, height: labelSize.height+heightPadding)
+        return CGSize(width: sizeForBadge().width, height: sizeForBadge().height)
     }
 }
