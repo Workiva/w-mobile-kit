@@ -6,13 +6,44 @@ import Foundation
 import UIKit
 
 public class WBadge: UIView {
+    public var badgeColor = UIColor(hex: 0x0094FF) { //blue
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var countColor = UIColor.whiteColor() {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var horizontalAlignment: xAlignment = .Left {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var verticalAlignment: yAlignment = .Top {
+        didSet {
+            setupUI()
+        }
+    }
+
+    // Will automatically hidge the badge if less than 1
+    public var automaticallyHide: Bool = true {
+        didSet {
+            hidden = shouldHide()
+        }
+    }
+
     public var count: Int = 0 {
         didSet {
             setupUI()
         }
     }
 
-    public var widthPadding: CGFloat = 20.0 {
+    public var widthPadding: CGFloat = 10.0 {
         didSet {
             setupUI()
         }
@@ -37,27 +68,24 @@ public class WBadge: UIView {
         }
     }
 
+    // Defaults to labelSize.height / 2 if not set
     public var cornerRadius: CGFloat? {
         didSet {
             setupUI()
         }
     }
 
+    public func increment() {
+        count = count + 1
+    }
+
+    public func decrement() {
+        count = count - 1
+    }
+
     internal var badgeView = UIView()
 
     internal var countLabel = UILabel()
-
-    public var badgeColor = UIColor(hex: 0x0094FF) { //blue
-        didSet {
-            setupUI()
-        }
-    }
-
-    public var countColor = UIColor.whiteColor() {
-        didSet {
-            setupUI()
-        }
-    }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -89,11 +117,29 @@ public class WBadge: UIView {
     private var labelSize: CGSize = CGSizeZero
 
     public func setupUI() {
+        hidden = shouldHide()
+
         setBadgeCount(count)
 
         badgeView.snp_remakeConstraints { (make) in
-            make.centerX.equalTo(self)
-            make.centerY.equalTo(self)
+            switch horizontalAlignment {
+            case .Left:
+                make.left.equalTo(0)
+            case .Center:
+                make.centerX.equalTo(self)
+            case .Right:
+                make.right.equalTo(0)
+            }
+
+            switch verticalAlignment {
+            case .Top:
+                make.top.equalTo(0)
+            case .Center:
+                make.centerY.equalTo(self)
+            case .Bottom:
+                make.bottom.equalTo(0)
+            }
+
             make.width.equalTo(0).offset(sizeForBadge().width)
             make.height.equalTo(0).offset(sizeForBadge().height)
         }
@@ -113,18 +159,17 @@ public class WBadge: UIView {
         badgeView.backgroundColor = badgeColor
     }
 
+    internal func shouldHide() -> Bool {
+        return ((count < 1) && automaticallyHide) ? true : false
+    }
+
     internal func sizeForBadge() -> CGSize {
         return CGSizeMake(labelSize.width+widthPadding, labelSize.height+heightPadding)
     }
 
     internal func setBadgeCount(count: Int) {
-        let countString = String(count)
-
-        let attributedString = NSMutableAttributedString(string: countString)
-        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(1.6), range: NSRange(location: 0, length: countString.characters.count))
-
-        countLabel.attributedText = attributedString
-        countLabel.textAlignment = NSTextAlignment.Center
+        countLabel.text = String(count)
+        countLabel.textAlignment = .Center
         countLabel.font = font
         countLabel.textColor = countColor
         countLabel.sizeToFit()
