@@ -10,15 +10,16 @@ let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
 @objc public protocol WAutoCompleteTextViewDelegate : class {
-    optional func didSelectAutoCompletion(word: String)
+    optional func didSelectAutoCompletion(data: AnyObject)
 }
 
 @objc public protocol WAutoCompleteTextViewDataSource : UITableViewDataSource {
-    optional func didChangeAutoCompletionPrefix(prefix: String, word: String)
-    optional func heightForAutoCompleteTable() -> CGFloat
+    optional func didChangeAutoCompletionPrefix(textView: WAutoCompleteTextView, prefix: String, word: String)
+    optional func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat
 }
 
 public class WAutoCompleteTextView : UIView {
+//public class WAutoCompleteTextView<T: NSObject>: UIView {
     private var topLineSeparator = UIView()
     private var backgroundView = UIView()
     private var isAutoCompleting = false
@@ -165,7 +166,7 @@ public class WAutoCompleteTextView : UIView {
             make.right.equalTo(backgroundView)
             make.bottom.equalTo(backgroundView.snp_top)
             if (animateIn) {
-                if let setHeight = dataSource?.heightForAutoCompleteTable?() {
+                if let setHeight = dataSource?.heightForAutoCompleteTable?(self) {
                     make.height.equalTo(min(setHeight, maxAutoCompleteHeight))
                 } else {
                     make.height.equalTo(maxAutoCompleteHeight)
@@ -313,7 +314,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
                                 showAutoCompleteView(true)
                                 autoCompleteRange = range
                                 
-                                dataSource?.didChangeAutoCompletionPrefix?(prefix, word: wordWithoutPrefix)
+                                dataSource?.didChangeAutoCompletionPrefix?(self, prefix: prefix, word: wordWithoutPrefix)
                                 
                                 return
                             }
