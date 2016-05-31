@@ -115,7 +115,6 @@ public class BadgeExamplesVC: WSideMenuContentVC {
             make.centerY.equalTo(badge6.snp_centerY)
         }
 
-
         let badge8 = WBadge(111)
         badge8.badgeColor = .yellowColor()
         badge8.countColor = .blackColor()

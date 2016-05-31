@@ -910,7 +910,7 @@
                                 </constraints>
                             </view>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumValue="-10000" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="nRx-iA-emb">
-                                <rect key="frame" x="203" y="196" width="94" height="29"/>
+                                <rect key="frame" x="253" y="196" width="94" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="QHu-oT-DsK"/>
                                     <constraint firstAttribute="width" constant="94" id="ee9-Ii-qlt"/>
@@ -947,6 +947,7 @@
                             <constraint firstItem="wNo-xG-8se" firstAttribute="centerX" secondItem="GBv-vE-iRO" secondAttribute="centerX" id="fyM-ay-FQQ"/>
                             <constraint firstItem="K9F-wD-0PC" firstAttribute="leading" secondItem="Vfa-U5-LF4" secondAttribute="leading" constant="8" id="gYR-Ji-MXu"/>
                             <constraint firstItem="j6G-fy-1fe" firstAttribute="leading" secondItem="oiv-Ux-HBQ" secondAttribute="trailing" constant="18" id="oyX-zl-TUo"/>
+                            <constraint firstItem="nRx-iA-emb" firstAttribute="centerX" secondItem="GBv-vE-iRO" secondAttribute="centerX" id="sCG-rO-ErP"/>
                             <constraint firstItem="oiv-Ux-HBQ" firstAttribute="top" secondItem="QsX-Rw-lzZ" secondAttribute="bottom" constant="5" id="sfg-Rd-NjJ"/>
                             <constraint firstItem="Vfa-U5-LF4" firstAttribute="leading" secondItem="j6G-fy-1fe" secondAttribute="trailing" constant="56" id="ums-Sr-SpR"/>
                         </constraints>
@@ -955,6 +956,7 @@
                                 <exclude reference="Cop-fr-EBh"/>
                                 <exclude reference="J4s-nW-ibn"/>
                                 <exclude reference="sfg-Rd-NjJ"/>
+                                <exclude reference="Al6-dF-w3h"/>
                             </mask>
                         </variation>
                     </view>

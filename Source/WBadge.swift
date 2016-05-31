@@ -140,15 +140,15 @@ public class WBadge: UIView {
                 make.bottom.equalTo(0)
             }
 
-            make.width.equalTo(0).offset(sizeForBadge().width)
-            make.height.equalTo(0).offset(sizeForBadge().height)
+            make.width.equalTo(sizeForBadge().width)
+            make.height.equalTo(sizeForBadge().height)
         }
 
         countLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
-            make.width.equalTo(0).offset(labelSize.width)
-            make.height.equalTo(0).offset(labelSize.height)
+            make.width.equalTo(labelSize.width)
+            make.height.equalTo(labelSize.height)
         }
 
         layoutIfNeeded()
