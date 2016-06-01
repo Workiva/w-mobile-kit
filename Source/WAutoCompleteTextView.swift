@@ -21,8 +21,9 @@ let TABLE_HEIGHT_ROW: CGFloat = 30
 public class WAutoCompleteTextView : UIView {
 //public class WAutoCompleteTextView<T: NSObject>: UIView {
     private var topLineSeparator = UIView()
-    private var backgroundView = UIView()
     private var isAutoCompleting = false
+    private var keyboardHeight: CGFloat?
+    internal var backgroundView = UIView()
     internal var autoCompleteRange: Range<String.Index>?
     
     public var autoCompleteTable = WAutoCompleteTableView()
@@ -115,7 +116,7 @@ public class WAutoCompleteTextView : UIView {
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.height.equalTo(TEXT_VIEW_HEIGHT)
-            make.bottom.equalTo(self).constraint
+            make.bottom.equalTo(self)
         }
         textField.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView).offset(8)
@@ -140,16 +141,17 @@ public class WAutoCompleteTextView : UIView {
             snp_remakeConstraints { (make) in
                 make.left.equalTo(superview)
                 make.right.equalTo(superview)
-                make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
+                if let keyboardHeight = keyboardHeight {
+                    make.bottom.equalTo(superview).offset(-keyboardHeight)
+                } else {
+                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
+                }
                 make.height.equalTo(TEXT_VIEW_HEIGHT)
             }
-            UIView.performWithoutAnimation {
-                superview.layoutIfNeeded()
-            }
+            
+            superview.layoutIfNeeded()
         } else {
-            UIView.performWithoutAnimation {
-                self.layoutIfNeeded()
-            }
+            layoutIfNeeded()
         }
     }
     
@@ -161,24 +163,45 @@ public class WAutoCompleteTextView : UIView {
     
     public func animateTable(animateIn: Bool = true) {
         autoCompleteTable.hidden = false
+        
+        var height = maxAutoCompleteHeight
+        if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
+            height = min(dataSourceHeight, maxAutoCompleteHeight)
+        }
         autoCompleteTable.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView)
             make.right.equalTo(backgroundView)
             make.bottom.equalTo(backgroundView.snp_top)
             if (animateIn) {
-                if let setHeight = dataSource?.heightForAutoCompleteTable?(self) {
-                    make.height.equalTo(min(setHeight, maxAutoCompleteHeight))
-                } else {
-                    make.height.equalTo(maxAutoCompleteHeight)
-                }
+                make.height.equalTo(height)
             } else {
                 make.height.equalTo(0)
             }
         }
         
+        var viewToLayout: UIView = self
+        if let superview = superview {
+            snp_remakeConstraints { (make) in
+                make.left.equalTo(superview)
+                make.right.equalTo(superview)
+                if let keyboardHeight = keyboardHeight {
+                    make.bottom.equalTo(superview).offset(-keyboardHeight)
+                } else {
+                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
+                }
+                if (animateIn) {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT + height)
+                } else {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT)
+                }
+            }
+            
+            viewToLayout = superview
+        }
+        
         UIView.animateWithDuration(0.3,
             animations: {
-                self.layoutIfNeeded()
+                viewToLayout.layoutIfNeeded()
             },
             completion: { finished in
                 if (!animateIn) {
@@ -190,11 +213,19 @@ public class WAutoCompleteTextView : UIView {
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
         if let currentSuperview = superview {
+            var tableHeight: CGFloat = 0
+            if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
+                tableHeight = dataSourceHeight
+            }
             snp_remakeConstraints { (make) in
                 make.bottom.equalTo(currentSuperview).offset(-height)
                 make.left.equalTo(currentSuperview)
                 make.right.equalTo(currentSuperview)
-                make.height.equalTo(TEXT_VIEW_HEIGHT + maxAutoCompleteHeight)
+                if (isAutoCompleting) {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT + tableHeight)
+                } else {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT)
+                }
             }
             
             currentSuperview.layoutIfNeeded()
@@ -205,14 +236,18 @@ public class WAutoCompleteTextView : UIView {
         var height: CGFloat = bottomConstraintOffset
         if let userInfo = notification.userInfo {
             if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
-                let keyboardHeight = keyboardInfo.CGRectValue().height
-                height = keyboardHeight
+                let keyboardFrame = keyboardInfo.CGRectValue()
+                let screenHeight = UIScreen.mainScreen().bounds.height
+                
+                height = screenHeight - keyboardFrame.origin.y
+                keyboardHeight = height
             }
         }
         adjustForKeyboardHeight(height)
     }
     
     public func keyboardWillHide(notification: NSNotification) {
+        keyboardHeight = nil
         adjustForKeyboardHeight(bottomConstraintOffset)
     }
     
