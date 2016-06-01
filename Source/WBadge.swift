@@ -30,7 +30,7 @@ public class WBadge: UIView {
         }
     }
 
-    // Will automatically hidge the badge if less than 1
+    // Will automatically hide the badge if less than 1
     public var automaticallyHide: Bool = true {
         didSet {
             hidden = shouldHide()
