@@ -1,7 +1,6 @@
 //
 //  WExtensions.swift
 //  WMobileKit
-//
 
 import Foundation
 
