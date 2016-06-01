@@ -55,7 +55,6 @@ public class BadgeExamplesVC: WSideMenuContentVC {
             make.top.equalTo(badge1.snp_top)
         }
 
-
         let badge3 = WBadge(111)
         view.addSubview(badge3)
         badge3.snp_makeConstraints { (make) in

@@ -160,7 +160,7 @@ public class WBadge: UIView {
     }
 
     internal func shouldHide() -> Bool {
-        return ((count < 1) && automaticallyHide) ? true : false
+        return ((count < 1) && automaticallyHide)
     }
 
     internal func sizeForBadge() -> CGSize {
