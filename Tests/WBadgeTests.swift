@@ -13,8 +13,6 @@ class WBadgeSpec: QuickSpec {
             var badge: WBadge!
             var window: UIWindow!
 
-            var badgeCount = 0
-
             beforeEach({
                 subject = UIViewController()
 
