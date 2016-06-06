@@ -63,7 +63,7 @@ class WBannerSpec: QuickSpec {
                     bannerView = WBannerView(rootView: subject.view)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("testsBanner")
+                    let locToSave = path.stringByAppendingPathComponent("WBannerView")
 
                     NSKeyedArchiver.archiveRootObject(bannerView, toFile: locToSave)
 

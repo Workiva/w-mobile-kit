@@ -1,5 +1,5 @@
 //
-//  WUserLogo.swift
+//  WUserLogoView.swift
 //  WMobileKit
 
 import Foundation

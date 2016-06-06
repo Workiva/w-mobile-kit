@@ -22,7 +22,7 @@ public class WSwitch: UIControl {
             setupUI()
         }
     }
-    
+
     public var circleRadius: CGFloat = 10.0 {
         didSet {
             setupUI()
@@ -84,9 +84,7 @@ public class WSwitch: UIControl {
         pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WSwitch.switchWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
         addGestureRecognizer(pressRecognizer)
-        
-        bounds = CGRect(origin: bounds.origin, size: CGSize(width: barWidth, height: circleRadius * 2))
-        
+
         didCommonInit = true
     }
 
@@ -146,6 +144,8 @@ public class WSwitch: UIControl {
         barView.layer.cornerRadius = barView.frame.size.height / 2
         backCircle.layer.cornerRadius = backCircle.frame.size.width / 2
         frontCircle.layer.cornerRadius = frontCircle.frame.size.width / 2
+
+        invalidateIntrinsicContentSize()
     }
     
     public func setOn(on: Bool, animated: Bool) {
@@ -188,9 +188,10 @@ public class WSwitch: UIControl {
             break
         }
     }
-    
+
+    // Must have a invalidateIntrinsicContentSize() call in setupUI()
     public override func intrinsicContentSize() -> CGSize {
-        return CGSize(width: barWidth, height: circleRadius * 2)
+        return CGSize(width: barWidth, height: max(barHeight, circleRadius * 2))
     }
 }
 
