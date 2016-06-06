@@ -19,7 +19,6 @@ let TABLE_HEIGHT_ROW: CGFloat = 30
 }
 
 public class WAutoCompleteTextView : UIView {
-//public class WAutoCompleteTextView<T: NSObject>: UIView {
     private var topLineSeparator = UIView()
     private var isAutoCompleting = false
     private var keyboardHeight: CGFloat?
