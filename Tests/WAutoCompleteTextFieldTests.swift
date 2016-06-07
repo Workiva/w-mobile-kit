@@ -210,7 +210,7 @@ class WAutoCompleteTextFieldSpec: QuickSpec {
     }
 }
 
-class AutoCompleteTestViewController: UIViewController, WAutoCompleteTextViewDelegate, UITableViewDataSource {
+class AutoCompleteTestViewController: UIViewController, WAutoCompleteTextViewDelegate, WAutoCompleteTextViewDataSource, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -221,7 +221,7 @@ class AutoCompleteTestViewController: UIViewController, WAutoCompleteTextViewDel
         return cell
     }
     
-    func heightForAutoCompleteTable() -> CGFloat {
+    func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat {
         return 100
     }
 }

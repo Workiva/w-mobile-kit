@@ -35,6 +35,21 @@ public class AutoCompleteTextFieldExampleVC: WSideMenuContentVC {
 
 // MARK: Table View Data Source
 //       Must be implemented for auto completion
+extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDataSource {
+    public func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat {
+        return CGFloat(searchResults.count * 40)
+    }
+    
+    public func didChangeAutoCompletionPrefix(textView: WAutoCompleteTextView, prefix: String, word: String) {
+        searchResults.removeAll()
+        
+        // For the example, just show options of whatever the user typed with 1-4 appended to end
+        for i in 1...4 {
+            searchResults.append(word.stringByAppendingString(String(i)))
+        }
+    }
+}
+
 extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Auto completion cells show data from search results
@@ -55,20 +70,7 @@ extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
 // MARK: Auto Complete Text View Delegate
 //       Must be implemented for auto completion
 extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDelegate {
-    public func heightForAutoCompleteTable() -> CGFloat {
-        return CGFloat(searchResults.count * 40)
-    }
-    
-    public func didChangeAutoCompletionPrefix(prefix: String, word: String) {
-        searchResults.removeAll()
-        
-        // For the example, just show options of whatever the user typed with 1-4 appended to end
-        for i in 1...4 {
-            searchResults.append(word.stringByAppendingString(String(i)))
-        }
-    }
-    
-    public func didSelectAutoCompletion(word: String) {
+    public func didSelectAutoCompletion(data: AnyObject) {
         // Word was chosen, called after word has been replaced
     }
 }

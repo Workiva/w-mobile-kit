@@ -3,21 +3,26 @@
 //  WMobileKit
 
 import UIKit
+import SnapKit
 
 let TEXT_VIEW_HEIGHT: CGFloat = 48
 let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
 @objc public protocol WAutoCompleteTextViewDelegate : class {
-    optional func didChangeAutoCompletionPrefix(prefix: String, word: String)
-    optional func didSelectAutoCompletion(word: String)
-    optional func heightForAutoCompleteTable() -> CGFloat
+    optional func didSelectAutoCompletion(data: AnyObject)
+}
+
+@objc public protocol WAutoCompleteTextViewDataSource : UITableViewDataSource {
+    optional func didChangeAutoCompletionPrefix(textView: WAutoCompleteTextView, prefix: String, word: String)
+    optional func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat
 }
 
 public class WAutoCompleteTextView : UIView {
     private var topLineSeparator = UIView()
-    private var backgroundView = UIView()
     private var isAutoCompleting = false
+    private var keyboardHeight: CGFloat?
+    internal var backgroundView = UIView()
     internal var autoCompleteRange: Range<String.Index>?
     
     public var autoCompleteTable = WAutoCompleteTableView()
@@ -26,8 +31,9 @@ public class WAutoCompleteTextView : UIView {
     public var addSpaceAfterReplacement = true
     public var numCharactersBeforeAutoComplete = 1
     public var controlPrefix: String?
+    public var bottomConstraintOffset: CGFloat = 0
     public weak var delegate: WAutoCompleteTextViewDelegate?
-    public weak var dataSource: UITableViewDataSource? {
+    public weak var dataSource: WAutoCompleteTextViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
         }
@@ -47,15 +53,7 @@ public class WAutoCompleteTextView : UIView {
             autoCompleteTable.reloadData()
         }
     }
-    
-    public override var bounds: CGRect {
-        didSet {
-            if (!CGRectEqualToRect(bounds, CGRectZero)) {
-                setupUI()
-            }
-        }
-    }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -76,15 +74,7 @@ public class WAutoCompleteTextView : UIView {
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
-        if let newSuperview = superview {
-            snp_remakeConstraints { (make) in
-                make.left.equalTo(newSuperview)
-                make.right.equalTo(newSuperview)
-                make.bottom.equalTo(newSuperview)
-                make.height.equalTo(TEXT_VIEW_HEIGHT)
-            }
-            newSuperview.layoutIfNeeded()
-        }
+        setupUI()
     }
     
     private func commonInit() {
@@ -145,8 +135,22 @@ public class WAutoCompleteTextView : UIView {
             make.height.equalTo(0)
             make.top.equalTo(backgroundView)
         }
-        UIView.performWithoutAnimation { 
-            self.layoutIfNeeded()
+        
+        if let superview = superview {
+            snp_remakeConstraints { (make) in
+                make.left.equalTo(superview)
+                make.right.equalTo(superview)
+                if let keyboardHeight = keyboardHeight {
+                    make.bottom.equalTo(superview).offset(-keyboardHeight)
+                } else {
+                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
+                }
+                make.height.equalTo(TEXT_VIEW_HEIGHT)
+            }
+            
+            superview.layoutIfNeeded()
+        } else {
+            layoutIfNeeded()
         }
     }
     
@@ -158,24 +162,45 @@ public class WAutoCompleteTextView : UIView {
     
     public func animateTable(animateIn: Bool = true) {
         autoCompleteTable.hidden = false
+        
+        var height = maxAutoCompleteHeight
+        if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
+            height = min(dataSourceHeight, maxAutoCompleteHeight)
+        }
         autoCompleteTable.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView)
             make.right.equalTo(backgroundView)
             make.bottom.equalTo(backgroundView.snp_top)
             if (animateIn) {
-                if let setHeight = delegate?.heightForAutoCompleteTable?() {
-                    make.height.equalTo(min(setHeight, maxAutoCompleteHeight))
-                } else {
-                    make.height.equalTo(maxAutoCompleteHeight)
-                }
+                make.height.equalTo(height)
             } else {
                 make.height.equalTo(0)
             }
         }
         
+        var viewToLayout: UIView = self
+        if let superview = superview {
+            snp_remakeConstraints { (make) in
+                make.left.equalTo(superview)
+                make.right.equalTo(superview)
+                if let keyboardHeight = keyboardHeight {
+                    make.bottom.equalTo(superview).offset(-keyboardHeight)
+                } else {
+                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
+                }
+                if (animateIn) {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT + height)
+                } else {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT)
+                }
+            }
+            
+            viewToLayout = superview
+        }
+        
         UIView.animateWithDuration(0.3,
             animations: {
-                self.layoutIfNeeded()
+                viewToLayout.layoutIfNeeded()
             },
             completion: { finished in
                 if (!animateIn) {
@@ -187,30 +212,42 @@ public class WAutoCompleteTextView : UIView {
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
         if let currentSuperview = superview {
-            snp_remakeConstraints(closure: { (make) in
+            var tableHeight: CGFloat = 0
+            if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
+                tableHeight = dataSourceHeight
+            }
+            snp_remakeConstraints { (make) in
                 make.bottom.equalTo(currentSuperview).offset(-height)
                 make.left.equalTo(currentSuperview)
                 make.right.equalTo(currentSuperview)
-                make.height.equalTo(TEXT_VIEW_HEIGHT + maxAutoCompleteHeight)
-            })
+                if (isAutoCompleting) {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT + tableHeight)
+                } else {
+                    make.height.equalTo(TEXT_VIEW_HEIGHT)
+                }
+            }
             
             currentSuperview.layoutIfNeeded()
         }
     }
     
     public func keyboardWillShow(notification: NSNotification) {
-        var height: CGFloat = 0
+        var height: CGFloat = bottomConstraintOffset
         if let userInfo = notification.userInfo {
             if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
-                let keyboardHeight = keyboardInfo.CGRectValue().height
-                height = keyboardHeight
+                let keyboardFrame = keyboardInfo.CGRectValue()
+                let screenHeight = UIScreen.mainScreen().bounds.height
+                
+                height = screenHeight - keyboardFrame.origin.y
+                keyboardHeight = height
             }
         }
         adjustForKeyboardHeight(height)
     }
     
     public func keyboardWillHide(notification: NSNotification) {
-        adjustForKeyboardHeight(0)
+        keyboardHeight = nil
+        adjustForKeyboardHeight(bottomConstraintOffset)
     }
     
     public func acceptAutoCompletionWithString(string: String) {
@@ -303,7 +340,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
             if let range = wordRangeAtCursor(textField) {
                 if let word = textField.text?.substringWithRange(range) {
                     if let prefix = controlPrefix {
-                        if (word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) {
+                        if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
                             let offset = text.startIndex.distanceTo(range.startIndex)
                             let pos = textField.positionFromPosition(textField.beginningOfDocument, offset: offset)
                             let wordWithoutPrefix = word.substringFromIndex(word.startIndex.advancedBy(prefix.characters.count))
@@ -311,7 +348,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
                                 showAutoCompleteView(true)
                                 autoCompleteRange = range
                                 
-                                delegate?.didChangeAutoCompletionPrefix?(prefix, word: wordWithoutPrefix)
+                                dataSource?.didChangeAutoCompletionPrefix?(self, prefix: prefix, word: wordWithoutPrefix)
                                 
                                 return
                             }
