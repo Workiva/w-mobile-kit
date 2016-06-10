@@ -25,7 +25,6 @@ let ROW_HEIGHT: CGFloat = 58.0
 let CANCEL_HEIGHT: CGFloat = 56.0
 let HEADER_HEIGHT: CGFloat = 44.0
 let SHEET_WIDTH_IPAD: CGFloat = 355.0
-let SHEET_HEIGHT_MAX: CGFloat = 400.0
 
 let ACTION_CELL = "actionCell"
 let HEADER_VIEW = "headerView"
@@ -250,7 +249,13 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
             tableView.reloadData()
         }
     }
-    public var maxSheetHeight: CGFloat = SHEET_HEIGHT_MAX {
+
+    public func defaultMaxSheetHeight() -> CGFloat {
+        // 80% of screen height
+        return UIScreen.mainScreen().bounds.size.height * 0.8
+    }
+
+    public var maxSheetHeight: CGFloat? {
         didSet {
             setupUI(false);
         }
@@ -351,7 +356,9 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions.count
         let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (hasCancel ? (CANCEL_SEPARATOR_HEIGHT + CANCEL_HEIGHT) : 0) + (titleString != nil ? HEADER_HEIGHT : 0)
-        return min(height, maxSheetHeight)
+        let maxHeight = (maxSheetHeight != nil) ? maxSheetHeight! : defaultMaxSheetHeight()
+
+        return min(height, maxHeight)
     }
 
     public func heightForSheetContent() -> CGFloat {

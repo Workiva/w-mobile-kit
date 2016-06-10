@@ -45,7 +45,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let permissionsSheetButton = UIButton(type: UIButtonType.RoundedRect)
         permissionsSheetButton.backgroundColor = .lightGrayColor()
         permissionsSheetButton.tintColor = .greenColor()
-        permissionsSheetButton.setTitle("Selection Cancel Sheet", forState: UIControlState.Normal)
+        permissionsSheetButton.setTitle("Cancel Action Sheet", forState: UIControlState.Normal)
         permissionsSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         permissionsSheetButton.addTarget(self, action: #selector(presentPermissionsActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
@@ -59,7 +59,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let iconSheetButton = UIButton(type: UIButtonType.RoundedRect)
         iconSheetButton.backgroundColor = .lightGrayColor()
         iconSheetButton.tintColor = .greenColor()
-        iconSheetButton.setTitle("Icon Dismiss Cancel Sheet", forState: UIControlState.Normal)
+        iconSheetButton.setTitle("Scrollable Cancel Action Sheet", forState: UIControlState.Normal)
         iconSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         iconSheetButton.addTarget(self, action: #selector(presentIconActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
@@ -73,7 +73,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         let sortSheetButton = UIButton(type: UIButtonType.RoundedRect)
         sortSheetButton.backgroundColor = .lightGrayColor()
         sortSheetButton.tintColor = .greenColor()
-        sortSheetButton.setTitle("Selection Dismiss Sheet", forState: UIControlState.Normal)
+        sortSheetButton.setTitle("Autosize Sheet", forState: UIControlState.Normal)
         sortSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
         sortSheetButton.addTarget(self, action: #selector(presentSortActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
@@ -223,7 +223,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheet.setSelectedAction(1)
         actionSheet.hasCancel = true
-        actionSheet.dismissOnAction = false
+        actionSheet.dismissOnAction = true
         actionSheet.popoverPresentationController?.sourceView = sender
 
         presentViewController(actionSheet, animated: true, completion: nil)
@@ -234,10 +234,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         let actionSheetIcons = WActionSheetVC<String>()
 
-        actionSheetIcons.titleString = "2015 Revenue Forecasts"
+        actionSheetIcons.titleString = "Scrollable Action Sheet"
         actionSheetIcons.maxSheetHeight = 315
         
-        actionSheetIcons.addAction(WAction(title: "Open in viewer", image:UIImage(named: "folder"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Open folder", image:UIImage(named: "folder"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
@@ -246,6 +246,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                 NSLog(action.title! + " was tapped")
         }))
         actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal,
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+        }))
+        actionSheetIcons.addAction(WAction(title: "Alerts", image:UIImage(named: "alert"), style: ActionStyle.Normal,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
@@ -266,20 +270,44 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         let actionSheetSort = WActionSheetVC<String>()
 
-        actionSheetSort.titleString = "Sort Tasks"
-        actionSheetSort.addAction(WAction(title: "Status",
+        actionSheetSort.titleString = "Sort"
+        actionSheetSort.addAction(WAction(title: "First Name",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 actionSheetSort.deselectAction()
                 actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "File",
+        actionSheetSort.addAction(WAction(title: "Last Name",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 actionSheetSort.deselectAction()
                 actionSheetSort.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Assigner",
+        actionSheetSort.addAction(WAction(title: "Title",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Subtitle",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Section",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Modified Date",
+            handler: { action in
+                NSLog(action.title! + " was tapped")
+                actionSheetSort.deselectAction()
+                actionSheetSort.setSelectedAction(action)
+        }))
+        actionSheetSort.addAction(WAction(title: "Creation Date",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 actionSheetSort.deselectAction()

@@ -390,5 +390,7 @@ public class WAutoCompleteTableView : UITableView {
         allowsSelectionDuringEditing = true
         userInteractionEnabled = true
         scrollEnabled = true
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGrayColor().CGColor
     }
 }
