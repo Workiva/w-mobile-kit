@@ -401,7 +401,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         sideMenuController()?.delegate = self
     }
 
-    private func setupUI() {
+    public func setupUI() {
         if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
             pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth)
         } else {
