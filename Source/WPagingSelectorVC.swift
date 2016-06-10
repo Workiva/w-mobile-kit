@@ -198,7 +198,7 @@ public class WPagingSelectorControl: UIControl {
             contentWidth = CGFloat(tabWidth! * pages.count)
         }
 
-        scrollView.addSubview(contentView);
+        scrollView.addSubview(contentView)
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
             make.top.equalTo(scrollView)
@@ -384,7 +384,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(mainContainerView);
+        view.addSubview(mainContainerView)
 
         mainContainerView.snp_makeConstraints { (make) in
             make.left.equalTo(view)
@@ -413,7 +413,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
 
-            view.addSubview(pagingSelectorControl);
+            view.addSubview(pagingSelectorControl)
             pagingSelectorControl.snp_makeConstraints { (make) in
                 make.left.equalTo(view)
                 make.right.equalTo(view)
