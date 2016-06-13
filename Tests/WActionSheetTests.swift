@@ -114,6 +114,18 @@ class WActionSheetSpec: QuickSpec {
                     expect(newHeaderView).toNot(equal(nil))
                 }
             }
+
+            describe("max sheet height") {
+                it("should have a max sheet height of 80% of the sheet height if a max height is not set") {
+                    expect(subject.defaultMaxSheetHeight()) == UIScreen.mainScreen().bounds.size.height * 0.8
+                }
+
+                it("should use a custom max sheet height if a custom value is set") {
+                    subject.maxSheetHeight = 200.0
+
+                    expect(subject.maxSheetHeight) == 200.0
+                }
+            }
             
             describe("cell selection") {
                 it("should select correctly") {

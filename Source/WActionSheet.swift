@@ -257,7 +257,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
     public var maxSheetHeight: CGFloat? {
         didSet {
-            setupUI(false);
+            setupUI(false)
         }
     }
 

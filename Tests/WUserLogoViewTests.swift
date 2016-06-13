@@ -150,6 +150,26 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.lineWidth).to(equal(1.0))
                 }
 
+                it("should successfully add and display a user logo view with an empty name") {
+                    userLogoView = WUserLogoView("")
+
+                    subject.view.addSubview(userLogoView)
+                    userLogoView.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(80)
+                        make.height.equalTo(80)
+                    }
+
+                    subject.view.layoutIfNeeded()
+
+                    // public properties
+                    expect(userLogoView.initialsLabel.text).to(equal("?"))
+                    expect(userLogoView.name).to(equal(""))
+                    expect(userLogoView.lineWidth).to(equal(1.0))
+                    expect(userLogoView.initialsLabel.textColor) == UIColor.grayColor()
+                }
+
                 it("should work correctly if the initials label has been removed") {
                     userLogoView = WUserLogoView(name5)
                     userLogoView.initialsLimit = 1
