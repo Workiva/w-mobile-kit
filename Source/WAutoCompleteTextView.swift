@@ -6,10 +6,11 @@ import UIKit
 import SnapKit
 
 let TEXT_VIEW_HEIGHT: CGFloat = 48
+let SUBMIT_BUTTON_WIDTH: CGFloat = 60
 let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
-@objc public protocol WAutoCompleteTextViewDelegate : class {
+@objc public protocol WAutoCompletionTextViewDelegate : class {
     optional func didSelectAutoCompletion(data: AnyObject)
 }
 
@@ -25,14 +26,26 @@ public class WAutoCompleteTextView : UIView {
     internal var backgroundView = UIView()
     internal var autoCompleteRange: Range<String.Index>?
     
+    public func isShowingAutoComplete() -> Bool {
+        return isAutoCompleting
+    }
     public var autoCompleteTable = WAutoCompleteTableView()
-    public var textField = WTextField()
+    public var textView = WTextView()
     public var replacesControlPrefix = false
     public var addSpaceAfterReplacement = true
     public var numCharactersBeforeAutoComplete = 1
     public var controlPrefix: String?
     public var bottomConstraintOffset: CGFloat = 0
-    public weak var delegate: WAutoCompleteTextViewDelegate?
+    
+    public lazy var submitButton = UIButton()
+    public var hasSubmitButton: Bool = false {
+        didSet {
+            submitButton.hidden = !hasSubmitButton
+            setupUI()
+        }
+    }
+    
+    public weak var delegate: WAutoCompletionTextViewDelegate?
     public weak var dataSource: WAutoCompleteTextViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
@@ -91,23 +104,33 @@ public class WAutoCompleteTextView : UIView {
         addSubview(backgroundView)
         backgroundView.backgroundColor = UIColor(hex: 0xEEEEEE)
         
-        addSubview(textField)
-        textField.backgroundColor = .whiteColor()
-        textField.borderStyle = .None
-        textField.bottomLineColor = .clearColor()
-        textField.placeholder = "Type @ to mention someone"
-        textField.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
-        textField.textColor = .darkGrayColor()
-        textField.layer.borderColor = UIColor.lightGrayColor().CGColor
-        textField.clipsToBounds = true
-        textField.layer.borderWidth = 0.5
-        textField.layer.cornerRadius = 5.0
-        textField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
-        textField.autoCompleteDelegate = self
-        textField.addTarget(self, action: #selector(WAutoCompleteTextView.textFieldDidChange(_:)), forControlEvents: .EditingChanged)
+        addSubview(textView)
+        textView.backgroundColor = .whiteColor()
+        textView.scrollEnabled = false
+        textView.editable = true
+        textView.userInteractionEnabled = true
+        textView.font = UIFont.systemFontOfSize(15)
+        textView.placeholderText = "Type @ to mention someone"
+        textView.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
+        textView.textColor = .darkGrayColor()
+        textView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        textView.clipsToBounds = true
+        textView.layer.borderWidth = 0.5
+        textView.layer.cornerRadius = 5.0
+        textView.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
+        textView.delegate = self
         
         addSubview(topLineSeparator)
         topLineSeparator.backgroundColor = .lightGrayColor()
+        
+        submitButton.setTitle("Submit", forState: .Normal)
+        submitButton.setTitleColor(.darkGrayColor(), forState: .Normal)
+        submitButton.titleLabel?.numberOfLines = 1
+        submitButton.titleLabel?.font = UIFont.systemFontOfSize(12)
+        submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        submitButton.backgroundColor = .clearColor()
+        submitButton.hidden = true
+        addSubview(submitButton)
     }
     
     public func setupUI() {
@@ -117,11 +140,28 @@ public class WAutoCompleteTextView : UIView {
             make.height.equalTo(TEXT_VIEW_HEIGHT)
             make.bottom.equalTo(self)
         }
-        textField.snp_remakeConstraints { (make) in
-            make.left.equalTo(backgroundView).offset(8)
-            make.right.equalTo(backgroundView).offset(-8)
-            make.bottom.equalTo(backgroundView).offset(-8)
-            make.top.equalTo(backgroundView).offset(8)
+        
+        if (hasSubmitButton) {
+            submitButton.snp_remakeConstraints { (make) in
+                make.top.equalTo(backgroundView).offset(8)
+                make.right.equalTo(backgroundView).offset(-8)
+                make.width.equalTo(SUBMIT_BUTTON_WIDTH)
+                make.bottom.equalTo(backgroundView).offset(-8)
+            }
+            
+            textView.snp_remakeConstraints { (make) in
+                make.left.equalTo(backgroundView).offset(8)
+                make.right.equalTo(submitButton.snp_left).offset(-8)
+                make.bottom.equalTo(backgroundView).offset(-8)
+                make.top.equalTo(backgroundView).offset(8)
+            }
+        } else {
+            textView.snp_remakeConstraints { (make) in
+                make.left.equalTo(backgroundView).offset(8)
+                make.right.equalTo(backgroundView).offset(-8)
+                make.bottom.equalTo(backgroundView).offset(-8)
+                make.top.equalTo(backgroundView).offset(8)
+            }
         }
         topLineSeparator.snp_remakeConstraints { (make) in
             make.left.equalTo(backgroundView)
@@ -252,7 +292,7 @@ public class WAutoCompleteTextView : UIView {
     
     public func acceptAutoCompletionWithString(string: String) {
         if let range = autoCompleteRange {
-            var selection = textField.selectedTextRange
+            var selection = textView.selectedTextRange
             
             if (!replacesControlPrefix) {
                 autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
@@ -262,14 +302,16 @@ public class WAutoCompleteTextView : UIView {
             if (addSpaceAfterReplacement) {
                 replaceText = replaceText.stringByAppendingString(" ")
             }
-            textField.text?.replaceRange(autoCompleteRange!, with: replaceText)
+            textView.text?.replaceRange(autoCompleteRange!, with: replaceText)
             
-            let autoCompleteOffset = textField.text!.startIndex.distanceTo(range.startIndex) + 1
+            let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
             
-            if let newSelectPos = textField.positionFromPosition(textField.beginningOfDocument, offset: autoCompleteOffset + replaceText.characters.count) {
-                selection = textField.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
-                textField.selectedTextRange = selection
+            if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.characters.count) {
+                selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
+                textView.selectedTextRange = selection
             }
+        } else {
+            textView.text = textView.text.stringByAppendingString(string)
         }
     }
     
@@ -291,29 +333,32 @@ extension WAutoCompleteTextView : UITableViewDelegate {
     }
 }
 
-extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
-    public func textFieldDidChange(textField: UITextField) {
-        processWordAtCursor(textField)
+extension WAutoCompleteTextView : UITextViewDelegate {
+    public func textViewDidChange(textView: UITextView) {
+        processWordAtCursor(textView)
+        
+        textView.bounds.size = textView.contentSize
+        textView.layoutIfNeeded()
     }
     
-    public func textFieldDidEndEditing(textField: UITextField) {
+    public func textViewDidEndEditing(textView: UITextView) {
         showAutoCompleteView(false)
     }
     
-    public func wordRangeAtCursor(textField: UITextField) -> Range<String.Index>? {
-        if (textField.text!.characters.count <= 0) {
+    public func wordRangeAtCursor(textView: UITextView) -> Range<String.Index>? {
+        if (textView.text!.characters.count <= 0) {
             return nil
         }
         
-        if let range = textField.selectedTextRange {
-            let firstPos = min(textField.offsetFromPosition(textField.beginningOfDocument, toPosition: range.start), textField.text!.characters.count)
-            let firstIndex = textField.text!.characters.startIndex.advancedBy(firstPos)
+        if let range = textView.selectedTextRange {
+            let firstPos = min(textView.offsetFromPosition(textView.beginningOfDocument, toPosition: range.start), textView.text!.characters.count)
+            let firstIndex = textView.text!.characters.startIndex.advancedBy(firstPos)
             
-            let leftPortion = textField.text?.substringToIndex(firstIndex)
+            let leftPortion = textView.text?.substringToIndex(firstIndex)
             let leftComponents = leftPortion?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             let leftWordPart = leftComponents?.last
             
-            let rightPortion = textField.text?.substringFromIndex(firstIndex)
+            let rightPortion = textView.text?.substringFromIndex(firstIndex)
             let rightComponents = rightPortion?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             let rightWordPart = rightComponents?.first
             
@@ -322,7 +367,7 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
             }
             
             if (firstPos > 0) {
-                let charBeforeCursor = textField.text?.substringWithRange(textField.text!.startIndex.advancedBy(firstPos - 1)..<textField.text!.startIndex.advancedBy(firstPos))
+                let charBeforeCursor = textView.text?.substringWithRange(textView.text!.startIndex.advancedBy(firstPos - 1)..<textView.text!.startIndex.advancedBy(firstPos))
                 let whitespaceRange = charBeforeCursor?.rangeOfCharacterFromSet(NSCharacterSet.whitespaceCharacterSet())
                 
                 if (whitespaceRange?.count == 1) {
@@ -335,16 +380,16 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
         return nil
     }
     
-    public func processWordAtCursor(textField: UITextField) {
-        if let text = textField.text {
-            if let range = wordRangeAtCursor(textField) {
-                if let word = textField.text?.substringWithRange(range) {
+    public func processWordAtCursor(textView: UITextView) {
+        if let text = textView.text {
+            if let range = wordRangeAtCursor(textView) {
+                if let word = textView.text?.substringWithRange(range) {
                     if let prefix = controlPrefix {
                         if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
-                            let offset = text.startIndex.distanceTo(range.startIndex)
-                            let pos = textField.positionFromPosition(textField.beginningOfDocument, offset: offset)
+                            let offset = textView.text!.startIndex.distanceTo(range.startIndex)
+                            let pos = textView.positionFromPosition(textView.beginningOfDocument, offset: offset)
                             let wordWithoutPrefix = word.substringFromIndex(word.startIndex.advancedBy(prefix.characters.count))
-                            if (textField.offsetFromPosition(textField.selectedTextRange!.start, toPosition: pos!) != 0) {
+                            if (textView.offsetFromPosition(textView.selectedTextRange!.start, toPosition: pos!) != 0) {
                                 showAutoCompleteView(true)
                                 autoCompleteRange = range
                                 
@@ -363,8 +408,13 @@ extension WAutoCompleteTextView : WAutoCompleteTextFieldDelegate {
         }
     }
     
-    public func textFieldDidChangeSelection(textField: UITextField) {
-        processWordAtCursor(textField)
+    public func textViewDidChangeSelection(textView: UITextView) {
+        processWordAtCursor(textView)
+        
+        if (hasSubmitButton) {
+            let trimmedString = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            submitButton.enabled = trimmedString.characters.count > 0
+        }
     }
 }
 

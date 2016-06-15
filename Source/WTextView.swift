@@ -15,6 +15,12 @@ public class WTextView: UITextView, UITextViewDelegate {
             buildTextView(text)
         }
     }
+
+    public var placeholderText: String! {
+        didSet {
+            buildTextView(text)
+        }
+    }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
