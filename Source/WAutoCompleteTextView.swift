@@ -6,7 +6,9 @@ import UIKit
 import SnapKit
 
 let TEXT_VIEW_HEIGHT: CGFloat = 48
+let MAX_TEXT_VIEW_HEIGHT: CGFloat = 200
 let SUBMIT_BUTTON_WIDTH: CGFloat = 60
+
 let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
@@ -137,7 +139,7 @@ public class WAutoCompleteTextView : UIView {
         backgroundView.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.right.equalTo(self)
-            make.height.equalTo(TEXT_VIEW_HEIGHT)
+            make.top.equalTo(self)
             make.bottom.equalTo(self)
         }
         
@@ -252,22 +254,13 @@ public class WAutoCompleteTextView : UIView {
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
         if let currentSuperview = superview {
-            var tableHeight: CGFloat = 0
-            if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
-                tableHeight = dataSourceHeight
-            }
             snp_remakeConstraints { (make) in
                 make.bottom.equalTo(currentSuperview).offset(-height)
                 make.left.equalTo(currentSuperview)
                 make.right.equalTo(currentSuperview)
-                if (isAutoCompleting) {
-                    make.height.equalTo(TEXT_VIEW_HEIGHT + tableHeight)
-                } else {
-                    make.height.equalTo(TEXT_VIEW_HEIGHT)
-                }
             }
             
-            currentSuperview.layoutIfNeeded()
+            updateTextViewHeight()
         }
     }
     
@@ -337,12 +330,24 @@ extension WAutoCompleteTextView : UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         processWordAtCursor(textView)
         
-        textView.bounds.size = textView.contentSize
-        textView.layoutIfNeeded()
+        updateTextViewHeight()
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
         showAutoCompleteView(false)
+    }
+    
+    private func updateTextViewHeight() {
+        if let currentSuperview = superview {
+            var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
+            height = max(height, TEXT_VIEW_HEIGHT)
+            
+            snp_updateConstraints { (make) in
+                make.height.equalTo(height)
+            }
+
+            layoutIfNeeded()
+        }
     }
     
     public func wordRangeAtCursor(textView: UITextView) -> Range<String.Index>? {
