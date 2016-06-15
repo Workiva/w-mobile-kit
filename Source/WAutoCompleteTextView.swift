@@ -106,7 +106,7 @@ public class WAutoCompleteTextView : UIView {
         
         addSubview(textView)
         textView.backgroundColor = .whiteColor()
-        textView.scrollEnabled = false
+        textView.scrollEnabled = true
         textView.editable = true
         textView.userInteractionEnabled = true
         textView.font = UIFont.systemFontOfSize(15)
