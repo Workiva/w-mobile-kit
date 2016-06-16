@@ -6,7 +6,7 @@ import UIKit
 import SnapKit
 
 let TEXT_VIEW_HEIGHT: CGFloat = 48
-let MAX_TEXT_VIEW_HEIGHT: CGFloat = 200
+let MAX_TEXT_VIEW_HEIGHT: CGFloat = TEXT_VIEW_HEIGHT * 4
 let SUBMIT_BUTTON_WIDTH: CGFloat = 60
 
 let TABLE_HEIGHT_MAX: CGFloat = 90
@@ -98,8 +98,9 @@ public class WAutoCompleteTextView : UIView {
         
         backgroundColor = .clearColor()
         
+        sizeToFit()
+        
         addSubview(autoCompleteTable)
-        autoCompleteTable.hidden = true
         autoCompleteTable.scrollEnabled = true
         autoCompleteTable.delegate = self
         
@@ -119,12 +120,12 @@ public class WAutoCompleteTextView : UIView {
         textView.clipsToBounds = true
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 5.0
-        textView.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
         textView.delegate = self
         
         addSubview(topLineSeparator)
         topLineSeparator.backgroundColor = .lightGrayColor()
         
+        addSubview(submitButton)
         submitButton.setTitle("Submit", forState: .Normal)
         submitButton.setTitleColor(.darkGrayColor(), forState: .Normal)
         submitButton.titleLabel?.numberOfLines = 1
@@ -132,14 +133,28 @@ public class WAutoCompleteTextView : UIView {
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
         submitButton.backgroundColor = .clearColor()
         submitButton.hidden = true
-        addSubview(submitButton)
     }
     
     public func setupUI() {
+        autoCompleteTable.snp_remakeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.height.equalTo(0)
+            make.top.equalTo(self)
+        }
+        
+        topLineSeparator.snp_remakeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.top.equalTo(autoCompleteTable.snp_bottom)
+            make.height.equalTo(0.5)
+        }
+        
         backgroundView.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.right.equalTo(self)
-            make.top.equalTo(self)
+            make.top.equalTo(topLineSeparator.snp_bottom)
+            make.height.equalTo(TEXT_VIEW_HEIGHT)
             make.bottom.equalTo(self)
         }
         
@@ -165,18 +180,6 @@ public class WAutoCompleteTextView : UIView {
                 make.top.equalTo(backgroundView).offset(8)
             }
         }
-        topLineSeparator.snp_remakeConstraints { (make) in
-            make.left.equalTo(backgroundView)
-            make.right.equalTo(backgroundView)
-            make.top.equalTo(backgroundView)
-            make.height.equalTo(0.5)
-        }
-        autoCompleteTable.snp_remakeConstraints { (make) in
-            make.left.equalTo(backgroundView)
-            make.right.equalTo(backgroundView)
-            make.height.equalTo(0)
-            make.top.equalTo(backgroundView)
-        }
         
         if let superview = superview {
             snp_remakeConstraints { (make) in
@@ -187,7 +190,6 @@ public class WAutoCompleteTextView : UIView {
                 } else {
                     make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
                 }
-                make.height.equalTo(TEXT_VIEW_HEIGHT)
             }
             
             superview.layoutIfNeeded()
@@ -196,60 +198,44 @@ public class WAutoCompleteTextView : UIView {
         }
     }
     
-    public func showAutoCompleteView(show: Bool = true) {
-        animateTable(show)
-        isAutoCompleting = show
-        autoCompleteTable.reloadData()
+    public func dismiss() {
+        animateTable(false)
+        textView.text = nil
+        textView.resignFirstResponder()        
+    }
+    
+    public func showAutoCompleteTable(show: Bool = true) {
+        if (show) {
+            autoCompleteTable.reloadData()
+        }
+
+        if (show && !isAutoCompleting) {
+            animateTable(show)
+        } else if (!show && isAutoCompleting) {
+            animateTable(show)
+        }
     }
     
     public func animateTable(animateIn: Bool = true) {
-        autoCompleteTable.hidden = false
-        
         var height = maxAutoCompleteHeight
         if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
             height = min(dataSourceHeight, maxAutoCompleteHeight)
         }
-        autoCompleteTable.snp_remakeConstraints { (make) in
-            make.left.equalTo(backgroundView)
-            make.right.equalTo(backgroundView)
-            make.bottom.equalTo(backgroundView.snp_top)
+        
+        autoCompleteTable.snp_updateConstraints { (make) in
             if (animateIn) {
                 make.height.equalTo(height)
+                isAutoCompleting = true
             } else {
                 make.height.equalTo(0)
+                isAutoCompleting = false
             }
         }
-        
-        var viewToLayout: UIView = self
-        if let superview = superview {
-            snp_remakeConstraints { (make) in
-                make.left.equalTo(superview)
-                make.right.equalTo(superview)
-                if let keyboardHeight = keyboardHeight {
-                    make.bottom.equalTo(superview).offset(-keyboardHeight)
-                } else {
-                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
-                }
-                if (animateIn) {
-                    make.height.equalTo(TEXT_VIEW_HEIGHT + height)
-                } else {
-                    make.height.equalTo(TEXT_VIEW_HEIGHT)
-                }
-            }
-            
-            viewToLayout = superview
-        }
-        
+                
         UIView.animateWithDuration(0.3,
             animations: {
-                viewToLayout.layoutIfNeeded()
-            },
-            completion: { finished in
-                if (!animateIn) {
-                    self.autoCompleteTable.hidden = true
-                }
-            }
-        )
+                self.updateHeight()
+            }, completion: nil)
     }
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
@@ -260,7 +246,7 @@ public class WAutoCompleteTextView : UIView {
                 make.right.equalTo(currentSuperview)
             }
             
-            updateTextViewHeight()
+            updateHeight()
         }
     }
     
@@ -320,7 +306,7 @@ extension WAutoCompleteTextView : UITableViewDelegate {
             delegate?.didSelectAutoCompletion?(cell.textLabel!.text!)
         }
         
-        showAutoCompleteView(false)
+        showAutoCompleteTable(false)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -330,23 +316,28 @@ extension WAutoCompleteTextView : UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         processWordAtCursor(textView)
         
-        updateTextViewHeight()
+        updateHeight()
+        
+        if (hasSubmitButton) {
+            let trimmedString = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            submitButton.enabled = trimmedString.characters.count > 0
+        }        
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
-        showAutoCompleteView(false)
+        showAutoCompleteTable(false)
     }
     
-    private func updateTextViewHeight() {
+    private func updateHeight() {
         if let currentSuperview = superview {
             var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
             height = max(height, TEXT_VIEW_HEIGHT)
             
-            snp_updateConstraints { (make) in
+            backgroundView.snp_updateConstraints { (make) in
                 make.height.equalTo(height)
             }
 
-            layoutIfNeeded()
+            currentSuperview.layoutIfNeeded()
         }
     }
     
@@ -391,11 +382,10 @@ extension WAutoCompleteTextView : UITextViewDelegate {
                 if let word = textView.text?.substringWithRange(range) {
                     if let prefix = controlPrefix {
                         if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
-                            let offset = textView.text!.startIndex.distanceTo(range.startIndex)
+                            let offset = text.startIndex.distanceTo(range.startIndex)
                             let pos = textView.positionFromPosition(textView.beginningOfDocument, offset: offset)
                             let wordWithoutPrefix = word.substringFromIndex(word.startIndex.advancedBy(prefix.characters.count))
                             if (textView.offsetFromPosition(textView.selectedTextRange!.start, toPosition: pos!) != 0) {
-                                showAutoCompleteView(true)
                                 autoCompleteRange = range
                                 
                                 dataSource?.didChangeAutoCompletionPrefix?(self, prefix: prefix, word: wordWithoutPrefix)
@@ -407,19 +397,14 @@ extension WAutoCompleteTextView : UITextViewDelegate {
                 }
             }
             if (isAutoCompleting) {
-                showAutoCompleteView(false)
+                showAutoCompleteTable(false)
                 autoCompleteRange = nil
             }
         }
     }
     
     public func textViewDidChangeSelection(textView: UITextView) {
-        processWordAtCursor(textView)
-        
-        if (hasSubmitButton) {
-            let trimmedString = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            submitButton.enabled = trimmedString.characters.count > 0
-        }
+        processWordAtCursor(textView)        
     }
 }
 

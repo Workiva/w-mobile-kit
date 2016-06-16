@@ -16,7 +16,7 @@ public class WTextView: UITextView, UITextViewDelegate {
         }
     }
 
-    public var placeholderText: String! {
+    public var placeholderText: String = "" {
         didSet {
             buildTextView(text)
         }
