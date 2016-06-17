@@ -1,6 +1,20 @@
 //
 //  WUserLogoViewTests.swift
 //  WMobileKit
+//
+//  Copyright 2016 Workiva Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 
 import Quick
 import Nimble
@@ -134,6 +148,26 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.initialsLabel.text).to(equal("ATES"))
                     expect(userLogoView.name).to(equal(name4))
                     expect(userLogoView.lineWidth).to(equal(1.0))
+                }
+
+                it("should successfully add and display a user logo view with an empty name") {
+                    userLogoView = WUserLogoView("")
+
+                    subject.view.addSubview(userLogoView)
+                    userLogoView.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(80)
+                        make.height.equalTo(80)
+                    }
+
+                    subject.view.layoutIfNeeded()
+
+                    // public properties
+                    expect(userLogoView.initialsLabel.text).to(equal("?"))
+                    expect(userLogoView.name).to(equal(""))
+                    expect(userLogoView.lineWidth).to(equal(1.0))
+                    expect(userLogoView.initialsLabel.textColor) == UIColor.grayColor()
                 }
 
                 it("should work correctly if the initials label has been removed") {

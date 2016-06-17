@@ -1,6 +1,20 @@
 //
 //  WActionSheetVCTests.swift
 //  WMobileKit
+//
+//  Copyright 2016 Workiva Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 
 import Quick
 import Nimble
@@ -98,6 +112,18 @@ class WActionSheetSpec: QuickSpec {
                     let newHeaderView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WHeaderView
                     
                     expect(newHeaderView).toNot(equal(nil))
+                }
+            }
+
+            describe("max sheet height") {
+                it("should have a max sheet height of 80% of the sheet height if a max height is not set") {
+                    expect(subject.defaultMaxSheetHeight()) == UIScreen.mainScreen().bounds.size.height * 0.8
+                }
+
+                it("should use a custom max sheet height if a custom value is set") {
+                    subject.maxSheetHeight = 200.0
+
+                    expect(subject.maxSheetHeight) == 200.0
                 }
             }
             

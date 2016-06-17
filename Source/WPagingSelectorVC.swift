@@ -1,6 +1,20 @@
 //
 //  WPagingSelectorControl.swift
 //  WMobileKit
+//
+//  Copyright 2016 Workiva Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 
 import Foundation
 import UIKit
@@ -198,7 +212,7 @@ public class WPagingSelectorControl: UIControl {
             contentWidth = CGFloat(tabWidth! * pages.count)
         }
 
-        scrollView.addSubview(contentView);
+        scrollView.addSubview(contentView)
         contentView.snp_makeConstraints { (make) in
             make.left.equalTo(scrollView)
             make.top.equalTo(scrollView)
@@ -384,7 +398,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(mainContainerView);
+        view.addSubview(mainContainerView)
 
         mainContainerView.snp_makeConstraints { (make) in
             make.left.equalTo(view)
@@ -401,7 +415,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         sideMenuController()?.delegate = self
     }
 
-    private func setupUI() {
+    public func setupUI() {
         if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
             pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth)
         } else {
@@ -413,7 +427,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
 
-            view.addSubview(pagingSelectorControl);
+            view.addSubview(pagingSelectorControl)
             pagingSelectorControl.snp_makeConstraints { (make) in
                 make.left.equalTo(view)
                 make.right.equalTo(view)
