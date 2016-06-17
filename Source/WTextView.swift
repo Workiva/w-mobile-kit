@@ -37,24 +37,28 @@ public class WTextView: UITextView, UITextViewDelegate {
     public var placeholderText: String = "" {
         didSet {
             placeholderLabel.text = placeholderText
+            textDidChange()
         }
     }
     
     public var placeholderTextColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22) {
         didSet {
             placeholderLabel.textColor = placeholderTextColor
+            textDidChange()
         }
     }
     
     override public var font: UIFont! {
         didSet {
             placeholderLabel.font = font
+            textDidChange()
         }
     }
     
     override public var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
+            textDidChange()
         }
     }
                 
@@ -102,14 +106,14 @@ public class WTextView: UITextView, UITextViewDelegate {
     }
     
     private func updatePlaceholder() {
-        if (text.isEmpty) {
+        if (text.isEmpty && placeholderLabel.superview == nil) {
             addSubview(placeholderLabel)
             placeholderLabel.snp_remakeConstraints() { (make) in
                 make.top.equalTo(self).offset(8)
                 make.left.equalTo(self).offset(8)
                 make.right.equalTo(self).offset(-8)
             }
-        } else if (placeholderLabel.superview != nil){
+        } else if (!text.isEmpty && placeholderLabel.superview != nil){
             placeholderLabel.removeFromSuperview()
         }
     }
