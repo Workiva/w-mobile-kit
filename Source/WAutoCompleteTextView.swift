@@ -97,9 +97,7 @@ public class WAutoCompleteTextView : UIView {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         backgroundColor = .clearColor()
-        
-        sizeToFit()
-        
+                
         addSubview(autoCompleteTable)
         autoCompleteTable.scrollEnabled = true
         autoCompleteTable.delegate = self
@@ -110,6 +108,7 @@ public class WAutoCompleteTextView : UIView {
         addSubview(textView)
         textView.backgroundColor = .whiteColor()
         textView.scrollEnabled = true
+        textView.scrollsToTop = false
         textView.editable = true
         textView.userInteractionEnabled = true
         textView.font = UIFont.systemFontOfSize(15)
@@ -330,14 +329,14 @@ extension WAutoCompleteTextView : UITextViewDelegate {
     
     private func updateHeight() {
         if let currentSuperview = superview {
-            var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
-            height = max(height, TEXT_VIEW_HEIGHT)
-            
-            backgroundView.snp_updateConstraints { (make) in
-                make.height.equalTo(height)
+            if (textView.contentSize.height > 0) {
+                var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
+                height = max(height, TEXT_VIEW_HEIGHT)
+                
+                backgroundView.snp_updateConstraints { (make) in
+                    make.height.equalTo(height)
+                }                
             }
-
-            currentSuperview.layoutIfNeeded()
         }
     }
     

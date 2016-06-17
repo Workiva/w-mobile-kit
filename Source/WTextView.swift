@@ -10,18 +10,40 @@ let KEY_RANGE_LINK = "LinkRange"
 let KEY_RANGE_ADDRESS = "AddressRange"
 
 public class WTextView: UITextView, UITextViewDelegate {
-    public override var text: String! {
+    private let placeholderLabel: UILabel = UILabel()
+    
+    private var placeholderLabelConstraints = [NSLayoutConstraint]()
+    
+    override public var text: String! {
         didSet {
-            buildTextView(text)
+            textDidChange()
         }
     }
-
+        
     public var placeholderText: String = "" {
         didSet {
-            buildTextView(text)
+            placeholderLabel.text = placeholderText
         }
     }
     
+    public var placeholderTextColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22) {
+        didSet {
+            placeholderLabel.textColor = placeholderTextColor
+        }
+    }
+    
+    override public var font: UIFont! {
+        didSet {
+            placeholderLabel.font = font
+        }
+    }
+    
+    override public var textAlignment: NSTextAlignment {
+        didSet {
+            placeholderLabel.textAlignment = textAlignment
+        }
+    }
+                
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -46,6 +68,36 @@ public class WTextView: UITextView, UITextViewDelegate {
         editable = false
         scrollEnabled = false
         delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(textDidChange),
+                                                         name: UITextViewTextDidChangeNotification,
+                                                         object: nil)
+        
+        placeholderLabel.font = font
+        placeholderLabel.textColor = placeholderTextColor
+        placeholderLabel.textAlignment = textAlignment
+        placeholderLabel.text = placeholderText
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.backgroundColor = UIColor.clearColor()
+        placeholderLabel.sizeToFit()
+    }
+        
+    @objc private func textDidChange() {
+        updatePlaceholder()
+    }
+    
+    private func updatePlaceholder() {
+        if (text.isEmpty) {
+            addSubview(placeholderLabel)
+            placeholderLabel.snp_remakeConstraints() { (make) in
+                make.top.equalTo(self).offset(8)
+                make.left.equalTo(self).offset(8)
+                make.right.equalTo(self).offset(-8)
+            }
+        } else if (placeholderLabel.superview != nil){
+            placeholderLabel.removeFromSuperview()
+        }
     }
     
     public func buildTextView(text: String) {
@@ -153,8 +205,14 @@ public class WTextView: UITextView, UITextViewDelegate {
         
         return nil
     }
-    
+                
     public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         return true
     }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UITextViewTextDidChangeNotification,
+                                                            object: nil)
+    }    
 }
