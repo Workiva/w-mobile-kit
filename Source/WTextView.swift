@@ -31,6 +31,7 @@ public class WTextView: UITextView, UITextViewDelegate {
     override public var text: String! {
         didSet {
             textDidChange()
+            buildTextView(text)
         }
     }
         

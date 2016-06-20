@@ -223,9 +223,7 @@ public class WAutoCompleteTextView : UIView {
             autoCompleteTable.reloadData()
         }
 
-        if (show && !isAutoCompleting) {
-            animateTable(show)
-        } else if (!show && isAutoCompleting) {
+        if ( (show && !isAutoCompleting) || (!show && isAutoCompleting) ) {
             animateTable(show)
         }
     }
@@ -245,7 +243,7 @@ public class WAutoCompleteTextView : UIView {
                 isAutoCompleting = false
             }
         }
-                
+        
         UIView.animateWithDuration(0.3,
             animations: {
                 self.updateHeight()
@@ -343,7 +341,7 @@ extension WAutoCompleteTextView : UITextViewDelegate {
     }
     
     private func updateHeight() {
-        if let currentSuperview = superview {
+        if (superview != nil) {
             if (textView.contentSize.height > 0) {
                 var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
                 height = max(height, TEXT_VIEW_HEIGHT)

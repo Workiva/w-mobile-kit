@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -630,7 +630,7 @@
         <!--NavigationVC-->
         <scene sceneID="iKe-Y1-geA">
             <objects>
-                <navigationController storyboardIdentifier="AutoCompleteTextFieldExampleVC" id="Fkx-XM-Urm" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AutoCompleteTextViewExampleVC" id="Fkx-XM-Urm" customClass="NavigationVC" customModule="WMobileKitExample_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="I5e-CN-gkp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -643,10 +643,10 @@
             </objects>
             <point key="canvasLocation" x="1159" y="7658"/>
         </scene>
-        <!--Auto Complete Text Field ExampleVC-->
+        <!--Auto Complete Text View ExampleVC-->
         <scene sceneID="r9Y-9w-xI6">
             <objects>
-                <viewController id="fCc-Wf-TOc" customClass="AutoCompleteTextFieldExampleVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
+                <viewController id="fCc-Wf-TOc" customClass="AutoCompleteTextViewExampleVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sAN-g7-aFl"/>
                         <viewControllerLayoutGuide type="bottom" id="1QC-NJ-G1w"/>
@@ -926,7 +926,7 @@
                                     <constraint firstAttribute="width" constant="80" id="ufY-sl-0KS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1006,7 +1006,7 @@
                                     <constraint firstAttribute="width" constant="256" id="fZc-Hn-GQn"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reusable, custom swift UI components" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JsT-1r-jNK">
@@ -1026,7 +1026,7 @@
                                     <constraint firstAttribute="height" constant="30" id="hvj-o7-0ai"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press the top left icon to view examples" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZJ-Vm-OxB">
