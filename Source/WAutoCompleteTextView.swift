@@ -146,6 +146,7 @@ public class WAutoCompleteTextView : UIView {
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
         submitButton.backgroundColor = .clearColor()
         submitButton.hidden = true
+        submitButton.enabled = false
     }
     
     public func setupUI() {
@@ -334,7 +335,7 @@ extension WAutoCompleteTextView : UITextViewDelegate {
         if (hasSubmitButton) {
             let trimmedString = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             submitButton.enabled = trimmedString.characters.count > 0
-        }        
+        }
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
