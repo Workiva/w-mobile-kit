@@ -282,6 +282,8 @@ public class WAutoCompleteTextView : UIView {
     }
     
     public func acceptAutoCompletionWithString(string: String) {
+        var replaceText = string
+
         if let range = autoCompleteRange {
             var selection = textView.selectedTextRange
             
@@ -289,7 +291,6 @@ public class WAutoCompleteTextView : UIView {
                 autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
             }
             
-            var replaceText = string
             if (addSpaceAfterReplacement) {
                 replaceText = replaceText.stringByAppendingString(" ")
             }
@@ -302,7 +303,11 @@ public class WAutoCompleteTextView : UIView {
                 textView.selectedTextRange = selection
             }
         } else {
-            textView.text = textView.text.stringByAppendingString(string)
+            if (addSpaceAfterReplacement) {
+                replaceText = replaceText.stringByAppendingString(" ")
+            }
+
+            textView.text = textView.text.stringByAppendingString(replaceText)
         }
     }
     
