@@ -29,9 +29,13 @@ public enum WPagingWidthMode {
     case Static, Dynamic
 }
 
-@objc protocol WPagingSelectorVCDelegate: class {
+@objc protocol WPagingSelectorControlDelegate: class {
     optional func willChangeToTab(sender: WPagingSelectorControl, tab: Int)
     optional func didChangeToTab(sender: WPagingSelectorControl, tab: Int)
+}
+
+@objc protocol WPagingSelectorVCDelegate: class {
+    optional func shouldShowShadow(sender: WPagingSelectorVC) -> Bool
 }
 
 public class WScrollView: UIScrollView {
@@ -142,7 +146,7 @@ public class WPagingSelectorControl: UIControl {
     private var selectedContainer: WTabView?
     private var tabViews = Array<WTabView>()
     private var isAnimating = false
-    private weak var delegate: WPagingSelectorVCDelegate?
+    private weak var delegate: WPagingSelectorControlDelegate?
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -368,7 +372,7 @@ public struct WPage {
     }
 }
 
-public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
+public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate {
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
     public var pagingControlHeight: Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
@@ -396,6 +400,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     var mainContainerView = UIView()
     var currentPageIndex = 0
     var isShowingShadow = false
+    
+    weak var delegate: WPagingSelectorVCDelegate?
 
     public var pages:[WPage] = [WPage]() {
         didSet {
@@ -560,6 +566,13 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
 
 extension WPagingSelectorVC : UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let shouldShow = delegate?.shouldShowShadow?(self) {
+            if (!shouldShow) {
+                setShadow(false, animated: true)
+                return
+            }
+        }
+        
         if (scrollView.contentOffset.y <= 0) {
             setShadow(false, animated: true)
         } else {
