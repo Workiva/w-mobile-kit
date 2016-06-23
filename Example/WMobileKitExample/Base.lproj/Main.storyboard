@@ -379,9 +379,9 @@
                                 <rect key="frame" x="20" y="0.0" width="560" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Uj-Lh-h70" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="900"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="900"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqQ-cI-N3Q">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqQ-cI-N3Q">
                                                 <rect key="frame" x="30" y="30" width="510" height="115"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="115" id="8DN-Dw-DrM"/>
@@ -390,7 +390,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try scrolling down!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3st-nG-q7b">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Try scrolling down!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3st-nG-q7b">
                                                 <rect key="frame" x="60" y="455" width="480" height="115"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="115" id="Mem-4O-cig"/>
@@ -405,7 +405,7 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See the shadow that appears?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-pV-2x6">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="See the shadow that appears?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-pV-2x6">
                                                 <rect key="frame" x="30" y="700" width="540" height="115"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="115" id="LC7-9V-awD"/>
@@ -446,6 +446,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="5Uj-Lh-h70" secondAttribute="bottom" id="5Nq-Bg-IjR"/>
                                     <constraint firstAttribute="trailing" secondItem="5Uj-Lh-h70" secondAttribute="trailing" id="A2g-NT-boE"/>
+                                    <constraint firstItem="5Uj-Lh-h70" firstAttribute="width" secondItem="egW-at-xdc" secondAttribute="width" id="SD9-Za-44A"/>
                                     <constraint firstItem="5Uj-Lh-h70" firstAttribute="top" secondItem="egW-at-xdc" secondAttribute="top" id="k0t-Nt-HsE"/>
                                     <constraint firstItem="5Uj-Lh-h70" firstAttribute="leading" secondItem="egW-at-xdc" secondAttribute="leading" id="pzk-kK-3L9"/>
                                     <constraint firstAttribute="height" constant="580" id="tyW-EO-A5s"/>
@@ -473,6 +474,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="WeP-G7-zSi"/>
                                 <exclude reference="1XV-gT-MP6"/>
                                 <exclude reference="yYV-Od-Z8O"/>
                             </mask>

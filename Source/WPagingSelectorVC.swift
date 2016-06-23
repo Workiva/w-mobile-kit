@@ -122,6 +122,12 @@ public class WPagingSelectorControl: UIControl {
             }
         }
     }
+    
+    public var separatorLineColor: UIColor = WThemeManager.sharedInstance.currentTheme.pagingSelectorSeparatorColor {
+        didSet {
+            separatorLine.backgroundColor = separatorLineColor
+        }
+    }
 
     public private(set) var widthMode: WPagingWidthMode = .Dynamic
     public private(set) var tabWidth: Int?
@@ -131,6 +137,7 @@ public class WPagingSelectorControl: UIControl {
     private var pages = [WPage]()
     private var contentView = UIView()
     private var tabContainerView = UIView()
+    private var separatorLine = UIView()
     private var selectionIndicatorView = WSelectionIndicatorView()
     private var selectedContainer: WTabView?
     private var tabViews = Array<WTabView>()
@@ -205,6 +212,14 @@ public class WPagingSelectorControl: UIControl {
             make.right.equalTo(self)
             make.bottom.equalTo(self)
             make.top.equalTo(self)
+        }
+        
+        addSubview(separatorLine)
+        separatorLine.snp_makeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.bottom.equalTo(self)
+            make.height.equalTo(1)
         }
 
         var contentWidth:CGFloat = CGFloat(0)
@@ -370,6 +385,12 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
             pagingSelectorControl?.tabTextColor = tabTextColor
         }
     }
+    
+    public var separatorLineColor: UIColor = WThemeManager.sharedInstance.currentTheme.pagingSelectorSeparatorColor {
+        didSet {
+            pagingSelectorControl?.separatorLineColor = separatorLineColor
+        }
+    }
 
     var mainViewController: UIViewController?
     var mainContainerView = UIView()
@@ -427,6 +448,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
 
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
+            pagingSelectorControl.separatorLineColor = separatorLineColor
 
             view.addSubview(pagingSelectorControl)
             pagingSelectorControl.snp_makeConstraints { (make) in
@@ -442,18 +464,6 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
                 make.bottom.equalTo(view)
                 make.top.equalTo(pagingSelectorControl.snp_bottom)
             }
-            
-            let bottomLine = UIView()
-            bottomLine.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-            
-            pagingSelectorControl.addSubview(bottomLine)
-            bottomLine.snp_remakeConstraints(closure: { (make) in
-                make.left.equalTo(pagingSelectorControl)
-                make.right.equalTo(pagingSelectorControl)
-                make.bottom.equalTo(pagingSelectorControl)
-                make.height.equalTo(1)
-            })
-            pagingSelectorControl.layoutIfNeeded()
         }
 
         if let mainViewController = pages[0].viewController {
@@ -521,8 +531,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     }
     
     public func setShadow(enabled: Bool, animated: Bool = false) {
-        pagingSelectorControl?.layer.shadowOffset = CGSize(width: 0, height: 2)
-        pagingSelectorControl?.layer.shadowRadius = 2
+        pagingSelectorControl?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        pagingSelectorControl?.layer.shadowRadius = 4
         pagingSelectorControl?.layer.shadowColor = UIColor.blackColor().CGColor
         
         if (enabled != isShowingShadow) {
@@ -538,7 +548,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
                 
                 self.pagingSelectorControl?.layer.addAnimation(animation, forKey: "shadowAnimation")
             } else {
-                pagingSelectorControl?.layer.shadowOpacity = enabled ? 0.5 : 0
+                pagingSelectorControl?.layer.shadowOpacity = enabled ? 0.11 : 0
             }
         }
     }
