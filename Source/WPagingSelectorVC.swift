@@ -374,6 +374,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
     var mainViewController: UIViewController?
     var mainContainerView = UIView()
     var currentPageIndex = 0
+    var isShowingShadow = false
 
     public var pages:[WPage] = [WPage]() {
         didSet {
@@ -441,6 +442,18 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
                 make.bottom.equalTo(view)
                 make.top.equalTo(pagingSelectorControl.snp_bottom)
             }
+            
+            let bottomLine = UIView()
+            bottomLine.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+            
+            pagingSelectorControl.addSubview(bottomLine)
+            bottomLine.snp_remakeConstraints(closure: { (make) in
+                make.left.equalTo(pagingSelectorControl)
+                make.right.equalTo(pagingSelectorControl)
+                make.bottom.equalTo(pagingSelectorControl)
+                make.height.equalTo(1)
+            })
+            pagingSelectorControl.layoutIfNeeded()
         }
 
         if let mainViewController = pages[0].viewController {
@@ -506,8 +519,41 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
             })
         }
     }
+    
+    public func setShadow(enabled: Bool, animated: Bool = false) {
+        pagingSelectorControl?.layer.shadowOffset = CGSize(width: 0, height: 2)
+        pagingSelectorControl?.layer.shadowRadius = 2
+        pagingSelectorControl?.layer.shadowColor = UIColor.blackColor().CGColor
+        
+        if (enabled != isShowingShadow) {
+            isShowingShadow = enabled
+            
+            if (animated) {
+                let animation = CABasicAnimation(keyPath: "shadowOpacity")
+                animation.fromValue = enabled ? CGFloat(0.0) : CGFloat(0.4)
+                animation.toValue = enabled ? CGFloat(0.5) : CGFloat(0.0)
+                animation.duration = 0.2
+                animation.fillMode = kCAFillModeForwards
+                animation.removedOnCompletion = false
+                
+                self.pagingSelectorControl?.layer.addAnimation(animation, forKey: "shadowAnimation")
+            } else {
+                pagingSelectorControl?.layer.shadowOpacity = enabled ? 0.5 : 0
+            }
+        }
+    }
 
     @objc internal func didChangeToTab(sender: WPagingSelectorControl, tab: Int) {
         currentPageIndex = tab
+    }
+}
+
+extension WPagingSelectorVC : UIScrollViewDelegate {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y <= 0) {
+            setShadow(false, animated: true)
+        } else {
+            setShadow(true, animated: true)
+        }
     }
 }

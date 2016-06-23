@@ -63,6 +63,11 @@ class LeftMenuTVCExample: UITableViewController {
                 pagingVC.tabWidth = 90
                 pagingVC.pagingControlHeight = 44
                 pagingVC.tabTextColor = WThemeManager.sharedInstance.currentTheme.secondaryTextColor
+                
+                let subviews = vc1.view.subviews
+                if let scrollView = subviews[0] as? UIScrollView {
+                    scrollView.delegate = pagingVC
+                }
 
                 let pages = [
                     WPage(title: "Text VC", viewController: vc1),
