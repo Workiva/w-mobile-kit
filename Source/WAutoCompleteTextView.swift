@@ -62,7 +62,7 @@ public class WAutoCompleteTextView : UIView {
     }
     
     public weak var delegate: WAutoCompletionTextViewDelegate?
-    public weak var dataSource: WAutoCompleteTextViewDataSource? {
+    public var dataSource: WAutoCompleteTextViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
         }
