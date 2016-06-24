@@ -395,6 +395,9 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
             pagingSelectorControl?.separatorLineColor = separatorLineColor
         }
     }
+    
+    public var shadowOpacity: Float = 0.3
+    public var shadowAnimationDuration = 0.2
 
     var mainViewController: UIViewController?
     var mainContainerView = UIView()
@@ -557,15 +560,15 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
             
             if (animated) {
                 let animation = CABasicAnimation(keyPath: "shadowOpacity")
-                animation.fromValue = enabled ? CGFloat(0.0) : CGFloat(0.4)
-                animation.toValue = enabled ? CGFloat(0.5) : CGFloat(0.0)
-                animation.duration = 0.2
+                animation.fromValue = enabled ? 0.0 : shadowOpacity
+                animation.toValue = enabled ? shadowOpacity : 0.0
+                animation.duration = shadowAnimationDuration
                 animation.fillMode = kCAFillModeForwards
                 animation.removedOnCompletion = false
                 
                 self.pagingSelectorControl?.layer.addAnimation(animation, forKey: "shadowAnimation")
             } else {
-                pagingSelectorControl?.layer.shadowOpacity = enabled ? 0.11 : 0
+                pagingSelectorControl?.layer.shadowOpacity = enabled ? shadowOpacity : 0.0
             }
         }
     }
