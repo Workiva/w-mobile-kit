@@ -218,6 +218,19 @@ class WSwitchSpec: QuickSpec {
 
                     expect(switchControl.on) == true
                 }
+                
+                it("should not switch value if switch is not enabled") {
+                    switchControl = WSwitch()
+                    subject.view.addSubview(switchControl)
+                    switchControl.setupUI()
+                    switchControl.enabled = false
+                    
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+                    pressRecognizer.testState = .Ended
+                    switchControl.switchWasPressed(pressRecognizer)
+                    
+                    expect(switchControl.on) == true
+                }
 
                 it("should handle button presses on touch began") {
                     switchControl = WSwitch()

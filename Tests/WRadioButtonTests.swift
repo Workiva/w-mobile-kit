@@ -268,6 +268,19 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
                     expect(radioButton.selected) == false
                 }
+                
+                it("should not handle button presses on touch when button is not enabled") {
+                    radioButton = WRadioButton()
+                    radioButton.enabled = false
+                    
+                    let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
+                    pressRecognizer.testState = .Began
+                    radioButton.buttonWasPressed(pressRecognizer)
+                    
+                    // Should not highlight
+                    expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
+                    expect(radioButton.selected) == false
+                }
 
                 it("should handle button presses on other events") {
                     radioButton = WRadioButton()

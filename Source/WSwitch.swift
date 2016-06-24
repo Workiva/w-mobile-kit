@@ -168,6 +168,10 @@ public class WSwitch: UIControl {
     }
     
     public func switchWasPressed(sender: UILongPressGestureRecognizer) {
+        if (!enabled) {
+            return
+        }
+        
         switch sender.state {
         case .Began:
             frontCircle.alpha = 0.5

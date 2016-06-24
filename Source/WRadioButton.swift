@@ -213,6 +213,10 @@ public class WRadioButton: UIControl {
      Selection will only occur if the touch up is within the threshold.
      */
     public func buttonWasPressed(sender: UILongPressGestureRecognizer) {
+        if (!enabled) {
+            return
+        }
+        
         switch sender.state {
         case .Began:
             radioCircle.backgroundColor = highlightColor
