@@ -23,74 +23,77 @@ public class TextViewExamplesVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: Text View with correct Markdown URL
-        let correctTextView = WTextView("This WTextView has a [correct]() Markdown URL")
-        correctTextView.backgroundColor = .clearColor()
-        correctTextView.textAlignment = .Center
-        view.addSubview(correctTextView)
-        correctTextView.snp_makeConstraints { (make) in
+        // MARK: Text View with placeholder text.
+        let noIconsLabel = UILabel()
+        noIconsLabel.text = "This WTextView has placeholder text."
+        noIconsLabel.textAlignment = .Center
+        view.addSubview(noIconsLabel)
+        noIconsLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(20)
-            make.width.equalTo(view).multipliedBy(0.8)
-            make.height.equalTo(35)
+            make.width.equalTo(300)
+            make.height.equalTo(20)
         }
         
-        let incorrectTextView = WTextView("This WTextView has an [incorrect](() Markdown URL")
-        incorrectTextView.textAlignment = .Center
-        view.addSubview(incorrectTextView)
-        incorrectTextView.snp_makeConstraints { (make) in
+        let noIconsTextView = WTextView()
+        noIconsTextView.editable = true
+        noIconsTextView.scrollEnabled = true
+        noIconsTextView.placeholderText = "Type something to see this disappear"
+        view.addSubview(noIconsTextView)
+        noIconsTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(correctTextView.snp_bottom).offset(20)
-            make.width.equalTo(view).multipliedBy(0.8)
-            make.height.equalTo(35)
+            make.top.equalTo(noIconsLabel.snp_bottom).offset(4)
+            make.width.equalTo(300)
+            make.height.equalTo(30)
         }
         
-        let multipleCorrectTextView = WTextView("This WTextView has [multiple]() correct [Markdown]() URLs")
-        multipleCorrectTextView.textAlignment = .Center
-        multipleCorrectTextView.backgroundColor = .clearColor()
-        multipleCorrectTextView.linkTextAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                                                      NSForegroundColorAttributeName: UIColor.purpleColor()]
-        view.addSubview(multipleCorrectTextView)
-        multipleCorrectTextView.snp_makeConstraints { (make) in
+        // MARK: Text View with a left icon.
+        let leftIconLabel = UILabel()
+        leftIconLabel.text = "This WTextView has a left icon."
+        leftIconLabel.textAlignment = .Center
+        view.addSubview(leftIconLabel)
+        leftIconLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(incorrectTextView.snp_bottom).offset(20)
-            make.width.equalTo(view).multipliedBy(0.8)
-            make.height.equalTo(35)
+            make.top.equalTo(noIconsTextView.snp_bottom).offset(10)
+            make.width.equalTo(300)
+            make.height.equalTo(20)
         }
         
-        let mixedTextView = WTextView()
-        mixedTextView.text = "This WTextView has [some](() [incorrect]]() URLs with [some]() correct [ones]() as well"
-        mixedTextView.textAlignment = .Center
-        view.addSubview(mixedTextView)
-        mixedTextView.snp_makeConstraints { (make) in
+        let leftIconTextView = WTextView()
+        leftIconTextView.editable = true
+        leftIconTextView.scrollEnabled = true        
+        leftIconTextView.leftImage = UIImage(named: "person")
+        view.addSubview(leftIconTextView)
+        leftIconTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(multipleCorrectTextView.snp_bottom).offset(20)
-            make.width.equalTo(view).multipliedBy(0.8)
-            make.height.equalTo(45)
+            make.top.equalTo(leftIconLabel.snp_bottom).offset(4)
+            make.width.equalTo(300)
+            make.height.equalTo(30)
         }
         
-        let complexTextView = WTextView()
-        complexTextView.text = "This WTextView has a [co[mpl]ex]   () URL"
-        complexTextView.backgroundColor = .clearColor()
-        complexTextView.textAlignment = .Center
-        complexTextView.linkTextAttributes = [NSForegroundColorAttributeName: UIColor.yellowColor(),
-                                              NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleThick.rawValue]
-        view.addSubview(complexTextView)
-        complexTextView.snp_makeConstraints { (make) in
+        // MARK: Text View with both.
+        let bothLabel = UILabel()
+        bothLabel.text = "This WTextView has placeholder text and a left icon."
+        bothLabel.textAlignment = .Center
+        view.addSubview(bothLabel)
+        bothLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(mixedTextView.snp_bottom).offset(20)
-            make.width.equalTo(view).multipliedBy(0.8)
-            make.height.equalTo(35)
+            make.top.equalTo(leftIconTextView.snp_bottom).offset(10)
+            make.width.equalTo(300)
+            make.height.equalTo(20)
         }
         
-        let realLinkTextView = WTextView("This WTextView has a link that will take you directly to [Wdesk.com](https://wdesk.com)")
-        realLinkTextView.textAlignment = .Center
-        view.addSubview(realLinkTextView)
-        realLinkTextView.snp_makeConstraints { (make) in
+        let bothTextView = WTextView()
+        bothTextView.editable = true
+        bothTextView.scrollEnabled = true
+        bothTextView.placeholderText = "Enter the name of a person"
+        bothTextView.leftImage = UIImage(named: "person")
+        view.addSubview(bothTextView)
+        bothTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(complexTextView.snp_bottom).offset(20)
-            make.width.equalTo(view).multipliedBy(0.6)
-            make.height.equalTo(45)
-        }
+            make.top.equalTo(bothLabel.snp_bottom).offset(4)
+            make.width.equalTo(300)
+            make.height.equalTo(30)
+        }        
     }
 }
