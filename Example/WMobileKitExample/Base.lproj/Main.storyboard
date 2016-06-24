@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -363,10 +364,10 @@
             </objects>
             <point key="canvasLocation" x="1159" y="2652"/>
         </scene>
-        <!--Side Menu ContentVC-->
+        <!--Paging Selector DelegateVC-->
         <scene sceneID="YYJ-vY-zbz">
             <objects>
-                <viewController storyboardIdentifier="textVC" id="mX8-IJ-DeD" customClass="WSideMenuContentVC" customModule="WMobileKit" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="textVC" id="mX8-IJ-DeD" customClass="PagingSelectorDelegateVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3K1-hr-ABD"/>
                         <viewControllerLayoutGuide type="bottom" id="FIr-Vm-EMw"/>
@@ -381,17 +382,17 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Uj-Lh-h70" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="900"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqQ-cI-N3Q">
-                                                <rect key="frame" x="30" y="30" width="510" height="115"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqQ-cI-N3Q">
+                                                <rect key="frame" x="20" y="5" width="520" height="260"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="115" id="8DN-Dw-DrM"/>
+                                                    <constraint firstAttribute="height" constant="260" id="8DN-Dw-DrM"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Try scrolling down!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3st-nG-q7b">
-                                                <rect key="frame" x="60" y="455" width="480" height="115"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try scrolling down!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3st-nG-q7b">
+                                                <rect key="frame" x="20" y="275" width="520" height="115"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="115" id="Mem-4O-cig"/>
                                                     <constraint firstAttribute="height" constant="115" id="u0O-DJ-N5x"/>
@@ -405,11 +406,11 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="See the shadow that appears?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-pV-2x6">
-                                                <rect key="frame" x="30" y="700" width="540" height="115"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notice the shadow appears under the paging selector!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-pV-2x6">
+                                                <rect key="frame" x="20" y="680" width="520" height="180"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="115" id="LC7-9V-awD"/>
-                                                    <constraint firstAttribute="height" constant="115" id="NoZ-Sl-1gT"/>
+                                                    <constraint firstAttribute="height" constant="180" id="NoZ-Sl-1gT"/>
                                                     <constraint firstAttribute="height" constant="115" id="VVu-x7-Qyl"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -425,16 +426,16 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="a9W-pV-2x6" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="30" id="3Bu-uY-cbA"/>
-                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="30" id="47s-wP-cET"/>
+                                            <constraint firstItem="a9W-pV-2x6" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="3Bu-uY-cbA"/>
+                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="47s-wP-cET"/>
                                             <constraint firstAttribute="bottom" secondItem="3st-nG-q7b" secondAttribute="bottom" constant="30" id="A0c-ce-OJF"/>
-                                            <constraint firstAttribute="bottom" secondItem="a9W-pV-2x6" secondAttribute="bottom" constant="85" id="BJ9-dM-IVn"/>
-                                            <constraint firstItem="3st-nG-q7b" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="60" id="Pvm-w4-5R5"/>
-                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="top" secondItem="5Uj-Lh-h70" secondAttribute="top" constant="30" id="R8m-Qu-kB6"/>
-                                            <constraint firstAttribute="trailing" secondItem="a9W-pV-2x6" secondAttribute="trailing" constant="30" id="Wgm-mC-jyc"/>
-                                            <constraint firstItem="3st-nG-q7b" firstAttribute="top" secondItem="pqQ-cI-N3Q" secondAttribute="bottom" constant="310" id="iqP-aM-W8O"/>
-                                            <constraint firstAttribute="trailing" secondItem="3st-nG-q7b" secondAttribute="trailing" constant="60" id="sHQ-Pp-paL"/>
-                                            <constraint firstAttribute="trailing" secondItem="pqQ-cI-N3Q" secondAttribute="trailing" constant="60" id="z0L-zh-XAq"/>
+                                            <constraint firstAttribute="bottom" secondItem="a9W-pV-2x6" secondAttribute="bottom" constant="40" id="BJ9-dM-IVn"/>
+                                            <constraint firstItem="3st-nG-q7b" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="Pvm-w4-5R5"/>
+                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="top" secondItem="5Uj-Lh-h70" secondAttribute="top" constant="5" id="R8m-Qu-kB6"/>
+                                            <constraint firstAttribute="trailing" secondItem="a9W-pV-2x6" secondAttribute="trailing" constant="20" id="Wgm-mC-jyc"/>
+                                            <constraint firstItem="3st-nG-q7b" firstAttribute="top" secondItem="pqQ-cI-N3Q" secondAttribute="bottom" constant="10" id="iqP-aM-W8O"/>
+                                            <constraint firstAttribute="trailing" secondItem="3st-nG-q7b" secondAttribute="trailing" constant="20" id="sHQ-Pp-paL"/>
+                                            <constraint firstAttribute="trailing" secondItem="pqQ-cI-N3Q" secondAttribute="trailing" constant="20" id="z0L-zh-XAq"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -509,18 +510,18 @@ See the nice shadow?</string>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="QgH-Pr-kMO"/>
                             <exclude reference="POC-SZ-XMP"/>
+                            <exclude reference="QgH-Pr-kMO"/>
                         </mask>
                     </variation>
                 </label>
             </objects>
             <point key="canvasLocation" x="2652" y="2652"/>
         </scene>
-        <!--Paging SelectorVC-->
+        <!--Paging ControlVC ExampleVC-->
         <scene sceneID="bdh-GG-E3Y">
             <objects>
-                <viewController id="Cnq-KB-er6" customClass="WPagingSelectorVC" customModule="WMobileKit" sceneMemberID="viewController">
+                <viewController id="Cnq-KB-er6" customClass="PagingControlVCExampleVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zhT-iK-760"/>
                         <viewControllerLayoutGuide type="bottom" id="19S-L2-bsB"/>

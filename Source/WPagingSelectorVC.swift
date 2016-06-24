@@ -34,8 +34,8 @@ public enum WPagingWidthMode {
     optional func didChangeToTab(sender: WPagingSelectorControl, tab: Int)
 }
 
-@objc protocol WPagingSelectorVCDelegate: class {
-    optional func shouldShowShadow(sender: WPagingSelectorVC) -> Bool
+public protocol WPagingSelectorVCDelegate: class {
+    func shouldShowShadow(sender: WPagingSelectorVC) -> Bool
 }
 
 public class WScrollView: UIScrollView {
@@ -401,7 +401,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     var currentPageIndex = 0
     var isShowingShadow = false
     
-    weak var delegate: WPagingSelectorVCDelegate?
+    public weak var delegate: WPagingSelectorVCDelegate?
 
     public var pages:[WPage] = [WPage]() {
         didSet {
@@ -486,6 +486,13 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
         if let newMainViewController = pages[tab].viewController {
             mainViewController = newMainViewController
+            
+            if let mainViewController = mainViewController as? WPagingSelectorVCDelegate {
+                delegate = mainViewController
+            } else {
+                delegate = nil
+            }
+                        
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
 
             // Animates view controller in left or right
@@ -499,8 +506,6 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
                 make.bottom.equalTo(mainContainerView)
                 make.width.equalTo(mainContainerView)
             })
-
-            oldMainViewController
 
             mainContainerView.layoutIfNeeded()
 
@@ -533,6 +538,12 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
                         self.removeViewControllerFromContainer(oldMainViewController)
                     }
             })
+            
+            if let delegate = delegate {
+                setShadow(delegate.shouldShowShadow(self), animated: true)
+            } else {
+                setShadow(false, animated: true)
+            }
         }
     }
     
@@ -566,17 +577,14 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
 extension WPagingSelectorVC : UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        if let shouldShow = delegate?.shouldShowShadow?(self) {
-            if (!shouldShow) {
-                setShadow(false, animated: true)
-                return
-            }
-        }
-        
-        if (scrollView.contentOffset.y <= 0) {
-            setShadow(false, animated: true)
+        if let delegate = delegate {
+            setShadow(delegate.shouldShowShadow(self), animated: true)
         } else {
-            setShadow(true, animated: true)
+            if (scrollView.contentOffset.y <= 0) {
+                setShadow(false, animated: true)
+            } else {
+                setShadow(true, animated: true)
+            }
         }
     }
 }
