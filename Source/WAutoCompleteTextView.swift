@@ -234,20 +234,25 @@ public class WAutoCompleteTextView : UIView {
             height = min(dataSourceHeight, maxAutoCompleteHeight)
         }
         
+        isAutoCompleting = animateIn
+        
         autoCompleteTable.snp_updateConstraints { (make) in
             if (animateIn) {
                 make.height.equalTo(height)
-                isAutoCompleting = true
             } else {
                 make.height.equalTo(0)
-                isAutoCompleting = false
             }
         }
         
+        updateHeight()
+        
         UIView.animateWithDuration(0.3,
             animations: {
-                self.updateHeight()
-            }, completion: nil)
+                self.superview?.layoutIfNeeded()
+            }, completion: { finished in
+                self.autoCompleteTable.hidden = !animateIn
+            }
+        )        
     }
     
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
@@ -259,6 +264,7 @@ public class WAutoCompleteTextView : UIView {
             }
             
             updateHeight()
+            currentSuperview.layoutIfNeeded()
         }
     }
     
@@ -353,7 +359,12 @@ extension WAutoCompleteTextView : UITextViewDelegate {
                 
                 backgroundView.snp_updateConstraints { (make) in
                     make.height.equalTo(height)
-                }                
+                }
+                
+                UIView.animateWithDuration(0.2,
+                    animations: {
+                        self.superview?.layoutIfNeeded()
+                    }, completion: nil)                
             }
         }
     }
