@@ -36,7 +36,7 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextViewExamplesVC") as! NavigationVC
     lazy var spinnerExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SpinnerExamplesVC") as! NavigationVC
     lazy var loadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("LoadingModalExamplesVC") as! NavigationVC
-    lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextFieldExampleVC") as! NavigationVC
+    lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextViewExampleVC") as! NavigationVC
     lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SwitchAndRadioExamplesVC") as! NavigationVC
     lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("BadgeExamplesVC") as! NavigationVC
 
@@ -88,7 +88,7 @@ class LeftMenuTVCExample: UITableViewController {
         case 8:
             sideMenuController()?.changeMainViewController(loadingModalExamplesVC)
         case 9:
-            sideMenuController()?.changeMainViewController(autoCompleteTextFieldExampleVC)
+            sideMenuController()?.changeMainViewController(autoCompleteTextViewExampleVC)
         case 10:
             sideMenuController()?.changeMainViewController(switchAndRadioExamplesVC)
         case 11:
