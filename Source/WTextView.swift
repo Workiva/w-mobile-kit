@@ -24,8 +24,8 @@ let KEY_RANGE_LINK = "LinkRange"
 let KEY_RANGE_ADDRESS = "AddressRange"
 
 public class WTextView: UITextView, UITextViewDelegate {
-    private let leftImageView: UIImageView = UIImageView()
-    private let placeholderLabel: UILabel = UILabel()
+    let leftImageView: UIImageView = UIImageView()
+    let placeholderLabel: UILabel = UILabel()
     
     private var placeholderLabelConstraints = [NSLayoutConstraint]()
     
@@ -86,6 +86,12 @@ public class WTextView: UITextView, UITextViewDelegate {
         self.init(frame: CGRectZero)
         
         commonInit()
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        updateUI()
     }
     
     public func commonInit() {
