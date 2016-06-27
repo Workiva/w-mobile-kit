@@ -114,31 +114,33 @@ public class WTextView: UITextView, UITextViewDelegate {
     }
     
     private func updateUI() {
-        let imageWidthHeight = 20
-        
-        var leftInset = CGFloat(0)
-        if (leftImageView.image != nil) {
-            leftInset = CGFloat(28)
-        }
-        
-        contentInset = UIEdgeInsetsMake(0, leftInset, 0, 0)
-        
-        leftImageView.snp_remakeConstraints() { (make) in
-            make.centerY.equalTo(self)
-            make.left.equalTo(self).offset(-imageWidthHeight)
-            make.width.equalTo(imageWidthHeight)
-            make.height.equalTo(imageWidthHeight)
-        }
-        
-        if (text.isEmpty && placeholderLabel.superview == nil) {
-            addSubview(placeholderLabel)
-            placeholderLabel.snp_remakeConstraints() { (make) in
-                make.centerY.equalTo(self)
-                make.left.equalTo(self).offset(8)
-                make.right.equalTo(self).offset(-8)
+        if (self.superview != nil) {
+            let imageWidthHeight = 20
+            
+            var leftInset = CGFloat(0)
+            if (leftImageView.image != nil) {
+                leftInset = CGFloat(28)
             }
-        } else if (!text.isEmpty && placeholderLabel.superview != nil){
-            placeholderLabel.removeFromSuperview()
+            
+            contentInset = UIEdgeInsetsMake(0, leftInset, 0, 0)
+            
+            leftImageView.snp_remakeConstraints() { (make) in
+                make.centerY.equalTo(self)
+                make.left.equalTo(self).offset(-imageWidthHeight)
+                make.width.equalTo(imageWidthHeight)
+                make.height.equalTo(imageWidthHeight)
+            }
+            
+            if (text.isEmpty && placeholderLabel.superview == nil) {
+                addSubview(placeholderLabel)
+                placeholderLabel.snp_remakeConstraints() { (make) in
+                    make.centerY.equalTo(self)
+                    make.left.equalTo(self).offset(8)
+                    make.right.equalTo(self).offset(-8)
+                }
+            } else if (!text.isEmpty && placeholderLabel.superview != nil){
+                placeholderLabel.removeFromSuperview()
+            }
         }
     }
         
