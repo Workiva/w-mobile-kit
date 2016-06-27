@@ -58,6 +58,9 @@ public class PagingControlVCExampleVC: WPagingSelectorVC {
         ]
         
         self.pages = pages
+        
+        separatorLineHeight = 3.0
+        shadowColor = UIColor.purpleColor().CGColor
     }
 
     public override func viewWillAppear(animated: Bool) {

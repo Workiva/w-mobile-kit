@@ -132,6 +132,16 @@ public class WPagingSelectorControl: UIControl {
             separatorLine.backgroundColor = separatorLineColor
         }
     }
+    
+    public var separatorLineHeight: CGFloat = 1.0 {
+        didSet {
+            separatorLine.snp_updateConstraints { (make) in
+                make.height.equalTo(separatorLineHeight)
+            }
+            
+            layoutIfNeeded()
+        }
+    }
 
     public private(set) var widthMode: WPagingWidthMode = .Dynamic
     public private(set) var tabWidth: Int?
@@ -223,7 +233,7 @@ public class WPagingSelectorControl: UIControl {
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.bottom.equalTo(self)
-            make.height.equalTo(1)
+            make.height.equalTo(separatorLineHeight)
         }
 
         var contentWidth:CGFloat = CGFloat(0)
@@ -396,6 +406,14 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
         }
     }
     
+    public var separatorLineHeight: CGFloat = 1.0 {
+        didSet {
+            pagingSelectorControl?.separatorLineHeight = separatorLineHeight
+        }
+    }
+    
+    public var shadowColor: CGColor = UIColor.blackColor().CGColor
+    public var shadowRadius: CGFloat = 4
     public var shadowOpacity: Float = 0.3
     public var shadowAnimationDuration = 0.2
 
@@ -552,8 +570,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     
     public func setShadow(enabled: Bool, animated: Bool = false) {
         pagingSelectorControl?.layer.shadowOffset = CGSize(width: 0, height: 0)
-        pagingSelectorControl?.layer.shadowRadius = 4
-        pagingSelectorControl?.layer.shadowColor = UIColor.blackColor().CGColor
+        pagingSelectorControl?.layer.shadowRadius = shadowRadius
+        pagingSelectorControl?.layer.shadowColor = shadowColor
         
         if (enabled != isShowingShadow) {
             isShowingShadow = enabled

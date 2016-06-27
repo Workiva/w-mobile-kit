@@ -105,6 +105,12 @@ class WPagingSelectorVCSpec: QuickSpec {
                     
                     expect(subject.pagingSelectorControl!.separatorLineColor) == UIColor.blueColor()
                 }
+                
+                it("should set separator line height on control when setting on the VC") {
+                    subject.separatorLineHeight = 3.0
+                    
+                    expect(subject.pagingSelectorControl!.separatorLineHeight) == 3.0
+                }
             }
 
             describe("tabs") { 
@@ -258,6 +264,32 @@ class WPagingSelectorVCSpec: QuickSpec {
                     subject.scrollViewDidScroll(delegate.scrollView)
                     
                     expect(subject.isShowingShadow) == false
+                }
+                
+                it("should set shadow properties correctly") {
+                    let pagingControl = subject.pagingSelectorControl!
+                    let shadowDisabledOpacity: Float = 0.0
+                    let shadowColor = UIColor.purpleColor().CGColor
+                    let shadowRadius: CGFloat = 5
+                    
+                    // First call sets up initial properties regardless and verify defaults
+                    subject.setShadow(false, animated: false)
+                    
+                    expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
+                    expect(pagingControl.layer.shadowColor) == UIColor.blackColor().CGColor
+                    expect(pagingControl.layer.shadowRadius) == 4
+                    expect(pagingControl.layer.shadowOffset) == CGSize(width: 0, height: 0)
+                    
+                    // Change shadow properties
+                    subject.shadowColor = shadowColor
+                    subject.shadowRadius = shadowRadius
+                    
+                    // Second call should keep set shadow properties
+                    subject.setShadow(false, animated: false)
+                    
+                    // Verify set properties
+                    expect(pagingControl.layer.shadowColor) == shadowColor
+                    expect(pagingControl.layer.shadowRadius) == shadowRadius
                 }
                 
                 it("should set shadow properties correctly and immediately with no animation") {
