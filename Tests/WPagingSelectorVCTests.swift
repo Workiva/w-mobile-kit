@@ -69,9 +69,47 @@ class WPagingSelectorVCSpec: QuickSpec {
                 it("should have the correct properties set") {
                     subject.tabWidth = DEFAULT_TAB_WIDTH
 
-                    expect(subject.tabWidth).to(equal(DEFAULT_TAB_WIDTH))
-                    expect(subject.pagingControlHeight).to(equal(DEFAULT_PAGING_SELECTOR_HEIGHT))
+                    expect(subject.tabWidth) == DEFAULT_TAB_WIDTH
+                    expect(subject.pagingControlHeight) == DEFAULT_PAGING_SELECTOR_HEIGHT
                     expect(subject.tabTextColor).to(equal(UIColor.blackColor()))
+                }
+                
+                it("should set to default tab width if trying to set too small of a value") {
+                    subject.tabWidth = 1
+                    
+                    expect(subject.pagingSelectorControl!.tabWidth) == DEFAULT_TAB_WIDTH
+                }
+                
+                it("should remove old paging selector when setting new pages") {
+                    let selector = subject.pagingSelectorControl
+                    subject.pages =  [WPage(title: "Test")]
+                    
+                    expect(selector!.superview).to(beNil())
+                }
+                
+                it("should remove old paging selector when setting new height") {
+                    let selector = subject.pagingSelectorControl
+                    subject.pagingControlHeight = 10
+                    
+                    expect(selector!.superview).to(beNil())
+                }
+                
+                it("should set color on control when setting on the VC") {
+                    subject.tabTextColor = .blueColor()
+                    
+                    expect(subject.pagingSelectorControl!.tabTextColor) == UIColor.blueColor()
+                }
+                
+                it("should set color for the separator line on control when setting on the VC") {
+                    subject.separatorLineColor = .blueColor()
+                    
+                    expect(subject.pagingSelectorControl!.separatorLineColor) == UIColor.blueColor()
+                }
+                
+                it("should set separator line height on control when setting on the VC") {
+                    subject.separatorLineHeight = 3.0
+                    
+                    expect(subject.pagingSelectorControl!.separatorLineHeight) == 3.0
                 }
             }
 
@@ -177,6 +215,126 @@ class WPagingSelectorVCSpec: QuickSpec {
                     expect(pagingSelectorControl).toNot(beNil())
                 }
             }
+            
+            describe("PagingSelectorControl Shadow") {
+                var delegate: WPagingSelectorControlVCDelegateMock!
+                
+                beforeEach({
+                    delegate = WPagingSelectorControlVCDelegateMock()
+                    
+                    subject.pages = [WPage(title: "Test"), WPage(title: "Test 2", viewController: delegate)]
+                    delegate.scrollView.delegate = subject
+                })
+                
+                it("should check with delegate when changing tabs") {
+                    expect(subject.isShowingShadow) == false
+                    
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 1)
+                    
+                    expect(subject.isShowingShadow) == true
+                }
+                
+                it("should show shadow if scrolling and delegate says to show shadow") {
+                    delegate.forceShowShadow = false
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 1)
+                    delegate.forceShowShadow = true
+                    
+                    expect(subject.isShowingShadow) == false
+                    
+                    subject.scrollViewDidScroll(delegate.scrollView)
+                    
+                    expect(subject.isShowingShadow) == true
+                }
+                
+                it("should show shadow if scrolling and content goes above paging selector with no delegate overrides") {
+                    delegate.forceShowShadow = false
+                    
+                    expect(subject.isShowingShadow) == false
+                    delegate.scrollView.contentOffset = CGPoint(x: 0, y: 1)
+                    subject.scrollViewDidScroll(delegate.scrollView)
+                    
+                    expect(subject.isShowingShadow) == true
+                }
+                
+                it("should not show shadow if scrolling and no content is behind paging selector with no delegate overrides") {
+                    delegate.forceShowShadow = false
+                    
+                    expect(subject.isShowingShadow) == false
+                    delegate.scrollView.contentOffset = CGPoint(x: 0, y: -1)
+                    subject.scrollViewDidScroll(delegate.scrollView)
+                    
+                    expect(subject.isShowingShadow) == false
+                }
+                
+                it("should set shadow properties correctly") {
+                    let pagingControl = subject.pagingSelectorControl!
+                    let shadowDisabledOpacity: Float = 0.0
+                    let shadowColor = UIColor.purpleColor().CGColor
+                    let shadowRadius: CGFloat = 5
+                    
+                    // First call sets up initial properties regardless and verify defaults
+                    subject.setShadow(false, animated: false)
+                    
+                    expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
+                    expect(pagingControl.layer.shadowColor) == UIColor.blackColor().CGColor
+                    expect(pagingControl.layer.shadowRadius) == 4
+                    expect(pagingControl.layer.shadowOffset) == CGSize(width: 0, height: 0)
+                    
+                    // Change shadow properties
+                    subject.shadowColor = shadowColor
+                    subject.shadowRadius = shadowRadius
+                    
+                    // Second call should keep set shadow properties
+                    subject.setShadow(false, animated: false)
+                    
+                    // Verify set properties
+                    expect(pagingControl.layer.shadowColor) == shadowColor
+                    expect(pagingControl.layer.shadowRadius) == shadowRadius
+                }
+                
+                it("should set shadow properties correctly and immediately with no animation") {
+                    let pagingControl = subject.pagingSelectorControl!
+                    let shadowEnabledOpacity: Float = 0.3
+                    let shadowDisabledOpacity: Float = 0.0
+                    
+                    // First call sets up initial properties regardless
+                    subject.setShadow(false, animated: false)
+                    
+                    expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
+                    expect(pagingControl.layer.shadowColor) == UIColor.blackColor().CGColor
+                    expect(pagingControl.layer.shadowRadius) == 4
+                    expect(pagingControl.layer.shadowOffset) == CGSize(width: 0, height: 0)
+                    
+                    // Second call will change opacity to very transparent
+                    subject.setShadow(true, animated: false)
+                    
+                    expect(pagingControl.layer.shadowOpacity) == shadowEnabledOpacity
+                    
+                    // Third call will change opacity back to completely transparent
+                    subject.setShadow(false, animated: false)
+                    
+                    expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
+                }
+            }
         }
+    }
+}
+
+class WPagingSelectorControlVCDelegateMock: WSideMenuContentVC, WPagingSelectorVCDelegate {
+    var forceShowShadow = true
+    var scrollView = UIScrollView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(scrollView)
+    }
+    
+    func shouldShowShadow(sender: WPagingSelectorVC) -> Bool {
+        if (forceShowShadow) {
+            return forceShowShadow
+        }
+        
+        return scrollView.contentOffset.y > 0
     }
 }
