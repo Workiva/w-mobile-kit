@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -209,7 +210,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="WMarkupTextView Examples" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ED-B0-hl4">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="WMarkdownTextView Examples" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6ED-B0-hl4" userLabel="WMarkdownTextView Examples">
                                                     <rect key="frame" x="15" y="0.0" width="550" height="59.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -381,10 +382,10 @@
             </objects>
             <point key="canvasLocation" x="1159" y="2652"/>
         </scene>
-        <!--Side Menu ContentVC-->
+        <!--Paging Selector DelegateVC-->
         <scene sceneID="YYJ-vY-zbz">
             <objects>
-                <viewController storyboardIdentifier="textVC" id="mX8-IJ-DeD" customClass="WSideMenuContentVC" customModule="WMobileKit" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="textVC" id="mX8-IJ-DeD" customClass="PagingSelectorDelegateVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3K1-hr-ABD"/>
                         <viewControllerLayoutGuide type="bottom" id="FIr-Vm-EMw"/>
@@ -393,41 +394,152 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="H4k-77-kiy">
-                                <rect key="frame" x="36" y="148" width="528" height="420"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egW-at-xdc">
+                                <rect key="frame" x="20" y="0.0" width="560" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Uj-Lh-h70" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="900"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqQ-cI-N3Q">
+                                                <rect key="frame" x="20" y="5" width="520" height="260"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="260" id="8DN-Dw-DrM"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try scrolling down!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3st-nG-q7b">
+                                                <rect key="frame" x="20" y="275" width="520" height="115"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="115" id="Mem-4O-cig"/>
+                                                    <constraint firstAttribute="height" constant="115" id="u0O-DJ-N5x"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="Mem-4O-cig"/>
+                                                    </mask>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notice the shadow appears under the paging selector!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-pV-2x6">
+                                                <rect key="frame" x="20" y="680" width="520" height="180"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="115" id="LC7-9V-awD"/>
+                                                    <constraint firstAttribute="height" constant="180" id="NoZ-Sl-1gT"/>
+                                                    <constraint firstAttribute="height" constant="115" id="VVu-x7-Qyl"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="LC7-9V-awD"/>
+                                                        <exclude reference="VVu-x7-Qyl"/>
+                                                    </mask>
+                                                </variation>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="a9W-pV-2x6" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="3Bu-uY-cbA"/>
+                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="47s-wP-cET"/>
+                                            <constraint firstAttribute="bottom" secondItem="3st-nG-q7b" secondAttribute="bottom" constant="30" id="A0c-ce-OJF"/>
+                                            <constraint firstAttribute="bottom" secondItem="a9W-pV-2x6" secondAttribute="bottom" constant="40" id="BJ9-dM-IVn"/>
+                                            <constraint firstItem="3st-nG-q7b" firstAttribute="leading" secondItem="5Uj-Lh-h70" secondAttribute="leading" constant="20" id="Pvm-w4-5R5"/>
+                                            <constraint firstItem="pqQ-cI-N3Q" firstAttribute="top" secondItem="5Uj-Lh-h70" secondAttribute="top" constant="5" id="R8m-Qu-kB6"/>
+                                            <constraint firstAttribute="trailing" secondItem="a9W-pV-2x6" secondAttribute="trailing" constant="20" id="Wgm-mC-jyc"/>
+                                            <constraint firstItem="3st-nG-q7b" firstAttribute="top" secondItem="pqQ-cI-N3Q" secondAttribute="bottom" constant="10" id="iqP-aM-W8O"/>
+                                            <constraint firstAttribute="trailing" secondItem="3st-nG-q7b" secondAttribute="trailing" constant="20" id="sHQ-Pp-paL"/>
+                                            <constraint firstAttribute="trailing" secondItem="pqQ-cI-N3Q" secondAttribute="trailing" constant="20" id="z0L-zh-XAq"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="A0c-ce-OJF"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5Uj-Lh-h70" secondAttribute="bottom" id="5Nq-Bg-IjR"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Uj-Lh-h70" secondAttribute="trailing" id="A2g-NT-boE"/>
+                                    <constraint firstItem="5Uj-Lh-h70" firstAttribute="width" secondItem="egW-at-xdc" secondAttribute="width" id="SD9-Za-44A"/>
+                                    <constraint firstItem="5Uj-Lh-h70" firstAttribute="top" secondItem="egW-at-xdc" secondAttribute="top" id="k0t-Nt-HsE"/>
+                                    <constraint firstItem="5Uj-Lh-h70" firstAttribute="leading" secondItem="egW-at-xdc" secondAttribute="leading" id="pzk-kK-3L9"/>
+                                    <constraint firstAttribute="height" constant="580" id="tyW-EO-A5s"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="tyW-EO-A5s"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="Cnq-KB-er6" id="pPl-Ph-zSv"/>
+                                </connections>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="H4k-77-kiy" firstAttribute="top" secondItem="3K1-hr-ABD" secondAttribute="bottom" constant="16" id="2QI-8l-fUa"/>
-                            <constraint firstItem="H4k-77-kiy" firstAttribute="centerX" secondItem="Uhq-Df-bU1" secondAttribute="centerX" id="A19-3v-qON"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="H4k-77-kiy" secondAttribute="trailing" constant="16" id="No3-Mh-IYi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="H4k-77-kiy" secondAttribute="trailing" constant="16" id="T2g-LE-6mx"/>
-                            <constraint firstItem="H4k-77-kiy" firstAttribute="leading" secondItem="Uhq-Df-bU1" secondAttribute="leadingMargin" constant="16" id="W6W-oO-QwQ"/>
-                            <constraint firstItem="FIr-Vm-EMw" firstAttribute="top" secondItem="H4k-77-kiy" secondAttribute="bottom" constant="32" id="g0P-Y9-WDH"/>
-                            <constraint firstItem="H4k-77-kiy" firstAttribute="top" secondItem="3K1-hr-ABD" secondAttribute="bottom" constant="128" id="jOS-cy-hwG"/>
-                            <constraint firstItem="H4k-77-kiy" firstAttribute="leading" secondItem="Uhq-Df-bU1" secondAttribute="leadingMargin" constant="16" id="tWd-yG-bIn"/>
+                            <constraint firstItem="egW-at-xdc" firstAttribute="top" secondItem="3K1-hr-ABD" secondAttribute="bottom" id="1XV-gT-MP6"/>
+                            <constraint firstItem="egW-at-xdc" firstAttribute="trailing" secondItem="Uhq-Df-bU1" secondAttribute="trailingMargin" id="DKY-zw-cFy"/>
+                            <constraint firstItem="5Uj-Lh-h70" firstAttribute="height" secondItem="Uhq-Df-bU1" secondAttribute="height" constant="300" id="F3M-AO-LY0"/>
+                            <constraint firstItem="egW-at-xdc" firstAttribute="bottom" secondItem="Uhq-Df-bU1" secondAttribute="bottomMargin" id="K8o-xQ-HWB"/>
+                            <constraint firstItem="egW-at-xdc" firstAttribute="top" secondItem="Uhq-Df-bU1" secondAttribute="topMargin" id="KBg-Rm-WDA"/>
+                            <constraint firstItem="5Uj-Lh-h70" firstAttribute="width" secondItem="Uhq-Df-bU1" secondAttribute="width" id="WeP-G7-zSi"/>
+                            <constraint firstItem="egW-at-xdc" firstAttribute="leading" secondItem="Uhq-Df-bU1" secondAttribute="leadingMargin" id="p0w-5v-jqz"/>
+                            <constraint firstItem="FIr-Vm-EMw" firstAttribute="top" secondItem="egW-at-xdc" secondAttribute="bottom" id="yYV-Od-Z8O"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="2QI-8l-fUa"/>
-                                <exclude reference="T2g-LE-6mx"/>
-                                <exclude reference="W6W-oO-QwQ"/>
+                                <exclude reference="WeP-G7-zSi"/>
+                                <exclude reference="1XV-gT-MP6"/>
+                                <exclude reference="yYV-Od-Z8O"/>
                             </mask>
                         </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaC-wL-5L4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="4KZ-h9-TaR">
+                    <rect key="frame" x="0.0" y="0.0" width="560" height="700"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="700" id="POC-SZ-XMP"/>
+                        <constraint firstAttribute="width" constant="560" id="QgH-Pr-kMO"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="700" id="fPQ-wO-7WH"/>
+                    </constraints>
+                    <string key="text">This is a WSideMenuContentVC that is stored in the page struct for the WPagingSelectorVC.
+
+
+
+
+
+
+
+
+Try scrolling down!
+
+
+
+
+See the nice shadow?</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="POC-SZ-XMP"/>
+                            <exclude reference="QgH-Pr-kMO"/>
+                        </mask>
+                    </variation>
+                </label>
             </objects>
             <point key="canvasLocation" x="2652" y="2652"/>
         </scene>
-        <!--Paging SelectorVC-->
+        <!--Paging ControlVC ExampleVC-->
         <scene sceneID="bdh-GG-E3Y">
             <objects>
-                <viewController id="Cnq-KB-er6" customClass="WPagingSelectorVC" customModule="WMobileKit" sceneMemberID="viewController">
+                <viewController id="Cnq-KB-er6" customClass="PagingControlVCExampleVC" customModule="WMobileKitExample_Example" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zhT-iK-760"/>
                         <viewControllerLayoutGuide type="bottom" id="19S-L2-bsB"/>
@@ -435,7 +547,34 @@
                     <view key="view" contentMode="scaleToFill" id="nd1-O0-kgT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZU-Bg-ZYo">
+                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="580" id="gd1-0Q-kd6"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="gd1-0Q-kd6"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="Cnq-KB-er6" id="NVd-4a-0wx"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" red="0.22352941179999999" green="0.74117647060000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="GZU-Bg-ZYo" firstAttribute="leading" secondItem="nd1-O0-kgT" secondAttribute="leadingMargin" id="EIE-Hw-XPy"/>
+                            <constraint firstItem="GZU-Bg-ZYo" firstAttribute="top" secondItem="zhT-iK-760" secondAttribute="bottom" id="Kjk-db-tU2"/>
+                            <constraint firstItem="19S-L2-bsB" firstAttribute="top" secondItem="GZU-Bg-ZYo" secondAttribute="bottom" id="MaJ-8b-f2b"/>
+                            <constraint firstItem="GZU-Bg-ZYo" firstAttribute="trailing" secondItem="nd1-O0-kgT" secondAttribute="trailingMargin" id="VuU-dy-EOG"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="GZU-Bg-ZYo"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="l5G-gv-XIv"/>
                 </viewController>

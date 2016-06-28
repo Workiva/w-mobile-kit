@@ -75,12 +75,13 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         let bothLabel = UILabel()
         bothLabel.text = "This WTextView has placeholder text and a left icon."
         bothLabel.textAlignment = .Center
+        bothLabel.numberOfLines = 2
         view.addSubview(bothLabel)
         bothLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(leftIconTextView.snp_bottom).offset(10)
             make.width.equalTo(300)
-            make.height.equalTo(20)
+            make.height.equalTo(60)
         }
         
         let bothTextView = WTextView()

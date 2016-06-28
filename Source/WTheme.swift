@@ -56,6 +56,7 @@ public class WTheme: NSObject {
     // Paging Selector
     public var pagingSelectorControlColor: UIColor = .lightGrayColor()
     public var pagingSelectionIndicatorColor: UIColor = .whiteColor()
+    public var pagingSelectorSeparatorColor: UIColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
     
     // Action Sheet
     public var actionSheetSelectColor: UIColor = .blueColor()
@@ -98,6 +99,7 @@ public class CustomTheme: WTheme {
 
         pagingSelectorControlColor = UIColor(hex: 0x2495BE)
         pagingSelectionIndicatorColor = UIColor(hex: 0x026DCE)
+        pagingSelectorSeparatorColor = UIColor(hex: 0xDEDEDE, alpha: 0.35)
         
         actionSheetSelectColor = UIColor(hex: 0x0094FF)
 
