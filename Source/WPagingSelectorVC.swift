@@ -24,6 +24,7 @@ let MIN_TAB_WIDTH = 20
 let ANIMATION_DURATION = 0.2
 let SELECTION_INDICATOR_VIEW_HEIGHT = 3
 public let DEFAULT_PAGING_SELECTOR_HEIGHT = 44
+public let DEFAULT_PAGING_SELECTOR_SIDE_PADDING = 0
 
 public enum WPagingWidthMode {
     case Static, Dynamic
@@ -386,11 +387,13 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
     public var pagingControlHeight: Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
-            if (pagingSelectorControl != nil) {
-                pagingSelectorControl!.removeFromSuperview()
+            pagingControlConstraintsChanged()
+        }
+    }
 
-                setupUI()
-            }
+    public var pagingControlSidePadding: Int = DEFAULT_PAGING_SELECTOR_SIDE_PADDING {
+        didSet {
+            pagingControlConstraintsChanged()
         }
     }
 
@@ -436,11 +439,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var tabWidth: Int? {
         didSet {
-            if (pagingSelectorControl != nil) {
-                pagingSelectorControl!.removeFromSuperview()
-
-                setupUI()
-            }
+            pagingControlConstraintsChanged()
         }
     }
 
@@ -479,8 +478,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
             view.addSubview(pagingSelectorControl)
             pagingSelectorControl.snp_makeConstraints { (make) in
-                make.left.equalTo(view)
-                make.right.equalTo(view)
+                make.left.equalTo(view).offset(pagingControlSidePadding)
+                make.right.equalTo(view).offset(-pagingControlSidePadding)
                 make.height.equalTo(pagingControlHeight)
                 make.top.equalTo(view)
             }
@@ -497,6 +496,14 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
 
             self.mainViewController = mainViewController
+        }
+    }
+
+    public func pagingControlConstraintsChanged() {
+        if (pagingSelectorControl != nil) {
+            pagingSelectorControl!.removeFromSuperview()
+
+            setupUI()
         }
     }
 
