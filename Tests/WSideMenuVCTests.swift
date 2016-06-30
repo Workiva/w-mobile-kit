@@ -96,18 +96,21 @@ class WSideMenuVCSpec: QuickSpec {
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
+                    expect(subject.backgroundTapView.hidden) == false
 
                     // Close
                     subject.toggleSideMenu()
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
+                    expect(subject.backgroundTapView.hidden) == true
 
                     // Open
                     subject.toggleSideMenu()
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
+                    expect(subject.backgroundTapView.hidden) == false
                 }
             }
 
@@ -161,12 +164,14 @@ class WSideMenuVCSpec: QuickSpec {
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
+                    expect(subject.backgroundTapView.hidden) == false
 
-                    subject.mainContainerViewWasTapped(subject)
+                    subject.backgroundWasTapped(subject)
 
                     // Now closed
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
+                    expect(subject.backgroundTapView.hidden) == true
                 }
             }
 
@@ -189,18 +194,21 @@ class WSideMenuVCSpec: QuickSpec {
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
+                    expect(subject.backgroundTapView.hidden) == false
 
                     // Close
                     sideMenuContentVC.toggleSideMenu()
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
+                    expect(subject.backgroundTapView.hidden) == true
 
                     // Open
                     sideMenuContentVC.toggleSideMenu()
 
                     expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
+                    expect(subject.backgroundTapView.hidden) == false
                 }
 
                 it("should respond to the back button item being tapped") {

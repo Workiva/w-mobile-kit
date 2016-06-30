@@ -50,14 +50,15 @@ public class WSideMenuVC: UIViewController {
     // Setable properties
     public var mainViewController: UIViewController?
     public var leftSideMenuViewController: UIViewController?
+    public var backgroundView: UIView!
     public var options: WSideMenuOptions?
     public weak var delegate: WSideMenuProtocol?
 
     // Internal properties
-    var mainContainerView = UIView(frame: CGRect.zero)
-    var leftSideMenuContainerView = UIView(frame: CGRect.zero)
+    var backgroundTapView = UIView()
+    var mainContainerView = UIView()
+    var leftSideMenuContainerView = UIView()
     var leftSideMenuBorderView = UIView()
-    var mainContainerTapRecognizer: UITapGestureRecognizer?
     var menuState: WSideMenuState = .Closed
     var statusBarHidden = false
 
@@ -92,9 +93,20 @@ public class WSideMenuVC: UIViewController {
 
         // Initial setup of views
         view.addSubview(mainContainerView)
+
+        // Add background tap view behind the side menu
+        view.insertSubview(backgroundTapView, aboveSubview: mainContainerView)
+
         view.addSubview(leftSideMenuContainerView)
 
         mainContainerView.snp_makeConstraints { (make) in
+            make.left.equalTo(view)
+            make.top.equalTo(view)
+            make.right.equalTo(view)
+            make.bottom.equalTo(view)
+        }
+
+        backgroundTapView.snp_makeConstraints { (make) in
             make.left.equalTo(view)
             make.top.equalTo(view)
             make.right.equalTo(view)
@@ -108,12 +120,12 @@ public class WSideMenuVC: UIViewController {
         }
 
         if let mainViewController = mainViewController {
-            // Add a tap gesture recongizer to the mainContainerView
+            // Add a tap gesture recongizer to the backgroundTapView
             // When the side menu is open, allow it to be tapped to close it
-            mainContainerTapRecognizer = UITapGestureRecognizer(target: self,
-                                                                action: #selector(WSideMenuVC.mainContainerViewWasTapped(_:)))
-            mainContainerTapRecognizer?.enabled = false
-            mainContainerView.addGestureRecognizer(mainContainerTapRecognizer!)
+            let backgroundTapRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(WSideMenuVC.backgroundWasTapped(_:)))
+            backgroundTapView.hidden = true
+            backgroundTapView.addGestureRecognizer(backgroundTapRecognizer)
 
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
             
@@ -191,7 +203,7 @@ public class WSideMenuVC: UIViewController {
         }
 
         // Enable the tap outside the drawer to close on when side menu is open
-        mainContainerTapRecognizer?.enabled = true
+        backgroundTapView.hidden = false
 
         leftSideMenuContainerView.snp_remakeConstraints { (make) in
             make.height.equalTo(view)
@@ -221,7 +233,7 @@ public class WSideMenuVC: UIViewController {
 
     public func closeSideMenu() {
         // Disable the tap outside the drawer to close
-        mainContainerTapRecognizer?.enabled = false
+        backgroundTapView.hidden = true
 
         leftSideMenuContainerView.snp_remakeConstraints { (make) in
             make.height.equalTo(view)
@@ -250,7 +262,7 @@ public class WSideMenuVC: UIViewController {
     }
 
     @objc
-    func mainContainerViewWasTapped(sender: AnyObject) {
+    func backgroundWasTapped(sender: AnyObject) {
         closeSideMenu()
     }
 }
