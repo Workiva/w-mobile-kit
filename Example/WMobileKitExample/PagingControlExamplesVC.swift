@@ -75,7 +75,7 @@ public class PagingControlExamplesVC: WSideMenuContentVC {
             make.top.equalTo(pagingSelectorControl3.snp_bottom)
         }
 
-        let pagingSelectorControl5 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name, tab5Name], tabWidth: 90)
+        let pagingSelectorControl5 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name, tab5Name], tabWidth: 90, tabSpacing: 15)
         pagingSelectorControl5.tabTextColor = UIColor.blackColor()
         
         view.addSubview(pagingSelectorControl5);
