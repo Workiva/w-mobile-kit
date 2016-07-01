@@ -607,6 +607,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     make.width.equalTo(25)
                     make.height.equalTo(25)
                 })
+            } else {
+                iconImageView?.image = nil
             }
 
             if let subtitle = actionInfo.subtitle {
@@ -632,6 +634,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     make.height.equalTo(14)
                     make.bottom.equalTo(self).offset(-8)
                 })
+            } else {
+                subtitleLabel?.text = ""
             }
 
             if let title = actionInfo.title {
@@ -645,7 +649,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 titleLabel?.textColor = UIColor(hex: 0x595959)
                 
                 titleLabel?.snp_remakeConstraints(closure: { (make) in
-                    make.height.equalTo(20)
+                    make.height.equalTo(23)
 
                     if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
@@ -661,6 +665,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                         make.centerY.equalTo(self)
                     }
                 })
+            } else {
+                titleLabel?.text = ""
             }
         }
 
