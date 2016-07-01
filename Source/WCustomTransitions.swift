@@ -40,6 +40,7 @@ import UIKit
 
 public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     public var presenting = true // Presenting or Dismissing (== push or pop)
+    public var transitionDuration = 1.0
 
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         // If the reference to these views does not exist, we cannot animate a transition.
@@ -73,6 +74,6 @@ public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransit
     }
 
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 1.0
+        return transitionDuration
     }
 }
