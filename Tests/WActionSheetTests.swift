@@ -113,6 +113,29 @@ class WActionSheetSpec: QuickSpec {
                     
                     expect(newHeaderView).toNot(equal(nil))
                 }
+                
+                it("should have default status bar settings") {
+                    expect(subject.prefersStatusBarHidden()) == false
+                    expect(subject.preferredStatusBarStyle()) == UIStatusBarStyle.Default
+                }
+                
+                it("should use stored settings for status bar style") {
+                    subject.previousStatusBarStyle = .LightContent
+                    subject.previousStatusBarHidden = true
+                    
+                    expect(subject.prefersStatusBarHidden()) == true
+                    expect(subject.preferredStatusBarStyle()) == UIStatusBarStyle.LightContent
+                }
+                
+                it("should set window and subview properties correctly") {
+                    expect(subject.presentingWindow).toNot(beNil())
+                    expect(subject.presentingWindow!.hidden) == false
+                    expect(subject.presentingWindow!.windowLevel) == UIWindowLevelStatusBar + 1
+                    expect(subject.presentingWindow!.rootViewController) == subject
+                    
+                    expect(subject.tapRecognizerView.backgroundColor) == UIColor.blackColor().colorWithAlphaComponent(0.4)
+                    expect(subject.tapRecognizerView.gestureRecognizers?.count) == 1
+                }
             }
 
             describe("max sheet height") {
