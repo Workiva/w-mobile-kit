@@ -403,7 +403,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
         }
     }
 
-    public var pagingControlSidePadding: Int = DEFAULT_PAGING_SELECTOR_SIDE_PADDING {
+    public var pagingControlSidePadding: CGFloat = DEFAULT_PAGING_SELECTOR_SIDE_PADDING {
         didSet {
             pagingControlConstraintsChanged()
         }
