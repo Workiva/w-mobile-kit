@@ -70,6 +70,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     subject.tabWidth = DEFAULT_TAB_WIDTH
 
                     expect(subject.tabWidth) == DEFAULT_TAB_WIDTH
+                    expect(subject.tabSpacing) == 0.0
                     expect(subject.pagingControlHeight) == DEFAULT_PAGING_SELECTOR_HEIGHT
                     expect(subject.pagingControlSidePadding) == DEFAULT_PAGING_SELECTOR_SIDE_PADDING
                     expect(subject.tabTextColor).to(equal(UIColor.blackColor()))
@@ -118,6 +119,13 @@ class WPagingSelectorVCSpec: QuickSpec {
                     subject.separatorLineHeight = 3.0
                     
                     expect(subject.pagingSelectorControl!.separatorLineHeight) == 3.0
+                }
+
+                it("should remove old paging selector when setting new tab spacing") {
+                    let selector = subject.pagingSelectorControl
+                    subject.tabSpacing = 20
+
+                    expect(selector!.superview).to(beNil())
                 }
             }
 
@@ -216,6 +224,12 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                 it("should init with titles and tabWidth") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles, tabWidth: 40)
+
+                    expect(pagingSelectorControl).toNot(beNil())
+                }
+
+                it("should init with titles and tabSpacing") {
+                    pagingSelectorControl = WPagingSelectorControl(titles: titles, tabWidth: 40, tabSpacing: 15)
 
                     expect(pagingSelectorControl).toNot(beNil())
                 }
