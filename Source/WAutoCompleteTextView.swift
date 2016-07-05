@@ -149,7 +149,6 @@ public class WAutoCompleteTextView: UIView {
 
     public func setupUI() {
         if let superview = superview {
-
             autoCompleteTable.snp_remakeConstraints { (make) in
                 make.left.equalTo(self)
                 make.right.equalTo(self)
