@@ -151,47 +151,47 @@ public class WAutoCompleteTextView : UIView {
     
     public func setupUI() {
         autoCompleteTable.snp_remakeConstraints { (make) in
-            make.left.equalTo(self).priorityHigh()
-            make.right.equalTo(self).priorityHigh()
-            make.height.equalTo(0).priorityHigh()
-            make.top.equalTo(self).priorityHigh()
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.height.equalTo(0)
+            make.top.equalTo(self)
         }
         
         topLineSeparator.snp_remakeConstraints { (make) in
-            make.left.equalTo(self).priorityHigh()
-            make.right.equalTo(self).priorityHigh()
-            make.top.equalTo(autoCompleteTable.snp_bottom).priorityHigh()
-            make.height.equalTo(0.5).priorityHigh()
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.top.equalTo(autoCompleteTable.snp_bottom)
+            make.height.equalTo(0.5)
         }
         
         backgroundView.snp_remakeConstraints { (make) in
-            make.left.equalTo(self).priorityHigh()
-            make.right.equalTo(self).priorityHigh()
-            make.top.equalTo(topLineSeparator.snp_bottom).priorityHigh()
-            make.height.equalTo(TEXT_VIEW_HEIGHT).priorityHigh()
-            make.bottom.equalTo(self).priorityHigh()
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.top.equalTo(topLineSeparator.snp_bottom)
+            make.height.equalTo(TEXT_VIEW_HEIGHT)
+            make.bottom.equalTo(self)
         }
         
         if (hasSubmitButton) {
             submitButton.snp_remakeConstraints { (make) in
-                make.top.equalTo(backgroundView).offset(8).priorityHigh()
-                make.right.equalTo(backgroundView).offset(-8).priorityHigh()
-                make.width.equalTo(SUBMIT_BUTTON_WIDTH).priorityHigh()
-                make.bottom.equalTo(backgroundView).offset(-8).priorityHigh()
+                make.top.equalTo(backgroundView).offset(8)
+                make.right.equalTo(backgroundView).offset(-8)
+                make.width.equalTo(SUBMIT_BUTTON_WIDTH)
+                make.bottom.equalTo(backgroundView).offset(-8)
             }
             
             textView.snp_remakeConstraints { (make) in
-                make.left.equalTo(backgroundView).offset(8).priorityHigh()
-                make.right.equalTo(submitButton.snp_left).offset(-8).priorityHigh()
-                make.bottom.equalTo(backgroundView).offset(-8).priorityHigh()
-                make.top.equalTo(backgroundView).offset(8).priorityHigh()
+                make.left.equalTo(backgroundView).offset(8)
+                make.right.equalTo(submitButton.snp_left).offset(-8)
+                make.bottom.equalTo(backgroundView).offset(-8)
+                make.top.equalTo(backgroundView).offset(8)
             }
         } else {
             textView.snp_remakeConstraints { (make) in
-                make.left.equalTo(backgroundView).offset(8).priorityHigh()
-                make.right.equalTo(backgroundView).offset(-8).priorityHigh()
-                make.bottom.equalTo(backgroundView).offset(-8).priorityHigh()
-                make.top.equalTo(backgroundView).offset(8).priorityHigh()
+                make.left.equalTo(backgroundView).offset(8)
+                make.right.equalTo(backgroundView).offset(-8)
+                make.bottom.equalTo(backgroundView).offset(-8)
+                make.top.equalTo(backgroundView).offset(8)
             }
         }
         
@@ -200,9 +200,9 @@ public class WAutoCompleteTextView : UIView {
                 make.left.equalTo(superview)
                 make.right.equalTo(superview)
                 if let keyboardHeight = keyboardHeight {
-                    make.bottom.equalTo(superview).offset(-keyboardHeight).priorityHigh()
+                    make.bottom.equalTo(superview).offset(-keyboardHeight)
                 } else {
-                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset).priorityHigh()
+                    make.bottom.equalTo(superview).offset(-bottomConstraintOffset)
                 }
             }
             
@@ -238,9 +238,9 @@ public class WAutoCompleteTextView : UIView {
         
         autoCompleteTable.snp_updateConstraints { (make) in
             if (animateIn) {
-                make.height.equalTo(height).priorityHigh()
+                make.height.equalTo(height)
             } else {
-                make.height.equalTo(0).priorityHigh()
+                make.height.equalTo(0)
             }
         }
         
@@ -258,9 +258,9 @@ public class WAutoCompleteTextView : UIView {
     public func adjustForKeyboardHeight(height: CGFloat = 0) {
         if let currentSuperview = superview {
             snp_remakeConstraints { (make) in
-                make.bottom.equalTo(currentSuperview).offset(-height).priorityHigh()
-                make.left.equalTo(currentSuperview).priorityHigh()
-                make.right.equalTo(currentSuperview).priorityHigh()
+                make.bottom.equalTo(currentSuperview).offset(-height)
+                make.left.equalTo(currentSuperview)
+                make.right.equalTo(currentSuperview)
             }
             
             updateHeight()
@@ -358,7 +358,7 @@ extension WAutoCompleteTextView : UITextViewDelegate {
                 height = max(height, TEXT_VIEW_HEIGHT)
                 
                 backgroundView.snp_updateConstraints { (make) in
-                    make.height.equalTo(height).priorityHigh()
+                    make.height.equalTo(height)
                 }
                 
                 UIView.animateWithDuration(0.2,
