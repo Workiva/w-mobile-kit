@@ -19,11 +19,11 @@
 import Foundation
 import UIKit
 
-let DEFAULT_TAB_WIDTH = 90
-let MIN_TAB_WIDTH = 20
+let DEFAULT_TAB_WIDTH: CGFloat = 90.0
+let MIN_TAB_WIDTH: CGFloat = 20.0
 let ANIMATION_DURATION = 0.2
-let SELECTION_INDICATOR_VIEW_HEIGHT = 3
-public let DEFAULT_PAGING_SELECTOR_HEIGHT = 44
+let SELECTION_INDICATOR_VIEW_HEIGHT: CGFloat = 3.0
+public let DEFAULT_PAGING_SELECTOR_HEIGHT: CGFloat = 44.0
 
 public enum WPagingWidthMode {
     case Static, Dynamic
@@ -144,7 +144,8 @@ public class WPagingSelectorControl: UIControl {
     }
 
     public private(set) var widthMode: WPagingWidthMode = .Dynamic
-    public private(set) var tabWidth: Int?
+    public private(set) var tabWidth: CGFloat?
+    public private(set) var tabSpacing: CGFloat = 0.0
     public private(set) var selectedPage: Int?
 
     private var scrollView = WScrollView()
@@ -167,12 +168,16 @@ public class WPagingSelectorControl: UIControl {
         self.init(titles: titles, tabWidth: nil)
     }
 
-    public init(titles: Array<String>, tabWidth: Int?) {
+    public init(titles: Array<String>, tabWidth: CGFloat?, tabSpacing: CGFloat = 0.0) {
         super.init(frame: CGRectZero)
 
         for title in titles {
             let page = WPage(title: title, viewController: nil)
             pages.append(page)
+        }
+
+        if tabSpacing > 0.0 {
+            self.tabSpacing = tabSpacing
         }
 
         if let tabWidth = tabWidth {
@@ -194,10 +199,14 @@ public class WPagingSelectorControl: UIControl {
         self.init(pages: pages, tabWidth: nil)
     }
 
-    public init(pages: Array<WPage>, tabWidth: Int?) {
+    public init(pages: Array<WPage>, tabWidth: CGFloat?, tabSpacing: CGFloat = 0.0) {
         super.init(frame: CGRectZero)
 
         self.pages = pages
+
+        if tabSpacing > 0.0 {
+            self.tabSpacing = tabSpacing
+        }
 
         if let tabWidth = tabWidth {
             widthMode = .Static
@@ -236,9 +245,13 @@ public class WPagingSelectorControl: UIControl {
             make.height.equalTo(separatorLineHeight)
         }
 
-        var contentWidth:CGFloat = CGFloat(0)
+        var contentWidth: CGFloat = 0.0
         if (widthMode == .Static) {
-            contentWidth = CGFloat(tabWidth! * pages.count)
+            if pages.count > 1 {
+                contentWidth = (tabWidth! * CGFloat(pages.count)) + (tabSpacing * (CGFloat(pages.count) - 1))
+            } else {
+                contentWidth = tabWidth! * CGFloat(pages.count)
+            }
         }
 
         scrollView.addSubview(contentView)
@@ -297,7 +310,7 @@ public class WPagingSelectorControl: UIControl {
                     if i == 0 {
                         make.left.equalTo(tabContainerView)
                     } else {
-                        make.left.equalTo(tabViews[i - 1].snp_right)
+                        make.left.equalTo(tabViews[i - 1].snp_right).offset(tabSpacing)
                     }
 
                     if widthMode == .Dynamic {
@@ -326,8 +339,7 @@ public class WPagingSelectorControl: UIControl {
         if (widthMode == .Dynamic) {
             scrollView.contentSize = CGSize(width: contentView.frame.size.width, height: contentView.frame.size.height)
         } else {
-            // Set width to number of tabs * tab width
-            scrollView.contentSize = CGSize(width: CGFloat(tabWidth! * pages.count), height: contentView.frame.size.height)
+            scrollView.contentSize = CGSize(width: contentWidth, height: contentView.frame.size.height)
         }
     }
 
@@ -384,7 +396,7 @@ public struct WPage {
 
 public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate {
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
-    public var pagingControlHeight: Int = DEFAULT_PAGING_SELECTOR_HEIGHT {
+    public var pagingControlHeight: CGFloat = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
             if (pagingSelectorControl != nil) {
                 pagingSelectorControl!.removeFromSuperview()
@@ -434,7 +446,17 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
         }
     }
 
-    public var tabWidth: Int? {
+    public var tabWidth: CGFloat? {
+        didSet {
+            if (pagingSelectorControl != nil) {
+                pagingSelectorControl!.removeFromSuperview()
+
+                setupUI()
+            }
+        }
+    }
+
+    public var tabSpacing: CGFloat = 0.0 {
         didSet {
             if (pagingSelectorControl != nil) {
                 pagingSelectorControl!.removeFromSuperview()
@@ -466,9 +488,9 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public func setupUI() {
         if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
-            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth)
+            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth, tabSpacing: tabSpacing)
         } else {
-            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: DEFAULT_TAB_WIDTH)
+            pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: DEFAULT_TAB_WIDTH, tabSpacing: tabSpacing)
         }
 
         pagingSelectorControl?.delegate = self
