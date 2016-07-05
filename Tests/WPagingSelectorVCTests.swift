@@ -72,6 +72,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     expect(subject.tabWidth) == DEFAULT_TAB_WIDTH
                     expect(subject.tabSpacing) == 0.0
                     expect(subject.pagingControlHeight) == DEFAULT_PAGING_SELECTOR_HEIGHT
+                    expect(subject.pagingControlSidePadding) == DEFAULT_PAGING_SELECTOR_SIDE_PADDING
                     expect(subject.tabTextColor).to(equal(UIColor.blackColor()))
                 }
                 
@@ -92,6 +93,13 @@ class WPagingSelectorVCSpec: QuickSpec {
                     let selector = subject.pagingSelectorControl
                     subject.pagingControlHeight = 10
                     
+                    expect(selector!.superview).to(beNil())
+                }
+
+                it("should remove old paging selector when setting new side padding") {
+                    let selector = subject.pagingSelectorControl
+                    subject.pagingControlSidePadding = 10
+
                     expect(selector!.superview).to(beNil())
                 }
                 
@@ -144,7 +152,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     tabView = nil
                 })
 
-                it("should init with coder correctly and verify commonInit") {
+                it("should init with coder correctly") {
                     tabView = WTabView(title: "Tab")
 
                     let path = NSTemporaryDirectory() as NSString
@@ -155,8 +163,6 @@ class WPagingSelectorVCSpec: QuickSpec {
                     let tabView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
 
                     expect(tabView).toNot(equal(nil))
-
-                    // default settings from commonInit
                 }
             }
 
@@ -167,7 +173,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     selectionIndicatorView = nil
                 })
 
-                it("should init with coder correctly and verify commonInit") {
+                it("should init with coder correctly") {
                     selectionIndicatorView = WSelectionIndicatorView()
 
                     let path = NSTemporaryDirectory() as NSString
@@ -178,8 +184,6 @@ class WPagingSelectorVCSpec: QuickSpec {
                     let selectionIndicatorView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
 
                     expect(selectionIndicatorView).toNot(equal(nil))
-                    
-                    // default settings from commonInit
                 }
             }
 
@@ -189,6 +193,13 @@ class WPagingSelectorVCSpec: QuickSpec {
                 afterEach({
                     pagingSelectorControl = nil
                 })
+
+                let verifyCommonInit = {
+                    expect(pagingSelectorControl.tabTextColor) == UIColor.grayColor()
+                    expect(pagingSelectorControl.separatorLineColor) == WThemeManager.sharedInstance.currentTheme.pagingSelectorSeparatorColor
+                    expect(pagingSelectorControl.separatorLineHeight) == 1.0
+                    expect(pagingSelectorControl.widthMode).to(equal(WPagingWidthMode.Dynamic))
+                }
 
                 it("should init with coder correctly and verify commonInit") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles)
@@ -202,7 +213,7 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     expect(pagingSelectorControl).toNot(equal(nil))
                     
-                    // default settings from commonInit
+                    verifyCommonInit()
                 }
 
                 it("should init with titles") {
