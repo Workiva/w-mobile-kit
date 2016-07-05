@@ -1,5 +1,5 @@
 //
-//  AutoFillTextFieldExampleVC.swift
+//  AutoFillTextViewExampleVC.swift
 //  WMobileKitExample
 //
 //  Copyright 2016 Workiva Inc.
@@ -21,35 +21,35 @@ import WMobileKit
 
 let autoCellIdentifier = "autoCompleteCell"
 
-public class AutoCompleteTextFieldExampleVC: WSideMenuContentVC {
+public class AutoCompleteTextViewExampleVC: WSideMenuContentVC {
     public var searchResults = [String]()
-    public var textView = WAutoCompleteTextView()
+    public var autoCompleteView = WAutoCompleteTextView()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         // These values are not set by default, must be set for full functionality
-        textView.controlPrefix = "@"
-        textView.dataSource = self
-        textView.delegate = self
-        textView.autoCompleteTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: autoCellIdentifier)
+        autoCompleteView.controlPrefix = "@"
+        autoCompleteView.dataSource = self
+        autoCompleteView.delegate = self
+        autoCompleteView.autoCompleteTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: autoCellIdentifier)
         
         // These values have defaults, but are set differently for the example
-        textView.autoCompleteTable.rowHeight = 40
-        textView.maxAutoCompleteHeight = 130
+        autoCompleteView.autoCompleteTable.rowHeight = 40
+        autoCompleteView.maxAutoCompleteHeight = 130
         
         // These values are already set by default, shown here for the example
-        textView.addSpaceAfterReplacement = true
-        textView.replacesControlPrefix = false
-        textView.numCharactersBeforeAutoComplete = 1
+        autoCompleteView.addSpaceAfterReplacement = true
+        autoCompleteView.replacesControlPrefix = false
+        autoCompleteView.numCharactersBeforeAutoComplete = 1
         
-        view.addSubview(textView)
+        view.addSubview(autoCompleteView)
     }
 }
 
 // MARK: Table View Data Source
 //       Must be implemented for auto completion
-extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDataSource {
+extension AutoCompleteTextViewExampleVC: WAutoCompleteTextViewDataSource {
     public func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat {
         return CGFloat(searchResults.count * 40)
     }
@@ -61,10 +61,11 @@ extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDataSource {
         for i in 1...4 {
             searchResults.append(word.stringByAppendingString(String(i)))
         }
+        autoCompleteView.showAutoCompleteTable()
     }
 }
 
-extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
+extension AutoCompleteTextViewExampleVC: UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Auto completion cells show data from search results
         let cell = tableView.dequeueReusableCellWithIdentifier(autoCellIdentifier)!
@@ -83,7 +84,7 @@ extension AutoCompleteTextFieldExampleVC: UITableViewDataSource {
 
 // MARK: Auto Complete Text View Delegate
 //       Must be implemented for auto completion
-extension AutoCompleteTextFieldExampleVC: WAutoCompleteTextViewDelegate {
+extension AutoCompleteTextViewExampleVC: WAutoCompletionTextViewDelegate {
     public func didSelectAutoCompletion(data: AnyObject) {
         // Word was chosen, called after word has been replaced
     }

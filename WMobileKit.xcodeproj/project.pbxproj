@@ -15,7 +15,7 @@
 		73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */; };
 		73B2B5CA1CD2B1D500053D22 /* WTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */; };
 		73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */; };
-		73B81F191CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F181CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift */; };
+		73B81F191CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */; };
 		73B81F1C1CE13DA1009A9D73 /* WAutoCompleteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */; };
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
 		D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */; };
@@ -81,7 +81,7 @@
 		73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheet.swift; sourceTree = "<group>"; };
 		73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextViewTests.swift; sourceTree = "<group>"; };
 		73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextView.swift; sourceTree = "<group>"; };
-		73B81F181CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoCompleteTextFieldTests.swift; sourceTree = "<group>"; };
+		73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoCompleteTextViewTests.swift; sourceTree = "<group>"; };
 		73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoCompleteTextView.swift; sourceTree = "<group>"; };
 		9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,7 +238,7 @@
 				D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */,
 				D518B1DA1CDC08D20058B6A9 /* WExtensionsTests.swift */,
 				73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */,
-				73B81F181CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift */,
+				73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */,
 				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
 				D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */,
 				D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */,
@@ -518,7 +518,7 @@
 				D71E55DE1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
 				D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */,
-				73B81F191CE13A62009A9D73 /* WAutoCompleteTextFieldTests.swift in Sources */,
+				73B81F191CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift in Sources */,
 				D7CC99A41CC9614B00572B6F /* WSpinnerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

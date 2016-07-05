@@ -34,9 +34,10 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var modalViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("ModalViewExamplesVC") as! NavigationVC
     lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextFieldExamplesVC") as! NavigationVC
     lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextViewExamplesVC") as! NavigationVC
+    lazy var markdownTextViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("MarkdownTextViewExamplesVC") as! NavigationVC
     lazy var spinnerExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SpinnerExamplesVC") as! NavigationVC
     lazy var loadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("LoadingModalExamplesVC") as! NavigationVC
-    lazy var autoCompleteTextFieldExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextFieldExampleVC") as! NavigationVC
+    lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextViewExampleVC") as! NavigationVC
     lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SwitchAndRadioExamplesVC") as! NavigationVC
     lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("BadgeExamplesVC") as! NavigationVC
 
@@ -57,14 +58,16 @@ class LeftMenuTVCExample: UITableViewController {
         case 6:
             sideMenuController()?.changeMainViewController(textViewExamplesVC)
         case 7:
-            sideMenuController()?.changeMainViewController(spinnerExamplesVC)
+            sideMenuController()?.changeMainViewController(markdownTextViewExamplesVC)
         case 8:
-            sideMenuController()?.changeMainViewController(loadingModalExamplesVC)
+            sideMenuController()?.changeMainViewController(spinnerExamplesVC)
         case 9:
-            sideMenuController()?.changeMainViewController(autoCompleteTextFieldExampleVC)
+            sideMenuController()?.changeMainViewController(loadingModalExamplesVC)
         case 10:
-            sideMenuController()?.changeMainViewController(switchAndRadioExamplesVC)
+            sideMenuController()?.changeMainViewController(autoCompleteTextViewExampleVC)
         case 11:
+            sideMenuController()?.changeMainViewController(switchAndRadioExamplesVC)
+        case 12:
             sideMenuController()?.changeMainViewController(badgeExamplesVC)
         default:
             break

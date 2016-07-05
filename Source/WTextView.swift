@@ -24,18 +24,58 @@ let KEY_RANGE_LINK = "LinkRange"
 let KEY_RANGE_ADDRESS = "AddressRange"
 
 public class WTextView: UITextView, UITextViewDelegate {
-    public override var text: String! {
+    let leftImageView: UIImageView = UIImageView()
+    let placeholderLabel: UILabel = UILabel()
+    
+    private var placeholderLabelConstraints = [NSLayoutConstraint]()
+    
+    override public var text: String! {
         didSet {
-            buildTextView(text)
+            textDidChange()
+        }
+    }
+        
+    public var placeholderText: String = "" {
+        didSet {
+            placeholderLabel.text = placeholderText
+            textDidChange()
         }
     }
     
+    public var placeholderTextColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22) {
+        didSet {
+            placeholderLabel.textColor = placeholderTextColor
+            textDidChange()
+        }
+    }
+    
+    public var leftImage: UIImage? {
+        didSet {
+            leftImageView.image = leftImage
+            updateUI()
+        }
+    }
+    
+    override public var font: UIFont! {
+        didSet {
+            placeholderLabel.font = font
+            textDidChange()
+        }
+    }
+    
+    override public var textAlignment: NSTextAlignment {
+        didSet {
+            placeholderLabel.textAlignment = textAlignment
+            textDidChange()
+        }
+    }
+                
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         commonInit()
     }
-    
+        
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
@@ -46,14 +86,90 @@ public class WTextView: UITextView, UITextViewDelegate {
         self.init(frame: CGRectZero)
         
         commonInit()
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
         
-        buildTextView(text)
+        updateUI()
     }
     
     public func commonInit() {
         editable = false
         scrollEnabled = false
         delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(textDidChange),
+                                                         name: UITextViewTextDidChangeNotification,
+                                                         object: nil)
+        
+        placeholderLabel.font = font
+        placeholderLabel.textColor = placeholderTextColor
+        placeholderLabel.textAlignment = textAlignment
+        placeholderLabel.text = placeholderText
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.backgroundColor = UIColor.clearColor()
+        placeholderLabel.sizeToFit()
+        
+        addSubview(leftImageView)
+    }
+        
+    @objc private func textDidChange() {
+        updateUI()
+    }
+    
+    private func updateUI() {
+        if (self.superview != nil) {
+            let imageWidthHeight = 20
+            
+            var leftInset = CGFloat(0)
+            if (leftImageView.image != nil) {
+                leftInset = CGFloat(28)
+            }
+            
+            contentInset = UIEdgeInsetsMake(0, leftInset, 0, 0)
+            
+            leftImageView.snp_remakeConstraints() { (make) in
+                make.centerY.equalTo(self)
+                make.left.equalTo(self).offset(-imageWidthHeight)
+                make.width.equalTo(imageWidthHeight)
+                make.height.equalTo(imageWidthHeight)
+            }
+            
+            if (text.isEmpty && placeholderLabel.superview == nil) {
+                addSubview(placeholderLabel)
+                placeholderLabel.snp_remakeConstraints() { (make) in
+                    make.centerY.equalTo(self)
+                    make.left.equalTo(self).offset(8)
+                    make.right.equalTo(self).offset(-8)
+                }
+            } else if (!text.isEmpty && placeholderLabel.superview != nil){
+                placeholderLabel.removeFromSuperview()
+            }
+        }
+    }
+        
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UITextViewTextDidChangeNotification,
+                                                            object: nil)
+    }
+}
+
+public class WMarkdownTextView: WTextView {
+    override public var text: String! {
+        didSet {
+            textDidChange()
+            buildTextView(text)
+        }
+    }
+    
+    public convenience init(_ text: String) {
+        self.init(frame: CGRectZero)
+                
+        commonInit()
+        buildTextView(text)
     }
     
     public func buildTextView(text: String) {
@@ -136,12 +252,12 @@ public class WTextView: UITextView, UITextViewDelegate {
                     break
                 }
                 closeParenPos = index
-
+                
                 // Create ranges of form Range<String.Index>
                 let totalRange = text.startIndex.advancedBy(openBracketPos!)..<text.startIndex.advancedBy(closeParenPos! + 1)
                 let linkRange = text.startIndex.advancedBy(openBracketPos! + 1)..<text.startIndex.advancedBy(closeBracketPos!)
                 let addressRange = text.startIndex.advancedBy(openParenPos! + 1)..<text.startIndex.advancedBy(closeParenPos!)
-                    
+                
                 let markdownDict = [KEY_RANGE_TOTAL: totalRange, KEY_RANGE_LINK: linkRange, KEY_RANGE_ADDRESS: addressRange]
                 markdownArray.append(markdownDict)
                 
@@ -164,5 +280,5 @@ public class WTextView: UITextView, UITextViewDelegate {
     
     public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         return true
-    }
+    }    
 }
