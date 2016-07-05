@@ -242,8 +242,8 @@ public class WAutoCompleteTextView: UIView {
         updateHeight()
 
         UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.superview?.layoutIfNeeded()
+            animations: {
+                self.superview?.layoutIfNeeded()
             }, completion: { finished in
                 self.autoCompleteTable.hidden = !animateIn
             }
@@ -357,8 +357,8 @@ extension WAutoCompleteTextView: UITextViewDelegate {
                 }
 
                 UIView.animateWithDuration(0.2,
-                                           animations: {
-                                            self.superview?.layoutIfNeeded()
+                    animations: {
+                        self.superview?.layoutIfNeeded()
                     }, completion: nil)
             }
         }
