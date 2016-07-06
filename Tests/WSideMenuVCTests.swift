@@ -57,8 +57,6 @@ class WSideMenuVCSpec: QuickSpec {
                     let sideMenuVC = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSideMenuVC
 
                     expect(sideMenuVC).toNot(equal(nil))
-
-                    // default settings from commonInit
                 }
 
                 it("should have the correct properties set") {
@@ -253,6 +251,22 @@ class WSideMenuVCSpec: QuickSpec {
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].style) == .Plain
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -20, 0, 20)
+                }
+
+                it("should have correct padding between menu and back icons") {
+                    let additionalController = UIViewController()
+                    mainNC.pushViewController(additionalController, animated: false)
+
+                    subject.options?.drawerIcon = nil
+                    subject.options?.backIcon = nil
+
+                    sideMenuContentVC.paddingBetweenBackAndMenuIcons = 10
+
+                    sideMenuContentVC.addWSideMenuButtons()
+
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -10, 0, 10)
                 }
             }
         }
