@@ -525,14 +525,18 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         if (indexPath.section == 0) {
             // perform handler
             if let action: WAction<ActionDataType> = actionForIndexPath(indexPath) {
-                if (!executeActionAfterDismissal) {
-                    action.handler?(action)
-                } else if (dismissOnAction) {
+                if (executeActionAfterDismissal) {
                     animateOut(0.1, completion: {
                         action.handler?(action)
                     })
+
+                    return
                 }
-            } else if (dismissOnAction) {
+
+                action.handler?(action)
+            }
+
+            if (dismissOnAction) {
                 animateOut(0.1)
             }
         }
