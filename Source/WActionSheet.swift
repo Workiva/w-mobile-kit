@@ -45,13 +45,18 @@ internal protocol WBaseActionSheetDelegate {
 }
 
 public class WBaseActionSheet<ActionDataType>: UIViewController {
-    public var darkView = UIView()
+    public var presentingWindow: UIWindow? = UIWindow(frame: UIScreen.mainScreen().bounds)
+    
+    public var tapRecognizerView = UIView()
     public var containerView = UIView()
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
     internal var delegate: WBaseActionSheetDelegate!
 
+    var previousStatusBarStyle: UIStatusBarStyle?
+    var previousStatusBarHidden: Bool?
+    
     public var titleString: String?
     public var selectedIndex: Int?
     public var dismissOnAction = true
@@ -66,6 +71,32 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
 
+    public override func prefersStatusBarHidden() -> Bool {
+        return previousStatusBarHidden == nil ? false : previousStatusBarHidden!
+    }
+    
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return previousStatusBarStyle == nil ? .Default : previousStatusBarStyle!
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let presentingVC = presentationController?.presentingViewController {
+            previousStatusBarHidden = presentingVC.prefersStatusBarHidden()
+            previousStatusBarStyle = presentingVC.preferredStatusBarStyle()
+            
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    public override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        presentingWindow?.hidden = true
+        presentingWindow = nil
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,18 +112,25 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     }
 
     public func commonInit() {
-        view.addSubview(darkView)
-
+        view.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.0)
+        
+        presentingWindow?.windowLevel = UIWindowLevelStatusBar + 1
+        presentingWindow?.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.0)
+        presentingWindow?.rootViewController = self
+        presentingWindow?.hidden = true
+        
+        presentingWindow?.addSubview(tapRecognizerView)
+        
         // Do not use #selector here, causes issue with iPhone 4S
         let darkViewRecognizer = UITapGestureRecognizer(target: self, action: Selector("animateOut"))
-        darkView.addGestureRecognizer(darkViewRecognizer)
-
+        tapRecognizerView.addGestureRecognizer(darkViewRecognizer)
+        
         // Do not use #selector here, causes issue with iPhone 4S
         cancelButton.addTarget(self, action: Selector("animateOut"), forControlEvents: .TouchUpInside)
         cancelButton.tintColor = .lightGrayColor()
-
-        view.addSubview(containerView)
-        view.addSubview(cancelButton)
+        
+        presentingWindow?.addSubview(containerView)
+        presentingWindow?.addSubview(cancelButton)
     }
 
     public func setupUI(animated: Bool) {
@@ -101,21 +139,21 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
         containerView.snp_remakeConstraints { (make) in
             if (animated) {
-                make.top.equalTo(view.snp_bottom)
+                make.top.equalTo(presentingWindow!.snp_bottom)
             } else {
                 if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                    make.centerY.equalTo(view)
+                    make.centerY.equalTo(presentingWindow!)
                 } else {
-                    make.bottom.equalTo(view).offset(-10)
+                    make.bottom.equalTo(presentingWindow!).offset(-10)
                 }
             }
             if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
                 make.width.equalTo(SHEET_WIDTH_IPAD)
-                make.centerX.equalTo(view)
+                make.centerX.equalTo(presentingWindow!)
             } else {
-                make.left.equalTo(view).offset(10)
-                make.right.equalTo(view).offset(-10)
-           }
+                make.left.equalTo(presentingWindow!).offset(10)
+                make.right.equalTo(presentingWindow!).offset(-10)
+            }
             make.height.equalTo(height)
         }
         containerView.backgroundColor = .clearColor()
@@ -135,64 +173,69 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
             cancelButton.layer.cornerRadius = 4
             cancelButton.clipsToBounds = true
         }
-
-        darkView.snp_remakeConstraints { (make) in
-            make.left.equalTo(view)
-            make.right.equalTo(view)
-            make.top.equalTo(view)
-            make.bottom.equalTo(view)
+        
+        tapRecognizerView.snp_remakeConstraints { (make) in
+            make.left.equalTo(presentingWindow!)
+            make.right.equalTo(presentingWindow!)
+            make.top.equalTo(presentingWindow!)
+            make.bottom.equalTo(presentingWindow!)
         }
-        darkView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
+        tapRecognizerView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(animated ? 0.0 : 0.4)
     }
 
     // MARK: - Helper Methods
     public func animateIn() {
         delegate?.setupUI(true)
+        presentingWindow?.hidden = false
     }
 
     public func animateOut() {
         animateOut(0.1)
     }
-
-    public func animateOut(delay: NSTimeInterval) {
+    
+    public func animateOut(delay: NSTimeInterval, completion: (() -> Void)? = nil) {
         containerView.snp_remakeConstraints { (make) in
             if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                make.centerX.equalTo(view)
-                make.centerY.equalTo(view).offset(-10)
+                make.centerX.equalTo(presentingWindow!)
+                make.centerY.equalTo(presentingWindow!).offset(-10)
                 make.width.equalTo(SHEET_WIDTH_IPAD)
             } else {
-                make.bottom.equalTo(view).offset(-20)
-                make.left.equalTo(view).offset(10)
-                make.right.equalTo(view).offset(-10)
+                make.bottom.equalTo(presentingWindow!).offset(-20)
+                make.left.equalTo(presentingWindow!).offset(10)
+                make.right.equalTo(presentingWindow!).offset(-10)
             }
             make.height.equalTo((delegate?.heightForActionSheet())!)
         }
 
         UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut,
-            animations: {
-                self.view.layoutIfNeeded()
+                                   animations: {
+                                    self.presentingWindow?.layoutIfNeeded()
             },
-            completion: { finished in
-                self.containerView.snp_remakeConstraints { (make) in
-                    if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                        make.width.equalTo(SHEET_WIDTH_IPAD)
-                        make.centerX.equalTo(self.view)
-                    } else {
-                        make.left.equalTo(self.view).offset(10)
-                        make.right.equalTo(self.view).offset(-10)
-                    }
-                    make.height.equalTo((self.delegate?.heightForActionSheet())!)
-                    make.top.equalTo(self.view.snp_bottom)
-                }
-
-                UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
-                    animations: {
-                        self.view.layoutIfNeeded()
-                    },
-                    completion: { finished in
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    })
-            })
+                                   completion: { finished in
+                                    self.containerView.snp_remakeConstraints { (make) in
+                                        if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                                            make.width.equalTo(SHEET_WIDTH_IPAD)
+                                            make.centerX.equalTo(self.presentingWindow!)
+                                        } else {
+                                            make.left.equalTo(self.presentingWindow!).offset(10)
+                                            make.right.equalTo(self.presentingWindow!).offset(-10)
+                                        }
+                                        make.height.equalTo((self.delegate?.heightForActionSheet())!)
+                                        make.top.equalTo(self.presentingWindow!.snp_bottom)
+                                    }
+                                    
+                                    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
+                                        animations: {
+                                            self.presentingWindow?.layoutIfNeeded()
+                                            self.tapRecognizerView.backgroundColor = .clearColor()
+                                        },
+                                        completion: { finished in
+                                            self.dismissViewControllerAnimated(false, completion: completion)
+                                            self.presentingWindow?.hidden = true
+                                        }
+                                    )
+            }
+        )
     }
 
     // MARK: - Actions
@@ -244,6 +287,8 @@ public struct WAction<T> {
 // MARK: - Table Action Sheet
 public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBaseActionSheetDelegate, UITableViewDelegate, UITableViewDataSource {
     internal var tableView: UITableView = UITableView()
+    public var executeActionAfterDismissal = false
+    
     public var sheetSeparatorStyle = SheetSeparatorStyle.DestructiveOnly {
         didSet {
             tableView.reloadData()
@@ -324,34 +369,36 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         if (titleString != nil) {
             tableView.scrollIndicatorInsets = UIEdgeInsets(top: HEADER_HEIGHT, left: 0, bottom: 0, right: 0)
         }
-
-        view.layoutIfNeeded()
-
+        
+        presentingWindow?.layoutIfNeeded()
+        
         if (animated) {
             containerView.snp_remakeConstraints { (make) in
                 if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                    make.centerY.equalTo(view)
-                    make.centerX.equalTo(view)
+                    make.centerY.equalTo(presentingWindow!)
+                    make.centerX.equalTo(presentingWindow!)
                     make.width.equalTo(SHEET_WIDTH_IPAD)
                 } else {
-                    make.bottom.equalTo(view).offset(-10)
-                    make.left.equalTo(view).offset(10)
-                    make.right.equalTo(view).offset(-10)
+                    make.bottom.equalTo(presentingWindow!).offset(-10)
+                    make.left.equalTo(presentingWindow!).offset(10)
+                    make.right.equalTo(presentingWindow!).offset(-10)
                 }
                 make.height.equalTo(height)
             }
 
             UIView.animateWithDuration(0.35, delay: 0.1,
-               usingSpringWithDamping: 0.7,
-               initialSpringVelocity: 5.0,
-               options: UIViewAnimationOptions.CurveEaseOut,
-               animations: {
-                    self.view.layoutIfNeeded()
-               },
-               completion: nil)
+                                       usingSpringWithDamping: 0.7,
+                                       initialSpringVelocity: 5.0,
+                                       options: UIViewAnimationOptions.CurveEaseOut,
+                                       animations: {
+                                        self.presentingWindow?.layoutIfNeeded()
+                                        self.tapRecognizerView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
+                },
+                                       completion: nil
+            )
         }
     }
-
+    
     // MARK: - Helper Methods
     public func heightForActionSheet() -> CGFloat {
         let numCells = actions.count
@@ -478,10 +525,14 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         if (indexPath.section == 0) {
             // perform handler
             if let action: WAction<ActionDataType> = actionForIndexPath(indexPath) {
-                action.handler?(action)
-            }
-
-            if (dismissOnAction) {
+                if (!executeActionAfterDismissal) {
+                    action.handler?(action)
+                } else if (dismissOnAction) {
+                    animateOut(0.1, completion: {
+                        action.handler?(action)
+                    })
+                }
+            } else if (dismissOnAction) {
                 animateOut(0.1)
             }
         }
@@ -556,6 +607,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     make.width.equalTo(25)
                     make.height.equalTo(25)
                 })
+            } else {
+                iconImageView?.image = nil
             }
 
             if let subtitle = actionInfo.subtitle {
@@ -581,6 +634,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     make.height.equalTo(14)
                     make.bottom.equalTo(self).offset(-8)
                 })
+            } else {
+                subtitleLabel?.text = ""
             }
 
             if let title = actionInfo.title {
@@ -592,11 +647,9 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 titleLabel?.text = title
                 titleLabel?.font = UIFont.systemFontOfSize(20)
                 titleLabel?.textColor = UIColor(hex: 0x595959)
-
-                titleLabel?.snp_removeConstraints()
-
-                titleLabel?.snp_makeConstraints(closure: { (make) in
-                    make.height.equalTo(20)
+                
+                titleLabel?.snp_remakeConstraints(closure: { (make) in
+                    make.height.equalTo(23)
 
                     if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
@@ -612,6 +665,8 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                         make.centerY.equalTo(self)
                     }
                 })
+            } else {
+                titleLabel?.text = ""
             }
         }
 
@@ -673,8 +728,7 @@ public class WHeaderView: UITableViewHeaderFooterView {
         if (!subviews.contains(separatorBar)) {
             addSubview(separatorBar)
         }
-        separatorBar.snp_removeConstraints()
-        separatorBar.snp_makeConstraints { (make) in
+        separatorBar.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.bottom.equalTo(self)
             make.right.equalTo(self)
@@ -825,25 +879,26 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
         if (animated) {
             containerView.snp_remakeConstraints { (make) in
                 if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                    make.centerY.equalTo(view)
-                    make.centerX.equalTo(view)
+                    make.centerY.equalTo(presentingWindow!)
+                    make.centerX.equalTo(presentingWindow!)
                     make.width.equalTo(SHEET_WIDTH_IPAD)
                 } else {
-                    make.bottom.equalTo(view).offset(-10)
-                    make.left.equalTo(view).offset(10)
-                    make.right.equalTo(view).offset(-10)
+                    make.bottom.equalTo(presentingWindow!).offset(-10)
+                    make.left.equalTo(presentingWindow!).offset(10)
+                    make.right.equalTo(presentingWindow!).offset(-10)
                 }
                 make.height.equalTo(height)
             }
 
             UIView.animateWithDuration(0.35, delay: 0.1,
-               usingSpringWithDamping: 0.7,
-               initialSpringVelocity: 5.0,
-               options: UIViewAnimationOptions.CurveEaseOut,
-               animations: {
-                    self.view.layoutIfNeeded()
-               },
-               completion: nil)
+                                       usingSpringWithDamping: 0.7,
+                                       initialSpringVelocity: 5.0,
+                                       options: UIViewAnimationOptions.CurveEaseOut,
+                                       animations: {
+                                        self.presentingWindow?.layoutIfNeeded()
+                },
+                                       completion: nil
+            )
         }
     }
 

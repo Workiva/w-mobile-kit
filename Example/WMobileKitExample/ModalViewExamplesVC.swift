@@ -236,6 +236,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheetIcons.titleString = "Scrollable Action Sheet"
         actionSheetIcons.maxSheetHeight = 315
+        actionSheetIcons.executeActionAfterDismissal = true
         
         actionSheetIcons.addAction(WAction(title: "Open folder", image:UIImage(named: "folder"), style: ActionStyle.Normal,
             handler: { action in
