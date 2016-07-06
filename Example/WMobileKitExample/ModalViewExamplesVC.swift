@@ -316,7 +316,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         }))
 
         actionSheetSort.hasCancel = false
-        actionSheetSort.dismissOnAction = true
+        actionSheetSort.dismissOnAction = false
         actionSheetSort.setSelectedAction(1)
         actionSheetSort.sheetSeparatorStyle = .All
         actionSheetSort.popoverPresentationController?.sourceView = sender
