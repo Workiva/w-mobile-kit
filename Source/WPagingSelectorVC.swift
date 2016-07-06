@@ -24,6 +24,7 @@ let MIN_TAB_WIDTH: CGFloat = 20.0
 let ANIMATION_DURATION = 0.2
 let SELECTION_INDICATOR_VIEW_HEIGHT: CGFloat = 3.0
 public let DEFAULT_PAGING_SELECTOR_HEIGHT: CGFloat = 44.0
+public let DEFAULT_PAGING_SELECTOR_SIDE_PADDING: CGFloat = 0.0
 
 public enum WPagingWidthMode {
     case Static, Dynamic
@@ -398,11 +399,13 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
     public var pagingControlHeight: CGFloat = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
-            if (pagingSelectorControl != nil) {
-                pagingSelectorControl!.removeFromSuperview()
+            pagingControlConstraintsChanged()
+        }
+    }
 
-                setupUI()
-            }
+    public var pagingControlSidePadding: CGFloat = DEFAULT_PAGING_SELECTOR_SIDE_PADDING {
+        didSet {
+            pagingControlConstraintsChanged()
         }
     }
 
@@ -448,11 +451,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var tabWidth: CGFloat? {
         didSet {
-            if (pagingSelectorControl != nil) {
-                pagingSelectorControl!.removeFromSuperview()
-
-                setupUI()
-            }
+            pagingControlConstraintsChanged()
         }
     }
 
@@ -501,8 +500,8 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
             view.addSubview(pagingSelectorControl)
             pagingSelectorControl.snp_makeConstraints { (make) in
-                make.left.equalTo(view)
-                make.right.equalTo(view)
+                make.left.equalTo(view).offset(pagingControlSidePadding)
+                make.right.equalTo(view).offset(-pagingControlSidePadding)
                 make.height.equalTo(pagingControlHeight)
                 make.top.equalTo(view)
             }
@@ -519,6 +518,14 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
 
             self.mainViewController = mainViewController
+        }
+    }
+
+    public func pagingControlConstraintsChanged() {
+        if (pagingSelectorControl != nil) {
+            pagingSelectorControl!.removeFromSuperview()
+
+            setupUI()
         }
     }
 

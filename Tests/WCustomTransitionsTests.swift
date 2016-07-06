@@ -35,6 +35,8 @@ class WCustomTransitionsTests: QuickSpec {
 
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
+
+                animationController = SlideAnimationController()
             })
 
             afterEach({
@@ -43,15 +45,11 @@ class WCustomTransitionsTests: QuickSpec {
 
             describe("when app has been init") {
                 it("should init") {
-                    animationController = SlideAnimationController()
-
                     expect(animationController.presenting).to(beTruthy())
                     expect(animationController.transitionDuration(nil)) == 1.0
                 }
 
                 it("should perform animation without crash when presenting") {
-                    animationController = SlideAnimationController()
-
                     // All the views have to be set up in WCustomTransitioningContext in
                     // order to hit coverage requirement, this just verifies we do not crash.
                     let transitioningContext = WCustomTransitioningContext()
@@ -59,13 +57,20 @@ class WCustomTransitionsTests: QuickSpec {
                 }
 
                 it("should perform animation without crash when disappearing") {
-                    animationController = SlideAnimationController()
                     animationController.presenting = false
 
                     // All the views have to be set up in WCustomTransitioningContext in
                     // order to hit coverage requirement, this just verifies we do not crash.
                     let transitioningContext = WCustomTransitioningContext()
                     animationController.animateTransition(transitioningContext)
+                }
+
+                it("should allow transition duration to be set") {
+                    expect(animationController.transitionDuration(nil)) == 1.0
+
+                    animationController.transitionDuration = 0.8
+
+                    expect(animationController.transitionDuration(nil)) == 0.8
                 }
             }
         }
