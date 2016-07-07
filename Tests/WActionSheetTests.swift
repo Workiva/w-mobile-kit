@@ -55,10 +55,6 @@ class WActionSheetSpec: QuickSpec {
                 table.reloadData()
             })
             
-            afterEach({
-                subject.animateOut()
-            })
-            
             describe("when app has been init") {
                 it("should have the correct height with cancel") {
                     expect(subject.heightForActionSheet()) == (ROW_HEIGHT * 3) + (CANCEL_SEPARATOR_HEIGHT + CANCEL_HEIGHT) + (HEADER_HEIGHT)
@@ -135,6 +131,13 @@ class WActionSheetSpec: QuickSpec {
                     
                     expect(subject.tapRecognizerView.backgroundColor) == UIColor.blackColor().colorWithAlphaComponent(0.4)
                     expect(subject.tapRecognizerView.gestureRecognizers?.count) == 1
+                }
+
+                it("should create a window if it does not exist when appearing") {
+                    subject.presentingWindow = nil
+                    subject.viewWillAppear(false)
+
+                    expect(subject.presentingWindow).toNot(beNil())
                 }
             }
 
@@ -279,10 +282,6 @@ class WActionSheetSpec: QuickSpec {
                 subject.pickerView.reloadAllComponents()
             })
 
-            afterEach({
-                subject.animateOut()
-            })
-
             describe("when app has been init") {
                 it("should have everything initalized properly") {
                     // Delegate assignment
@@ -322,7 +321,7 @@ class WActionSheetSpec: QuickSpec {
                     subject.pickerView.selectRow(1, inComponent: 0, animated: true)
                 }
 
-                it("with an invlaid row number") {
+                it("with an invalid row number") {
                     subject.pickerView.selectRow(9, inComponent: 0, animated: true)
                 }
             }
