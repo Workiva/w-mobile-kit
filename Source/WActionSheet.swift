@@ -85,8 +85,13 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         checkForPresentingWindow()
 
         if let presentingVC = presentationController?.presentingViewController {
-            previousStatusBarHidden = presentingVC.prefersStatusBarHidden()
-            previousStatusBarStyle = presentingVC.preferredStatusBarStyle()
+            if let navVC = presentingVC.navigationController {
+                previousStatusBarHidden = navVC.prefersStatusBarHidden()
+                previousStatusBarStyle = navVC.preferredStatusBarStyle()
+            } else {
+                previousStatusBarHidden = presentingVC.prefersStatusBarHidden()
+                previousStatusBarStyle = presentingVC.preferredStatusBarStyle()
+            }
 
             setNeedsStatusBarAppearanceUpdate()
         }
