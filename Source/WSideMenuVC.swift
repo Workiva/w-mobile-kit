@@ -268,6 +268,12 @@ public class WSideMenuVC: UIViewController {
 }
 
 public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
+    public var paddingBetweenBackAndMenuIcons: CGFloat = 20.0 {
+        didSet {
+            addWSideMenuButtons()
+        }
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -279,35 +285,37 @@ public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
         // Adds a button to open the side menu
         // If this VC is not the first rootVc for its nav controller, add a back button as well
         var sideMenuButtonItem: UIBarButtonItem = UIBarButtonItem()
-        
+
         if let sideMenuController = sideMenuController() {
             if let menuIcon = sideMenuController.options?.drawerIcon {
                 sideMenuButtonItem = UIBarButtonItem(image: menuIcon,
-                                                     style: .Plain,
-                                                     target: self,
-                                                     action: #selector(WSideMenuContentVC.toggleSideMenu))
+                    style: .Plain,
+                    target: self,
+                    action: #selector(WSideMenuContentVC.toggleSideMenu))
             } else {
                 sideMenuButtonItem = UIBarButtonItem(title: "Toggle",
-                                                     style: .Plain,
-                                                     target: self,
-                                                     action: #selector(WSideMenuContentVC.toggleSideMenu))
+                    style: .Plain,
+                    target: self,
+                    action: #selector(WSideMenuContentVC.toggleSideMenu))
             }
-            
+
             if (navigationController?.viewControllers.count > 1) {
                 var backMenuButtonItem = UIBarButtonItem()
-                
+
                 if let backIcon = sideMenuController.options?.backIcon {
                     backMenuButtonItem = UIBarButtonItem(image: backIcon,
-                                                         style: .Plain,
-                                                         target: self,
-                                                         action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
+                        style: .Plain,
+                        target: self,
+                        action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
                 } else {
                     backMenuButtonItem = UIBarButtonItem(title: "Back",
-                                                         style: .Plain,
-                                                         target: self,
-                                                         action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
+                        style: .Plain,
+                        target: self,
+                        action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
                 }
-                
+
+                sideMenuButtonItem.imageInsets = UIEdgeInsetsMake(0, -paddingBetweenBackAndMenuIcons, 0, paddingBetweenBackAndMenuIcons)
+
                 navigationItem.leftBarButtonItems = [backMenuButtonItem, sideMenuButtonItem]
             } else {
                 navigationItem.leftBarButtonItem = sideMenuButtonItem
