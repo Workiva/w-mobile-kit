@@ -62,6 +62,30 @@ public class WLoadingModal: UIView {
         }
     }
 
+    public var addBlurBackground: Bool = true {
+        didSet {
+            self.commonInit()
+        }
+    }
+
+    public var blurEffectStyle: UIBlurEffectStyle = .Dark {
+        didSet {
+            self.commonInit()
+        }
+    }
+
+    public var blurEffectAlpha: CGFloat = 0.8 {
+        didSet {
+            self.commonInit()
+        }
+    }
+
+    public var blurEffectAutoResizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight] {
+        didSet {
+            self.commonInit()
+        }
+    }
+
     // MARK: - Inits
     public convenience init(_ title: String) {
         self.init()
@@ -105,18 +129,20 @@ public class WLoadingModal: UIView {
     private func commonInit() {
         backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        if (addBlurBackground) {
+            let blurEffect = UIBlurEffect(style: blurEffectStyle)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
 
-        // Get full window bounds to apply blurred view
-        if let win = UIApplication.sharedApplication().delegate!.window {
-            if (win != nil) {
-                blurEffectView.frame = win!.frame
+            // Get full window bounds to apply blurred view
+            if let win = UIApplication.sharedApplication().delegate!.window {
+                if (win != nil) {
+                    blurEffectView.frame = win!.frame
+                }
             }
+            blurEffectView.alpha = blurEffectAlpha
+            blurEffectView.autoresizingMask = blurEffectAutoResizingMask
+            insertSubview(blurEffectView, atIndex: 0)
         }
-        blurEffectView.alpha = 0.8
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        insertSubview(blurEffectView, atIndex: 0)
 
         spinnerView.indeterminate = true
         addSubview(spinnerView)
