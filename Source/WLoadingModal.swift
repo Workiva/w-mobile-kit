@@ -133,12 +133,7 @@ public class WLoadingModal: UIView {
             let blurEffect = UIBlurEffect(style: blurEffectStyle)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
 
-            // Get full window bounds to apply blurred view
-            if let win = UIApplication.sharedApplication().delegate!.window {
-                if (win != nil) {
-                    blurEffectView.frame = win!.frame
-                }
-            }
+            blurEffectView.frame = frame
             blurEffectView.alpha = blurEffectAlpha
             blurEffectView.autoresizingMask = blurEffectAutoResizingMask
             insertSubview(blurEffectView, atIndex: 0)
