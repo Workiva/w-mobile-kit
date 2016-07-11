@@ -64,27 +64,31 @@ public class WLoadingModal: UIView {
 
     public var addBlurBackground: Bool = true {
         didSet {
-            self.commonInit()
+            blurEffectView.removeFromSuperview()
         }
     }
 
     public var blurEffectStyle: UIBlurEffectStyle = .Dark {
         didSet {
-            self.commonInit()
+            remakeBlurBackground()
         }
     }
 
     public var blurEffectAlpha: CGFloat = 0.8 {
         didSet {
-            self.commonInit()
+            remakeBlurBackground()
         }
     }
 
     public var blurEffectAutoResizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight] {
         didSet {
-            self.commonInit()
+            remakeBlurBackground()
         }
     }
+
+    public var blurEffect = UIBlurEffect()
+
+    public var blurEffectView = UIVisualEffectView()
 
     // MARK: - Inits
     public convenience init(_ title: String) {
@@ -130,13 +134,8 @@ public class WLoadingModal: UIView {
         backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
         if (addBlurBackground) {
-            let blurEffect = UIBlurEffect(style: blurEffectStyle)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-            blurEffectView.frame = frame
-            blurEffectView.alpha = blurEffectAlpha
-            blurEffectView.autoresizingMask = blurEffectAutoResizingMask
-            insertSubview(blurEffectView, atIndex: 0)
+            remakeBlurBackground()
+            addSubview(blurEffectView)
         }
 
         spinnerView.indeterminate = true
@@ -153,6 +152,12 @@ public class WLoadingModal: UIView {
         descriptionLabel.numberOfLines = 0
         addSubview(descriptionLabel)
         remakeDescriptionConstraints()
+    }
+
+    private func remakeBlurBackground() {
+        blurEffectView.frame = frame
+        blurEffectView.alpha = blurEffectAlpha
+        blurEffectView.autoresizingMask = blurEffectAutoResizingMask
     }
 
     private func remakeAllConstraints() {

@@ -49,7 +49,6 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.descriptionLabel.textColor) == UIColor.whiteColor()
                     expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
                     expect(loadingModalView.descriptionLabel.numberOfLines) == 0
-                    expect(loadingModalView.addBlurBackground) == true
                     expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Dark))
                     expect(loadingModalView.blurEffectAlpha) == 0.8
                     expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleWidth, .FlexibleHeight]
@@ -90,15 +89,14 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView).toNot(equal(nil))
 
                     verifyCommonInit()
+                    expect(loadingModalView.addBlurBackground) == true
                 }
 
                 it("should successfully create a loading view with default settings") {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
-                    expect(loadingModalView.backgroundColor) == .clearColor()
-                    expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
-
                     verifyCommonInit()
+                    expect(loadingModalView.addBlurBackground) == true
                     expect(loadingModalView.subviews.count) == 4
                 }
 
@@ -106,6 +104,17 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView = WLoadingModal("Testing just title init.")
 
                     verifyCommonInit()
+                    expect(loadingModalView.titleLabel.text) == "Testing just title init."
+                    expect(loadingModalView.subviews.count) == 4
+                }
+
+                it("should successfully create a loading view without blur bakcground") {
+                    loadingModalView = WLoadingModal(frame: subject.view.frame)
+                    loadingModalView.addBlurBackground = false
+
+                    verifyCommonInit()
+                    expect(loadingModalView.subviews.count) == 3
+                    expect(loadingModalView.subviews.contains(loadingModalView.blurEffectView)).to(beFalsy())
                 }
 
                 it("should successfully create a loading view with custom settings") {
@@ -193,21 +202,6 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Light))
                     expect(loadingModalView.blurEffectAlpha) == 0.6
                     expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleRightMargin, .FlexibleTopMargin]
-                }
-
-                it("should not add a blur view if told not to") {
-                    loadingModalView = WLoadingModal(frame: subject.view.frame)
-                    loadingModalView.addBlurBackground = false
-
-                    expect(subject.view.subviews.contains(loadingModalView)).to(beFalsy())
-                    loadingModalView.show(subject.view, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-
-                    expect(subject.view.subviews.contains(loadingModalView)).to(beTruthy())
-
-                    loadingModalView.hide()
-
-                    expect(subject.view.subviews.contains(loadingModalView)).to(beFalsy())
-                    expect(loadingModalView.subviews.count) == 4
                 }
             }
         }
