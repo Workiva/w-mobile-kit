@@ -140,6 +140,7 @@ public class WTextView: UITextView, UITextViewDelegate {
             let imageWidthHeight = 20
             
             var leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) : 0
+            let leftPlaceholderOffset = 5 + leftInset
             
             textContainerInset = UIEdgeInsets(top: 8, left: leftInset, bottom: 8, right: 0)
             
@@ -150,12 +151,10 @@ public class WTextView: UITextView, UITextViewDelegate {
                 make.height.equalTo(imageWidthHeight)
             }
 
-            let leftOffset = 5 + (leftImageView.image == nil ? 0 : imageWidthHeight)
-
             placeholderLabel.snp_remakeConstraints() { (make) in
                 make.centerY.equalTo(self).offset(0.5)
-                make.width.equalTo(self).offset(-leftOffset - 5).priorityHigh()
-                make.left.equalTo(self).offset(leftOffset)
+                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priorityHigh()
+                make.left.equalTo(self).offset(leftPlaceholderOffset)
                 make.height.equalTo(self)
             }
 
