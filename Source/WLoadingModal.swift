@@ -76,12 +76,6 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public var blurEffectAlpha: CGFloat = 0.8 {
-        didSet {
-            remakeBlurBackground()
-        }
-    }
-
     public var blurEffectAutoResizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight] {
         didSet {
             remakeBlurBackground()
@@ -161,7 +155,6 @@ public class WLoadingModal: UIView {
         blurEffectView.effect = blurEffect
 
         blurEffectView.frame = frame
-        blurEffectView.alpha = blurEffectAlpha
         blurEffectView.autoresizingMask = blurEffectAutoResizingMask
     }
 

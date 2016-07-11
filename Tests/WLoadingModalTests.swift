@@ -50,7 +50,6 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
                     expect(loadingModalView.descriptionLabel.numberOfLines) == 0
                     expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Dark))
-                    expect(loadingModalView.blurEffectAlpha) == 0.8
                     expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleWidth, .FlexibleHeight]
                     expect(loadingModalView.spinnerSize) == 44
                     expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 32
@@ -190,7 +189,6 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView.titleLabelHeight = 44
                     loadingModalView.descriptionLabelHeight = 66
                     loadingModalView.blurEffectStyle = .Light
-                    loadingModalView.blurEffectAlpha = 0.6
                     loadingModalView.blurEffectAutoResizingMask = [.FlexibleRightMargin, .FlexibleTopMargin]
 
                     expect(loadingModalView.spinnerSize) == 11
@@ -200,7 +198,6 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.titleLabelHeight) == 44
                     expect(loadingModalView.descriptionLabelHeight) == 66
                     expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Light))
-                    expect(loadingModalView.blurEffectAlpha) == 0.6
                     expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleRightMargin, .FlexibleTopMargin]
                 }
             }
