@@ -59,7 +59,6 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.paddingBetweenDescriptionAndTitle) == 32
                     expect(loadingModalView.titleLabelHeight) == 20
                     expect(loadingModalView.descriptionLabelHeight) == 60
-                    expect(loadingModalView.subviews.count) == 4
                 }
 
                 it("should init with coder correctly and verify commonInit") {
@@ -100,6 +99,7 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
 
                     verifyCommonInit()
+                    expect(loadingModalView.subviews.count) == 4
                 }
 
                 it("should successfully create a loading view with default settings") {
@@ -207,7 +207,7 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView.hide()
 
                     expect(subject.view.subviews.contains(loadingModalView)).to(beFalsy())
-                    expect(loadingModalView.subviews.count) == 3
+                    expect(loadingModalView.subviews.count) == 4
                 }
             }
         }
