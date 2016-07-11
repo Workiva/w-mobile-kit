@@ -61,8 +61,13 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         
         let leftIconTextView = WTextView()
         leftIconTextView.editable = true
-        leftIconTextView.scrollEnabled = true        
+        leftIconTextView.placeholderText = "Text colors and alignment can be set"
+        leftIconTextView.scrollEnabled = true
         leftIconTextView.leftImage = UIImage(named: "person")
+        leftIconTextView.textAlignment = .Right
+        leftIconTextView.textColor = UIColor.redColor()
+        leftIconTextView.placeholderTextColor = UIColor.purpleColor().colorWithAlphaComponent(0.3)
+
         view.addSubview(leftIconTextView)
         leftIconTextView.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -95,6 +100,20 @@ public class TextViewExamplesVC: WSideMenuContentVC {
             make.top.equalTo(bothLabel.snp_bottom).offset(4)
             make.width.equalTo(300)
             make.height.equalTo(30)
-        }        
+        }
+
+        let defaultTextField = UITextField()
+        defaultTextField.placeholder = "Testholder"
+        defaultTextField.text = "Testholder"
+        defaultTextField.backgroundColor = .whiteColor()
+        defaultTextField.textColor = .redColor()
+        defaultTextField.font = bothTextView.font
+        view.addSubview(defaultTextField)
+        defaultTextField.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(bothTextView.snp_bottom).offset(10)
+            make.width.equalTo(300)
+            make.height.equalTo(30)
+        }
     }
 }
