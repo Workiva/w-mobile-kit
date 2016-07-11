@@ -64,7 +64,9 @@ public class WLoadingModal: UIView {
 
     public var addBlurBackground: Bool = true {
         didSet {
-            blurEffectView.removeFromSuperview()
+            if (!addBlurBackground) {
+                blurEffectView.removeFromSuperview()
+            }
         }
     }
 
@@ -155,6 +157,9 @@ public class WLoadingModal: UIView {
     }
 
     private func remakeBlurBackground() {
+        blurEffect = UIBlurEffect(style: blurEffectStyle)
+        blurEffectView.effect = blurEffect
+
         blurEffectView.frame = frame
         blurEffectView.alpha = blurEffectAlpha
         blurEffectView.autoresizingMask = blurEffectAutoResizingMask
