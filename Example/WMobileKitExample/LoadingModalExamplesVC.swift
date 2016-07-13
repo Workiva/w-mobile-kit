@@ -89,6 +89,8 @@ public class LoadingModalExamplesVC: WSideMenuContentVC {
                 loadingModal?.show(view, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
             } else if (senderButton == smallLoadingTapRecognizer!) {
                 loadingModal?.show(smallFrame, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+                loadingModal?.descriptionLabel.text = "This has no blur background and will go away in 3 seconds."
+                loadingModal?.addBlurBackground = false
             }
 
             let timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(LoadingModalExamplesVC.dismissLoadingModal(_:)), userInfo: nil, repeats: true)

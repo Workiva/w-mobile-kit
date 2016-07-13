@@ -62,6 +62,34 @@ public class WLoadingModal: UIView {
         }
     }
 
+    public var addBlurBackground: Bool = true {
+        didSet {
+            blurEffectView.removeFromSuperview()
+
+            // Case where we are changing it from false to true.
+            if (addBlurBackground) {
+                remakeBlurBackground()
+                addSubview(blurEffectView)
+            }
+        }
+    }
+
+    public var blurEffectStyle: UIBlurEffectStyle = .Dark {
+        didSet {
+            remakeBlurBackground()
+        }
+    }
+
+    public var blurEffectAutoResizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight] {
+        didSet {
+            remakeBlurBackground()
+        }
+    }
+
+    public var blurEffect = UIBlurEffect()
+
+    public var blurEffectView = UIVisualEffectView()
+
     // MARK: - Inits
     public convenience init(_ title: String) {
         self.init()
@@ -105,6 +133,11 @@ public class WLoadingModal: UIView {
     private func commonInit() {
         backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
+        if (addBlurBackground) {
+            remakeBlurBackground()
+            addSubview(blurEffectView)
+        }
+
         spinnerView.indeterminate = true
         addSubview(spinnerView)
         remakeSpinnerConstraints()
@@ -119,6 +152,14 @@ public class WLoadingModal: UIView {
         descriptionLabel.numberOfLines = 0
         addSubview(descriptionLabel)
         remakeDescriptionConstraints()
+    }
+
+    private func remakeBlurBackground() {
+        blurEffect = UIBlurEffect(style: blurEffectStyle)
+        blurEffectView.effect = blurEffect
+
+        blurEffectView.frame = frame
+        blurEffectView.autoresizingMask = blurEffectAutoResizingMask
     }
 
     private func remakeAllConstraints() {
