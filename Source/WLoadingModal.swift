@@ -64,8 +64,12 @@ public class WLoadingModal: UIView {
 
     public var addBlurBackground: Bool = true {
         didSet {
-            if (!addBlurBackground) {
-                blurEffectView.removeFromSuperview()
+            blurEffectView.removeFromSuperview()
+
+            // Case where we are changing it from false to true.
+            if (addBlurBackground) {
+                remakeBlurBackground()
+                addSubview(blurEffectView)
             }
         }
     }

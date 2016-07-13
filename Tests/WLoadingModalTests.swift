@@ -107,13 +107,26 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.subviews.count) == 4
                 }
 
-                it("should successfully create a loading view without blur bakcground") {
+                it("should successfully create a loading view without blur background") {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
                     loadingModalView.addBlurBackground = false
 
                     verifyCommonInit()
                     expect(loadingModalView.subviews.count) == 3
                     expect(loadingModalView.subviews.contains(loadingModalView.blurEffectView)).to(beFalsy())
+                }
+
+                it("should successfully create a loading view without blur background and be able to add it back") {
+                    loadingModalView = WLoadingModal(frame: subject.view.frame)
+                    loadingModalView.addBlurBackground = false
+
+                    verifyCommonInit()
+                    expect(loadingModalView.subviews.count) == 3
+                    expect(loadingModalView.subviews.contains(loadingModalView.blurEffectView)).to(beFalsy())
+
+                    loadingModalView.addBlurBackground = true
+                    expect(loadingModalView.subviews.count) == 4
+                    expect(loadingModalView.subviews.contains(loadingModalView.blurEffectView)).to(beTruthy())
                 }
 
                 it("should successfully create a loading view with custom settings") {
