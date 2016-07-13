@@ -26,9 +26,8 @@ let KEY_RANGE_ADDRESS = "AddressRange"
 public class WTextView: UITextView, UITextViewDelegate {
     let leftImageView: UIImageView = UIImageView()
     let placeholderLabel: UILabel = UILabel()
-    
-    private var placeholderLabelConstraints = [NSLayoutConstraint]()
-    
+    let testLabel: UILabel = UILabel()
+
     override public var text: String! {
         didSet {
             textDidChange()
@@ -56,7 +55,7 @@ public class WTextView: UITextView, UITextViewDelegate {
         }
     }
     
-    override public var font: UIFont! {
+    override public var font: UIFont? {
         didSet {
             placeholderLabel.font = font
             textDidChange()
@@ -93,6 +92,14 @@ public class WTextView: UITextView, UITextViewDelegate {
         
         updateUI()
     }
+
+    public override func becomeFirstResponder() -> Bool {
+        let returnValue = super.becomeFirstResponder()
+
+        updateUI()
+
+        return returnValue
+    }
     
     public func commonInit() {
         editable = false
@@ -103,50 +110,55 @@ public class WTextView: UITextView, UITextViewDelegate {
                                                          selector: #selector(textDidChange),
                                                          name: UITextViewTextDidChangeNotification,
                                                          object: nil)
-        
-        placeholderLabel.font = font
-        placeholderLabel.textColor = placeholderTextColor
-        placeholderLabel.textAlignment = textAlignment
+
+        addSubview(leftImageView)
+        addSubview(placeholderLabel)
+
+        // This is a workaround to get the default font set on the text view
+        //  the property is explicitly unwrapped but nil during initialization until text is set
+        let oldText = text
+        text = "a"
+        text = oldText
+
         placeholderLabel.text = placeholderText
         placeholderLabel.numberOfLines = 0
         placeholderLabel.backgroundColor = UIColor.clearColor()
-        placeholderLabel.sizeToFit()
-        
-        addSubview(leftImageView)
+        placeholderLabel.hidden = !text.isEmpty
     }
-        
+
     @objc private func textDidChange() {
         updateUI()
     }
     
     private func updateUI() {
+        placeholderLabel.font = font
+        placeholderLabel.textColor = placeholderTextColor
+        placeholderLabel.textAlignment = textAlignment
+        placeholderLabel.hidden = !text.isEmpty
+
         if (self.superview != nil) {
             let imageWidthHeight = 20
             
-            var leftInset = CGFloat(0)
-            if (leftImageView.image != nil) {
-                leftInset = CGFloat(28)
-            }
+            var leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) : 0
+            let leftPlaceholderOffset = 5 + leftInset
             
-            contentInset = UIEdgeInsetsMake(0, leftInset, 0, 0)
+            textContainerInset = UIEdgeInsets(top: 8, left: leftInset, bottom: 8, right: 0)
             
             leftImageView.snp_remakeConstraints() { (make) in
                 make.centerY.equalTo(self)
-                make.left.equalTo(self).offset(-imageWidthHeight)
+                make.left.equalTo(self)
                 make.width.equalTo(imageWidthHeight)
                 make.height.equalTo(imageWidthHeight)
             }
-            
-            if (text.isEmpty && placeholderLabel.superview == nil) {
-                addSubview(placeholderLabel)
-                placeholderLabel.snp_remakeConstraints() { (make) in
-                    make.centerY.equalTo(self)
-                    make.left.equalTo(self).offset(8)
-                    make.right.equalTo(self).offset(-8)
-                }
-            } else if (!text.isEmpty && placeholderLabel.superview != nil){
-                placeholderLabel.removeFromSuperview()
+
+            placeholderLabel.snp_remakeConstraints() { (make) in
+                make.centerY.equalTo(self).offset(0.5)
+                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priorityHigh()
+                make.left.equalTo(self).offset(leftPlaceholderOffset)
+                make.height.equalTo(self)
             }
+
+            layoutIfNeeded()
         }
     }
         

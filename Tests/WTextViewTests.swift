@@ -160,10 +160,10 @@ class WTextViewTests: QuickSpec {
                         expect(textView.placeholderLabel.superview).toNot(beNil())
                         
                         textView.text = "Something"
-                        expect(textView.placeholderLabel.superview).to(beNil())
+                        expect(textView.placeholderLabel.hidden) == true
                         
                         textView.text = ""
-                        expect(textView.placeholderLabel.superview).toNot(beNil())
+                        expect(textView.placeholderLabel.hidden) == false
                     }
                     
                     it("should add a left image when specified") {
