@@ -431,9 +431,9 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     public var shadowRadius: CGFloat = 4
     public var shadowOpacity: Float = 0.3
     public var shadowAnimationDuration = 0.2
+    public var mainContainerView = UIView()
 
-    var mainViewController: UIViewController?
-    var mainContainerView = UIView()
+    var mainViewController: UIViewController?    
     var currentPageIndex = 0
     var isShowingShadow = false
     
