@@ -64,6 +64,16 @@ class WActionSheetSpec: QuickSpec {
                     subject.hasCancel = false
                     expect(subject.heightForActionSheet()) == (ROW_HEIGHT * 3) + (HEADER_HEIGHT)
                 }
+
+                it("should have the correct content height with title") {
+                    expect(subject.heightForSheetContent()) == (ROW_HEIGHT * 3) + (HEADER_HEIGHT)
+                }
+
+                it("should have the correct content height without title") {
+                    subject.titleString = nil
+                    subject.hasCancel = false
+                    expect(subject.heightForSheetContent()) == (ROW_HEIGHT * 3)
+                }
                 
                 it("should have correct table properties") {
                     expect(subject.tableView(table, numberOfRowsInSection: 0)).to(equal(3))
