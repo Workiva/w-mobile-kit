@@ -6,6 +6,11 @@ import UIKit
 import Foundation
 
 public class WSizeVC: UIViewController {
+    public func isIPadSize -> Bool {
+        return (horizontalSizeClass == .Compact) ? false : true
+    }
+
+    // Should be accessed externally through traitCollection.horizontalSizeClass for the latest value
     public private(set) var horizontalSizeClass = UIUserInterfaceSizeClass.Unspecified {
         didSet {
             if oldValue != horizontalSizeClass {
