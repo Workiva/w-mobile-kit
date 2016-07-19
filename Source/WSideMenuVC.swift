@@ -267,7 +267,7 @@ public class WSideMenuVC: WSizeVC {
     }
 }
 
-public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
+public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
     public var paddingBetweenBackAndMenuIcons: CGFloat = 20.0 {
         didSet {
             addWSideMenuButtons()
