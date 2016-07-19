@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 public class WSizeVC: UIViewController {
-    var horizontalSizeClass = UIUserInterfaceSizeClass.Unspecified {
+    public private(set) var horizontalSizeClass = UIUserInterfaceSizeClass.Unspecified {
         didSet {
             if oldValue != horizontalSizeClass {
                 horizontalSizeClassChanged(horizontalSizeClass)
@@ -14,7 +14,7 @@ public class WSizeVC: UIViewController {
         }
     }
 
-    var verticalSizeClass = UIUserInterfaceSizeClass.Unspecified {
+    public private(set) var verticalSizeClass = UIUserInterfaceSizeClass.Unspecified {
         didSet {
             if oldValue != verticalSizeClass {
                 verticalSizeClassChanged(verticalSizeClass)
