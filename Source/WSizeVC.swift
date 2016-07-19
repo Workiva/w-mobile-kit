@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 public class WSizeVC: UIViewController {
-    public func isIPadSize -> Bool {
+    public func isIPadSize() -> Bool {
         return (horizontalSizeClass == .Compact) ? false : true
     }
 
