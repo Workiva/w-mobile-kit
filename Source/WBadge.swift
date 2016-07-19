@@ -205,14 +205,14 @@ public class WBadge: UIView {
         borderView.clipsToBounds = true
         borderView.layer.cornerRadius = badgeView.layer.cornerRadius
         borderView.backgroundColor = borderColor
-	}
+    }
 	
     internal func shouldHide() -> Bool {
         return ((count < 1) && automaticallyHide)
     }
 
     internal func sizeForBadge() -> CGSize {
-        return CGSizeMake(labelSize.width+widthPadding+borderWidth, labelSize.height+heightPadding+borderWidth)
+        return CGSizeMake(labelSize.width + widthPadding + borderWidth, labelSize.height + heightPadding + borderWidth)
     }
 
     internal func setBadgeCount(count: Int) {
@@ -239,12 +239,12 @@ public class WBadge: UIView {
 // all views in the cell and restores them upon deselection.
 internal class WLockBackgroundView: UIView {
     var lockBackgroundColor = true
-    
-	override public var backgroundColor: UIColor? {
-		didSet {
-			if (lockBackgroundColor && UIColor.clearColor().isEqual(backgroundColor)) {
-				backgroundColor = oldValue
-			}
-		}
-	}	
+
+    override public var backgroundColor: UIColor? {
+        didSet {
+            if (lockBackgroundColor && UIColor.clearColor().isEqual(backgroundColor)) {
+                backgroundColor = oldValue
+            }
+        }
+    }	
 }
