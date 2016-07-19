@@ -46,7 +46,7 @@ public class WBadge: UIView {
         }
     }
     
-	public var borderWidth: CGFloat = 0 {
+    public var borderWidth: CGFloat = 0 {
         didSet {
             setupUI()
         }
@@ -108,7 +108,7 @@ public class WBadge: UIView {
             setupUI()
         }
     }
-	
+
     public func increment() {
         count = count + 1
     }
