@@ -47,10 +47,13 @@ class WBadgeSpec: QuickSpec {
                 // All views added programatically
                 expect(badge.subviews.contains(badge.badgeView)).to(beTruthy())
                 expect(badge.badgeView.subviews.contains(badge.countLabel)).to(beTruthy())
+                expect(badge.subviews.contains(badge.borderView)).to(beTruthy())
 
                 // Custom properties
                 expect(badge.badgeColor) == UIColor(hex: 0x0094FF)
                 expect(badge.countColor) == UIColor.whiteColor()
+                expect(badge.borderColor) == UIColor.clearColor()
+                expect(badge.borderWidth) == 0
                 expect(badge.horizontalAlignment) == xAlignment.Left
                 expect(badge.verticalAlignment) == yAlignment.Top
                 expect(badge.automaticallyHide) == true
@@ -94,6 +97,7 @@ class WBadgeSpec: QuickSpec {
                     expect(badge.count) == 4
                     expect(badge.countLabel.text) == "4"
                     expect(badge.hidden) == false
+                    expect(badge.lockBadgeColor) == true
                 }
 
                 it("should use the basic init and manually set custom properties") {
@@ -101,6 +105,8 @@ class WBadgeSpec: QuickSpec {
 
                     badge.badgeColor = UIColor.brownColor()
                     badge.countColor = UIColor.darkGrayColor()
+                    badge.borderColor = UIColor.whiteColor()
+                    badge.borderWidth = 2
                     badge.horizontalAlignment = xAlignment.Right
                     badge.horizontalAlignment = xAlignment.Center
                     badge.verticalAlignment = yAlignment.Bottom
@@ -118,6 +124,8 @@ class WBadgeSpec: QuickSpec {
                     // Custom properties
                     expect(badge.badgeColor) == UIColor.brownColor()
                     expect(badge.countColor) == UIColor.darkGrayColor()
+                    expect(badge.borderColor) == UIColor.whiteColor()
+                    expect(badge.borderWidth) == 2
                     expect(badge.horizontalAlignment) == xAlignment.Center
                     expect(badge.verticalAlignment) == yAlignment.Center
                     expect(badge.automaticallyHide) == false
@@ -188,6 +196,25 @@ class WBadgeSpec: QuickSpec {
                     expect(badge.count) == 1
                     expect(badge.countLabel.text) == "1"
                     expect(badge.hidden) == false
+                }
+                
+                it("should lock the badge and border color when specified") {
+                    badge = WBadge(1)
+                    
+                    badge.badgeColor = UIColor.redColor()
+                    badge.borderColor = UIColor.whiteColor()
+                    
+                    badge.lockBadgeColor = true
+                    badge.badgeView.backgroundColor = .clearColor()
+                    badge.borderView.backgroundColor = .clearColor()
+                    expect(badge.badgeView.backgroundColor) == UIColor.redColor()
+                    expect(badge.borderView.backgroundColor) == UIColor.whiteColor()
+                    
+                    badge.lockBadgeColor = false
+                    badge.badgeView.backgroundColor = .clearColor()
+                    badge.borderView.backgroundColor = .clearColor()
+                    expect(badge.badgeView.backgroundColor) == UIColor.clearColor()                    
+                    expect(badge.borderView.backgroundColor) == UIColor.clearColor()
                 }
             }
         }

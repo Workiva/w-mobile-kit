@@ -26,12 +26,32 @@ public class WBadge: UIView {
         }
     }
 
+    public var lockBadgeColor: Bool = true {
+        didSet {
+            badgeView.lockBackgroundColor = lockBadgeColor
+            borderView.lockBackgroundColor = lockBadgeColor
+            setupUI()
+        }
+    }
+    
     public var countColor = UIColor.whiteColor() {
         didSet {
             setupUI()
         }
     }
 
+    public var borderColor = UIColor.clearColor() {
+        didSet {
+            setupUI()
+        }
+    }
+    
+    public var borderWidth: CGFloat = 0 {
+        didSet {
+            setupUI()
+        }
+    }
+    
     public var horizontalAlignment: xAlignment = .Left {
         didSet {
             setupUI()
@@ -97,7 +117,9 @@ public class WBadge: UIView {
         count = count - 1
     }
 
-    internal var badgeView = UIView()
+    internal var borderView = WLockBackgroundView()
+    
+    internal var badgeView = WLockBackgroundView()
 
     internal var countLabel = UILabel()
 
@@ -124,6 +146,7 @@ public class WBadge: UIView {
     }
 
     public func commonInit() {
+        addSubview(borderView)
         addSubview(badgeView)
         badgeView.addSubview(countLabel)
     }
@@ -158,6 +181,13 @@ public class WBadge: UIView {
             make.height.equalTo(sizeForBadge().height)
         }
 
+        borderView.snp_remakeConstraints { (make) in
+            make.centerX.equalTo(badgeView)
+            make.centerY.equalTo(badgeView)
+            make.width.equalTo(badgeView.snp_width).offset(borderWidth)
+            make.height.equalTo(badgeView.snp_height).offset(borderWidth)
+        }
+        
         countLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
@@ -167,18 +197,22 @@ public class WBadge: UIView {
 
         layoutIfNeeded()
         invalidateIntrinsicContentSize()
-
+        
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = (cornerRadius != nil) ? cornerRadius! : (labelSize.height / 2)
         badgeView.backgroundColor = badgeColor
-    }
 
+        borderView.clipsToBounds = true
+        borderView.layer.cornerRadius = badgeView.layer.cornerRadius
+        borderView.backgroundColor = borderColor
+    }
+	
     internal func shouldHide() -> Bool {
         return ((count < 1) && automaticallyHide)
     }
 
     internal func sizeForBadge() -> CGSize {
-        return CGSizeMake(labelSize.width+widthPadding, labelSize.height+heightPadding)
+        return CGSizeMake(labelSize.width + widthPadding + borderWidth, labelSize.height + heightPadding + borderWidth)
     }
 
     internal func setBadgeCount(count: Int) {
@@ -198,4 +232,19 @@ public class WBadge: UIView {
     public override func intrinsicContentSize() -> CGSize {
         return CGSize(width: sizeForBadge().width, height: sizeForBadge().height)
     }
+}
+
+// This class allows a view to keep its background color when in a UITableViewCell
+// that has been selected. In this case, the OS clears the background color of
+// all views in the cell and restores them upon deselection.
+internal class WLockBackgroundView: UIView {
+    var lockBackgroundColor = true
+
+    override public var backgroundColor: UIColor? {
+        didSet {
+            if (lockBackgroundColor && UIColor.clearColor().isEqual(backgroundColor)) {
+                backgroundColor = oldValue
+            }
+        }
+    }	
 }
