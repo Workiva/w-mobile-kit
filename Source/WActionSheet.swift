@@ -427,7 +427,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
     public func heightForSheetContent() -> CGFloat {
         let numCells = actions.count
-        let height = ((CGFloat(numCells)) * ROW_HEIGHT)
+        let height = ((CGFloat(numCells)) * ROW_HEIGHT) + (titleString != nil ? HEADER_HEIGHT : 0)
         return height
     }
 

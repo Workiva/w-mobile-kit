@@ -70,6 +70,20 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(230)
         }
 
+        let scrollNoCancelSheetButton = UIButton(type: UIButtonType.RoundedRect)
+        scrollNoCancelSheetButton.backgroundColor = .lightGrayColor()
+        scrollNoCancelSheetButton.tintColor = .greenColor()
+        scrollNoCancelSheetButton.setTitle("Scrollable Action Sheet", forState: UIControlState.Normal)
+        scrollNoCancelSheetButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        scrollNoCancelSheetButton.addTarget(self, action: #selector(presentIconActionSheet(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(scrollNoCancelSheetButton)
+        scrollNoCancelSheetButton.snp_makeConstraints { (make) in
+            make.top.equalTo(iconSheetButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(230)
+        }
+
         let sortSheetButton = UIButton(type: UIButtonType.RoundedRect)
         sortSheetButton.backgroundColor = .lightGrayColor()
         sortSheetButton.tintColor = .greenColor()
@@ -79,7 +93,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(sortSheetButton)
         sortSheetButton.snp_makeConstraints { (make) in
-            make.top.equalTo(iconSheetButton.snp_bottom).offset(10)
+            make.top.equalTo(scrollNoCancelSheetButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -259,7 +273,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                 NSLog(action.title! + " was tapped")
         }))
 
-        actionSheetIcons.hasCancel = true
+        if let titleString = sender.currentTitle {
+            actionSheetIcons.hasCancel = titleString.containsString("Cancel")
+        }
+
         actionSheetIcons.dismissOnAction = true
         actionSheetIcons.popoverPresentationController?.sourceView = sender
 
