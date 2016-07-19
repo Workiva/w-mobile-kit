@@ -38,6 +38,6 @@ public class WSizeVC: UIViewController {
         verticalSizeClass = traitCollection.verticalSizeClass
     }
 
-    func horizontalSizeClassChanged(horizontalSizeClass: UIUserInterfaceSizeClass) { }
-    func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) { }
+    public func horizontalSizeClassChanged(horizontalSizeClass: UIUserInterfaceSizeClass) { }
+    public func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) { }
 }
