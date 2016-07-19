@@ -240,7 +240,7 @@ public class WBadge: UIView {
 internal class WLockBackgroundView: UIView {
     var lockBackgroundColor = true
 
-    override public var backgroundColor: UIColor? {
+    override var backgroundColor: UIColor? {
         didSet {
             if (lockBackgroundColor && UIColor.clearColor().isEqual(backgroundColor)) {
                 backgroundColor = oldValue

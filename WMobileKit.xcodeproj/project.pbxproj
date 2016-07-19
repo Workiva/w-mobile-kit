@@ -31,6 +31,7 @@
 		D545B3661CEB7FB000615281 /* WRadioButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */; };
 		D545B3681CEBD4E600615281 /* WTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545B3671CEBD4E600615281 /* WTestUtils.swift */; };
 		D552AFAA1CF4D36500E43E16 /* WExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552AFA91CF4D36500E43E16 /* WExtensions.swift */; };
+		D56186221D3EC11A00B28696 /* WSizeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56186211D3EC11A00B28696 /* WSizeVC.swift */; };
 		D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */; };
 		D565A4451CE243A0007077F4 /* WRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D565A4441CE243A0007077F4 /* WRadioButton.swift */; };
 		D56DF0171CF8F4E3000893C1 /* WUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0161CF8F4E3000893C1 /* WUtils.swift */; };
@@ -101,6 +102,7 @@
 		D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButtonTests.swift; sourceTree = "<group>"; };
 		D545B3671CEBD4E600615281 /* WTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTestUtils.swift; sourceTree = "<group>"; };
 		D552AFA91CF4D36500E43E16 /* WExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WExtensions.swift; sourceTree = "<group>"; };
+		D56186211D3EC11A00B28696 /* WSizeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSizeVC.swift; sourceTree = "<group>"; };
 		D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVCTests.swift; sourceTree = "<group>"; };
 		D565A4441CE243A0007077F4 /* WRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButton.swift; sourceTree = "<group>"; };
 		D56DF0161CF8F4E3000893C1 /* WUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtils.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */,
 				D565A4441CE243A0007077F4 /* WRadioButton.swift */,
 				55A106301CAC849300495BBC /* WSideMenuVC.swift */,
+				D56186211D3EC11A00B28696 /* WSizeVC.swift */,
 				D7CC99A11CC960D200572B6F /* WSpinner.swift */,
 				730364EC1CE6419F00F8F3D8 /* WSwitch.swift */,
 				D7310D7A1CC7D55A00130C7B /* WTextField.swift */,
@@ -473,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D56186221D3EC11A00B28696 /* WSizeVC.swift in Sources */,
 				73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */,
 				D5F7A6521CF6401500636AB4 /* WBadge.swift in Sources */,
 				730364ED1CE6419F00F8F3D8 /* WSwitch.swift in Sources */,

@@ -46,7 +46,7 @@ enum WSideMenuState {
     case Open, Closed
 }
 
-public class WSideMenuVC: UIViewController {
+public class WSideMenuVC: WSizeVC {
     // Setable properties
     public var mainViewController: UIViewController?
     public var leftSideMenuViewController: UIViewController?
