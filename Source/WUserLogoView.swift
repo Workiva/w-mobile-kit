@@ -172,6 +172,7 @@ public class WUserLogoView: UIView {
         if let imageData = imageData {
             if let context = UIGraphicsGetCurrentContext() {
                 if let image = UIImage(data: imageData) {
+                    hideInitials()
                     image.drawInRect(rect)
                     layer.cornerRadius = frame.width / 2
                     clipsToBounds = true
