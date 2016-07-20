@@ -53,3 +53,19 @@ public extension UILongPressGestureRecognizer {
         enabled = true
     }
 }
+
+public extension UIApplication
+{
+    func isRunningInFullScreen() -> Bool
+    {
+        if let w = self.keyWindow
+        {
+            let maxScreenSize = max(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+            let minScreenSize = min(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+            let maxAppSize = max(w.bounds.size.width, w.bounds.size.height)
+            let minAppSize = min(w.bounds.size.width, w.bounds.size.height)
+            return maxScreenSize == maxAppSize && minScreenSize == minAppSize
+        }
+        return true
+    }
+}
