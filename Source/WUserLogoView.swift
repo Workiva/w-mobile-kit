@@ -64,6 +64,24 @@ public class WUserLogoView: UIView {
         }
     }
     
+    private var imageData: NSData? {
+        didSet {
+            setupUIMainThread()
+        }
+    }
+    
+    public var imageURL: String? {
+        didSet {
+            if (imageURL != nil && (imageData == nil || imageURL != oldValue)) {
+                if let checkedUrl = NSURL(string: imageURL!) {
+                    downloadImage(checkedUrl)
+                }
+            } else {
+                imageData = nil
+            }
+        }
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -83,23 +101,39 @@ public class WUserLogoView: UIView {
     }
     
     public func commonInit() {
+        opaque = false
+        
         addSubview(initialsLabel)
     }
     
+    private func setupUIMainThread() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupUI()
+        }
+    }
+    
     public func setupUI() {
+        if (imageData == nil) {
+            setupInitials()
+        } else {
+            setNeedsDisplay()
+        }
+    }
+
+    private func setupInitials() {
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.width.equalTo(self).multipliedBy(0.8)
             make.height.equalTo(self).multipliedBy(0.8)
         }
-
+        
         var mappedColor: UIColor
-
+        
         if name != nil && name != "" {
             // Use user provided color if populated. Otherwise use mapped color for name
             mappedColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name!)
-
+            
             // Use user provided initials if populated
             if initials == nil {
                 initials = name!.initials(initialsLimit)
@@ -111,29 +145,46 @@ public class WUserLogoView: UIView {
             }
             mappedColor = .grayColor()
         }
-
+        
         circleLayer.strokeColor = mappedColor.CGColor
-
+        
         let spacing = max(frame.size.width, 30) / 30 - 1
         let attributedString = NSMutableAttributedString(string: initials!)
         attributedString.addAttribute(NSKernAttributeName, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
-
+        
         initialsLabel.attributedText = attributedString
         initialsLabel.textAlignment = NSTextAlignment.Center
         initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
         initialsLabel.textColor = mappedColor
-
+        
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-
+        
         let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
         circleLayer.lineWidth = lineWidth
-
+        
         layer.addSublayer(circleLayer)
     }
-
+    
+    public override func drawRect(rect: CGRect) {
+        if let imageData = imageData {
+            if let context = UIGraphicsGetCurrentContext() {
+                if let image = UIImage(data: imageData) {
+                    image.drawInRect(rect)
+                    layer.cornerRadius = frame.width / 2
+                    clipsToBounds = true
+                }
+            }
+        }
+    }
+            
+    func hideInitials() {
+        initialsLabel.hidden = true
+        circleLayer.hidden = true
+    }
+    
     // Can be overridden for differnt mappings
     public class func mapNameToColor(name: String) -> UIColor {
         // CRC32 decimal
@@ -152,4 +203,19 @@ public class WUserLogoView: UIView {
             return UIColor(hex: 0xF26C21) // Orange
         }
     }
+    
+    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+    
+    private func downloadImage(url: NSURL){
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            self.getDataFromUrl(url) { (data, response, error) in
+                self.imageData = data
+            }
+        }
+    }        
 }
