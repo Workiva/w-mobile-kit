@@ -64,7 +64,7 @@ public class WUserLogoView: UIView {
         }
     }
     
-    private var imageData: NSData? {
+    internal var imageData: NSData? {
         didSet {
             setupUIMainThread()
         }
@@ -116,11 +116,13 @@ public class WUserLogoView: UIView {
         if (imageData == nil) {
             setupInitials()
         } else {
+            initialsLabel.hidden = true
             setNeedsDisplay()
         }
     }
 
     private func setupInitials() {
+        initialsLabel.hidden = false
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
@@ -163,13 +165,10 @@ public class WUserLogoView: UIView {
     
     public override func drawRect(rect: CGRect) {
         if let imageData = imageData {
-            if let context = UIGraphicsGetCurrentContext() {
-                if let image = UIImage(data: imageData) {
-                    hideInitials()
-                    image.drawInRect(rect)
-                    layer.cornerRadius = frame.width / 2
-                    clipsToBounds = true
-                }
+            if let image = UIImage(data: imageData) {
+                image.drawInRect(rect)
+                layer.cornerRadius = frame.width / 2
+                clipsToBounds = true
             }
         }
         
@@ -214,6 +213,12 @@ public class WUserLogoView: UIView {
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             self.getDataFromUrl(url) { (data, response, error) in
                 self.imageData = data
+                
+                if (self.imageData == nil) {
+                    // The image data failed to load,
+                    // so clear the URL as well
+                    self.imageURL = nil
+                }                
             }
         }
     }        

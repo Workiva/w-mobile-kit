@@ -34,6 +34,7 @@ class WUserLogoViewTests: QuickSpec {
             let name4 = "Anthony Tony Edward Stark"
             let name5 = "Natasha Romanova"
             let name6 = "Matt Murdock"
+            let name7 = "Homer Simpson"
 
             beforeEach({
                 subject = UIViewController()
@@ -191,6 +192,55 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.name).to(equal(name5))
                     expect(userLogoView.lineWidth).to(equal(1.0))
                 }
+                
+                it("should successfully add and display a user's profile image via URL") {
+                    userLogoView = WUserLogoView(name7)
+                    userLogoView.initialsLimit = 2
+                    userLogoView.initialsLabel.removeFromSuperview()
+                    userLogoView.bounds = CGRectMake(0, 0, 80, 80)
+                    userLogoView.imageURL = "http://www.simpsoncrazy.com/content/pictures/homer/HomerSimpson3.gif"
+                    
+                    subject.view.addSubview(userLogoView)
+                    userLogoView.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(80)
+                        make.height.equalTo(80)
+                    }
+                    
+                    subject.view.layoutIfNeeded()
+                    
+                    // public properties
+                    userLogoView.setNeedsDisplay()
+                    expect(userLogoView.name).to(equal(name7))
+                    expect(userLogoView.lineWidth).to(equal(1.0))
+                    expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy())
+                    expect(userLogoView.imageData).toEventuallyNot(beNil())
+                }    
+                
+                it("should continue to show the user's initials when not able to load the image URL") {
+                    userLogoView = WUserLogoView(name7)
+                    userLogoView.initialsLimit = 2
+                    userLogoView.initialsLabel.removeFromSuperview()
+                    userLogoView.bounds = CGRectMake(0, 0, 80, 80)
+                    userLogoView.imageURL = "http://not.a.valid.domain/image.gif"
+                    
+                    subject.view.addSubview(userLogoView)
+                    userLogoView.snp_makeConstraints { (make) in
+                        make.centerX.equalTo(subject.view)
+                        make.top.equalTo(subject.view).offset(10)
+                        make.width.equalTo(80)
+                        make.height.equalTo(80)
+                    }
+                    
+                    subject.view.layoutIfNeeded()
+                    
+                    // public properties
+                    expect(userLogoView.imageURL).toEventually(beNil())
+                    expect(userLogoView.initialsLabel.hidden) == false
+                    expect(userLogoView.name).to(equal(name7))
+                    expect(userLogoView.lineWidth).to(equal(1.0))
+                }                  
             }
 
             describe("mapping name to color") {
