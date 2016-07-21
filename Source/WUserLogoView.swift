@@ -160,7 +160,7 @@ public class WUserLogoView: UIView {
         
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
         
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
         circleLayer.lineWidth = lineWidth
@@ -173,7 +173,7 @@ public class WUserLogoView: UIView {
             if let context = UIGraphicsGetCurrentContext() {
                 if let image = UIImage(data: imageData) {
                     hideInitials()
-                    image.drawInRect(rect)
+                    image.drawInRect(rect.insetBy(dx: lineWidth + 1, dy: lineWidth + 1))
                     layer.cornerRadius = frame.width / 2
                     clipsToBounds = true
                 }
@@ -183,7 +183,6 @@ public class WUserLogoView: UIView {
             
     func hideInitials() {
         initialsLabel.hidden = true
-        circleLayer.hidden = true
     }
     
     // Can be overridden for differnt mappings
