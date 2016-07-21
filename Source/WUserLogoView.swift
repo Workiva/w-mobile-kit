@@ -157,14 +157,7 @@ public class WUserLogoView: UIView {
         initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
         initialsLabel.textColor = mappedColor
-        
-        let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
-        circleLayer.path = path.CGPath
-        circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.lineWidth = lineWidth
-        
+                
         layer.addSublayer(circleLayer)
     }
     
@@ -173,12 +166,18 @@ public class WUserLogoView: UIView {
             if let context = UIGraphicsGetCurrentContext() {
                 if let image = UIImage(data: imageData) {
                     hideInitials()
-                    image.drawInRect(rect.insetBy(dx: lineWidth + 1, dy: lineWidth + 1))
+                    image.drawInRect(rect)
                     layer.cornerRadius = frame.width / 2
                     clipsToBounds = true
                 }
             }
         }
+        
+        let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        circleLayer.path = path.CGPath
+        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.lineWidth = lineWidth        
     }
             
     func hideInitials() {
