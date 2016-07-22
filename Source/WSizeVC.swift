@@ -19,10 +19,20 @@
 import UIKit
 import Foundation
 
+public enum SizeType {
+    case iPad, iPhone, Unknown
+}
+
 public class WSizeVC: UIViewController {
     // Must be checked on view will appear or later for accurate result
-    public func isIPadSize() -> Bool {
-        return ((traitCollection.horizontalSizeClass == .Compact) || (traitCollection.verticalSizeClass == .Compact)) ? false : true
+    public func currentSizeType() -> SizeType {
+        if ((traitCollection.horizontalSizeClass == .Unspecified) || (traitCollection.verticalSizeClass == .Unspecified)) {
+            return .Unknown
+        } else if ((traitCollection.horizontalSizeClass == .Compact) || (traitCollection.verticalSizeClass == .Compact)) {
+            return .iPhone
+        } else {
+            return .iPad
+        }
     }
 
     // Should be accessed externally through traitCollection.horizontalSizeClass for the latest value

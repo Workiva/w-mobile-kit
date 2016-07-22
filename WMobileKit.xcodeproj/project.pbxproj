@@ -36,6 +36,7 @@
 		D565A4451CE243A0007077F4 /* WRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D565A4441CE243A0007077F4 /* WRadioButton.swift */; };
 		D56DF0171CF8F4E3000893C1 /* WUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0161CF8F4E3000893C1 /* WUtils.swift */; };
 		D56DF01A1CF8F5AD000893C1 /* WBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */; };
+		D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5728F361D41965E006178EC /* WSizeVCTests.swift */; };
 		D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB771CC57DA000301C7F /* WUserLogoView.swift */; };
 		D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */; };
 		D592AB7E1CC82FFE00301C7F /* WToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB7D1CC82FFE00301C7F /* WToast.swift */; };
@@ -107,6 +108,7 @@
 		D565A4441CE243A0007077F4 /* WRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButton.swift; sourceTree = "<group>"; };
 		D56DF0161CF8F4E3000893C1 /* WUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtils.swift; sourceTree = "<group>"; };
 		D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadgeTests.swift; sourceTree = "<group>"; };
+		D5728F361D41965E006178EC /* WSizeVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSizeVCTests.swift; sourceTree = "<group>"; };
 		D592AB771CC57DA000301C7F /* WUserLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoView.swift; sourceTree = "<group>"; };
 		D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoViewTests.swift; sourceTree = "<group>"; };
 		D592AB7D1CC82FFE00301C7F /* WToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WToast.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
 				D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */,
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
+				D5728F361D41965E006178EC /* WSizeVCTests.swift */,
 				D7CC99A31CC9614B00572B6F /* WSpinnerTests.swift */,
 				730364EE1CE641B300F8F3D8 /* WSwitchTests.swift */,
 				D7CC999B1CC9348E00572B6F /* WTextFieldTests.swift */,
@@ -520,6 +523,7 @@
 				D56DF01A1CF8F5AD000893C1 /* WBadgeTests.swift in Sources */,
 				D545B3661CEB7FB000615281 /* WRadioButtonTests.swift in Sources */,
 				D71E55DE1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift in Sources */,
+				D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,
 				D5409CEA1CCFD07200F984D3 /* WBannerTests.swift in Sources */,
 				73B81F191CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift in Sources */,
