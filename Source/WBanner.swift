@@ -58,7 +58,7 @@ public class WBannerView: UIView {
 
     public var titleMessage = "" {
         didSet {
-            titleMessageLabel.text = bodyMessage
+            titleMessageLabel.text = titleMessage
         }
     }
     public var bodyMessage = "" {
