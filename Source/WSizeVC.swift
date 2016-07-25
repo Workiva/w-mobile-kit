@@ -24,7 +24,7 @@ public enum SizeType {
 }
 
 public class WSizeVC: UIViewController {
-    // Must be checked on view will appear or later for accurate result
+    /// Must be checked on viewWillAppear() or later for an accurate result
     public func currentSizeType() -> SizeType {
         if ((traitCollection.horizontalSizeClass == .Unspecified) || (traitCollection.verticalSizeClass == .Unspecified)) {
             return .Unknown
@@ -35,7 +35,7 @@ public class WSizeVC: UIViewController {
         }
     }
 
-    // Should be accessed externally through traitCollection.horizontalSizeClass for the latest value
+    /// Should be accessed externally through traitCollection.horizontalSizeClass for the latest value
     var horizontalSizeClass = UIUserInterfaceSizeClass.Unspecified {
         didSet {
             if oldValue != horizontalSizeClass {
@@ -44,7 +44,7 @@ public class WSizeVC: UIViewController {
         }
     }
 
-    // Should be accessed externally through traitCollection.verticalSizeClass for the latest value
+    /// Should be accessed externally through traitCollection.verticalSizeClass for the latest value
     var verticalSizeClass = UIUserInterfaceSizeClass.Unspecified {
         didSet {
             if oldValue != verticalSizeClass {
