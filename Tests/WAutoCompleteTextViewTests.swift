@@ -85,7 +85,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     autoCompleteView.maxAutoCompleteHeight = 150
                     autoCompleteView.showAutoCompleteTable()
                     
-                    expect(autoCompleteView.isShowingAutoComplete()).toEventually(equal(true), timeout: 0.3)
+                    expect(autoCompleteView.isShowingAutoComplete()).toEventually(equal(true), timeout: 0.5)
                 }
                 
                 it("should have properties set properly without delegate") {
@@ -95,7 +95,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     autoCompleteView.maxAutoCompleteHeight = 150
                     autoCompleteView.showAutoCompleteTable()
                     
-                    expect(autoCompleteView.isShowingAutoComplete()).toEventually(equal(true), timeout: 0.3)
+                    expect(autoCompleteView.isShowingAutoComplete()).toEventually(equal(true), timeout: 0.5)
                 }
             }
             
