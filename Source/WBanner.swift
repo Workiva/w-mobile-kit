@@ -54,6 +54,7 @@ public class WBannerView: UIView {
     public var placement: WBannerPlacementOptions = .Bottom
     public var animationDuration = BANNER_DEFAULT_ANIMATION_DURATION
     public var height = BANNER_DEFAULT_HEIGHT
+    public var sidePadding: CGFloat = 0
 
     public var titleMessage = "" {
         didSet {
@@ -218,15 +219,14 @@ public class WBannerView: UIView {
     public func show() {
         if rootView == nil {
             print("Root view needed to show banner")
-
             return
         }
 
         rootView!.addSubview(self)
         snp_remakeConstraints { (make) in
             make.height.equalTo(height)
-            make.left.equalTo(rootView!)
-            make.right.equalTo(rootView!)
+            make.left.equalTo(rootView!).offset(sidePadding)
+            make.right.equalTo(rootView!).offset(-sidePadding)
 
             switch placement {
             case .Bottom:
@@ -248,8 +248,8 @@ public class WBannerView: UIView {
                 make.top.equalTo(rootView!)
             }
 
-            make.left.equalTo(rootView!)
-            make.right.equalTo(rootView!)
+            make.left.equalTo(rootView!).offset(sidePadding)
+            make.right.equalTo(rootView!).offset(-sidePadding)
         }
 
         UIView.animateWithDuration(animationDuration, delay: 0, options: .CurveEaseInOut,
@@ -274,8 +274,8 @@ public class WBannerView: UIView {
             //animate out
             snp_remakeConstraints{ (make) in
                 make.height.equalTo(height)
-                make.left.equalTo(rootView!)
-                make.right.equalTo(rootView!)
+                make.left.equalTo(rootView!).offset(sidePadding)
+                make.right.equalTo(rootView!).offset(-sidePadding)
 
                 switch placement {
                 case .Bottom:

@@ -441,10 +441,6 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var pages:[WPage] = [WPage]() {
         didSet {
-            if let pagingSelectorControl = pagingSelectorControl {
-                pagingSelectorControl.removeFromSuperview()
-            }
-
             setupUI()
         }
     }
@@ -457,11 +453,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var tabSpacing: CGFloat = 0.0 {
         didSet {
-            if (pagingSelectorControl != nil) {
-                pagingSelectorControl!.removeFromSuperview()
-
-                setupUI()
-            }
+            setupUI()
         }
     }
 
@@ -486,6 +478,11 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     }
 
     public func setupUI() {
+        if let pagingSelector = pagingSelectorControl {
+            pagingSelector.removeFromSuperview()
+            pagingSelectorControl = nil
+        }
+
         if (tabWidth == nil || tabWidth >= MIN_TAB_WIDTH) {
             pagingSelectorControl = WPagingSelectorControl(pages: pages, tabWidth: tabWidth, tabSpacing: tabSpacing)
         } else {
@@ -514,19 +511,16 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
             }
         }
 
-        if let mainViewController = pages[0].viewController {
-            addViewControllerToContainer(mainContainerView, viewController: mainViewController)
+        if (pages.count > 0) {
+            let newMainViewController = pages[0].viewController
+            addViewControllerToContainer(mainContainerView, viewController: newMainViewController)
 
-            self.mainViewController = mainViewController
+            self.mainViewController = newMainViewController
         }
     }
 
     public func pagingControlConstraintsChanged() {
-        if (pagingSelectorControl != nil) {
-            pagingSelectorControl!.removeFromSuperview()
-
-            setupUI()
-        }
+        setupUI()
     }
 
     // Delegate methods
