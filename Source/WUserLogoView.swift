@@ -117,8 +117,9 @@ public class WUserLogoView: UIView {
             setupInitials()
         } else {
             initialsLabel.hidden = true
-            setNeedsDisplay()
         }
+
+        setNeedsDisplay()
     }
 
     private func setupInitials() {
