@@ -139,7 +139,7 @@ public class WTextView: UITextView, UITextViewDelegate {
         if (self.superview != nil) {
             let imageWidthHeight = 20
             
-            var leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) : 0
+            let leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) : 0
             let leftPlaceholderOffset = 5 + leftInset
             
             textContainerInset = UIEdgeInsets(top: 8, left: leftInset, bottom: 8, right: 0)

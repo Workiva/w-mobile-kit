@@ -46,7 +46,7 @@ enum WSideMenuState {
     case Open, Closed
 }
 
-public class WSideMenuVC: UIViewController {
+public class WSideMenuVC: WSizeVC {
     // Setable properties
     public var mainViewController: UIViewController?
     public var leftSideMenuViewController: UIViewController?
@@ -267,7 +267,7 @@ public class WSideMenuVC: UIViewController {
     }
 }
 
-public class WSideMenuContentVC: UIViewController, WSideMenuProtocol {
+public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
     public var paddingBetweenBackAndMenuIcons: CGFloat = 20.0 {
         didSet {
             addWSideMenuButtons()
