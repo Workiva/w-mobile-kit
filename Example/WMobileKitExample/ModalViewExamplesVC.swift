@@ -414,7 +414,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  titleIcon: UIImage(named: "alert"),
                                  bodyMessage: "Body. Banners can be dismissed on a timer.",
                                  bannerColor: UIColor(hex: 0x006400))
-        bottomBanner!.bodyNumberOfLines = 1
         bottomBanner!.delegate = self
         bottomBanner!.show()
     }

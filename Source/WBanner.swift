@@ -98,14 +98,8 @@ public class WBannerView: UIView {
         }
     }
 
-    public override var frame: CGRect {
-        didSet {
-            print("was changed")
-        }
-    }
-
-    /// Use to manually change the number of lines for the body.
-    public var bodyNumberOfLines: Int = BANNER_DEFAULT_BODY_NUMBER_OF_LINES {
+    /// Used to manually change the number of lines for the body.
+    var bodyNumberOfLines: Int = BANNER_DEFAULT_BODY_NUMBER_OF_LINES {
         didSet {
             if (bodyNumberOfLines < 1) {
                 bodyNumberOfLines = 1
