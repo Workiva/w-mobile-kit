@@ -37,6 +37,7 @@
 		D56DF0171CF8F4E3000893C1 /* WUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0161CF8F4E3000893C1 /* WUtils.swift */; };
 		D56DF01A1CF8F5AD000893C1 /* WBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */; };
 		D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5728F361D41965E006178EC /* WSizeVCTests.swift */; };
+		D574D5861D49293C00BA7771 /* WLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574D5851D49293C00BA7771 /* WLabel.swift */; };
 		D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB771CC57DA000301C7F /* WUserLogoView.swift */; };
 		D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */; };
 		D592AB7E1CC82FFE00301C7F /* WToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB7D1CC82FFE00301C7F /* WToast.swift */; };
@@ -109,6 +110,7 @@
 		D56DF0161CF8F4E3000893C1 /* WUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtils.swift; sourceTree = "<group>"; };
 		D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadgeTests.swift; sourceTree = "<group>"; };
 		D5728F361D41965E006178EC /* WSizeVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSizeVCTests.swift; sourceTree = "<group>"; };
+		D574D5851D49293C00BA7771 /* WLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLabel.swift; sourceTree = "<group>"; };
 		D592AB771CC57DA000301C7F /* WUserLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoView.swift; sourceTree = "<group>"; };
 		D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoViewTests.swift; sourceTree = "<group>"; };
 		D592AB7D1CC82FFE00301C7F /* WToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WToast.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
 				D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */,
+				D574D5851D49293C00BA7771 /* WLabel.swift */,
 				D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */,
 				D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */,
 				D565A4441CE243A0007077F4 /* WRadioButton.swift */,
@@ -489,6 +492,7 @@
 				D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
 				D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */,
+				D574D5861D49293C00BA7771 /* WLabel.swift in Sources */,
 				D77BA8641CDBDF2A0018944A /* WCustomTransitions.swift in Sources */,
 				73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */,
 				D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */,

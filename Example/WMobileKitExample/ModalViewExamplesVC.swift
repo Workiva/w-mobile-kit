@@ -417,21 +417,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         bottomBanner!.delegate = self
         bottomBanner!.show()
     }
-
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-
-        coordinator.animateAlongsideTransition(
-            { context in
-                if (size.height < size.width) {
-                    // Landscape
-                    self.topBanner?.bodyNumberOfLines = 1
-                } else {
-                    // Portrait
-                    self.topBanner?.bodyNumberOfLines = 2
-                }},
-            completion: nil)
-    }
 }
 
 // MARK: - WPickerActionSheetDelegate
