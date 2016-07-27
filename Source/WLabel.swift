@@ -25,16 +25,10 @@ import Foundation
 public class WLabel: UILabel {
     public weak var delegate: WLabelDelegate?
 
-    // Triggers on orientation change and notifys the delegate of the new line count
+    // Trigger on bounds change and notify the delegate of the new line count
     public override var bounds: CGRect {
         didSet {
-            if UIScreen.mainScreen().bounds.height > UIScreen.mainScreen().bounds.width {
-                // Portrait
-                delegate?.lineCountChanged?(dynamicLineCount())
-            } else {
-                // Landscape
-                delegate?.lineCountChanged?(dynamicLineCount())
-            }
+            delegate?.lineCountChanged?(dynamicLineCount())
         }
     }
 }

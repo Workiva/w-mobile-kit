@@ -22,7 +22,7 @@ import Nimble
 
 class WLabelTests: QuickSpec {
     override func spec() {
-        describe("WLoadingModalSpec") {
+        describe("WLabelSpec") {
             var subject: UIViewController!
             var wlabel: WLabel!
 
