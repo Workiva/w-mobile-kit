@@ -227,7 +227,7 @@ public class WBannerView: UIView {
             make.height.equalTo(15)
 
             if (titleIconImageView.image != nil) {
-                make.left.equalTo(titleIconImageView.snp_right).offset(8)
+                make.left.equalTo(titleIconImageView.snp_right).offset(6)
             } else {
                 make.left.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
             }
@@ -241,7 +241,12 @@ public class WBannerView: UIView {
         titleMessageLabel.text = titleMessage
 
         bodyMessageLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(titleMessageLabel.snp_bottom).offset(4)
+            if (bodyNumberOfLines <= 1) {
+                make.top.equalTo(titleMessageLabel.snp_bottom).offset(7)
+            } else {
+                make.top.equalTo(titleMessageLabel.snp_bottom).offset(4)
+            }
+
             make.bottom.equalTo(self).offset(-verticalPaddingForNumberOfLines(bodyNumberOfLines))
             make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
 
@@ -261,7 +266,7 @@ public class WBannerView: UIView {
 
     private func verticalPaddingForNumberOfLines(numberOfLines: Int) -> CGFloat {
         if (numberOfLines <= 1) {
-            return 18.0
+            return 16.0
         } else if (numberOfLines == 2) {
             return 10.0
         } else {
