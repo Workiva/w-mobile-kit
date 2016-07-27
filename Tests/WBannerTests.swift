@@ -64,11 +64,11 @@ class WBannerSpec: QuickSpec {
             let verifyCommonInit = {
                 expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
                 expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
+                expect(bannerView.titleMessageLabel.font).to(equal(UIFont.systemFontOfSize(15)))
                 expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
                 expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
                 expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(16)))
+                expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(12)))
                 expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
             }
 
