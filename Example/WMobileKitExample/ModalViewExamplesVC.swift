@@ -403,7 +403,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         topBanner!.delegate = self
         topBanner!.placement = .Top
         topBanner!.hideOptions = .DismissOnTap
-
         topBanner!.show()
     }
 
@@ -415,8 +414,24 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                                  titleIcon: UIImage(named: "alert"),
                                  bodyMessage: "Body. Banners can be dismissed on a timer.",
                                  bannerColor: UIColor(hex: 0x006400))
+        bottomBanner!.bodyNumberOfLines = 1
         bottomBanner!.delegate = self
         bottomBanner!.show()
+    }
+
+    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+        coordinator.animateAlongsideTransition(
+            { context in
+                if (size.height < size.width) {
+                    // Landscape
+                    self.topBanner?.bodyNumberOfLines = 1
+                } else {
+                    // Portrait
+                    self.topBanner?.bodyNumberOfLines = 2
+                }},
+            completion: nil)
     }
 }
 

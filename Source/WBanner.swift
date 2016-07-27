@@ -33,9 +33,15 @@ public enum WBannerPlacementOptions {
     case Top, Bottom
 }
 
-let BANNER_DEFAULT_HEIGHT = 80
+let BANNER_DEFAULT_HEIGHT = 68
 let BANNER_DEFAULT_SHOW_DURATION = 2.0
 let BANNER_DEFAULT_ANIMATION_DURATION = 0.3
+let BANNER_DEFAULT_TOP_PADDING = 12
+let BANNER_DEFAULT_BOTTOM_PADDING = 12
+let BANNER_DEFAULT_LEFT_PADDING = 16
+let BANNER_DEFAULT_RIGHT_PADDING = 16
+
+let BANNER_DEFAULT_BODY_NUMBER_OF_LINES = 2
 
 public class WBannerView: UIView {
     // Public API
@@ -92,8 +98,27 @@ public class WBannerView: UIView {
         }
     }
 
+    public override var frame: CGRect {
+        didSet {
+            print("was changed")
+        }
+    }
+
+    /// Use to manually change the number of lines for the body.
+    public var bodyNumberOfLines: Int = BANNER_DEFAULT_BODY_NUMBER_OF_LINES {
+        didSet {
+            if (bodyNumberOfLines < 1) {
+                bodyNumberOfLines = 1
+            } else {
+                bodyMessageLabel.numberOfLines = bodyNumberOfLines
+
+                setupUI()
+            }
+        }
+    }
+
     public var titleMessageLabel = UILabel()
-    public var bodyMessageLabel = UILabel()
+    public var bodyMessageLabel = WLabel()
     public var titleIconImageView = UIImageView()
     public var rightIconImageView = UIImageView()
     public var backgroundView = UIView()
@@ -136,6 +161,7 @@ public class WBannerView: UIView {
         addSubview(titleMessageLabel)
         addSubview(titleIconImageView)
         addSubview(bodyMessageLabel)
+        bodyMessageLabel.delegate = self
         addSubview(rightIconImageView)
 
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(WBannerViewDelegate.bannerWasTapped(_:)))
@@ -145,12 +171,12 @@ public class WBannerView: UIView {
         // overwritten by custom user values
         titleMessageLabel.numberOfLines = 1
         titleMessageLabel.textAlignment = .Left
-        titleMessageLabel.font = UIFont.systemFontOfSize(16)
+        titleMessageLabel.font = UIFont.systemFontOfSize(15)
         titleMessageLabel.textColor = .whiteColor()
 
-        bodyMessageLabel.numberOfLines = 2
+        bodyMessageLabel.numberOfLines = bodyNumberOfLines
         bodyMessageLabel.textAlignment = .Left
-        bodyMessageLabel.font = UIFont.systemFontOfSize(16)
+        bodyMessageLabel.font = UIFont.systemFontOfSize(12)
         bodyMessageLabel.textColor = .whiteColor()
     }
 
@@ -166,35 +192,70 @@ public class WBannerView: UIView {
         }
         backgroundView.backgroundColor = bannerColor
 
-        titleIconImageView.snp_remakeConstraints { (make) in
-            make.left.equalTo(self).offset(10)
-            make.top.equalTo(self).offset(10)
-            make.height.equalTo(18)
-            make.width.equalTo(18)
-        }
         titleIconImageView.image = titleIcon
-
-        rightIconImageView.snp_remakeConstraints { (make) in
-            make.centerY.equalTo(self)
-            make.right.equalTo(self).offset(-10)
-            make.height.equalTo(14)
-            make.width.equalTo(14)
+        if (titleIconImageView.image != nil) {
+            titleIconImageView.snp_remakeConstraints { (make) in
+                make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
+                make.top.equalTo(self).offset(verticalPaddingForNumberOfLines(bodyNumberOfLines))
+                make.height.equalTo(15)
+                make.width.equalTo(15)
+            }
+        } else {
+            // Hide if not populated
+            titleIconImageView.snp_remakeConstraints { (make) in
+                make.left.equalTo(0)
+                make.top.equalTo(0)
+                make.height.equalTo(0)
+                make.width.equalTo(0)
+            }
         }
+
         rightIconImageView.image = rightIcon
+        if (rightIconImageView.image != nil) {
+            rightIconImageView.snp_remakeConstraints { (make) in
+                make.centerY.equalTo(self)
+                make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
+                make.height.equalTo(16)
+                make.width.equalTo(16)
+            }
+        } else {
+            // Hide if not populated
+            rightIconImageView.snp_remakeConstraints { (make) in
+                make.left.equalTo(0)
+                make.top.equalTo(0)
+                make.height.equalTo(0)
+                make.width.equalTo(0)
+            }
+        }
 
         titleMessageLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(self).offset(10)
-            make.height.equalTo(18)
-            make.left.equalTo(titleIconImageView.snp_right).offset(10)
-            make.right.equalTo(rightIconImageView.snp_left).offset(-10)
+            make.top.equalTo(self).offset(verticalPaddingForNumberOfLines(bodyNumberOfLines))
+            make.height.equalTo(15)
+
+            if (titleIconImageView.image != nil) {
+                make.left.equalTo(titleIconImageView.snp_right).offset(8)
+            } else {
+                make.left.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
+            }
+
+            if (rightIconImageView.image != nil) {
+                make.right.equalTo(rightIconImageView.snp_left).offset(-8)
+            } else {
+                make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
+            }
         }
         titleMessageLabel.text = titleMessage
 
         bodyMessageLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(titleMessageLabel.snp_bottom).offset(2)
-            make.bottom.equalTo(self).offset(-10)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(rightIconImageView.snp_left).offset(-10)
+            make.top.equalTo(titleMessageLabel.snp_bottom).offset(4)
+            make.bottom.equalTo(self).offset(-verticalPaddingForNumberOfLines(bodyNumberOfLines))
+            make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
+
+            if (rightIconImageView.image != nil) {
+                make.right.equalTo(rightIconImageView.snp_left).offset(-8)
+            } else {
+                make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
+            }
         }
         bodyMessageLabel.text = bodyMessage
 
@@ -202,6 +263,16 @@ public class WBannerView: UIView {
         rightIconImageView.alpha = bannerAlpha
 
         layoutIfNeeded()
+    }
+
+    private func verticalPaddingForNumberOfLines(numberOfLines: Int) -> CGFloat {
+        if (numberOfLines <= 1) {
+            return 18.0
+        } else if (numberOfLines == 2) {
+            return 10.0
+        } else {
+            return 2.0
+        }
     }
 
     internal func bannerWasTapped(sender: UITapGestureRecognizer) {
@@ -296,5 +367,11 @@ public class WBannerView: UIView {
                 }
             )
         }
+    }
+}
+
+extension WBannerView: WLabelDelegate {
+    public func lineCountChanged(lineCount: Int) {
+        bodyNumberOfLines = lineCount
     }
 }
