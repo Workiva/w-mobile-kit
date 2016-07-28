@@ -40,6 +40,7 @@ let BANNER_DEFAULT_TOP_PADDING = 12
 let BANNER_DEFAULT_BOTTOM_PADDING = 12
 let BANNER_DEFAULT_LEFT_PADDING = 16
 let BANNER_DEFAULT_RIGHT_PADDING = 16
+let BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING = 8
 
 let BANNER_DEFAULT_BODY_NUMBER_OF_LINES = 2
 
@@ -233,7 +234,7 @@ public class WBannerView: UIView {
             }
 
             if (rightIconImageView.image != nil) {
-                make.right.equalTo(rightIconImageView.snp_left).offset(-8)
+                make.right.equalTo(rightIconImageView.snp_left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
             } else {
                 make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
             }
@@ -251,7 +252,7 @@ public class WBannerView: UIView {
             make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
 
             if (rightIconImageView.image != nil) {
-                make.right.equalTo(rightIconImageView.snp_left).offset(-8)
+                make.right.equalTo(rightIconImageView.snp_left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
             } else {
                 make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
             }
