@@ -165,7 +165,7 @@ public class WBannerView: UIView {
         // overwritten by custom user values
         titleMessageLabel.numberOfLines = 1
         titleMessageLabel.textAlignment = .Left
-        titleMessageLabel.font = UIFont.systemFontOfSize(15)
+        titleMessageLabel.font = UIFont.boldSystemFontOfSize(15)
         titleMessageLabel.textColor = .whiteColor()
 
         bodyMessageLabel.numberOfLines = bodyNumberOfLines

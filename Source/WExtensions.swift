@@ -57,10 +57,17 @@ public extension UILongPressGestureRecognizer {
 public extension UILabel {
     /// Calculates the current number of lines for a label. 
     public func dynamicLineCount() -> Int {
-        let textSize = CGSizeMake(frame.size.width, CGFloat(Float.infinity))
-        let totalHeight = lroundf(Float(sizeThatFits(textSize).height))
-        let charSize = lroundf(Float(font.lineHeight))
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = frame.size.height
+        paragraphStyle.maximumLineHeight = frame.size.height
+        paragraphStyle.lineBreakMode = .ByWordWrapping
+        let attributes: [String: AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
 
-        return (totalHeight/charSize)
+        let size = text!.sizeWithAttributes(attributes)
+        let stringWidth = size.width
+
+        let constrainedSize = CGSizeMake(frame.size.width, CGFloat(Float.infinity))
+        
+        return Int(ceil(Double(stringWidth/constrainedSize.width)))
     }
 }

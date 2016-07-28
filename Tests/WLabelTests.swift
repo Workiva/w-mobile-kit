@@ -43,7 +43,6 @@ class WLabelTests: QuickSpec {
                     wlabel.bounds = CGRect(x: 1, y: 1, width: 200, height: 200)
                 }
             }
-
         }
     }
 }
