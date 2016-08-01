@@ -73,6 +73,7 @@ public class WBadge: UIView {
 
     public var count: Int = 0 {
         didSet {
+            layoutIfNeeded()
             setupUI()
         }
     }
