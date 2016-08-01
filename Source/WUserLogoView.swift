@@ -72,9 +72,12 @@ public class WUserLogoView: UIView {
     
     public var imageURL: String? {
         didSet {
-            if (imageURL != nil && (imageData == nil || imageURL != oldValue)) {
-                if let checkedUrl = NSURL(string: imageURL!) {
-                    downloadImage(checkedUrl)
+            if (imageURL != nil) {
+                // Only update when necessary or when the URL has changed
+                if (imageData == nil || imageURL != oldValue) {
+                    if let checkedUrl = NSURL(string: imageURL!) {
+                        downloadImage(checkedUrl)
+                    }
                 }
             } else {
                 imageData = nil
