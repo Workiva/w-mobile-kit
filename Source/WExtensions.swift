@@ -54,6 +54,28 @@ public extension UILongPressGestureRecognizer {
     }
 }
 
+public extension UILabel {
+    /// Calculates the current number of lines for a label. 
+    public func dynamicLineCount() -> Int {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = frame.size.height
+        paragraphStyle.maximumLineHeight = frame.size.height
+        paragraphStyle.lineBreakMode = .ByWordWrapping
+        let attributes: [String: AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
+
+        let size = text!.sizeWithAttributes(attributes)
+        let stringWidth = size.width
+
+        let constrainedSize = CGSizeMake(frame.size.width, CGFloat(Float.infinity))
+
+        if ((constrainedSize.width == 0) || (stringWidth == 0)) {
+            return 1
+        }
+        
+        return Int(ceil(Double(stringWidth/constrainedSize.width)))
+    }
+}
+
 public extension UIApplication {
     func isRunningInFullScreen() -> Bool {
         if let w = self.keyWindow {

@@ -403,7 +403,6 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         topBanner!.delegate = self
         topBanner!.placement = .Top
         topBanner!.hideOptions = .DismissOnTap
-
         topBanner!.show()
     }
 
