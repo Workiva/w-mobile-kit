@@ -66,7 +66,6 @@ class WBannerSpec: QuickSpec {
                 expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
                 expect(bannerView.titleMessageLabel.font).to(equal(UIFont.boldSystemFontOfSize(15)))
                 expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
                 expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
                 expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(12)))
                 expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
@@ -84,6 +83,8 @@ class WBannerSpec: QuickSpec {
                     let bannerView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WBannerView
 
                     expect(bannerView).toNot(equal(nil))
+
+                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
 
                     // default settings from commonInit
                     verifyCommonInit()
@@ -119,6 +120,8 @@ class WBannerSpec: QuickSpec {
                     expect(roundAlpha(bannerView.rightIconImageView.alpha)).to(equal(1.0))
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(1.0))
+
+                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(1))
 
                     // default settings from commonInit
                     verifyCommonInit()
@@ -180,6 +183,8 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha1))
 
+                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
+
                     // default settings from commonInit
                     verifyCommonInit()
                 }
@@ -224,6 +229,8 @@ class WBannerSpec: QuickSpec {
                     expect(roundAlpha(bannerView.rightIconImageView.alpha)).to(equal(alpha2))
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha2))
+
+                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
 
                     // default settings from commonInit
                     verifyCommonInit()

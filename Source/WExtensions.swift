@@ -67,6 +67,10 @@ public extension UILabel {
         let stringWidth = size.width
 
         let constrainedSize = CGSizeMake(frame.size.width, CGFloat(Float.infinity))
+
+        if ((constrainedSize.width == 0) || (stringWidth == 0)) {
+            return 1
+        }
         
         return Int(ceil(Double(stringWidth/constrainedSize.width)))
     }
