@@ -57,6 +57,9 @@ echo "Starting iPhone 5 Simulator."
 open -a Simulator; sleep 2
 run_unit_tests "iPhone 5"
 
+# Clean up and ensure the sim is killed 
+clean_previous_build
+
 echo
 echo "Generating code coverage report"
 xcov -m $code_coverage_threshold -w WMobileKit.xcworkspace -s WMobileKit -o xcov
