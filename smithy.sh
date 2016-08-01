@@ -29,8 +29,9 @@ function clean_previous_build {
     echo "Cleaning up from previous build."
     find . -name "*.gcda" -print0 | xargs -0 rm
     killall "WMobileKit"; sleep 2
-    killall 'Simulator'; sleep 2
-    xcrun simctl erase all; sleep 2
+    echo "Going to kill Simulator"
+    killall Simulator; sleep 2
+    xcrun simctl erase all
 }
 
 function archive_code_coverage {
@@ -45,15 +46,15 @@ function archive_code_coverage {
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
 echo
-echo "Starting iPad Simulator."
-open -a Simulator --args -CurrentDeviceUDID 7BE2512A-6B44-4FFF-96A8-60BF0D7269A1; sleep 3
+echo "Starting iPad Retina Simulator."
+open -a Simulator; sleep 2
 run_unit_tests "iPad Retina"
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
 echo
-echo "Starting iPhone Simulator."
-open -a Simulator --args -CurrentDeviceUDID 5E5091B3-63F2-4C60-8FF8-E30BBEC8383B; sleep 3
+echo "Starting iPhone 5 Simulator."
+open -a Simulator; sleep 2
 run_unit_tests "iPhone 5"
 
 echo
