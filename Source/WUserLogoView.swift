@@ -64,27 +64,6 @@ public class WUserLogoView: UIView {
         }
     }
     
-    internal var imageData: NSData? {
-        didSet {
-            setupUIMainThread()
-        }
-    }
-    
-    public var imageURL: String? {
-        didSet {
-            if (imageURL != nil) {
-                // Only load the image if needed or value has changed
-                if (imageData == nil || imageURL != oldValue) {
-                    if let checkedUrl = NSURL(string: imageURL!) {
-                        downloadImage(checkedUrl)
-                    }
-                }
-            } else {
-                imageData = nil
-            }
-        }
-    }
-    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -146,6 +125,7 @@ public class WUserLogoView: UIView {
         initialsLabel.textColor = mappedColor
 
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
+        
         let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
