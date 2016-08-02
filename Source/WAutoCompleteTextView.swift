@@ -41,6 +41,7 @@ public class WAutoCompleteTextView: UIView {
     private var keyboardHeight: CGFloat?
     internal var backgroundView = UIView()
     internal var autoCompleteRange: Range<String.Index>?
+    internal var currentTableHeight: CGFloat?
 
     public func isShowingAutoComplete() -> Bool {
         return isAutoCompleting
@@ -217,9 +218,7 @@ public class WAutoCompleteTextView: UIView {
             autoCompleteTable.reloadData()
         }
 
-        if ((show && !isAutoCompleting) || (!show && isAutoCompleting)) {
-            animateTable(show)
-        }
+        animateTable(show)
     }
 
     public func animateTable(animateIn: Bool = true) {
@@ -227,6 +226,11 @@ public class WAutoCompleteTextView: UIView {
         if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
             height = min(dataSourceHeight, maxAutoCompleteHeight)
         }
+
+        if (currentTableHeight == height) {
+            return
+        }
+        currentTableHeight = animateIn ? height : 0
 
         isAutoCompleting = animateIn
 
