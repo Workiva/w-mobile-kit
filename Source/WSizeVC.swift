@@ -24,6 +24,25 @@ public enum SizeType {
 }
 
 public class WSizeVC: UIViewController {
+    public var contentContainerSidePadding: CGFloat = 0
+
+    var _contentContainer = UIView()
+    public func contentContainer() -> UIView {
+        return _contentContainer
+    }
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addSubview(contentContainer())
+        contentContainer().snp_remakeConstraints() { (make) in
+            make.left.equalTo(view).offset(contentContainerSidePadding)
+            make.top.equalTo(view)
+            make.right.equalTo(view).offset(contentContainerSidePadding)
+            make.bottom.equalTo(view)
+        }
+    }
+
     /// Must be checked on viewWillAppear() or later for an accurate result
     public func currentSizeType() -> SizeType {
         if ((traitCollection.horizontalSizeClass == .Unspecified) || (traitCollection.verticalSizeClass == .Unspecified)) {
