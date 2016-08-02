@@ -434,6 +434,13 @@ extension WAutoCompleteTextView: UITextViewDelegate {
     public func textViewDidChangeSelection(textView: UITextView) {
         processWordAtCursor(textView)
     }
+
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if let delegate = (textView as? WTextView)?.wTextViewDelegate where text == "\n" {
+            return delegate.textViewShouldReturn(textView as! WTextView)
+        }
+        return true
+    }
 }
 
 public class WAutoCompleteTableView: UITableView {

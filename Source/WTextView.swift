@@ -23,10 +23,16 @@ let KEY_RANGE_TOTAL = "TotalRange"
 let KEY_RANGE_LINK = "LinkRange"
 let KEY_RANGE_ADDRESS = "AddressRange"
 
+public protocol WTextViewDelegate: UITextViewDelegate {
+    func textViewShouldReturn(textView: WTextView) -> Bool
+}
+
 public class WTextView: UITextView, UITextViewDelegate {
     let leftImageView: UIImageView = UIImageView()
     let placeholderLabel: UILabel = UILabel()
     let testLabel: UILabel = UILabel()
+
+    public weak var wTextViewDelegate: WTextViewDelegate?
 
     override public var text: String! {
         didSet {
@@ -160,6 +166,13 @@ public class WTextView: UITextView, UITextViewDelegate {
 
             layoutIfNeeded()
         }
+    }
+
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if let delegate = wTextViewDelegate where text == "\n" {
+            return delegate.textViewShouldReturn(self)
+        }
+        return true
     }
         
     deinit {
