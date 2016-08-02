@@ -170,6 +170,6 @@ public class WTextField: UITextField {
             width -= imageWidthWithPadding
         }
 
-        return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height)
+        return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height - 2)
     }
 }

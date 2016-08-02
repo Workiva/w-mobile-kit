@@ -85,7 +85,7 @@ public class WUserLogoView: UIView {
     public func commonInit() {
         addSubview(initialsLabel)
     }
-    
+
     public func setupUI() {
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
@@ -125,7 +125,7 @@ public class WUserLogoView: UIView {
         initialsLabel.textColor = mappedColor
 
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-
+        
         let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
