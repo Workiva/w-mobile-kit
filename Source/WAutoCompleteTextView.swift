@@ -227,7 +227,7 @@ public class WAutoCompleteTextView: UIView {
             height = min(dataSourceHeight, maxAutoCompleteHeight)
         }
 
-        if (currentTableHeight == height) {
+        if (currentTableHeight == height && animateIn) {
             return
         }
         currentTableHeight = animateIn ? height : 0
