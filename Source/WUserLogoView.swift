@@ -178,7 +178,7 @@ public class WUserLogoView: UIView {
 
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
 
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
         circleLayer.lineWidth = lineWidth
