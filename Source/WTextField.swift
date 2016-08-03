@@ -219,6 +219,7 @@ public class WTextField: UITextField {
 
     func clearButtonWasPressed() {
         text = ""
+        sendActionsForControlEvents(.EditingChanged)
         determineIfRightViewShouldBeHidden()
     }
 }
