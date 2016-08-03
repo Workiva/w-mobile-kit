@@ -101,19 +101,5 @@ public class TextViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(300)
             make.height.equalTo(30)
         }
-
-        let defaultTextField = UITextField()
-        defaultTextField.placeholder = "Testholder"
-        defaultTextField.text = "Testholder"
-        defaultTextField.backgroundColor = .whiteColor()
-        defaultTextField.textColor = .redColor()
-        defaultTextField.font = bothTextView.font
-        view.addSubview(defaultTextField)
-        defaultTextField.snp_makeConstraints { (make) in
-            make.centerX.equalTo(view)
-            make.top.equalTo(bothTextView.snp_bottom).offset(10)
-            make.width.equalTo(300)
-            make.height.equalTo(30)
-        }
     }
 }
