@@ -69,7 +69,7 @@ public class WTextField: UITextField {
         }
     }
 
-    public var clearImage: UIImage? {
+    public var rightViewIsClearButton: Bool = false {
         didSet {
             setupUI()
         }
@@ -114,15 +114,16 @@ public class WTextField: UITextField {
             leftViewMode = .Always
         }
 
-        // Right View configuration (prioritize clear image)
-        if (clearImage != nil) {
-            let clearButton = UIButton()
-            clearButton.setImage(clearImage, forState: .Normal)
-            clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
-            rightView = UIButton()
-            rightViewMode = ((text == nil || text!.isEmpty) ? .Never : .Always)
-        } else if (rightImage != nil) {
-            rightView = UIImageView(image: rightImage)
+        // Right View configuration
+        if (rightImage != nil) {
+            if (rightViewIsClearButton) {
+                let clearButton = UIButton()
+                clearButton.setImage(rightImage, forState: .Normal)
+                clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
+                rightView = clearButton
+            } else {
+                rightView = UIImageView(image: rightImage)
+            }
             rightView?.contentMode = .ScaleAspectFit
             rightViewMode = .Always
         }
@@ -188,12 +189,8 @@ public class WTextField: UITextField {
     }
 
     func textFieldDidChange() {
-        if let allText = self.text where clearImage != nil {
-            if (allText.isEmpty) {
-                rightViewMode = .Never
-            } else {
-                rightViewMode = .Always
-            }
+        if (rightImage != nil && rightViewIsClearButton) {
+            rightView?.hidden = (text == nil || text!.isEmpty)
         }
     }
 

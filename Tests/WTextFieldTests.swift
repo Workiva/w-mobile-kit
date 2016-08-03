@@ -279,34 +279,39 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.bottomLineWidthWithText) == 2
                 }
 
-                it("should configure clear button even with a right icon") {
+                it("should set right view as button if clear flag is true") {
                     textField = WTextField()
+                    textField.rightViewIsClearButton = true
 
-                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
-                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
 
                     expect(textField.rightView?.isKindOfClass(UIButton.self)) == true
                 }
 
                 it("should show the clear button if text exists, hides if not") {
                     textField = WTextField()
+                    textField.rightViewIsClearButton = true
 
-                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
                     textField.text = "Test"
                     textField.textFieldDidChange()
 
-                    expect(textField.rightViewMode) == UITextFieldViewMode.Always
+                    expect(textField.rightView?.hidden) == false
 
                     textField.text = ""
                     textField.textFieldDidChange()
 
-                    expect(textField.rightViewMode) == UITextFieldViewMode.Never
+                    expect(textField.rightView?.hidden) == true
+
+                    textField.text = nil
+                    textField.textFieldDidChange()
+
+                    expect(textField.rightView?.hidden) == true
                 }
 
                 it("should clear the text when clear button is pressed") {
                     textField = WTextField()
 
-                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
                     textField.text = "Test"
                     textField.clearButtonWasPressed()
 
