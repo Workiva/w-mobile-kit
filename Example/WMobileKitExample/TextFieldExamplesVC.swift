@@ -132,7 +132,8 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         }
 
         let clearIconTextField = WTextField()
-        clearIconTextField.clearImage = UIImage(named: "close")
+        clearIconTextField.rightImage = UIImage(named: "close")
+        clearIconTextField.rightViewIsClearButton = true
         view.addSubview(clearIconTextField)
         clearIconTextField.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)

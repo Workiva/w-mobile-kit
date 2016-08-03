@@ -121,11 +121,13 @@ public class WTextField: UITextField {
                 clearButton.setImage(rightImage, forState: .Normal)
                 clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
                 rightView = clearButton
+                rightViewMode = .WhileEditing
+                rightView?.hidden = true
             } else {
                 rightView = UIImageView(image: rightImage)
+                rightViewMode = .Always
             }
             rightView?.contentMode = .ScaleAspectFit
-            rightViewMode = .Always
         }
     }
 
