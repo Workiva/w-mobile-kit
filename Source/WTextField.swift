@@ -68,6 +68,12 @@ public class WTextField: UITextField {
             setupUI()
         }
     }
+
+    public var clearImage: UIImage? {
+        didSet {
+            setupUI()
+        }
+    }
     
     // MARK: - Initialization
     public override init(frame: CGRect) {
@@ -96,6 +102,8 @@ public class WTextField: UITextField {
         minimumFontSize = 9
 
         borderStyle = .None
+
+        addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
     }
 
     public func setupUI() {
@@ -106,8 +114,14 @@ public class WTextField: UITextField {
             leftViewMode = .Always
         }
 
-        // Right View configuration
-        if (rightImage != nil) {
+        // Right View configuration (prioritize clear image)
+        if (clearImage != nil) {
+            let clearButton = UIButton()
+            clearButton.setImage(clearImage, forState: .Normal)
+            clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
+            rightView = UIButton()
+            rightViewMode = ((text == nil || text!.isEmpty) ? .Never : .Always)
+        } else if (rightImage != nil) {
             rightView = UIImageView(image: rightImage)
             rightView?.contentMode = .ScaleAspectFit
             rightViewMode = .Always
@@ -171,5 +185,20 @@ public class WTextField: UITextField {
         }
 
         return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height - 2)
+    }
+
+    func textFieldDidChange() {
+        if let allText = self.text where clearImage != nil {
+            if (allText.isEmpty) {
+                rightViewMode = .Never
+            } else {
+                rightViewMode = .Always
+            }
+        }
+    }
+
+    func clearButtonWasPressed() {
+        text = ""
+        textFieldDidChange()
     }
 }

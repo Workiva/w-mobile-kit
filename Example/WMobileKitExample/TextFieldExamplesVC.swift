@@ -118,5 +118,27 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
             make.width.equalTo(view).offset(-10)
             make.height.equalTo(30)
         }
+
+        // MARK: Text Field with clear icon.
+        let clearIconLabel = UILabel()
+        clearIconLabel.text = "This WTextField has a clear icon."
+        clearIconLabel.textAlignment = .Center
+        view.addSubview(clearIconLabel)
+        clearIconLabel.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(bothIconTextField.snp_bottom).offset(10)
+            make.width.equalTo(300)
+            make.height.equalTo(20)
+        }
+
+        let clearIconTextField = WTextField()
+        clearIconTextField.clearImage = UIImage(named: "close")
+        view.addSubview(clearIconTextField)
+        clearIconTextField.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(clearIconLabel.snp_bottom).offset(4)
+            make.width.equalTo(200)
+            make.height.equalTo(30)
+        }
     }
 }
