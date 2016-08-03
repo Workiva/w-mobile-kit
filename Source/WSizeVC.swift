@@ -24,6 +24,17 @@ public enum SizeType {
 }
 
 public class WSizeVC: UIViewController {
+    public var contentContainerSidePadding: CGFloat = 0
+    public var contentContainerTopPadding: CGFloat = 0
+    public var contentContainerBottomPadding: CGFloat = 0
+
+    var _contentContainer = UIView()
+    /// Add all content to this view so padding can easily be added.
+    /// Needs to be added to the VC in the viewDidLoad()
+    public func sizeContentContainer() -> UIView {
+        return _contentContainer
+    }
+
     /// Must be checked on viewWillAppear() or later for an accurate result
     public func currentSizeType() -> SizeType {
         if ((traitCollection.horizontalSizeClass == .Unspecified) || (traitCollection.verticalSizeClass == .Unspecified)) {
@@ -50,8 +61,6 @@ public class WSizeVC: UIViewController {
             if oldValue != verticalSizeClass {
                 verticalSizeClassChanged(verticalSizeClass)
             }
-
-            verticalSizeClassChanged(verticalSizeClass)
         }
     }
 
@@ -72,6 +81,15 @@ public class WSizeVC: UIViewController {
         updateSizes()
     }
 
-    public func horizontalSizeClassChanged(horizontalSizeClass: UIUserInterfaceSizeClass) { }
-    public func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) { }
+    public func horizontalSizeClassChanged(horizontalSizeClass: UIUserInterfaceSizeClass) {}
+    public func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) {}
+
+    public func updateContentContainerPadding() {
+        sizeContentContainer().snp_updateConstraints(closure: { (make) in
+            make.left.equalTo(view).offset(contentContainerSidePadding)
+            make.right.equalTo(view).offset(-contentContainerSidePadding)
+            make.top.equalTo(view).offset(contentContainerTopPadding)
+            make.bottom.equalTo(view).offset(-contentContainerBottomPadding)
+        })
+    }
 }

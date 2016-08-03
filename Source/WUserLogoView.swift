@@ -69,7 +69,7 @@ public class WUserLogoView: UIView {
             setupUIMainThread()
         }
     }
-    
+
     public var imageURL: String? {
         didSet {
             if (imageURL != nil) {
@@ -84,7 +84,7 @@ public class WUserLogoView: UIView {
             }
         }
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -105,16 +105,16 @@ public class WUserLogoView: UIView {
     
     public func commonInit() {
         opaque = false
-        
+
         addSubview(initialsLabel)
     }
-    
+
     private func setupUIMainThread() {
         dispatch_async(dispatch_get_main_queue()) {
             self.setupUI()
         }
     }
-    
+
     public func setupUI() {
         if (imageData == nil) {
             setupInitials()
@@ -133,13 +133,13 @@ public class WUserLogoView: UIView {
             make.width.equalTo(self).multipliedBy(0.8)
             make.height.equalTo(self).multipliedBy(0.8)
         }
-        
+
         var mappedColor: UIColor
-        
+
         if name != nil && name != "" {
             // Use user provided color if populated. Otherwise use mapped color for name
             mappedColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name!)
-            
+
             // Use user provided initials if populated
             if initials == nil {
                 initials = name!.initials(initialsLimit)
@@ -151,22 +151,22 @@ public class WUserLogoView: UIView {
             }
             mappedColor = .grayColor()
         }
-        
+
         circleLayer.strokeColor = mappedColor.CGColor
-        
+
         let spacing = max(frame.size.width, 30) / 30 - 1
         let attributedString = NSMutableAttributedString(string: initials!)
         attributedString.addAttribute(NSKernAttributeName, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
-        
+
         initialsLabel.attributedText = attributedString
         initialsLabel.textAlignment = NSTextAlignment.Center
         initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
         initialsLabel.textColor = mappedColor
-                
+
         layer.addSublayer(circleLayer)
     }
-    
+
     public override func drawRect(rect: CGRect) {
         if let imageData = imageData {
             if let image = UIImage(data: imageData) {
@@ -175,18 +175,19 @@ public class WUserLogoView: UIView {
                 clipsToBounds = true
             }
         }
-        
+
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.lineWidth = lineWidth        
+        circleLayer.lineWidth = lineWidth
     }
-            
+
     func hideInitials() {
         initialsLabel.hidden = true
     }
-    
+
     // Can be overridden for differnt mappings
     public class func mapNameToColor(name: String) -> UIColor {
         // CRC32 decimal
@@ -205,25 +206,25 @@ public class WUserLogoView: UIView {
             return UIColor(hex: 0xF26C21) // Orange
         }
     }
-    
+
     private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
             completion(data: data, response: response, error: error)
             }.resume()
     }
-    
+
     private func downloadImage(url: NSURL){
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             self.getDataFromUrl(url) { (data, response, error) in
                 self.imageData = data
-                
+
                 if (self.imageData == nil) {
                     // The image data failed to load,
                     // so clear the URL as well
                     self.imageURL = nil
-                }                
+                }
             }
         }
-    }        
+    }
 }

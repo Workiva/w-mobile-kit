@@ -92,19 +92,19 @@ class WTextFieldTests: QuickSpec {
                     expect(textRect.origin.x) == 0
                     expect(textRect.origin.y) == 0
                     expect(textRect.width) == 160
-                    expect(textRect.height) == 30
+                    expect(textRect.height) == 28
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
                     expect(placeHolderRect.origin.x) == 0
                     expect(placeHolderRect.origin.y) == 0
                     expect(placeHolderRect.width) == 160
-                    expect(placeHolderRect.height) == 30
+                    expect(placeHolderRect.height) == 28
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
                     expect(editingRect.origin.x) == 0
                     expect(editingRect.origin.y) == 0
                     expect(editingRect.width) == 160
-                    expect(editingRect.height) == 30
+                    expect(editingRect.height) == 28
 
                     let leftViewRect = textField.leftViewRectForBounds(textField.bounds)
                     expect(leftViewRect.origin.x) == 0 // (textField.height - imageSquareSize) / 2 = (30 - 16) / 2
@@ -182,17 +182,17 @@ class WTextFieldTests: QuickSpec {
                     let textRect = textField.textRectForBounds(textField.bounds)
                     expect(textRect.origin.x) == 24
                     expect(textRect.width) == 136
-                    expect(textRect.height) == 30
+                    expect(textRect.height) == 28
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
                     expect(placeHolderRect.origin.x) == 24
                     expect(placeHolderRect.width) == 136
-                    expect(placeHolderRect.height) == 30
+                    expect(placeHolderRect.height) == 28
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
                     expect(editingRect.origin.x) == 24
                     expect(editingRect.width) == 136
-                    expect(editingRect.height) == 30
+                    expect(editingRect.height) == 28
                 }
 
                 it("should successfully add and display a text field with a right icon") {
@@ -215,17 +215,17 @@ class WTextFieldTests: QuickSpec {
                     let textRect = textField.textRectForBounds(textField.bounds)
                     expect(textRect.origin.x) == 0
                     expect(textRect.width) == 136
-                    expect(textRect.height) == 30
+                    expect(textRect.height) == 28
 
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
                     expect(placeHolderRect.origin.x) == 0
                     expect(placeHolderRect.width) == 136
-                    expect(placeHolderRect.height) == 30
+                    expect(placeHolderRect.height) == 28
 
                     let editingRect = textField.editingRectForBounds(textField.bounds)
                     expect(editingRect.origin.x) == 0
                     expect(editingRect.width) == 136
-                    expect(editingRect.height) == 30
+                    expect(editingRect.height) == 28
                 }
 
                 it("should successfully add and display a text field with both icons set") {
@@ -249,17 +249,17 @@ class WTextFieldTests: QuickSpec {
                     let textRect = textField.textRectForBounds(textField.bounds)
                     expect(textRect.origin.x) == 24
                     expect(textRect.width) == 112
-                    expect(textRect.height) == 30
+                    expect(textRect.height) == 28
                     
                     let placeHolderRect = textField.placeholderRectForBounds(textField.bounds)
                     expect(placeHolderRect.origin.x) == 24
                     expect(placeHolderRect.width) == 112
-                    expect(placeHolderRect.height) == 30
+                    expect(placeHolderRect.height) == 28
                     
                     let editingRect = textField.editingRectForBounds(textField.bounds)
                     expect(editingRect.origin.x) == 24
                     expect(editingRect.width) == 112
-                    expect(editingRect.height) == 30
+                    expect(editingRect.height) == 28
                 }
 
                 it("should update bottom border with text change") {

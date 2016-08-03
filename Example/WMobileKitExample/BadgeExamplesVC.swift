@@ -62,12 +62,13 @@ public class BadgeExamplesVC: WSideMenuContentVC {
             make.top.equalTo(badge1.snp_top).offset(-2)
         }
 
-        let badge2 = WBadge(67)
+        let badge2 = WBadge()
         view.addSubview(badge2)
         badge2.snp_makeConstraints { (make) in
             make.left.equalTo(badge1.snp_right).offset(4)
             make.top.equalTo(badge1.snp_top)
         }
+        badge2.count = 67
 
         let badge3 = WBadge(111)
         view.addSubview(badge3)
