@@ -39,6 +39,12 @@ public class WTextField: UITextField {
         }
     }
 
+    public override var rightViewMode: UITextFieldViewMode {
+        didSet {
+            determineIfRightViewShouldBeHidden()
+        }
+    }
+
     public var bottomLineColor: UIColor = .whiteColor() {
         didSet {
             setBottomBorder()
@@ -191,13 +197,28 @@ public class WTextField: UITextField {
     }
 
     func textFieldDidChange() {
-        if (rightImage != nil && rightViewIsClearButton) {
-            rightView?.hidden = (text == nil || text!.isEmpty)
+        determineIfRightViewShouldBeHidden()
+    }
+
+    func determineIfRightViewShouldBeHidden() {
+        if (rightViewIsClearButton) {
+            switch rightViewMode {
+            case .Always:
+                rightView?.hidden = false
+            case .Never:
+                rightView?.hidden = true
+            case .UnlessEditing:
+                rightView?.hidden = !(text == nil || text!.isEmpty)
+            case .WhileEditing:
+                rightView?.hidden = (text == nil || text!.isEmpty)
+            default:
+                break
+            }
         }
     }
 
     func clearButtonWasPressed() {
         text = ""
-        textFieldDidChange()
+        determineIfRightViewShouldBeHidden()
     }
 }
