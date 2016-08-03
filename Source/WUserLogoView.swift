@@ -184,10 +184,6 @@ public class WUserLogoView: UIView {
         circleLayer.lineWidth = lineWidth
     }
 
-    func hideInitials() {
-        initialsLabel.hidden = true
-    }
-
     // Can be overridden for differnt mappings
     public class func mapNameToColor(name: String) -> UIColor {
         // CRC32 decimal

@@ -207,11 +207,9 @@ class WUserLogoViewTests: QuickSpec {
                         make.width.equalTo(80)
                         make.height.equalTo(80)
                     }
-                    
-                    subject.view.layoutIfNeeded()
-                    
+                                        
                     // public properties
-                    userLogoView.setNeedsDisplay()
+                    userLogoView.setupUI()
                     expect(userLogoView.name).to(equal(name7))
                     expect(userLogoView.lineWidth).to(equal(1.0))
                     expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy())
