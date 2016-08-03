@@ -278,6 +278,40 @@ class WTextFieldTests: QuickSpec {
                     expect(textField.bottomLineWidth) == 1
                     expect(textField.bottomLineWidthWithText) == 2
                 }
+
+                it("should configure clear button even with a right icon") {
+                    textField = WTextField()
+
+                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+
+                    expect(textField.rightView?.isKindOfClass(UIButton.self)) == true
+                }
+
+                it("should show the clear button if text exists, hides if not") {
+                    textField = WTextField()
+
+                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.text = "Test"
+                    textField.textFieldDidChange()
+
+                    expect(textField.rightViewMode) == UITextFieldViewMode.Always
+
+                    textField.text = ""
+                    textField.textFieldDidChange()
+
+                    expect(textField.rightViewMode) == UITextFieldViewMode.Never
+                }
+
+                it("should clear the text when clear button is pressed") {
+                    textField = WTextField()
+
+                    textField.clearImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.text = "Test"
+                    textField.clearButtonWasPressed()
+
+                    expect(textField.text) == ""
+                }
             }
         }
     }
