@@ -45,8 +45,10 @@ public class WSwitch: UIControl {
     
     public var on: Bool = false {
         didSet {
-            setupUI()
-            sendActionsForControlEvents(.ValueChanged)
+            if (oldValue != on) {
+                setupUI()
+                sendActionsForControlEvents(.ValueChanged)
+            }
         }
     }
 

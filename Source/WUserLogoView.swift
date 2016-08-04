@@ -64,6 +64,27 @@ public class WUserLogoView: UIView {
         }
     }
     
+    internal var imageData: NSData? {
+        didSet {
+            setupUIMainThread()
+        }
+    }
+
+    public var imageURL: String? {
+        didSet {
+            if (imageURL != nil) {
+                // Only update when necessary or when the URL has changed
+                if (imageData == nil || imageURL != oldValue) {
+                    if let checkedUrl = NSURL(string: imageURL!) {
+                        downloadImage(checkedUrl)
+                    }
+                }
+            } else {
+                imageData = nil
+            }
+        }
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -83,10 +104,29 @@ public class WUserLogoView: UIView {
     }
     
     public func commonInit() {
+        opaque = false
+
         addSubview(initialsLabel)
     }
 
+    private func setupUIMainThread() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupUI()
+        }
+    }
+
     public func setupUI() {
+        if (imageData == nil) {
+            setupInitials()
+        } else {
+            initialsLabel.hidden = true
+        }
+
+        setNeedsDisplay()
+    }
+
+    private func setupInitials() {
+        initialsLabel.hidden = false
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
@@ -124,14 +164,24 @@ public class WUserLogoView: UIView {
         initialsLabel.adjustsFontSizeToFitWidth = true
         initialsLabel.textColor = mappedColor
 
+        layer.addSublayer(circleLayer)
+    }
+
+    public override func drawRect(rect: CGRect) {
+        if let imageData = imageData {
+            if let image = UIImage(data: imageData) {
+                image.drawInRect(rect)
+                layer.cornerRadius = frame.width / 2
+                clipsToBounds = true
+            }
+        }
+
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         circleLayer.path = path.CGPath
         circleLayer.fillColor = UIColor.clearColor().CGColor
         circleLayer.lineWidth = lineWidth
-
-        layer.addSublayer(circleLayer)
     }
 
     // Can be overridden for differnt mappings
@@ -150,6 +200,27 @@ public class WUserLogoView: UIView {
             return UIColor(hex: 0x813296) // Purple
         default:
             return UIColor(hex: 0xF26C21) // Orange
+        }
+    }
+
+    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
+
+    private func downloadImage(url: NSURL){
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            self.getDataFromUrl(url) { (data, response, error) in
+                self.imageData = data
+
+                if (self.imageData == nil) {
+                    // The image data failed to load,
+                    // so clear the URL as well
+                    self.imageURL = nil
+                }
+            }
         }
     }
 }
