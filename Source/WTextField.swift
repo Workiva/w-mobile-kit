@@ -39,6 +39,12 @@ public class WTextField: UITextField {
         }
     }
 
+    public override var rightViewMode: UITextFieldViewMode {
+        didSet {
+            determineIfRightViewShouldBeHidden()
+        }
+    }
+
     public var bottomLineColor: UIColor = .whiteColor() {
         didSet {
             setBottomBorder()
@@ -64,6 +70,12 @@ public class WTextField: UITextField {
     }
 
     public var rightImage: UIImage? {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var rightViewIsClearButton: Bool = false {
         didSet {
             setupUI()
         }
@@ -96,6 +108,8 @@ public class WTextField: UITextField {
         minimumFontSize = 9
 
         borderStyle = .None
+
+        addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
     }
 
     public func setupUI() {
@@ -108,9 +122,18 @@ public class WTextField: UITextField {
 
         // Right View configuration
         if (rightImage != nil) {
-            rightView = UIImageView(image: rightImage)
+            if (rightViewIsClearButton) {
+                let clearButton = UIButton()
+                clearButton.setImage(rightImage, forState: .Normal)
+                clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
+                rightView = clearButton
+                rightViewMode = .WhileEditing
+                rightView?.hidden = true
+            } else {
+                rightView = UIImageView(image: rightImage)
+                rightViewMode = .Always
+            }
             rightView?.contentMode = .ScaleAspectFit
-            rightViewMode = .Always
         }
     }
 
@@ -171,5 +194,32 @@ public class WTextField: UITextField {
         }
 
         return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height - 2)
+    }
+
+    func textFieldDidChange() {
+        determineIfRightViewShouldBeHidden()
+    }
+
+    func determineIfRightViewShouldBeHidden() {
+        if (rightViewIsClearButton) {
+            switch rightViewMode {
+            case .Always:
+                rightView?.hidden = false
+            case .Never:
+                rightView?.hidden = true
+            case .UnlessEditing:
+                rightView?.hidden = !(text == nil || text!.isEmpty)
+            case .WhileEditing:
+                rightView?.hidden = (text == nil || text!.isEmpty)
+            default:
+                break
+            }
+        }
+    }
+
+    func clearButtonWasPressed() {
+        text = ""
+        sendActionsForControlEvents(.EditingChanged)
+        determineIfRightViewShouldBeHidden()
     }
 }
