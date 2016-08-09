@@ -287,7 +287,7 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
         var sideMenuButtonItem: UIBarButtonItem = UIBarButtonItem()
 
         if let sideMenuController = sideMenuController() {
-            if let menuIcon = sideMenuController.options?.drawerIcon {
+            if let menuIcon = sideMenuController.options?.drawerIcon?.imageWithRenderingMode(.AlwaysOriginal) {
                 sideMenuButtonItem = UIBarButtonItem(image: menuIcon,
                     style: .Plain,
                     target: self,
@@ -299,7 +299,7 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
                     action: #selector(WSideMenuContentVC.toggleSideMenu))
             }
 
-            if (navigationController?.viewControllers.count > 1) {
+            if (navigationController?.viewControllers.count > 1 && navigationController?.topViewController == self) {
                 var backMenuButtonItem = UIBarButtonItem()
 
                 if let backIcon = sideMenuController.options?.backIcon {
