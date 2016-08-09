@@ -212,8 +212,8 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.setupUI()
                     expect(userLogoView.name).to(equal(name7))
                     expect(userLogoView.lineWidth).to(equal(1.0))
-                    expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy())
-                    expect(userLogoView.imageData).toEventuallyNot(beNil())
+                    expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy(), timeout: 0.5)
+                    expect(userLogoView.imageData).toEventuallyNot(beNil(), timeout: 0.5)
                 }               
             }
 

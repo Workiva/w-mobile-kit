@@ -74,7 +74,19 @@ public class WTextView: UITextView, UITextViewDelegate {
             textDidChange()
         }
     }
-                
+
+    public var verticalOffsetForLeftImage: CGFloat = 0 {
+        didSet {
+            updateUI()
+        }
+    }
+
+    public var leftPaddingForLeftImage: CGFloat = 4 {
+        didSet {
+            updateUI()
+        }
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -144,15 +156,15 @@ public class WTextView: UITextView, UITextViewDelegate {
 
         if (self.superview != nil) {
             let imageWidthHeight = 20
-            
-            let leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) : 0
+
+            let leftInset: CGFloat = leftImageView.image != nil ? CGFloat(imageWidthHeight) + leftPaddingForLeftImage - 2 : 0
             let leftPlaceholderOffset = 5 + leftInset
-            
+
             textContainerInset = UIEdgeInsets(top: 8, left: leftInset, bottom: 8, right: 0)
-            
+
             leftImageView.snp_remakeConstraints() { (make) in
-                make.centerY.equalTo(self)
-                make.left.equalTo(self)
+                make.centerY.equalTo(self).offset(verticalOffsetForLeftImage)
+                make.left.equalTo(self).offset(leftPaddingForLeftImage)
                 make.width.equalTo(imageWidthHeight)
                 make.height.equalTo(imageWidthHeight)
             }

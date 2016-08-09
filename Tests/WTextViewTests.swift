@@ -41,6 +41,8 @@ class WTextViewTests: QuickSpec {
                 let verifyCommonInit = {
                     expect(textView.editable).to(beFalse())
                     expect(textView.scrollEnabled).to(beFalse())
+                    expect(textView.leftPaddingForLeftImage) == 4
+                    expect(textView.verticalOffsetForLeftImage) == 0
                 }
 
                 it("should init with coder correctly and verify commonInit") {
