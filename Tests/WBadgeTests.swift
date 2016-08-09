@@ -63,6 +63,7 @@ class WBadgeSpec: QuickSpec {
                 expect(badge.font) == UIFont.boldSystemFontOfSize(12)
                 expect(badge.fontSize) == 12.0
                 expect(badge.hidden) == true
+                expect(badge.showValue) == true
             }
 
             describe("when app has been init") {
@@ -196,6 +197,15 @@ class WBadgeSpec: QuickSpec {
                     expect(badge.count) == 1
                     expect(badge.countLabel.text) == "1"
                     expect(badge.hidden) == false
+                }
+
+                it ("should not show value if showValue is false") {
+                    badge = WBadge(2)
+                    badge.showValue = false
+
+                    expect(badge.hidden) == false
+                    expect(badge.count) == 2
+                    expect(badge.countLabel.text) == " "
                 }
                 
                 it("should lock the badge and border color when specified") {
