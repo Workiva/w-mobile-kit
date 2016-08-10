@@ -43,6 +43,7 @@ public class BadgeExamplesVC: WSideMenuContentVC {
 
         storyboardLocationBadge.verticalAlignment = .Bottom
         storyboardLocationBadge.horizontalAlignment = .Left
+        storyboardLocationBadge.showValue = false
 
         // Defaults
         let badge1 = WBadge()

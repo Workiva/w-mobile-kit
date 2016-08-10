@@ -74,6 +74,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 
                 it("should fit the superview it is added to") {
                     subject.view.addSubview(autoCompleteView)
+                    subject.view.layoutIfNeeded()
                     
                     expect(autoCompleteView.bounds.width).to(equal(subject.view.bounds.width))
                 }

@@ -71,6 +71,12 @@ public class WBadge: UIView {
         }
     }
 
+    public var showValue: Bool = true {
+        didSet {
+            setupUI()
+        }
+    }
+
     public var count: Int = 0 {
         didSet {
             layoutIfNeeded()
@@ -212,12 +218,16 @@ public class WBadge: UIView {
         return ((count < 1) && automaticallyHide)
     }
 
+    internal func shouldShowValue() -> Bool {
+        return (!shouldHide() && showValue)
+    }
+
     internal func sizeForBadge() -> CGSize {
-        return CGSizeMake(labelSize.width + widthPadding + borderWidth, labelSize.height + heightPadding + borderWidth)
+        return CGSizeMake(labelSize.width + widthPadding + borderWidth + (shouldShowValue() ? 0 : 1), labelSize.height + heightPadding + borderWidth)
     }
 
     internal func setBadgeCount(count: Int) {
-        countLabel.text = String(count)
+        countLabel.text = (!showValue) ? " " : String(count)
         countLabel.textAlignment = .Center
         countLabel.font = font
         countLabel.textColor = countColor
