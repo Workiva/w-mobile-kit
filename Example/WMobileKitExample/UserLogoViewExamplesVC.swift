@@ -35,7 +35,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
         let name8 = "Gambit X-Man"
         let name9 = "Scott Summers"
         let name10 = "Anthony Ed Stark"
-        let name11 = "Homer Simpson"
+        let name11 = "Workiva"
 
         let scrollView = UIScrollView(frame: CGRectZero)
         view.addSubview(scrollView)
@@ -250,7 +250,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
 
         let userLogo11 = WUserLogoView(name11)
         userLogo11.initialsLimit = 2
-        userLogo11.imageURL = "http://www.simpsoncrazy.com/content/pictures/homer/HomerSimpson3.gif"
+        userLogo11.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
         userLogo11.lineWidth = 2
         scrollView.addSubview(userLogo11)
         userLogo11.snp_makeConstraints { (make) in

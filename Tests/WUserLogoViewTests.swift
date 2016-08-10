@@ -198,7 +198,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.initialsLimit = 2
                     userLogoView.initialsLabel.removeFromSuperview()
                     userLogoView.bounds = CGRectMake(0, 0, 80, 80)
-                    userLogoView.imageURL = "http://www.simpsoncrazy.com/content/pictures/homer/HomerSimpson3.gif"
+                    userLogoView.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
                     
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp_makeConstraints { (make) in
