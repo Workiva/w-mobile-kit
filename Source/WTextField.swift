@@ -27,9 +27,17 @@ public class WTextField: UITextField {
     public var paddingBetweenTextAndImage: CGFloat = 8
 
     private var bottomLine = CALayer()
-    public var bottomLineWidth: CGFloat = 1
-    public var bottomLineWidthWithText: CGFloat = 2
-    private var currentBottomLineWidth: CGFloat? // Used to preserve above to values
+    public var bottomLineWidth: CGFloat = 1 {
+        didSet {
+            setBottomBorder()
+        }
+    }
+    public var bottomLineWidthWithText: CGFloat = 2 {
+        didSet {
+            setBottomBorder()
+        }
+    }
+    private var currentBottomLineWidth: CGFloat? // Used to preserve above set values
     
     public weak var autoCompleteDelegate: WAutoCompleteTextFieldDelegate?
         
