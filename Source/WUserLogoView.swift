@@ -28,11 +28,14 @@ public class WUserLogoView: UIView {
     }
     public var initialsLabel = UILabel()
     internal var circleLayer = CAShapeLayer()
+    internal var profileImageView = UIImageView()
+
+    internal var mappedColor = UIColor.clearColor()
 
     // Overrides the mapped color
     public var color: UIColor? {
         didSet {
-            setupUI()
+            updateMappedColor()
         }
     }
 
@@ -41,29 +44,29 @@ public class WUserLogoView: UIView {
             initials = name?.initials(initialsLimit)
         }
     }
-    
+
     public var initials: String? {
         didSet {
             setupUI()
         }
     }
-    
+
     public var lineWidth: CGFloat = 1.0 {
         didSet {
             setupUI()
         }
     }
-    
+
     public override var bounds: CGRect {
         didSet {
             if (!subviews.contains(initialsLabel)) {
                 commonInit()
             }
-            
+
             setupUI()
         }
     }
-    
+
     internal var imageData: NSData? {
         didSet {
             setupUIMainThread()
@@ -87,26 +90,29 @@ public class WUserLogoView: UIView {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         commonInit()
     }
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         commonInit()
     }
-    
+
     public convenience init(_ name: String) {
         self.init(frame: CGRectZero)
-        
+
         self.name = name
     }
-    
+
     public func commonInit() {
         opaque = false
 
         addSubview(initialsLabel)
+        addSubview(profileImageView)
+
+        layer.addSublayer(circleLayer)
     }
 
     private func setupUIMainThread() {
@@ -116,17 +122,6 @@ public class WUserLogoView: UIView {
     }
 
     public func setupUI() {
-        if (imageData == nil) {
-            setupInitials()
-        } else {
-            initialsLabel.hidden = true
-        }
-
-        setNeedsDisplay()
-    }
-
-    private func setupInitials() {
-        initialsLabel.hidden = false
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
@@ -134,8 +129,65 @@ public class WUserLogoView: UIView {
             make.height.equalTo(self).multipliedBy(0.8)
         }
 
-        var mappedColor: UIColor
+        profileImageView.snp_remakeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(self)
+            make.height.equalTo(self).offset(-1).priorityHigh()
+            make.width.equalTo(self).offset(-1).priorityHigh()
+        }
 
+        updateMappedColor()
+
+        layoutIfNeeded()
+
+        if (imageData == nil) {
+            setupInitials()
+        } else {
+            setupImage()
+        }
+
+        setupCircle()
+    }
+
+    private func setupInitials() {
+        initialsLabel.hidden = false
+        profileImageView.hidden = true
+
+        let spacing = max(frame.size.width, 30) / 30 - 1
+        let attributedString = NSMutableAttributedString(string: initials!)
+        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
+
+        initialsLabel.attributedText = attributedString
+        initialsLabel.textAlignment = NSTextAlignment.Center
+        initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
+        initialsLabel.adjustsFontSizeToFitWidth = true
+        initialsLabel.textColor = mappedColor
+    }
+
+    private func setupImage() {
+        if let profileImageData = imageData {
+            initialsLabel.hidden = true
+            profileImageView.hidden = false
+
+            profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            profileImageView.clipsToBounds = true
+            profileImageView.contentMode = .ScaleAspectFill
+
+            profileImageView.image = UIImage(data: profileImageData)
+        }
+    }
+
+    private func setupCircle() {
+        let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+
+        circleLayer.path = path.CGPath
+        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.lineWidth = lineWidth
+        circleLayer.strokeColor = mappedColor.CGColor
+    }
+
+    private func updateMappedColor() {
         if name != nil && name != "" {
             // Use user provided color if populated. Otherwise use mapped color for name
             mappedColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name!)
@@ -151,37 +203,6 @@ public class WUserLogoView: UIView {
             }
             mappedColor = .grayColor()
         }
-
-        circleLayer.strokeColor = mappedColor.CGColor
-
-        let spacing = max(frame.size.width, 30) / 30 - 1
-        let attributedString = NSMutableAttributedString(string: initials!)
-        attributedString.addAttribute(NSKernAttributeName, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
-
-        initialsLabel.attributedText = attributedString
-        initialsLabel.textAlignment = NSTextAlignment.Center
-        initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
-        initialsLabel.adjustsFontSizeToFitWidth = true
-        initialsLabel.textColor = mappedColor
-
-        layer.addSublayer(circleLayer)
-    }
-
-    public override func drawRect(rect: CGRect) {
-        if let imageData = imageData {
-            if let image = UIImage(data: imageData) {
-                image.drawInRect(rect)
-                layer.cornerRadius = frame.width / 2
-                clipsToBounds = true
-            }
-        }
-
-        let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
-        circleLayer.path = path.CGPath
-        circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.lineWidth = lineWidth
     }
 
     // Can be overridden for differnt mappings
@@ -214,7 +235,7 @@ public class WUserLogoView: UIView {
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             self.getDataFromUrl(url) { (data, response, error) in
                 self.imageData = data
-
+                
                 if (self.imageData == nil) {
                     // The image data failed to load,
                     // so clear the URL as well
