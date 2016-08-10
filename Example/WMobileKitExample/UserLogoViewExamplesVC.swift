@@ -35,7 +35,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
         let name8 = "Gambit X-Man"
         let name9 = "Scott Summers"
         let name10 = "Anthony Ed Stark"
-        let name11 = "Homer Simpson"
+        let name11 = "Workiva"
 
         let scrollView = UIScrollView(frame: CGRectZero)
         view.addSubview(scrollView)
@@ -45,7 +45,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.top.equalTo(view)
             make.bottom.equalTo(view)
         }
-        
+
         let userLogo = WUserLogoView(name1)
         userLogo.initialsLimit = 2
         scrollView.addSubview(userLogo)
@@ -55,7 +55,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(70)
             make.height.equalTo(70)
         }
-        
+
         let userLogoLabel = UILabel()
         scrollView.addSubview(userLogoLabel)
         userLogoLabel.text = userLogo.name
@@ -66,7 +66,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.left.equalTo(scrollView).offset(10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo2 = WUserLogoView(name2)
         scrollView.addSubview(userLogo2)
         userLogo2.snp_makeConstraints { (make) in
@@ -75,7 +75,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(100)
             make.height.equalTo(100)
         }
-        
+
         let userLogoLabel2 = UILabel()
         scrollView.addSubview(userLogoLabel2)
         userLogoLabel2.text = userLogo2.name
@@ -86,7 +86,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.left.equalTo(scrollView).offset(10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo3 = WUserLogoView(name3)
         scrollView.addSubview(userLogo3)
         userLogo3.snp_makeConstraints { (make) in
@@ -95,7 +95,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(80)
             make.height.equalTo(80)
         }
-        
+
         let userLogoLabel3 = UILabel()
         scrollView.addSubview(userLogoLabel3)
         userLogoLabel3.text = userLogo3.name
@@ -106,7 +106,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.left.equalTo(scrollView).offset(10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo4 = WUserLogoView(name4)
         userLogo4.initialsLimit = 2
         userLogo4.initials = "AS"
@@ -117,7 +117,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
-        
+
         let userLogoLabel4 = UILabel()
         scrollView.addSubview(userLogoLabel4)
         userLogoLabel4.text = userLogo4.name
@@ -128,7 +128,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.left.equalTo(scrollView).offset(10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo5 = WUserLogoView(name5)
         scrollView.addSubview(userLogo5)
         userLogo5.snp_makeConstraints { (make) in
@@ -137,7 +137,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(120)
             make.height.equalTo(120)
         }
-        
+
         let userLogoLabel5 = UILabel()
         scrollView.addSubview(userLogoLabel5)
         userLogoLabel5.text = userLogo5.name
@@ -148,7 +148,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.left.equalTo(scrollView).offset(10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo6 = WUserLogoView(name6)
         userLogo6.initialsLimit = 2
         scrollView.addSubview(userLogo6)
@@ -158,7 +158,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(90)
             make.height.equalTo(90)
         }
-        
+
         let userLogoLabel6 = UILabel()
         scrollView.addSubview(userLogoLabel6)
         userLogoLabel6.text = userLogo6.name
@@ -168,7 +168,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.centerX.equalTo(userLogo6)
             make.height.equalTo(0)
         }
-        
+
         let userLogo7 = WUserLogoView(name7)
         scrollView.addSubview(userLogo7)
         userLogo7.snp_makeConstraints { (make) in
@@ -177,7 +177,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(50)
             make.height.equalTo(50)
         }
-        
+
         let userLogoLabel7 = UILabel()
         scrollView.addSubview(userLogoLabel7)
         userLogoLabel7.text = userLogo7.name
@@ -187,7 +187,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.centerX.equalTo(userLogo7)
             make.height.equalTo(20)
         }
-        
+
         let userLogo8 = WUserLogoView(name8)
         userLogo8.initialsLimit = 1
         scrollView.addSubview(userLogo8)
@@ -197,7 +197,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(100)
             make.height.equalTo(100)
         }
-        
+
         let userLogoLabel8 = UILabel()
         scrollView.addSubview(userLogoLabel8)
         userLogoLabel8.text = userLogo8.name
@@ -247,10 +247,10 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.centerX.equalTo(userLogo10)
             make.height.equalTo(20)
         }
-        
+
         let userLogo11 = WUserLogoView(name11)
         userLogo11.initialsLimit = 2
-        userLogo11.imageURL = "http://www.simpsoncrazy.com/content/pictures/homer/HomerSimpson3.gif"
+        userLogo11.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
         userLogo11.lineWidth = 2
         scrollView.addSubview(userLogo11)
         userLogo11.snp_makeConstraints { (make) in
@@ -259,7 +259,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(70)
             make.height.equalTo(70)
         }
-        
+
         let userLogoLabel11 = UILabel()
         scrollView.addSubview(userLogoLabel11)
         userLogoLabel11.text = userLogo11.name
@@ -269,16 +269,16 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.centerX.equalTo(userLogo11)
             make.height.equalTo(20)
         }
-        
+
         view.layoutIfNeeded()
-        
-        scrollView.contentSize = CGSize(width: view.frame.width, height: userLogoLabel5.frame.origin.y + userLogoLabel5.frame.size.height)
+
+        scrollView.contentSize = CGSize(width: view.frame.width, height: userLogoLabel11.frame.origin.y + userLogoLabel11.frame.size.height + 10)
         scrollView.scrollEnabled = true
     }
-    
+
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // Set the WSideMenu delegate when the VC appears
         sideMenuController()?.delegate = self
     }
