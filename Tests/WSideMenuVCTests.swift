@@ -27,6 +27,7 @@ class WSideMenuVCSpec: QuickSpec {
             var window: UIWindow!
             var mainNC: UINavigationController!
             var mainVC: UIViewController!
+            var subNC: UINavigationController!
             var leftSideMenuVC: UIViewController!
 
             beforeEach({
@@ -174,12 +175,14 @@ class WSideMenuVCSpec: QuickSpec {
             }
 
             describe("WSideMenuContentVC") {
+                var subNavController: UINavigationController!
                 var sideMenuContentVC: WSideMenuContentVC!
 
                 beforeEach({
                     sideMenuContentVC = WSideMenuContentVC()
+                    subNavController = UINavigationController(rootViewController: sideMenuContentVC)
 
-                    subject.changeMainViewController(sideMenuContentVC)
+                    subject.changeMainViewController(subNavController)
                 })
 
                 it("should return the side menu controller for the content VC") {
@@ -219,6 +222,7 @@ class WSideMenuVCSpec: QuickSpec {
                     sideMenuContentVC.addWSideMenuButtons()
 
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.title) == "Toggle"
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image).to(beNil())
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
                 }
@@ -230,43 +234,43 @@ class WSideMenuVCSpec: QuickSpec {
 
                     sideMenuContentVC.addWSideMenuButtons()
 
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image) == image
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image).toNot(beNil())
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
                 }
 
                 it("should add side menu buttons for a content VC with a nav controller with multiple controllers no back icon") {
-                    let additionalController = UIViewController()
-                    mainNC.pushViewController(additionalController, animated: false)
+                    let additionalController = WSideMenuContentVC()
+                    subNavController.pushViewController(additionalController, animated: false)
 
                     subject.options?.drawerIcon = nil
                     subject.options?.backIcon = nil
 
-                    sideMenuContentVC.addWSideMenuButtons()
+                    additionalController.addWSideMenuButtons()
 
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].title) == "Back"
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].style) == .Plain
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[0].action) == #selector(WSideMenuContentVC.backButtonItemWasTapped(_:))
+                    expect(additionalController.navigationItem.leftBarButtonItems?[0].title) == "Back"
+                    expect(additionalController.navigationItem.leftBarButtonItems?[0].style) == .Plain
+                    expect(additionalController.navigationItem.leftBarButtonItems?[0].action) == #selector(WSideMenuContentVC.backButtonItemWasTapped(_:))
 
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].style) == .Plain
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -20, 0, 20)
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].style) == .Plain
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -20, 0, 20)
                 }
 
                 it("should have correct padding between menu and back icons") {
-                    let additionalController = UIViewController()
-                    mainNC.pushViewController(additionalController, animated: false)
+                    let additionalController = WSideMenuContentVC()
+                    subNavController.pushViewController(additionalController, animated: false)
 
                     subject.options?.drawerIcon = nil
                     subject.options?.backIcon = nil
 
-                    sideMenuContentVC.paddingBetweenBackAndMenuIcons = 10
+                    additionalController.paddingBetweenBackAndMenuIcons = 10
 
-                    sideMenuContentVC.addWSideMenuButtons()
+                    additionalController.addWSideMenuButtons()
 
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -10, 0, 10)
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -10, 0, 10)
                 }
             }
         }
