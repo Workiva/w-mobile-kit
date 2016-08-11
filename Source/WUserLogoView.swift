@@ -122,6 +122,10 @@ public class WUserLogoView: UIView {
     }
 
     public func setupUI() {
+        if (CGRectEqualToRect(frame, CGRectZero)) {
+            return
+        }
+
         initialsLabel.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
@@ -235,7 +239,7 @@ public class WUserLogoView: UIView {
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             self.getDataFromUrl(url) { (data, response, error) in
                 self.imageData = data
-                
+
                 if (self.imageData == nil) {
                     // The image data failed to load,
                     // so clear the URL as well
