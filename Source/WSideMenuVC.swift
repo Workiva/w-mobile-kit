@@ -48,7 +48,7 @@ enum WSideMenuState {
 
 public class WSideMenuVC: WSizeVC {
     // Setable properties
-    public var mainViewController: UIViewController?
+    weak public var mainViewController: UIViewController?
     public var leftSideMenuViewController: UIViewController?
     public var backgroundView: UIView!
     public var options: WSideMenuOptions?
@@ -264,6 +264,11 @@ public class WSideMenuVC: WSizeVC {
     @objc
     func backgroundWasTapped(sender: AnyObject) {
         closeSideMenu()
+    }
+    
+    deinit {
+        removeViewControllerFromContainer(mainViewController)
+        removeViewControllerFromContainer(leftSideMenuViewController)
     }
 }
 
