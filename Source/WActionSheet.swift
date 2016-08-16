@@ -37,7 +37,7 @@ public enum SheetSeparatorStyle {
     case All, DestructiveOnly
 }
 
-internal protocol WBaseActionSheetDelegate {
+internal protocol WBaseActionSheetDelegate: class {
     func commonInit()
     func setupUI(animated: Bool)
     func heightForActionSheet() -> CGFloat
@@ -52,7 +52,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
-    internal var delegate: WBaseActionSheetDelegate!
+    internal weak var delegate: WBaseActionSheetDelegate!
 
     var previousStatusBarStyle: UIStatusBarStyle?
     var previousStatusBarHidden: Bool?
@@ -794,7 +794,7 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
     internal var toolbarContainerView = UIView()
     internal var pickerView: UIPickerView = UIPickerView()
     internal let PICKER_VIEW_HEIGHT: CGFloat = 258.0
-    public var pickerDelegate: WPickerActionSheetDelegate?
+    public weak var pickerDelegate: WPickerActionSheetDelegate?
 
     // MARK: - Initialization
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
