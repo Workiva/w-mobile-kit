@@ -136,8 +136,8 @@ public class WUserLogoView: UIView {
         profileImageView.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
-            make.height.equalTo(self).offset(-1).priorityHigh()
-            make.width.equalTo(self).offset(-1).priorityHigh()
+            make.height.equalTo(self).offset(-1)
+            make.width.equalTo(self).offset(-1)
         }
 
         updateMappedColor()
