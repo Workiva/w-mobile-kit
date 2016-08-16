@@ -136,8 +136,8 @@ public class WUserLogoView: UIView {
         profileImageView.snp_remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
-            make.height.equalTo(self).offset(-1).priorityHigh()
-            make.width.equalTo(self).offset(-1).priorityHigh()
+            make.height.equalTo(self).offset(-2) // Prevents image from bleeding outside circle
+            make.width.equalTo(self).offset(-2)
         }
 
         updateMappedColor()
@@ -192,17 +192,20 @@ public class WUserLogoView: UIView {
     }
 
     private func updateMappedColor() {
-        if name != nil && name != "" {
+        if (imageData != nil) {
+            // Color for when an image is in use
+            mappedColor = WUserLogoView.mapImageDataToColor(imageData!)
+        } else if (name != nil && name != "") {
             // Use user provided color if populated. Otherwise use mapped color for name
             mappedColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name!)
 
             // Use user provided initials if populated
-            if initials == nil {
+            if (initials == nil) {
                 initials = name!.initials(initialsLimit)
             }
         } else {
             // Use "?" if name is not set
-            if initials != "?" {
+            if (initials != "?") {
                 initials = "?"
             }
             mappedColor = .grayColor()
@@ -226,6 +229,11 @@ public class WUserLogoView: UIView {
         default:
             return UIColor(hex: 0xF26C21) // Orange
         }
+    }
+
+    // Can be overridden for differnt mappings
+    public class func mapImageDataToColor(imageData: NSData) -> UIColor {
+        return UIColor(hex: 0xE3E3E3) // Gray89
     }
 
     private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
