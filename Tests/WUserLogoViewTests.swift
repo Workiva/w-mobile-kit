@@ -214,6 +214,7 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.lineWidth).to(equal(1.0))
                     expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy(), timeout: 3.0)
                     expect(userLogoView.imageData).toEventuallyNot(beNil(), timeout: 3.0)
+                    expect(userLogoView.mappedColor) == UIColor(hex: 0xE3E3E3)
                 }               
             }
 

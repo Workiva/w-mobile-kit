@@ -178,6 +178,9 @@ public class WUserLogoView: UIView {
             profileImageView.contentMode = .ScaleAspectFill
 
             profileImageView.image = UIImage(data: profileImageData)
+
+            // Color for when an image is in use
+            mappedColor = UIColor(hex: 0xE3E3E3)
         }
     }
 
