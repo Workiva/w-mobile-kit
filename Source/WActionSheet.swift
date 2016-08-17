@@ -37,7 +37,7 @@ public enum SheetSeparatorStyle {
     case All, DestructiveOnly
 }
 
-internal protocol WBaseActionSheetDelegate {
+internal protocol WBaseActionSheetDelegate: class {
     func commonInit()
     func setupUI(animated: Bool)
     func heightForActionSheet() -> CGFloat
@@ -52,7 +52,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     public var cancelButton = UIButton(type: .System)
     public var actions = [WAction<ActionDataType>]()
 
-    internal var delegate: WBaseActionSheetDelegate!
+    internal weak var delegate: WBaseActionSheetDelegate!
 
     var previousStatusBarStyle: UIStatusBarStyle?
     var previousStatusBarHidden: Bool?
@@ -99,7 +99,11 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
     public override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        containerView.removeFromSuperview()
+        tapRecognizerView.removeFromSuperview()
+        cancelButton.removeFromSuperview()
 
+        presentingWindow?.rootViewController = nil
         presentingWindow?.hidden = true
         presentingWindow = nil
     }
@@ -221,10 +225,10 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         }
 
         UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut,
-            animations: {
+            animations: { [unowned self] in
                 self.presentingWindow?.layoutIfNeeded()
             },
-            completion: { finished in
+            completion: { [unowned self] finished in
                 self.containerView.snp_remakeConstraints { (make) in
                     if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
                         make.width.equalTo(SHEET_WIDTH_IPAD)
@@ -238,13 +242,12 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
                 }
 
                 UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
-                    animations: {
+                    animations: { [unowned self] in
                         self.presentingWindow?.layoutIfNeeded()
                         self.tapRecognizerView.backgroundColor = .clearColor()
                     },
-                    completion: { finished in
+                    completion: { [unowned self] finished in
                         self.dismissViewControllerAnimated(false, completion: completion)
-                        self.presentingWindow?.hidden = true
                     }
                 )
             }
@@ -280,7 +283,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     }
 }
 
-public struct WAction<T> {
+public class WAction<T> {
     public private(set) var data: T?
     public var title: String?
     public var subtitle: String?
@@ -306,7 +309,7 @@ public struct WAction<T> {
 
 // MARK: - Table Action Sheet
 public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBaseActionSheetDelegate, UITableViewDelegate, UITableViewDataSource {
-    internal var tableView: UITableView = UITableView()
+    internal var tableView = UITableView()
     public var executeActionAfterDismissal = false
 
     public var sheetSeparatorStyle = SheetSeparatorStyle.DestructiveOnly {
@@ -542,15 +545,17 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         if (indexPath.section == 0) {
             // perform handler
             if let action: WAction<ActionDataType> = actionForIndexPath(indexPath) {
+                weak var weakAction = action
+
                 if (executeActionAfterDismissal) {
                     animateOut(0.1, completion: {
-                        action.handler?(action)
+                        action.handler?(weakAction!)
                     })
 
                     return
                 }
 
-                action.handler?(action)
+                action.handler?(weakAction!)
             }
 
             if (dismissOnAction) {
@@ -564,7 +569,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
 // MARK: - Table Cell
 public class WTableViewCell<ActionDataType>: UITableViewCell {
-    private var actionInfo: WAction<ActionDataType>? {
+    private weak var actionInfo: WAction<ActionDataType>? {
         didSet {
             commonInit()
         }
@@ -794,7 +799,7 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
     internal var toolbarContainerView = UIView()
     internal var pickerView: UIPickerView = UIPickerView()
     internal let PICKER_VIEW_HEIGHT: CGFloat = 258.0
-    public var pickerDelegate: WPickerActionSheetDelegate?
+    public weak var pickerDelegate: WPickerActionSheetDelegate?
 
     // MARK: - Initialization
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -912,7 +917,7 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
             }
 
             UIView.animateWithDuration(0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.CurveEaseOut,
-                animations: {
+                animations: { [unowned self] in
                     self.presentingWindow?.layoutIfNeeded()
                 },
                 completion: nil

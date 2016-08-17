@@ -219,8 +219,6 @@ public class WTextField: UITextField {
                 rightView?.hidden = !(text == nil || text!.isEmpty)
             case .WhileEditing:
                 rightView?.hidden = (text == nil || text!.isEmpty)
-            default:
-                break
             }
         }
     }

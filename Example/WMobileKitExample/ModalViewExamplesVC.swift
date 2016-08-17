@@ -208,31 +208,34 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         definesPresentationContext = true
 
         let actionSheet = WActionSheetVC<String>()
+        // Reference needs to be weak in the blocks to prevent retain cycles
+        weak var weakActionSheet = actionSheet
+
         actionSheet.titleString = "User Permissions"
 
         actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheet.deselectAction()
-                actionSheet.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheet.deselectAction()
-                actionSheet.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheet.deselectAction()
-                actionSheet.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive,
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheet.deselectAction()
-                actionSheet.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
 
         actionSheet.setSelectedAction(1)
@@ -287,49 +290,51 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         definesPresentationContext = true
 
         let actionSheetSort = WActionSheetVC<String>()
+        // Reference needs to be weak in the blocks to prevent retain cycles
+        weak var weakActionSheet = actionSheetSort
 
         actionSheetSort.titleString = "Sort"
         actionSheetSort.addAction(WAction(title: "First Name",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Last Name",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Title",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Subtitle",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Section",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Modified Date",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
         actionSheetSort.addAction(WAction(title: "Creation Date",
             handler: { action in
                 NSLog(action.title! + " was tapped")
-                actionSheetSort.deselectAction()
-                actionSheetSort.setSelectedAction(action)
+                weakActionSheet?.deselectAction()
+                weakActionSheet?.setSelectedAction(action)
         }))
 
         actionSheetSort.hasCancel = false
@@ -394,12 +399,12 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         topBanner?.hide()
 
         topBanner = WBannerView(rootView: view,
-                                 titleMessage: "Top Banner Title",
-                                 titleIcon: UIImage(named: "alert"),
-                                 bodyMessage: "This is the top tap to dismiss banner body. Banners can be dismissed by tapping them.",
-                                 rightIcon: UIImage(named: "close"),
-                                 bannerColor: UIColor(hex: 0x006400),
-                                 bannerAlpha: 0.8)
+            titleMessage: "Top Banner Title",
+            titleIcon: UIImage(named: "alert"),
+            bodyMessage: "This is the top tap to dismiss banner body. Banners can be dismissed by tapping them.",
+            rightIcon: UIImage(named: "close"),
+            bannerColor: UIColor(hex: 0x006400),
+            bannerAlpha: 0.8)
         topBanner!.delegate = self
         topBanner!.placement = .Top
         topBanner!.hideOptions = .DismissOnTap
@@ -410,10 +415,10 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         bottomBanner?.hide()
 
         bottomBanner = WBannerView(rootView: view,
-                                 titleMessage: "Bottom Banner Title",
-                                 titleIcon: UIImage(named: "alert"),
-                                 bodyMessage: "Body. Banners can be dismissed on a timer.",
-                                 bannerColor: UIColor(hex: 0x006400))
+            titleMessage: "Bottom Banner Title",
+            titleIcon: UIImage(named: "alert"),
+            bodyMessage: "Body. Banners can be dismissed on a timer.",
+            bannerColor: UIColor(hex: 0x006400))
         bottomBanner!.delegate = self
         bottomBanner!.show()
     }
