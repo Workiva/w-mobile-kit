@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WMobileKit'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'UI kit for common Swift components.'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage         = 'https:app.wdesk.com'
