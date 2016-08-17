@@ -27,7 +27,6 @@ class WSideMenuVCSpec: QuickSpec {
             var window: UIWindow!
             var mainNC: UINavigationController!
             var mainVC: UIViewController!
-            var subNC: UINavigationController!
             var leftSideMenuVC: UIViewController!
 
             beforeEach({
