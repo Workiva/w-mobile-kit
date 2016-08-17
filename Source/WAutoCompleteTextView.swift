@@ -141,7 +141,6 @@ public class WAutoCompleteTextView: UIView {
         submitButton.setTitle("Submit", forState: .Normal)
         submitButton.setTitleColor(.darkGrayColor(), forState: .Normal)
         submitButton.titleLabel?.numberOfLines = 1
-        submitButton.titleLabel?.font = UIFont.systemFontOfSize(12)
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
         submitButton.backgroundColor = .clearColor()
         submitButton.hidden = true
