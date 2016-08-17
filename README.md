@@ -7,26 +7,27 @@
 WMobileKit is a Swift library containing various custom UI components to provide functionality outside of the default libraries.
 
 ## Features
+
 - Customizable
 - Example App
-
-- [x] WActionSheet
-- [x] WAutoCompleteTextView
-- [x] WBadge
-- [x] WBanner
-- [x] WLabel
-- [x] WLoadingModal
-- [x] WRadioButton
-- [x] WSideMenuVC
-- [x] WSizeVC
-- [x] WSpinner
-- [x] WSwitch
-- [x] WTextField
-- [x] WTextView
-- [x] WTheme
-- [x] WToast
-- [x] WUserLogoView
-- [x] WUtils
+- Components
+ - [x] WActionSheet
+ - [x] WAutoCompleteTextView
+ - [x] WBadge
+ - [x] WBanner
+ - [x] WLabel
+ - [x] WLoadingModal
+ - [x] WRadioButton
+ - [x] WSideMenuVC
+ - [x] WSizeVC
+ - [x] WSpinner
+ - [x] WSwitch
+ - [x] WTextField
+ - [x] WTextView
+ - [x] WTheme
+ - [x] WToast
+ - [x] WUserLogoView
+ - [x] WUtils
 
 ## Usage
 
