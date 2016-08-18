@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import CryptoSwift
+import SDWebImage
 
 public class WUserLogoView: UIView {
     public var initialsLimit = 3 {
@@ -67,23 +68,19 @@ public class WUserLogoView: UIView {
         }
     }
 
-    internal var imageData: NSData? {
-        didSet {
-            setupUIMainThread()
-        }
-    }
-
+    private var image: UIImage?
+    
     public var imageURL: String? {
         didSet {
             if (imageURL != nil) {
                 // Only update when necessary or when the URL has changed
-                if (imageData == nil || imageURL != oldValue) {
+                if (image == nil || imageURL != oldValue) {
                     if let checkedUrl = NSURL(string: imageURL!) {
                         downloadImage(checkedUrl)
                     }
                 }
             } else {
-                imageData = nil
+                image = nil
             }
         }
     }
@@ -144,7 +141,7 @@ public class WUserLogoView: UIView {
 
         layoutIfNeeded()
 
-        if (imageData == nil) {
+        if (imageURL == nil) {
             setupInitials()
         } else {
             setupImage()
@@ -169,15 +166,13 @@ public class WUserLogoView: UIView {
     }
 
     private func setupImage() {
-        if let profileImageData = imageData {
+        if let profileImage = image {
             initialsLabel.hidden = true
             profileImageView.hidden = false
 
             profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
             profileImageView.clipsToBounds = true
             profileImageView.contentMode = .ScaleAspectFill
-
-            profileImageView.image = UIImage(data: profileImageData)
         }
     }
 
@@ -192,9 +187,9 @@ public class WUserLogoView: UIView {
     }
 
     private func updateMappedColor() {
-        if (imageData != nil) {
+        if (image != nil) {
             // Color for when an image is in use
-            mappedColor = WUserLogoView.mapImageDataToColor(imageData!)
+            mappedColor = WUserLogoView.mapImageDataToColor(image)
         } else if (name != nil && name != "") {
             // Use user provided color if populated. Otherwise use mapped color for name
             mappedColor = (color != nil) ? color! : WUserLogoView.mapNameToColor(name!)
@@ -232,7 +227,7 @@ public class WUserLogoView: UIView {
     }
 
     // Can be overridden for differnt mappings
-    public class func mapImageDataToColor(imageData: NSData) -> UIColor {
+    public class func mapImageDataToColor(image: UIImage?) -> UIColor {
         return UIColor(hex: 0xE3E3E3) // Gray89
     }
 
@@ -243,17 +238,12 @@ public class WUserLogoView: UIView {
     }
 
     private func downloadImage(url: NSURL){
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            self.getDataFromUrl(url) { (data, response, error) in
-                self.imageData = data
-
-                if (self.imageData == nil) {
-                    // The image data failed to load,
-                    // so clear the URL as well
-                    self.imageURL = nil
-                }
+        profileImageView.sd_setImageWithURL(url, completed: { (image, error, cacheType, url) in
+            if (error == nil) {
+                self.image = image
+            } else {
+                self.image = nil
             }
-        }
+        })
     }
 }
