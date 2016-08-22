@@ -1,8 +1,12 @@
 PODS:
   - CryptoSwift (0.4.1)
+  - SDWebImage (3.8.0):
+    - SDWebImage/Core (= 3.8.0)
+  - SDWebImage/Core (3.8.0)
   - SnapKit (0.20.0)
   - WMobileKit (0.0.2):
     - CryptoSwift (~> 0.4)
+    - SDWebImage (= 3.8)
     - SnapKit (~> 0.20.0)
 
 DEPENDENCIES:
@@ -14,8 +18,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CryptoSwift: 25b5aff3f260967391f8fff2e9abe4254d2c6fd5
+  SDWebImage: 7d9fe229266696de91eadf840c77ca15efd4bbd2
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
-  WMobileKit: a25ed59c7994ef94982c79019ae978de4856ffd7
+  WMobileKit: 438f889549068cc9fbcc44eedaa23bba027a14b6
 
 PODFILE CHECKSUM: fb0ddbcd40ed7b9c9487bbb0e366869765e5df23
 
