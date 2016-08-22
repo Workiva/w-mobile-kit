@@ -319,18 +319,21 @@ public class WAction<T> {
     public var actionStyle: ActionStyle?
     public var handler: (WAction -> Void)?
     public var index = 0
+    public var enabled = true
 
     public init(title: String?,
                 subtitle: String? = nil,
                 image: UIImage? = nil,
                 data: T? = nil,
                 style: ActionStyle? = ActionStyle.Normal,
+                enabled: Bool = true,
                 handler: (WAction<T> -> Void)? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.data = data
         self.actionStyle = style
+        self.enabled = enabled
         self.handler = handler
     }
 }
@@ -593,6 +596,16 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+
+    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if (indexPath.section == 0) {
+            let action = actionForIndexPath(indexPath)
+
+            return action.enabled
+        }
+
+        return true
+    }
 }
 
 // MARK: - Table Cell
@@ -607,6 +620,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
     internal var subtitleLabel: UILabel?
     internal var titleLabel: UILabel?
     internal var iconImageView: UIImageView?
+    internal var disabledView = UIView()
     public private(set) var separatorBar = UIView()
     public private(set) var isSelectedAction = false
 
@@ -626,8 +640,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
         if (!subviews.contains(selectBar)) {
             contentView.addSubview(selectBar)
         }
-        selectBar.snp_removeConstraints()
-        selectBar.snp_makeConstraints { (make) in
+        selectBar.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
@@ -654,8 +667,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     addSubview(iconImageView!)
                 }
 
-                iconImageView?.snp_removeConstraints()
-                iconImageView?.snp_makeConstraints(closure: { (make) in
+                iconImageView?.snp_remakeConstraints(closure: { (make) in
                     make.left.equalTo(self).offset(14)
                     make.centerY.equalTo(self)
                     make.width.equalTo(25)
@@ -676,9 +688,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 subtitleLabel?.font = UIFont.systemFontOfSize(12)
                 subtitleLabel?.textColor = UIColor(hex: 0x707070)
 
-                subtitleLabel?.snp_removeConstraints()
-
-                subtitleLabel?.snp_makeConstraints(closure: { (make) in
+                subtitleLabel?.snp_remakeConstraints(closure: { (make) in
                     if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
@@ -721,6 +731,21 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 })
             } else {
                 titleLabel?.text = ""
+            }
+
+            if (!actionInfo.enabled) {
+                addSubview(disabledView)
+                disabledView.hidden = false
+                disabledView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+
+                disabledView.snp_remakeConstraints { (make) in
+                    make.top.equalTo(self).offset(0.5)
+                    make.bottom.equalTo(self)
+                    make.left.equalTo(self)
+                    make.right.equalTo(self)
+                }
+            } else {
+                disabledView.hidden = true
             }
         }
 
