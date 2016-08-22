@@ -57,6 +57,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     var previousStatusBarStyle: UIStatusBarStyle?
     var previousStatusBarHidden: Bool?
 
+    // An optional completion handler to store in case an action is tapped while the action sheet is already dismissing
     var completionToHandle: (() -> Void)?
 
     public var titleString: String?
@@ -125,7 +126,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         providesPresentationContextTransitionStyle = true
     }
 
-    // In case an action is tapped during dismissal, we still call its completion handler
+    // In case an action is tapped during dismissal, still call its completion handler
     public override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
         let newCompletion: (() -> Void) = { Void in
             completion?()
@@ -224,6 +225,7 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     public func animateOut(delay: NSTimeInterval, completion: (() -> Void)? = nil) {
         checkForPresentingWindow()
 
+        // Do not dismiss twice, but store the completion handler to be called if needed
         if (isDismissing) {
             if (completion != nil) {
                 completionToHandle = completion
