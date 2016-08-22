@@ -231,7 +231,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
-        actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive,
+        actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.Destructive, enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
@@ -255,7 +255,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         actionSheetIcons.maxSheetHeight = 315
         actionSheetIcons.executeActionAfterDismissal = true
         
-        actionSheetIcons.addAction(WAction(title: "Open folder", image:UIImage(named: "folder"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Open folder", image:UIImage(named: "folder"), style: ActionStyle.Normal, enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
@@ -263,7 +263,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
-        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal,
+        actionSheetIcons.addAction(WAction(title: "Permissions", image:UIImage(named: "person"), style: ActionStyle.Normal, enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
         }))
@@ -324,13 +324,13 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Modified Date",
+        actionSheetSort.addAction(WAction(title: "Modified Date", enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Creation Date",
+        actionSheetSort.addAction(WAction(title: "Creation Date", enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
