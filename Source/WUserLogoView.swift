@@ -68,7 +68,11 @@ public class WUserLogoView: UIView {
         }
     }
 
-    private var image: UIImage?
+    private var image: UIImage? {
+        didSet {
+            setupUIMainThread()
+        }
+    }
     
     public var imageURL: String? {
         didSet {
@@ -97,7 +101,7 @@ public class WUserLogoView: UIView {
         commonInit()
     }
 
-    public convenience init(_ name: String) {
+    public convenience init(name: String) {
         self.init(frame: CGRectZero)
 
         self.name = name
@@ -141,7 +145,7 @@ public class WUserLogoView: UIView {
 
         layoutIfNeeded()
 
-        if (imageURL == nil) {
+        if (image == nil) {
             setupInitials()
         } else {
             setupImage()

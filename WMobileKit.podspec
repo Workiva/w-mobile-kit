@@ -17,4 +17,5 @@ Pod::Spec.new do |s|
   s.source_files     = 'Source/*{h,m,swift}'
   s.dependency 'SnapKit', '~> 0.20.0'
   s.dependency 'CryptoSwift', '~> 0.4'
+  s.dependency 'SDWebImage', '3.8'
 end
