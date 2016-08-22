@@ -128,9 +128,9 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
     // In case an action is tapped during dismissal, still call its completion handler
     public override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
-        let newCompletion: (() -> Void) = { Void in
+        let newCompletion: (() -> Void) = { [weak self] Void in
             completion?()
-            self.completionToHandle?()
+            self?.completionToHandle?()
         }
 
         super.dismissViewControllerAnimated(flag, completion: newCompletion)
