@@ -57,10 +57,14 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     var previousStatusBarStyle: UIStatusBarStyle?
     var previousStatusBarHidden: Bool?
 
+    // An optional completion handler to store in case an action is tapped while the action sheet is already dismissing
+    var completionToHandle: (() -> Void)?
+
     public var titleString: String?
     public var selectedIndex: Int?
     public var dismissOnAction = true
     public var hasCancel = false
+    public var isDismissing = false
 
     // MARK: - Initialization
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -120,6 +124,16 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         modalTransitionStyle = .CrossDissolve
 
         providesPresentationContextTransitionStyle = true
+    }
+
+    // In case an action is tapped during dismissal, still call its completion handler
+    public override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
+        let newCompletion: (() -> Void) = { [weak self] Void in
+            completion?()
+            self?.completionToHandle?()
+        }
+
+        super.dismissViewControllerAnimated(flag, completion: newCompletion)
     }
 
     public func commonInit() {
@@ -211,6 +225,17 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     public func animateOut(delay: NSTimeInterval, completion: (() -> Void)? = nil) {
         checkForPresentingWindow()
 
+        // Do not dismiss twice, but store the completion handler to be called if needed
+        if (isDismissing) {
+            if (completion != nil) {
+                completionToHandle = completion
+            }
+
+            return
+        }
+
+        isDismissing = true
+
         containerView.snp_remakeConstraints { (make) in
             if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
                 make.centerX.equalTo(presentingWindow!)
@@ -225,31 +250,34 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
         }
 
         UIView.animateWithDuration(0.05, delay: delay, options: UIViewAnimationOptions.CurveEaseOut,
-            animations: { [unowned self] in
-                self.presentingWindow?.layoutIfNeeded()
+            animations: { [weak self] in
+                self?.presentingWindow?.layoutIfNeeded()
             },
-            completion: { [unowned self] finished in
-                self.containerView.snp_remakeConstraints { (make) in
-                    if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                        make.width.equalTo(SHEET_WIDTH_IPAD)
-                        make.centerX.equalTo(self.presentingWindow!)
-                    } else {
-                        make.left.equalTo(self.presentingWindow!).offset(10)
-                        make.right.equalTo(self.presentingWindow!).offset(-10)
+            completion: { [weak self] finished in
+                if self != nil {
+                    self!.containerView.snp_remakeConstraints { (make) in
+                        if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                            make.width.equalTo(SHEET_WIDTH_IPAD)
+                            make.centerX.equalTo(self!.presentingWindow!)
+                        } else {
+                            make.left.equalTo(self!.presentingWindow!).offset(10)
+                            make.right.equalTo(self!.presentingWindow!).offset(-10)
+                        }
+                        make.height.equalTo((self!.delegate?.heightForActionSheet())!)
+                        make.top.equalTo(self!.presentingWindow!.snp_bottom)
                     }
-                    make.height.equalTo((self.delegate?.heightForActionSheet())!)
-                    make.top.equalTo(self.presentingWindow!.snp_bottom)
-                }
 
-                UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
-                    animations: { [unowned self] in
-                        self.presentingWindow?.layoutIfNeeded()
-                        self.tapRecognizerView.backgroundColor = .clearColor()
-                    },
-                    completion: { [unowned self] finished in
-                        self.dismissViewControllerAnimated(false, completion: completion)
-                    }
-                )
+                    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
+                        animations: { [weak self] in
+                            self?.presentingWindow?.layoutIfNeeded()
+                            self?.tapRecognizerView.backgroundColor = .clearColor()
+                        },
+                        completion: { [weak self] finished in
+                            self?.dismissViewControllerAnimated(false, completion: completion)
+                            self?.isDismissing = false
+                        }
+                    )
+                }
             }
         )
     }
@@ -291,18 +319,21 @@ public class WAction<T> {
     public var actionStyle: ActionStyle?
     public var handler: (WAction -> Void)?
     public var index = 0
+    public var enabled = true
 
     public init(title: String?,
                 subtitle: String? = nil,
                 image: UIImage? = nil,
                 data: T? = nil,
                 style: ActionStyle? = ActionStyle.Normal,
+                enabled: Bool = true,
                 handler: (WAction<T> -> Void)? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.data = data
         self.actionStyle = style
+        self.enabled = enabled
         self.handler = handler
     }
 }
@@ -565,6 +596,16 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+
+    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if (indexPath.section == 0) {
+            let action = actionForIndexPath(indexPath)
+
+            return action.enabled
+        }
+
+        return true
+    }
 }
 
 // MARK: - Table Cell
@@ -579,6 +620,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
     internal var subtitleLabel: UILabel?
     internal var titleLabel: UILabel?
     internal var iconImageView: UIImageView?
+    internal var disabledView = UIView()
     public private(set) var separatorBar = UIView()
     public private(set) var isSelectedAction = false
 
@@ -598,8 +640,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
         if (!subviews.contains(selectBar)) {
             contentView.addSubview(selectBar)
         }
-        selectBar.snp_removeConstraints()
-        selectBar.snp_makeConstraints { (make) in
+        selectBar.snp_remakeConstraints { (make) in
             make.left.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
@@ -626,8 +667,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                     addSubview(iconImageView!)
                 }
 
-                iconImageView?.snp_removeConstraints()
-                iconImageView?.snp_makeConstraints(closure: { (make) in
+                iconImageView?.snp_remakeConstraints(closure: { (make) in
                     make.left.equalTo(self).offset(14)
                     make.centerY.equalTo(self)
                     make.width.equalTo(25)
@@ -648,9 +688,7 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 subtitleLabel?.font = UIFont.systemFontOfSize(12)
                 subtitleLabel?.textColor = UIColor(hex: 0x707070)
 
-                subtitleLabel?.snp_removeConstraints()
-
-                subtitleLabel?.snp_makeConstraints(closure: { (make) in
+                subtitleLabel?.snp_remakeConstraints(closure: { (make) in
                     if (actionInfo.image != nil) {
                         make.left.equalTo(iconImageView!.snp_right).offset(16)
                     } else {
@@ -693,6 +731,21 @@ public class WTableViewCell<ActionDataType>: UITableViewCell {
                 })
             } else {
                 titleLabel?.text = ""
+            }
+
+            if (!actionInfo.enabled) {
+                addSubview(disabledView)
+                disabledView.hidden = false
+                disabledView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+
+                disabledView.snp_remakeConstraints { (make) in
+                    make.top.equalTo(self).offset(0.5)
+                    make.bottom.equalTo(self)
+                    make.left.equalTo(self)
+                    make.right.equalTo(self)
+                }
+            } else {
+                disabledView.hidden = true
             }
         }
 
@@ -917,8 +970,8 @@ public class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType
             }
 
             UIView.animateWithDuration(0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.CurveEaseOut,
-                animations: { [unowned self] in
-                    self.presentingWindow?.layoutIfNeeded()
+                animations: { [weak self] in
+                    self?.presentingWindow?.layoutIfNeeded()
                 },
                 completion: nil
             )

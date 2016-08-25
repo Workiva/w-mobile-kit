@@ -149,6 +149,17 @@ class WActionSheetSpec: QuickSpec {
 
                     expect(subject.presentingWindow).toNot(beNil())
                 }
+
+                it("should overlay a transparent white view and not highlight if action is disabled") {
+                    subject.actions[1].enabled = false
+                    table.reloadData()
+
+                    let indexPath = NSIndexPath(forItem: 1, inSection: 0)
+                    let disabledCell = table.cellForRowAtIndexPath(indexPath)
+
+                    expect(disabledCell!.subviews[disabledCell!.subviews.count - 1].backgroundColor) == UIColor.whiteColor().colorWithAlphaComponent(0.5)
+                    expect(subject.tableView(table, shouldHighlightRowAtIndexPath: indexPath)) == false
+                }
             }
 
             describe("max sheet height") {
