@@ -85,11 +85,13 @@ public class WSizeVC: UIViewController {
     public func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) {}
 
     public func updateContentContainerPadding() {
-        sizeContentContainer().snp_updateConstraints(closure: { (make) in
-            make.left.equalTo(view).offset(contentContainerSidePadding)
-            make.right.equalTo(view).offset(-contentContainerSidePadding)
-            make.top.equalTo(view).offset(contentContainerTopPadding)
-            make.bottom.equalTo(view).offset(-contentContainerBottomPadding)
-        })
+        if (view.subviews.contains(sizeContentContainer())) {
+            sizeContentContainer().snp_updateConstraints(closure: { (make) in
+                make.left.equalTo(view).offset(contentContainerSidePadding)
+                make.right.equalTo(view).offset(-contentContainerSidePadding)
+                make.top.equalTo(view).offset(contentContainerTopPadding)
+                make.bottom.equalTo(view).offset(-contentContainerBottomPadding)
+            })
+        }
     }
 }
