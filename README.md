@@ -31,7 +31,13 @@ WMobileKit is a Swift library containing various custom UI components to provide
 
 ## Usage
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To use the library in your app, add the following import to your file:
+```swift
+import WMobileKit
+```
+
+To run the example project, run `./setup.sh` in the root directory.
+Alternatively, you can run `pod install` from the Example directory.
 
 ## Requirements
 
@@ -41,6 +47,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
+Add the following to your Podfile:
 ```ruby
 pod "WMobileKit"
 ```
@@ -61,3 +68,11 @@ Solution:
 ## License
 
 WMobileKit is available under the Apache license. See the LICENSE file for more info.
+
+## Authors
+- James Romo
+- Jordan Ross
+- Jeff Scaturro
+- Todd Tarbox
+- Brian Blanchard
+- Bryan Rezende
