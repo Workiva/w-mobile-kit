@@ -52,7 +52,7 @@ class WUserLogoViewTests: QuickSpec {
 
             describe("when app has been init") {
                 it("should init with coder correctly and verify commonInit") {
-                    userLogoView = WUserLogoView(name1)
+                    userLogoView = WUserLogoView(name: name1)
 
                     let path = NSTemporaryDirectory() as NSString
                     let locToSave = path.stringByAppendingPathComponent("WUserLogoView")
@@ -67,7 +67,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
 
                 it("should successfully add and display a user logo view with default settings") {
-                    userLogoView = WUserLogoView(name1)
+                    userLogoView = WUserLogoView(name: name1)
 
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp_makeConstraints { (make) in
@@ -113,7 +113,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
 
                 it("should successfully add and display a user logo view with a three word name") {
-                    userLogoView = WUserLogoView(name3)
+                    userLogoView = WUserLogoView(name: name3)
 
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp_makeConstraints { (make) in
@@ -132,7 +132,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
 
                 it("should successfully add and display a user logo view with a four word name") {
-                    userLogoView = WUserLogoView(name4)
+                    userLogoView = WUserLogoView(name: name4)
                     userLogoView.initialsLimit = 4
 
                     subject.view.addSubview(userLogoView)
@@ -152,7 +152,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
 
                 it("should successfully add and display a user logo view with an empty name") {
-                    userLogoView = WUserLogoView("")
+                    userLogoView = WUserLogoView(name: "")
 
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp_makeConstraints { (make) in
@@ -172,7 +172,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
 
                 it("should work correctly if the initials label has been removed") {
-                    userLogoView = WUserLogoView(name5)
+                    userLogoView = WUserLogoView(name: name5)
                     userLogoView.initialsLimit = 1
                     userLogoView.initialsLabel.removeFromSuperview()
                     userLogoView.bounds = CGRectMake(0, 0, 80, 80)
@@ -194,7 +194,7 @@ class WUserLogoViewTests: QuickSpec {
                 }
                 
                 it("should successfully add and display a user's profile image via URL") {
-                    userLogoView = WUserLogoView(name7)
+                    userLogoView = WUserLogoView(name: name7)
                     userLogoView.initialsLimit = 2
                     userLogoView.initialsLabel.removeFromSuperview()
                     userLogoView.bounds = CGRectMake(0, 0, 80, 80)
@@ -213,7 +213,7 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.name).to(equal(name7))
                     expect(userLogoView.lineWidth).to(equal(1.0))
                     expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy(), timeout: 3.0)
-                    expect(userLogoView.imageData).toEventuallyNot(beNil(), timeout: 3.0)
+                    expect(userLogoView.imageURL).toEventuallyNot(beNil(), timeout: 3.0)
                     expect(userLogoView.mappedColor) == UIColor(hex: 0xE3E3E3)
                 }               
             }
