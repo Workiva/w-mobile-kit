@@ -25,12 +25,15 @@ function unit_test_failure_check {
 }
 
 function clean_previous_build {
-    echo
     echo "Cleaning up from previous build."
     find . -name "*.gcda" -print0 | xargs -0 rm
-    killall "WMobileKit"; sleep 2
+    killall "Wdesk"; sleep 2
     echo "Going to kill Simulator"
-    killall Simulator; sleep 2
+    killall Simulator
+    # Ensure it's dead
+    while [ $? -ne 1 ]; do
+        sleep 1; killall Simulator
+    done
     xcrun simctl erase all
 }
 
