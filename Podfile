@@ -4,6 +4,7 @@ use_frameworks!
 def common_pods
   pod 'SnapKit', '0.20.0'
   pod 'CryptoSwift', '0.4'
+  pod 'SDWebImage', '3.8'
 end
 
 target 'WMobileKit' do

@@ -25,12 +25,15 @@ function unit_test_failure_check {
 }
 
 function clean_previous_build {
-    echo
     echo "Cleaning up from previous build."
     find . -name "*.gcda" -print0 | xargs -0 rm
     killall "WMobileKit"; sleep 2
     echo "Going to kill Simulator"
-    killall Simulator; sleep 2
+    killall Simulator
+    # Ensure it's dead
+    while [ $? -ne 1 ]; do
+        sleep 3; killall Simulator
+    done
     xcrun simctl erase all
 }
 
@@ -47,17 +50,15 @@ function archive_code_coverage {
 clean_previous_build
 echo
 echo "Starting iPad Retina Simulator."
-open -a Simulator; sleep 2
 run_unit_tests "iPad Retina"
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
 echo
 echo "Starting iPhone 5 Simulator."
-open -a Simulator; sleep 2
 run_unit_tests "iPhone 5"
 
-# Clean up and ensure the sim is killed 
+# Clean up and ensure the sim is killed
 clean_previous_build
 
 echo

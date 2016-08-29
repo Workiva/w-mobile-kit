@@ -46,7 +46,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.bottom.equalTo(view)
         }
 
-        let userLogo = WUserLogoView(name1)
+        let userLogo = WUserLogoView(name: name1)
         userLogo.initialsLimit = 2
         scrollView.addSubview(userLogo)
         userLogo.snp_makeConstraints { (make) in
@@ -67,7 +67,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo2 = WUserLogoView(name2)
+        let userLogo2 = WUserLogoView(name: name2)
         scrollView.addSubview(userLogo2)
         userLogo2.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -87,7 +87,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo3 = WUserLogoView(name3)
+        let userLogo3 = WUserLogoView(name: name3)
         scrollView.addSubview(userLogo3)
         userLogo3.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -107,7 +107,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo4 = WUserLogoView(name4)
+        let userLogo4 = WUserLogoView(name: name4)
         userLogo4.initialsLimit = 2
         userLogo4.initials = "AS"
         scrollView.addSubview(userLogo4)
@@ -129,7 +129,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo5 = WUserLogoView(name5)
+        let userLogo5 = WUserLogoView(name: name5)
         scrollView.addSubview(userLogo5)
         userLogo5.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -149,7 +149,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo6 = WUserLogoView(name6)
+        let userLogo6 = WUserLogoView(name: name6)
         userLogo6.initialsLimit = 2
         scrollView.addSubview(userLogo6)
         userLogo6.snp_makeConstraints { (make) in
@@ -169,7 +169,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(0)
         }
 
-        let userLogo7 = WUserLogoView(name7)
+        let userLogo7 = WUserLogoView(name: name7)
         scrollView.addSubview(userLogo7)
         userLogo7.snp_makeConstraints { (make) in
             make.centerX.equalTo(userLogo6)
@@ -188,7 +188,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo8 = WUserLogoView(name8)
+        let userLogo8 = WUserLogoView(name: name8)
         userLogo8.initialsLimit = 1
         scrollView.addSubview(userLogo8)
         userLogo8.snp_makeConstraints { (make) in
@@ -208,7 +208,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo9 = WUserLogoView(name9)
+        let userLogo9 = WUserLogoView(name: name9)
         userLogo9.initialsLimit = 1
         scrollView.addSubview(userLogo9)
         userLogo9.snp_makeConstraints { (make) in
@@ -228,7 +228,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo10 = WUserLogoView(name10)
+        let userLogo10 = WUserLogoView(name: name10)
         userLogo10.initialsLimit = 1
         scrollView.addSubview(userLogo10)
         userLogo10.snp_makeConstraints { (make) in
@@ -248,7 +248,7 @@ public class UserLogoViewExamplesVC: WSideMenuContentVC {
             make.height.equalTo(20)
         }
 
-        let userLogo11 = WUserLogoView(name11)
+        let userLogo11 = WUserLogoView(name: name11)
         userLogo11.initialsLimit = 2
         userLogo11.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
         userLogo11.lineWidth = 2
