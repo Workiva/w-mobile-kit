@@ -213,9 +213,9 @@ public class WSideMenuVC: WSizeVC {
                 leftSideMenuContainerView.center.x = newCenter
                 recognizer.setTranslation(CGPointZero, inView: view)
             case .Ended:
-                // If the drawer has animated more than half way, open it
-                let x = abs(leftSideMenuContainerView.frame.origin.x)                
+                let x = abs(leftSideMenuContainerView.frame.origin.x)
                 
+                // If the drawer has animated out past the threshold, open it
                 if (x < width * options!.autoOpenThreshold) {
                     openSideMenu()
                 } else {
