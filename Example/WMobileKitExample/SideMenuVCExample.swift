@@ -26,6 +26,7 @@ class SideMenuVCExample: WSideMenuVC {
         var menuOptions = WSideMenuOptions()
         menuOptions.menuWidth = (UIDevice.currentDevice().userInterfaceIdiom == .Pad) ? 320 : 300
         menuOptions.drawerIcon = UIImage(named: "drawer")
+        menuOptions.swipeToOpen = true
         options = menuOptions
 
         let leftMenu = mainStoryboard.instantiateViewControllerWithIdentifier("LeftMenu") as! LeftMenuTVCExample

@@ -31,7 +31,10 @@ public struct WSideMenuOptions {
     public init(){}
 
     // Default WSideMenu options, change before calling super.viewDidLoad()
-    public var menuWidth = 300.0
+    public var menuWidth: CGFloat = 300.0
+    public var swipeToOpen = false
+    public var swipeToOpenThreshold: CGFloat = 0.33
+    public var autoOpenThreshold: CGFloat = 0.5
     public var useBlur = true
     public var showAboveStatusBar = true
     public var menuAnimationDuration = 0.3
@@ -126,6 +129,11 @@ public class WSideMenuVC: WSizeVC {
                                                                  action: #selector(WSideMenuVC.backgroundWasTapped(_:)))
             backgroundTapView.hidden = true
             backgroundTapView.addGestureRecognizer(backgroundTapRecognizer)
+            
+            if (options!.swipeToOpen) {
+                let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(WSideMenuVC.didPan(_:)))
+                view.addGestureRecognizer(panGestureRecognizer)
+            }
 
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
             
@@ -172,6 +180,54 @@ public class WSideMenuVC: WSizeVC {
         }
     }
     
+    public func didPan(recognizer: UIPanGestureRecognizer) {
+        let isMovingRight = recognizer.velocityInView(view).x > 0
+        let location = recognizer.locationInView(view).x
+        let translation = recognizer.translationInView(view).x
+        let width = options!.menuWidth
+        
+        switch recognizer.state {
+            case .Began:
+                if (menuState == .Closed) {
+                    if (isMovingRight) {
+                        // If the menu is closed only start to open if the touch began on the specified threshold
+                        if (location > view.frame.width * options!.swipeToOpenThreshold) {
+                            recognizer.enabled = false
+                        } else {
+                            if options!.showAboveStatusBar {
+                                hideStatusBar(true)
+                            }
+                        }
+                    }
+                } else {
+                    // A leftswipe anywhere outside the menu will start to close the menu
+                    if (!isMovingRight && location < width) {
+                        recognizer.enabled = false
+                    }
+                }
+            case .Changed:
+                // Do not allow the translation to go past the width of the menu
+                let newCenter = (leftSideMenuContainerView.center.x + translation < width / 2) ?
+                    leftSideMenuContainerView.center.x + translation : width / 2
+                
+                leftSideMenuContainerView.center.x = newCenter
+                recognizer.setTranslation(CGPointZero, inView: view)
+            case .Ended:
+                // If the drawer has animated more than half way, open it
+                let x = abs(leftSideMenuContainerView.frame.origin.x)                
+                
+                if (x < width * options!.autoOpenThreshold) {
+                    openSideMenu()
+                } else {
+                    closeSideMenu()
+                }
+            case .Cancelled:
+                recognizer.enabled = true
+            default:
+                break
+        }
+    }
+    
     public func changeMainViewController(newMainViewController: UIViewController) {
         // Swaps out main view controller
         removeViewControllerFromContainer(mainViewController)
@@ -196,6 +252,16 @@ public class WSideMenuVC: WSizeVC {
             closeSideMenu()
         }
     }
+    
+    public func hideStatusBar(hide: Bool) {
+        statusBarHidden = hide
+        
+        if (hide) {
+            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
+        } else {
+            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelNormal
+        }
+    }
 
     public func openSideMenu() {
         if (delegate?.sideMenuShouldOpenSideMenu?() == false) {
@@ -212,11 +278,9 @@ public class WSideMenuVC: WSizeVC {
         }
 
         delegate?.sideMenuWillOpen?()
-
-        statusBarHidden = true
         
         if options!.showAboveStatusBar {
-            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
+            hideStatusBar(true)
         }
         
         UIView.animateWithDuration(options!.menuAnimationDuration,
@@ -243,8 +307,6 @@ public class WSideMenuVC: WSizeVC {
 
         delegate?.sideMenuWillClose?()
 
-        statusBarHidden = false
-
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
@@ -252,7 +314,7 @@ public class WSideMenuVC: WSizeVC {
             },
             completion: { finished in
                 if self.options!.showAboveStatusBar {
-                    UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelNormal
+                    self.hideStatusBar(false)
                 }
                 
                 self.menuState = .Closed
