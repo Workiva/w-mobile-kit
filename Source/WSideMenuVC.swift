@@ -36,6 +36,7 @@ public struct WSideMenuOptions {
     public var swipeToOpenThreshold: CGFloat = 0.33
     public var autoOpenThreshold: CGFloat = 0.5
     public var useBlur = true
+    public var shadowOpacity: Float = 0.3
     public var showAboveStatusBar = true
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
@@ -212,6 +213,10 @@ public class WSideMenuVC: WSizeVC {
                 
                 leftSideMenuContainerView.center.x = newCenter
                 recognizer.setTranslation(CGPointZero, inView: view)
+                
+                // animate the shadow based on the percentage the drawer has animated in
+                let percentageMoved = 1 - (abs(leftSideMenuContainerView.frame.origin.x) / width)
+                leftSideMenuContainerView.layer.shadowOpacity = Float(percentageMoved) * options!.shadowOpacity            
             case .Ended:
                 let x = abs(leftSideMenuContainerView.frame.origin.x)
                 
@@ -286,7 +291,7 @@ public class WSideMenuVC: WSizeVC {
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
-                self.leftSideMenuContainerView.layer.shadowOpacity = 0.3
+                self.leftSideMenuContainerView.layer.shadowOpacity = self.options!.shadowOpacity
             },
             completion: { finished in
                 self.menuState = .Open
