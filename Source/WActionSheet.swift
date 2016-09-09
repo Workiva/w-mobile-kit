@@ -44,6 +44,9 @@ internal protocol WBaseActionSheetDelegate: class {
     func setSelectedAction(index: Int)
 }
 
+// This view controller manages the status bar for the UIWindow that is created by
+//   the properties of the status bar from the view controller presenting it
+//   as it is the root view controller of the window
 class WActionSheetStatusBarController: UIViewController {
     var previousStatusBarStyle: UIStatusBarStyle?
     var previousStatusBarHidden: Bool?
