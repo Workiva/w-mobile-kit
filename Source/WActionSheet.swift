@@ -44,6 +44,22 @@ internal protocol WBaseActionSheetDelegate: class {
     func setSelectedAction(index: Int)
 }
 
+// This view controller manages the status bar for the UIWindow that is created by
+//   the properties of the status bar from the view controller presenting it
+//   as it is the root view controller of the window
+class WActionSheetStatusBarController: UIViewController {
+    var previousStatusBarStyle: UIStatusBarStyle?
+    var previousStatusBarHidden: Bool?
+
+    override func prefersStatusBarHidden() -> Bool {
+        return previousStatusBarHidden == nil ? false : previousStatusBarHidden!
+    }
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return previousStatusBarStyle == nil ? .Default : previousStatusBarStyle!
+    }
+}
+
 public class WBaseActionSheet<ActionDataType>: UIViewController {
     public var presentingWindow: UIWindow? = UIWindow(frame: UIScreen.mainScreen().bounds)
 
@@ -54,8 +70,17 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
     internal weak var delegate: WBaseActionSheetDelegate!
 
-    var previousStatusBarStyle: UIStatusBarStyle?
-    var previousStatusBarHidden: Bool?
+    var statusBarStyleController = WActionSheetStatusBarController()
+    var previousStatusBarStyle: UIStatusBarStyle? {
+        didSet {
+            statusBarStyleController.previousStatusBarStyle = previousStatusBarStyle
+        }
+    }
+    var previousStatusBarHidden: Bool? {
+        didSet {
+            statusBarStyleController.previousStatusBarHidden = previousStatusBarHidden
+        }
+    }
 
     // An optional completion handler to store in case an action is tapped while the action sheet is already dismissing
     var completionToHandle: (() -> Void)?
@@ -73,14 +98,6 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
     public convenience init() {
         self.init(nibName: nil, bundle: nil)
-    }
-
-    public override func prefersStatusBarHidden() -> Bool {
-        return previousStatusBarHidden == nil ? false : previousStatusBarHidden!
-    }
-
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return previousStatusBarStyle == nil ? .Default : previousStatusBarStyle!
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -137,11 +154,13 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
     }
 
     public func commonInit() {
+        statusBarStyleController.view.userInteractionEnabled = false
+
         view.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.0)
 
         presentingWindow?.windowLevel = UIWindowLevelStatusBar + 1
         presentingWindow?.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.0)
-        presentingWindow?.rootViewController = self
+        presentingWindow?.rootViewController = statusBarStyleController
         presentingWindow?.hidden = true
 
         presentingWindow?.addSubview(tapRecognizerView)

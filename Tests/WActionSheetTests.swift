@@ -129,15 +129,15 @@ class WActionSheetSpec: QuickSpec {
                     subject.previousStatusBarStyle = .LightContent
                     subject.previousStatusBarHidden = true
                     
-                    expect(subject.prefersStatusBarHidden()) == true
-                    expect(subject.preferredStatusBarStyle()) == UIStatusBarStyle.LightContent
+                    expect(subject.statusBarStyleController.prefersStatusBarHidden()) == true
+                    expect(subject.statusBarStyleController.preferredStatusBarStyle()) == UIStatusBarStyle.LightContent
                 }
                 
                 it("should set window and subview properties correctly") {
                     expect(subject.presentingWindow).toNot(beNil())
                     expect(subject.presentingWindow!.hidden) == false
                     expect(subject.presentingWindow!.windowLevel) == UIWindowLevelStatusBar + 1
-                    expect(subject.presentingWindow!.rootViewController) == subject
+                    expect(subject.presentingWindow!.rootViewController) == subject.statusBarStyleController
                     
                     expect(subject.tapRecognizerView.backgroundColor) == UIColor.blackColor().colorWithAlphaComponent(0.4)
                     expect(subject.tapRecognizerView.gestureRecognizers?.count) == 1
