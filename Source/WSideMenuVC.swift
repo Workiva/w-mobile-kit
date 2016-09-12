@@ -31,11 +31,15 @@ public struct WSideMenuOptions {
     public init(){}
 
     // Default WSideMenu options, change before calling super.viewDidLoad()
-    public var menuWidth = 300.0
+    public var menuWidth: CGFloat = 300.0
+    public var swipeToOpen = false
+    public var swipeToOpenThreshold: CGFloat = 0.33
+    public var autoOpenThreshold: CGFloat = 0.5
     public var useBlur = true
     public var showAboveStatusBar = true
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
+    public var backgroundOpacity: CGFloat = 0.4
     public var statusBarStyle: UIStatusBarStyle = .LightContent
     public var drawerBorderColor: UIColor = .lightGrayColor()
     public var drawerIcon: UIImage?
@@ -126,6 +130,11 @@ public class WSideMenuVC: WSizeVC {
                                                                  action: #selector(WSideMenuVC.backgroundWasTapped(_:)))
             backgroundTapView.hidden = true
             backgroundTapView.addGestureRecognizer(backgroundTapRecognizer)
+            
+            if (options!.swipeToOpen) {
+                let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(WSideMenuVC.didPan(_:)))
+                view.addGestureRecognizer(panGestureRecognizer)
+            }
 
             addViewControllerToContainer(mainContainerView, viewController: mainViewController)
             
@@ -158,17 +167,67 @@ public class WSideMenuVC: WSizeVC {
                     make.top.equalTo(leftSideMenuContainerView)
                     make.width.equalTo(1)
                 }
-
-                // Add leftSideMenuVc as a sub view of the blurView.contentView
-                // The blur only blurs views under it and nothing in the contentView
-                addViewControllerToContainer(blurView.contentView, viewController: leftSideMenuViewController)
-            } else {
-                addViewControllerToContainer(leftSideMenuContainerView, viewController: leftSideMenuViewController)
             }
             
-            leftSideMenuContainerView.layer.masksToBounds = false
-            leftSideMenuContainerView.layer.shadowOffset = CGSizeMake(5, 0);
-            leftSideMenuContainerView.layer.shadowRadius = 3
+            addViewControllerToContainer(leftSideMenuContainerView, viewController: leftSideMenuViewController)
+        }
+    }
+    
+    public func didPan(recognizer: UIPanGestureRecognizer) {
+        let velocity = recognizer.velocityInView(view)
+        let isMovingRight = velocity.x > 0
+        let location = recognizer.locationInView(view).x
+        let translation = recognizer.translationInView(view).x
+        let width = options!.menuWidth
+        
+        switch recognizer.state {
+            case .Began:
+                if (delegate?.sideMenuShouldOpenSideMenu?() == false) {
+                    recognizer.enabled = false
+                    return
+                }
+                
+                if (menuState == .Closed) {
+                    if (isMovingRight) {
+                        // If the menu is closed only start to open if the touch began on the specified threshold
+                        if (location > view.frame.width * options!.swipeToOpenThreshold) {
+                            recognizer.enabled = false
+                        } else {
+                            if options!.showAboveStatusBar {
+                                hideStatusBar(true)
+                            }
+                            backgroundTapView.hidden = false
+                        }
+                    }
+                } else {
+                    // A leftswipe anywhere outside the menu will start to close the menu
+                    if (!isMovingRight && location < width) {
+                        recognizer.enabled = false
+                    }
+                }
+            case .Changed:
+                // Do not allow the translation to go past the width of the menu
+                let newCenter = (leftSideMenuContainerView.center.x + translation < width / 2) ?
+                    leftSideMenuContainerView.center.x + translation : width / 2
+                
+                leftSideMenuContainerView.center.x = newCenter
+                recognizer.setTranslation(CGPointZero, inView: view)
+                
+                // animate the shadow based on the percentage the drawer has animated in
+                backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(percentageMoved() * options!.backgroundOpacity)
+            case .Ended:
+                let x = abs(leftSideMenuContainerView.frame.origin.x)
+                
+                // If the drawer has animated out past the threshold, open it
+                if (x < width * options!.autoOpenThreshold) {
+                    openSideMenu()
+                } else {
+                    closeSideMenu()
+                }
+            case .Cancelled:
+                recognizer.enabled = true
+            default:
+                break
         }
     }
     
@@ -196,6 +255,22 @@ public class WSideMenuVC: WSizeVC {
             closeSideMenu()
         }
     }
+    
+    public func hideStatusBar(hide: Bool) {
+        statusBarHidden = hide
+        
+        if let window = UIApplication.sharedApplication().delegate?.window {
+            window?.windowLevel = hide ? UIWindowLevelStatusBar : UIWindowLevelNormal            
+        }
+    }
+    
+    public func percentageMoved() -> CGFloat {
+        if let width = options?.menuWidth {
+            return 1 - (abs(leftSideMenuContainerView.frame.origin.x) / width)
+        }
+        
+        return 0
+    }
 
     public func openSideMenu() {
         if (delegate?.sideMenuShouldOpenSideMenu?() == false) {
@@ -205,58 +280,60 @@ public class WSideMenuVC: WSizeVC {
         // Enable the tap outside the drawer to close on when side menu is open
         backgroundTapView.hidden = false
 
-        leftSideMenuContainerView.snp_remakeConstraints { (make) in
-            make.height.equalTo(view)
-            make.width.equalTo(options!.menuWidth)
-            make.left.equalTo(view)
-        }
-
         delegate?.sideMenuWillOpen?()
-
-        statusBarHidden = true
         
         if options!.showAboveStatusBar {
-            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
+            hideStatusBar(true)
         }
+        
+        let newCenterX = options!.menuWidth / 2
         
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
-                self.view.layoutIfNeeded()
-                self.leftSideMenuContainerView.layer.shadowOpacity = 0.3
+                self.leftSideMenuContainerView.center.x = newCenterX
+                self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(self.options!.backgroundOpacity)
             },
             completion: { finished in
                 self.menuState = .Open
                 self.delegate?.sideMenuDidOpen?()
+                
+                self.leftSideMenuContainerView.snp_remakeConstraints { (make) in
+                    make.height.equalTo(self.view)
+                    make.width.equalTo(self.options!.menuWidth)
+                    make.left.equalTo(self.view)
+                }
             }
         )
     }
 
     public func closeSideMenu() {
-        // Disable the tap outside the drawer to close
-        backgroundTapView.hidden = true
-
-        leftSideMenuContainerView.snp_remakeConstraints { (make) in
-            make.height.equalTo(view)
-            make.width.equalTo(options!.menuWidth)
-            make.right.equalTo(view.snp_left)
-        }
-
         delegate?.sideMenuWillClose?()
-
-        statusBarHidden = false
+        
+        let newCenterX = -self.options!.menuWidth / 2
 
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
-                self.view.layoutIfNeeded()
-                self.leftSideMenuContainerView.layer.shadowOpacity = 0
+                self.leftSideMenuContainerView.center.x = newCenterX
+                self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
             },
             completion: { finished in
                 if self.options!.showAboveStatusBar {
-                    UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelNormal
+                    self.hideStatusBar(false)
                 }
                 
                 self.menuState = .Closed
                 self.delegate?.sideMenuDidClose?()
+                
+                // Disable the tap outside the drawer to close
+                self.backgroundTapView.hidden = true
+                
+                self.leftSideMenuContainerView.snp_remakeConstraints { (make) in
+                    make.height.equalTo(self.view)
+                    make.width.equalTo(self.options!.menuWidth)
+                    make.right.equalTo(self.view.snp_left)
+                }
+                
+                self.view.layoutIfNeeded()
             }
         )
     }
