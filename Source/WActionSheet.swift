@@ -105,20 +105,10 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
 
         checkForPresentingWindow()
 
-        if let presentingVC = presentationController?.presentingViewController {
-            //if let navVC = presentingVC.navigationController {
-            //    previousStatusBarHidden = navVC.prefersStatusBarHidden()
-            //    previousStatusBarStyle = navVC.preferredStatusBarStyle()
-            //} else {
-            //    previousStatusBarHidden = presentingVC.prefersStatusBarHidden()
-            //    previousStatusBarStyle = presentingVC.preferredStatusBarStyle()
-            //}
+        previousStatusBarHidden = UIApplication.sharedApplication().statusBarHidden
+        previousStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
 
-            previousStatusBarHidden = UIApplication.sharedApplication().statusBarHidden
-            previousStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
-
-            setNeedsStatusBarAppearanceUpdate()
-        }
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     public override func viewDidDisappear(animated: Bool) {

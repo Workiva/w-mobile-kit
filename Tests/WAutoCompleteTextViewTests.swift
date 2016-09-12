@@ -115,7 +115,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
                     
-                    expect(autoCompleteView.frame.origin.y).toEventually(equal(autoCompleteView.superview!.frame.size.height - autoCompleteView.frame.size.height), timeout: 0.3)
+                    expect(autoCompleteView.frame.origin.y).toEventually(beCloseTo(autoCompleteView.superview!.frame.size.height - autoCompleteView.frame.size.height, within: 0.1), timeout: 0.3)
                 }
                 
                 it("should remove as observer when deinit") {
