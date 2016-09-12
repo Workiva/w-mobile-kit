@@ -257,13 +257,9 @@ public class WSideMenuVC: WSizeVC {
     }
     
     public func hideStatusBar(hide: Bool) {
-        statusBarHidden = hide
-        
-        if (hide) {
-            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelStatusBar
-        } else {
-            UIApplication.sharedApplication().delegate?.window!!.windowLevel = UIWindowLevelNormal
-        }
+        if let window = UIApplication.sharedApplication().delegate?.window {
+            window?.windowLevel = hide ? UIWindowLevelStatusBar : UIWindowLevelNormal
+        }                
     }
     
     public func percentageMoved() -> CGFloat {
