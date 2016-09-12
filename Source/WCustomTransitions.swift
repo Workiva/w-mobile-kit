@@ -45,10 +45,11 @@ public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransit
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         // If the reference to these views does not exist, we cannot animate a transition.
         guard let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey),
-            let container = transitionContext.containerView(),
             let toView = transitionContext.viewForKey(UITransitionContextToViewKey) else {
                 return
         }
+
+        let container = transitionContext.containerView()
 
         // Transforms we will use in the animations.
         let fromOffScreenOnRight = CGAffineTransformMakeTranslation(container.frame.width, 0)

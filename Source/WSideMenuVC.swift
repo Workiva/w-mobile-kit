@@ -239,14 +239,6 @@ public class WSideMenuVC: WSizeVC {
         view.layoutIfNeeded()
     }
     
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        if let options = options {
-            return options.statusBarStyle
-        } else {
-            return .Default
-        }
-    }
-
     public func toggleSideMenu() {
         switch menuState {
         case .Closed:

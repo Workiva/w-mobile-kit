@@ -2,7 +2,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 def common_pods
-  pod 'SnapKit', '0.20.0'
+  pod 'SnapKit', '0.22.0'
   pod 'CryptoSwift', '0.4'
   pod 'SDWebImage', '3.8'
 end
