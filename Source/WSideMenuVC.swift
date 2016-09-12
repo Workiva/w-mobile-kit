@@ -111,7 +111,7 @@ public class WSideMenuVC: WSizeVC {
         }
 
         backgroundTapView.snp_makeConstraints { (make) in
-            make.left.equalTo(view)
+            make.left.equalTo(leftSideMenuContainerView.snp_right)
             make.top.equalTo(view)
             make.right.equalTo(view)
             make.bottom.equalTo(view)
@@ -206,12 +206,18 @@ public class WSideMenuVC: WSizeVC {
                     }
                 }
             case .Changed:
-                // Do not allow the translation to go past the width of the menu
-                let newCenter = (leftSideMenuContainerView.center.x + translation < width / 2) ?
-                    leftSideMenuContainerView.center.x + translation : width / 2
+                leftSideMenuContainerView.snp_remakeConstraints { (make) in
+                    if (menuState == .Closed) {
+                        make.right.equalTo(view.snp_left).offset(min(translation, width))
+                    } else {
+                        make.left.equalTo(view).offset(min(translation, 0))
+                    }
+                    
+                    make.height.equalTo(view)
+                    make.width.equalTo(width)
+                }
                 
-                leftSideMenuContainerView.center.x = newCenter
-                recognizer.setTranslation(CGPointZero, inView: view)
+                view.layoutIfNeeded()
                 
                 // animate the shadow based on the percentage the drawer has animated in
                 backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(percentageMoved() * options!.backgroundOpacity)
@@ -286,22 +292,20 @@ public class WSideMenuVC: WSizeVC {
             hideStatusBar(true)
         }
         
-        let newCenterX = options!.menuWidth / 2
+        leftSideMenuContainerView.snp_remakeConstraints { (make) in
+            make.height.equalTo(self.view)
+            make.width.equalTo(self.options!.menuWidth)
+            make.left.equalTo(self.view)
+        }
         
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
-                self.leftSideMenuContainerView.center.x = newCenterX
+                self.view.layoutIfNeeded()
                 self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(self.options!.backgroundOpacity)
             },
             completion: { finished in
                 self.menuState = .Open
                 self.delegate?.sideMenuDidOpen?()
-                
-                self.leftSideMenuContainerView.snp_remakeConstraints { (make) in
-                    make.height.equalTo(self.view)
-                    make.width.equalTo(self.options!.menuWidth)
-                    make.left.equalTo(self.view)
-                }
             }
         )
     }
@@ -309,11 +313,15 @@ public class WSideMenuVC: WSizeVC {
     public func closeSideMenu() {
         delegate?.sideMenuWillClose?()
         
-        let newCenterX = -self.options!.menuWidth / 2
+        leftSideMenuContainerView.snp_remakeConstraints { (make) in
+            make.height.equalTo(self.view)
+            make.width.equalTo(self.options!.menuWidth)
+            make.right.equalTo(self.view.snp_left)
+        }
 
         UIView.animateWithDuration(options!.menuAnimationDuration,
             animations: {
-                self.leftSideMenuContainerView.center.x = newCenterX
+                self.view.layoutIfNeeded()
                 self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
             },
             completion: { finished in
@@ -326,14 +334,6 @@ public class WSideMenuVC: WSizeVC {
                 
                 // Disable the tap outside the drawer to close
                 self.backgroundTapView.hidden = true
-                
-                self.leftSideMenuContainerView.snp_remakeConstraints { (make) in
-                    make.height.equalTo(self.view)
-                    make.width.equalTo(self.options!.menuWidth)
-                    make.right.equalTo(self.view.snp_left)
-                }
-                
-                self.view.layoutIfNeeded()
             }
         )
     }
