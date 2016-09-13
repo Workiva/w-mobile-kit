@@ -44,6 +44,12 @@ function archive_code_coverage {
     zip -r -X code_coverage/coverage.zip xcov
 }
 
+# Verify library status
+pod lib lint WMobileKit.podspec --allow-warnings
+if [ $? -ne 0 ]; then
+  print_error "ERROR: Library check failed. Verify WMobileKit.podspec."
+fi
+
 ./build.sh
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.

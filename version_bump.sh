@@ -1,4 +1,5 @@
 #!/bin/sh
+source core.sh
 
 function usage {
     echo "${underline}${bold}Usage${normal}"
@@ -10,9 +11,7 @@ function usage {
 
 # Usage: updateVersion $arg1 $arg2
 function updateVersion {
-    echo
-    echo "Updating version from $1 to $2"
-    echo
+    print_heading "Updating version from $1 to $2"
     # Spaces are necessary
     sed -i "" -E "s/s.version          = '$1'/s.version          = '$2'/g" WMobileKit.podspec
 
@@ -22,9 +21,7 @@ function updateVersion {
 }
 
 function updatePods {
-    echo
-    echo "Updating Pods for new version"
-    echo
+    print_heading "Updating Pods for new version"
     ./setup.sh
 }
 
