@@ -165,7 +165,6 @@ public class WBaseActionSheet<ActionDataType>: UIViewController {
             tapRecognizerView.addGestureRecognizer(darkViewRecognizer)
         }
 
-        // Do not use #selector here, causes issue with iPhone 4S
         cancelButton.addTarget(self, action: animateOutSelector, forControlEvents: .TouchUpInside)
         cancelButton.tintColor = .lightGrayColor()
 
