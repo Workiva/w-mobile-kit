@@ -81,7 +81,7 @@ class WCustomTransitioningContext: NSObject, UIViewControllerContextTransitionin
     let cView = UIView()
     let firstVC = UIViewController()
 
-    func containerView() -> UIView? {
+    func containerView() -> UIView {
         return cView
     }
 
@@ -128,4 +128,6 @@ class WCustomTransitioningContext: NSObject, UIViewControllerContextTransitionin
     func targetTransform() -> CGAffineTransform {
         return CGAffineTransformMake(0, 0, 0, 0, 0, 0)
     }
+
+    func pauseInteractiveTransition() { }
 }

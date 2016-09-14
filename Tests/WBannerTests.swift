@@ -183,7 +183,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha1))
 
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
+                    expect(bannerView.bodyMessageLabel.numberOfLines) == 1
 
                     // default settings from commonInit
                     verifyCommonInit()
@@ -230,7 +230,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.backgroundView).toNot(beNil())
                     expect(roundAlpha(bannerView.backgroundView.alpha)).to(equal(alpha2))
 
-                    expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
+                    expect(bannerView.bodyMessageLabel.numberOfLines) == 1
 
                     // default settings from commonInit
                     verifyCommonInit()

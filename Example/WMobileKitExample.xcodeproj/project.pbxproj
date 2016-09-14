@@ -176,12 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "WMobileKitExample" */;
 			buildPhases = (
-				98A5CCD15F7D28C68E4CCA77 /* 📦 Check Pods Manifest.lock */,
+				98A5CCD15F7D28C68E4CCA77 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				8FC73EFBB362335A5F128DBD /* 📦 Embed Pods Frameworks */,
-				49E7A25303633E37FE83C756 /* 📦 Copy Pods Resources */,
+				8FC73EFBB362335A5F128DBD /* [CP] Embed Pods Frameworks */,
+				49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -204,6 +204,8 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5ZF66U48UD;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -239,14 +241,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		49E7A25303633E37FE83C756 /* 📦 Copy Pods Resources */ = {
+		49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,14 +256,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8FC73EFBB362335A5F128DBD /* 📦 Embed Pods Frameworks */ = {
+		8FC73EFBB362335A5F128DBD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,19 +271,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		98A5CCD15F7D28C68E4CCA77 /* 📦 Check Pods Manifest.lock */ = {
+		98A5CCD15F7D28C68E4CCA77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -420,13 +422,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5ZF66U48UD;
 				INFOPLIST_FILE = "$(SRCROOT)/WMobileKitExample/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WMobileKitExample_Example;
 				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -437,12 +442,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5ZF66U48UD;
 				INFOPLIST_FILE = "$(SRCROOT)/WMobileKitExample/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WMobileKitExample_Example;
 				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
