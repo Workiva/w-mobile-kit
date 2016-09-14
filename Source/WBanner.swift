@@ -230,7 +230,7 @@ public class WBannerView: UIView {
             if (titleIconImageView.image != nil) {
                 make.left.equalTo(titleIconImageView.snp_right).offset(6)
             } else {
-                make.left.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
+                make.left.equalTo(self).offset(BANNER_DEFAULT_RIGHT_PADDING)
             }
 
             if (rightIconImageView.image != nil) {

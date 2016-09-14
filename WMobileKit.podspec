@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WMobileKit'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Swift library containing various custom UI components to provide functionality outside of the default libraries.'
   s.license          = { :type => 'Apache', :file => 'LICENSE' }
   s.homepage         = 'https://github.com/Workiva/w-mobile-kit'
