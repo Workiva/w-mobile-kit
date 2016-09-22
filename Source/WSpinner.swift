@@ -198,10 +198,6 @@ public class WSpinner: UIControl {
         progressLayer.path = circlePath(false)
     }
 
-    public func degressToRadians(degress: CGFloat) -> CGFloat {
-        return (CGFloat(M_PI) * degress) / CGFloat(180)
-    }
-
     private func circlePath(backgroundPath: Bool) -> CGPath {
         let isClockwise = direction == .Clockwise
         let startAngle = CGFloat(3 * M_PI / 2)
