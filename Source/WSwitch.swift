@@ -24,13 +24,13 @@ public class WSwitch: UIControl {
     public var barView = WSwitchBarView()
     public var backCircle = WSwitchOutlineCircleView()
     public var frontCircle = UIView()
-    
+
     public var barWidth: CGFloat = 44.0 {
         didSet {
             setupUI()
         }
     }
-    
+
     public var barHeight: CGFloat = 12.0 {
         didSet {
             setupUI()
@@ -42,49 +42,55 @@ public class WSwitch: UIControl {
             setupUI()
         }
     }
-    
+
+    /** Controls whether or not the .ValueChanged event is sent. Used when programmatically
+     toggling the switch. */
+    private var shouldSendActionEvent = true
+
     public var on: Bool = false {
         didSet {
             if (oldValue != on) {
                 setupUI()
-                sendActionsForControlEvents(.ValueChanged)
+                if (shouldSendActionEvent) {
+                    sendActionsForControlEvents(.ValueChanged)
+                }
             }
         }
     }
 
-    // Threshold for touch up events registering
+    /// Threshold for touch up events registering
     public var touchThreshold: CGFloat = 25.0
-    
+
     private var animatedFlag = false
     internal var didSlideSwitch = false
     internal var didCommonInit = false
     internal var pressRecognizer: UILongPressGestureRecognizer!
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         commonInit()
         setupUI()
     }
-    
+
     public override init(frame: CGRect) {
         let newFrame = CGRect(origin: frame.origin, size: CGSize(width: barWidth, height: circleRadius * 2))
         super.init(frame: newFrame)
-        
+
         commonInit()
         setupUI()
     }
-    
+
     public convenience init(_ on: Bool) {
         self.init(frame: CGRectZero)
-        
+
         self.on = on
         setupUI()
     }
-    
+
     public convenience init() {
         self.init(true)
-        
+
         setupUI()
     }
 
@@ -96,7 +102,7 @@ public class WSwitch: UIControl {
 
         addSubview(frontCircle)
         frontCircle.backgroundColor = .whiteColor()
-        
+
         pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WSwitch.switchWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
         addGestureRecognizer(pressRecognizer)
@@ -108,7 +114,7 @@ public class WSwitch: UIControl {
         if (!didCommonInit) {
             return
         }
-        
+
         barView.snp_remakeConstraints { make in
             make.width.equalTo(barWidth)
             make.centerX.equalTo(self)
@@ -122,7 +128,7 @@ public class WSwitch: UIControl {
             } else {
                 make.left.equalTo(barView)
             }
-            
+
             make.centerY.equalTo(self)
             make.height.equalTo(circleRadius * 2)
             make.width.equalTo(circleRadius * 2)
@@ -134,7 +140,7 @@ public class WSwitch: UIControl {
             make.height.equalTo(backCircle).offset(-2)
             make.width.equalTo(backCircle).offset(-2)
         }
-        
+
         let startingBlock = {
             self.frontCircle.alpha = self.on ? 1.0 : 0.0
         }
@@ -152,28 +158,30 @@ public class WSwitch: UIControl {
             startingBlock()
             layoutIfNeeded()
         }
-        
+
         backCircle.clipsToBounds = true
         frontCircle.clipsToBounds = true
         barView.clipsToBounds = true
-        
+
         barView.layer.cornerRadius = barView.frame.size.height / 2
         backCircle.layer.cornerRadius = backCircle.frame.size.width / 2
         frontCircle.layer.cornerRadius = frontCircle.frame.size.width / 2
 
         invalidateIntrinsicContentSize()
     }
-    
-    public func setOn(on: Bool, animated: Bool) {
+
+    public func setOn(on: Bool, animated: Bool, triggerEvent: Bool = true) {
+        shouldSendActionEvent = triggerEvent
         animatedFlag = animated
         self.on = on
+        shouldSendActionEvent = true
     }
-    
+
     public func switchWasPressed(sender: UILongPressGestureRecognizer) {
         if (!enabled) {
             return
         }
-        
+
         switch sender.state {
         case .Began:
             frontCircle.alpha = 0.5
