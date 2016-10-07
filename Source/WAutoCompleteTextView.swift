@@ -315,6 +315,73 @@ public class WAutoCompleteTextView: UIView {
         }
     }
 
+    public func acceptAutoCompletionWithString(string: NSAttributedString) {
+        var replaceText = string
+
+        if let range = autoCompleteRange {
+            var selection = textView.selectedTextRange
+
+            if (!replacesControlPrefix) {
+                autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
+            }
+
+            if (addSpaceAfterReplacement) {
+                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
+                    let attributedSuffix = NSMutableAttributedString(string: " ")
+
+                    attributedSuffix.addAttribute(NSFontAttributeName,
+                                                  value: textView.font,
+                                                  range: NSRange(
+                                                    location:0,
+                                                    length:attributedSuffix.length))
+
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                                                  value: textView.textColor,
+                                                  range: NSRange(
+                                                    location:0,
+                                                    length:attributedSuffix.length))
+
+                    mutableCopy.appendAttributedString(attributedSuffix)
+                    replaceText = mutableCopy
+                }
+            }
+
+            let currentText = textView.text
+
+            let location = currentText.startIndex.distanceTo(range.startIndex)
+            let length = range.startIndex.distanceTo(range.endIndex)
+            let ns = NSMakeRange(location, length)
+
+
+            if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
+                mutableCopy.replaceCharactersInRange(ns, withAttributedString: replaceText)
+
+                textView.attributedText = mutableCopy
+
+                let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
+
+                if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.length) {
+                    selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
+                    textView.selectedTextRange = selection
+                }
+            }
+
+        } else {
+            if (addSpaceAfterReplacement) {
+                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
+                    mutableCopy.appendAttributedString(NSAttributedString(string: " "))
+                    replaceText = mutableCopy
+                }
+            }
+            
+            if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
+                mutableCopy.appendAttributedString(replaceText)
+                textView.attributedText = mutableCopy
+            }
+        }
+    }
+
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }

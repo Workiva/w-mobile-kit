@@ -39,6 +39,12 @@ public class WTextView: UITextView, UITextViewDelegate {
             textDidChange()
         }
     }
+
+    override public var attributedText: NSAttributedString! {
+        didSet {
+            textDidChange()
+        }
+    }
         
     public var placeholderText: String = "" {
         didSet {
