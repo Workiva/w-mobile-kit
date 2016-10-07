@@ -286,37 +286,11 @@ public class WAutoCompleteTextView: UIView {
     }
 
     public func acceptAutoCompletionWithString(string: String) {
-        var replaceText = string
-
-        if let range = autoCompleteRange {
-            var selection = textView.selectedTextRange
-
-            if (!replacesControlPrefix) {
-                autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
-            }
-
-            if (addSpaceAfterReplacement) {
-                replaceText = replaceText.stringByAppendingString(" ")
-            }
-            textView.text?.replaceRange(autoCompleteRange!, with: replaceText)
-
-            let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
-
-            if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.characters.count) {
-                selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
-                textView.selectedTextRange = selection
-            }
-        } else {
-            if (addSpaceAfterReplacement) {
-                replaceText = replaceText.stringByAppendingString(" ")
-            }
-
-            textView.text = textView.text.stringByAppendingString(replaceText)
-        }
+        acceptAutoCompletionWithAttributedString(NSAttributedString(string: string))
     }
 
-    public func acceptAutoCompletionWithString(string: NSAttributedString) {
-        var replaceText = string
+    public func acceptAutoCompletionWithAttributedString(attributedString: NSAttributedString) {
+        var replaceText = attributedString
 
         if let range = autoCompleteRange {
             var selection = textView.selectedTextRange
@@ -330,13 +304,13 @@ public class WAutoCompleteTextView: UIView {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
                     attributedSuffix.addAttribute(NSFontAttributeName,
-                                                  value: textView.font,
+                                                  value: textView.font!,
                                                   range: NSRange(
                                                     location:0,
                                                     length:attributedSuffix.length))
 
                     attributedSuffix.addAttribute(NSForegroundColorAttributeName,
-                                                  value: textView.textColor,
+                                                  value: textView.textColor!,
                                                   range: NSRange(
                                                     location:0,
                                                     length:attributedSuffix.length))
