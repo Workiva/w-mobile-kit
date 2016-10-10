@@ -286,32 +286,69 @@ public class WAutoCompleteTextView: UIView {
     }
 
     public func acceptAutoCompletionWithString(string: String) {
-        var replaceText = string
+        acceptAutoCompletionWithAttributedString(NSAttributedString(string: string))
+    }
 
-        if let range = autoCompleteRange {
+    public func acceptAutoCompletionWithAttributedString(attributedString: NSAttributedString) {
+        var replaceText = attributedString
+
+        if var range = autoCompleteRange {
             var selection = textView.selectedTextRange
 
             if (!replacesControlPrefix) {
-                autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
+                range = range.startIndex.advancedBy(1)..<range.endIndex
             }
 
             if (addSpaceAfterReplacement) {
-                replaceText = replaceText.stringByAppendingString(" ")
-            }
-            textView.text?.replaceRange(autoCompleteRange!, with: replaceText)
+                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
+                    let attributedSuffix = NSMutableAttributedString(string: " ")
 
-            let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
+                    attributedSuffix.addAttribute(NSFontAttributeName,
+                        value: textView.font!,
+                        range: NSRange(location:0,
+                                length:attributedSuffix.length))
 
-            if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.characters.count) {
-                selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
-                textView.selectedTextRange = selection
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                        value: textView.textColor!,
+                        range: NSRange(location:0,
+                                length:attributedSuffix.length))
+
+                    mutableCopy.appendAttributedString(attributedSuffix)
+                    replaceText = mutableCopy
+                }
             }
+
+            let currentText = textView.text
+
+            let location = currentText.startIndex.distanceTo(range.startIndex)
+            let length = range.startIndex.distanceTo(range.endIndex)
+            let ns = NSMakeRange(location, length)
+
+            if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
+                mutableCopy.replaceCharactersInRange(ns, withAttributedString: replaceText)
+
+                textView.attributedText = mutableCopy
+
+                let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
+
+                if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.length) {
+                    selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
+                    textView.selectedTextRange = selection
+                }
+            }
+
         } else {
             if (addSpaceAfterReplacement) {
-                replaceText = replaceText.stringByAppendingString(" ")
+                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
+                    mutableCopy.appendAttributedString(NSAttributedString(string: " "))
+                    replaceText = mutableCopy
+                }
             }
-
-            textView.text = textView.text.stringByAppendingString(replaceText)
+            
+            if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
+                mutableCopy.appendAttributedString(replaceText)
+                textView.attributedText = mutableCopy
+            }
         }
     }
 
