@@ -304,16 +304,14 @@ public class WAutoCompleteTextView: UIView {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
                     attributedSuffix.addAttribute(NSFontAttributeName,
-                                                  value: textView.font!,
-                                                  range: NSRange(
-                                                    location:0,
-                                                    length:attributedSuffix.length))
+                        value: textView.font!,
+                        range: NSRange(location:0,
+                                length:attributedSuffix.length))
 
                     attributedSuffix.addAttribute(NSForegroundColorAttributeName,
-                                                  value: textView.textColor!,
-                                                  range: NSRange(
-                                                    location:0,
-                                                    length:attributedSuffix.length))
+                        value: textView.textColor!,
+                        range: NSRange(location:0,
+                                length:attributedSuffix.length))
 
                     mutableCopy.appendAttributedString(attributedSuffix)
                     replaceText = mutableCopy
@@ -325,7 +323,6 @@ public class WAutoCompleteTextView: UIView {
             let location = currentText.startIndex.distanceTo(range.startIndex)
             let length = range.startIndex.distanceTo(range.endIndex)
             let ns = NSMakeRange(location, length)
-
 
             if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
                 mutableCopy.replaceCharactersInRange(ns, withAttributedString: replaceText)
@@ -354,7 +351,6 @@ public class WAutoCompleteTextView: UIView {
             }
         }
     }
-
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
