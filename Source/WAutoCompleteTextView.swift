@@ -292,11 +292,11 @@ public class WAutoCompleteTextView: UIView {
     public func acceptAutoCompletionWithAttributedString(attributedString: NSAttributedString) {
         var replaceText = attributedString
 
-        if let range = autoCompleteRange {
+        if var range = autoCompleteRange {
             var selection = textView.selectedTextRange
 
             if (!replacesControlPrefix) {
-                autoCompleteRange = range.startIndex.advancedBy(1)..<range.endIndex
+                range = range.startIndex.advancedBy(1)..<range.endIndex
             }
 
             if (addSpaceAfterReplacement) {
