@@ -381,6 +381,8 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
                     action: #selector(WSideMenuContentVC.toggleSideMenu))
             }
 
+            sideMenuButtonItem.accessibilityIdentifier = "SideMenuButton"
+
             if (navigationController?.viewControllers.count > 1 && navigationController?.topViewController == self) {
                 var backMenuButtonItem = UIBarButtonItem()
 
