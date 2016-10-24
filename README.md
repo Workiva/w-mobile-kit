@@ -26,7 +26,7 @@ Component | Demo
 Component | Demo
 --- | ---
 <b>WBadge</b><br> Custom number badge that provides the ability to change color, spacing, shape, location, and how the number displays/expands. | <img src="Gifs/WBadge.gif">
-<b>WSpinner</b><br> Custom progress spinner allowing for custom colors, the addition of images,  | <img src="Gifs/WSpinner.gif">
+<b>WSpinner</b><br> Custom progress spinner allowing for custom colors, the addition of images.  | <img src="Gifs/WSpinner.gif">
 <b>WUserLogoView</b><br> An image used to represent a user. Can use either a name which is hashed into a color or and image that is cropped to fit the view. | <img src="Gifs/WUserLogoView.gif">
 
 ### Modal Components
@@ -35,14 +35,14 @@ Component | Demo
 <b>WActionSheet</b><br> Custom action sheets providing the ability to include a picker view, automatically scale to content, scroll, include a cancel button, and tap to dismiss. | <img src="Gifs/WActionSheet.gif">
 <b>WBanner</b><br>  Static banners that display information over content from the top or bottom. Can be automatically dismissed or on tap. | <img src="Gifs/WBanner.gif">
 <b>WLoadingModal</b><br> Displays a loading view over content. Can dim the background view and will disappear after a set period of time. | <img src="Gifs/WLoadingModal.gif">
-<b>WToast</b><br> Custom toast that displays from the top/bottom or sides and can dismiss on top or a timer. The color, text, and transparency can be customized. | <img src="Gifs/WToast.gif">
+<b>WToast</b><br> Toast that displays from the top/bottom or sides and can be customized to dismiss on tap or via a timer. The color, text, and transparency can be customized. | <img src="Gifs/WToast.gif">
 
 ### Navigation
 Component | Demo
 --- | ---
 <b>WPagingSelectorControl</b><br> Custom paging control that allows scrolling headers, automatically spaced headers and button actions to display a view controller. | <img src="Gifs/WPagingSelectorControl.gif">
 <b>WPagingSelectorVC</b><br> View controller leveraging the WPagingSelectorControl. | <img src="Gifs/WPagingSelectorVC.gif">
-<b>WSideMenuVC</b><br> Custom side menu drawer. Displays view controllers as cells that can tapped to swap the main view. | <img src="Gifs/WSideMenuVC.gif">
+<b>WSideMenuVC</b><br> Custom side menu drawer. Displays view controllers as cells that can be tapped to swap the main view. | <img src="Gifs/WSideMenuVC.gif">
 
 ### Text Inputs
 Component | Demo
