@@ -355,7 +355,7 @@ open class WAutoCompleteTextView: UIView {
 }
 
 extension WAutoCompleteTextView: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             acceptAutoCompletionWithString(cell.textLabel!.text!)
             delegate?.didSelectAutoCompletion?(cell.textLabel!.text! as AnyObject)
@@ -368,7 +368,7 @@ extension WAutoCompleteTextView: UITableViewDelegate {
 }
 
 extension WAutoCompleteTextView: UITextViewDelegate {
-    public func textViewDidChange(_ textView: UITextView) {
+    open func textViewDidChange(_ textView: UITextView) {
         processWordAtCursor(textView)
 
         updateHeight()
@@ -379,7 +379,7 @@ extension WAutoCompleteTextView: UITextViewDelegate {
         }
     }
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    open func textViewDidEndEditing(_ textView: UITextView) {
         showAutoCompleteTable(false)
     }
 
@@ -402,7 +402,7 @@ extension WAutoCompleteTextView: UITextViewDelegate {
         }
     }
 
-    public func wordRangeAtCursor(_ textView: UITextView) -> Range<String.Index>? {
+    open func wordRangeAtCursor(_ textView: UITextView) -> Range<String.Index>? {
         var wordRange: Range<String.Index>?
 
         if let text = textView.text, text.characters.count > 0, let selectedRange = textView.selectedTextRange {
@@ -430,7 +430,7 @@ extension WAutoCompleteTextView: UITextViewDelegate {
         return wordRange
     }
 
-    public func processWordAtCursor(_ textView: UITextView) {
+    open func processWordAtCursor(_ textView: UITextView) {
         if let text = textView.text {
             if let range = wordRangeAtCursor(textView) {
                 if let word = textView.text?.substring(with: range) {
@@ -460,11 +460,11 @@ extension WAutoCompleteTextView: UITextViewDelegate {
         }
     }
 
-    public func textViewDidChangeSelection(_ textView: UITextView) {
+    open func textViewDidChangeSelection(_ textView: UITextView) {
         processWordAtCursor(textView)
     }
 
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if let delegate = (textView as? WTextView)?.wTextViewDelegate , text == "\n" {
             return delegate.textViewShouldReturn(textView as! WTextView)
         }
