@@ -177,7 +177,7 @@ open class WTextView: UITextView, UITextViewDelegate {
 
             placeholderLabel.snp.remakeConstraints() { (make) in
                 make.centerY.equalTo(self).offset(0.5)
-                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priorityHigh()
+                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priority(750)
                 make.left.equalTo(self).offset(leftPlaceholderOffset)
                 make.height.equalTo(self)
             }
@@ -195,8 +195,8 @@ open class WTextView: UITextView, UITextViewDelegate {
         
     deinit {
         NotificationCenter.default.removeObserver(self,
-                                                            name: NSNotification.Name.UITextViewTextDidChange,
-                                                            object: nil)
+            name: NSNotification.Name.UITextViewTextDidChange,
+            object: nil)
     }
 }
 

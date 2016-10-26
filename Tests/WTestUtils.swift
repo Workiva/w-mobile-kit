@@ -30,7 +30,7 @@ open class UILongPressGestureRecognizerMock : UILongPressGestureRecognizer {
 
     open override func location(in view: UIView?) -> CGPoint {
         if view != nil {
-            if view!.isKindOfClass(WSwitch) {
+            if view! is WSwitch {
                 if !slideLeft {
                     return CGPoint(x: view!.frame.origin.x + view!.frame.size.width, y: view!.frame.origin.y)
                 }

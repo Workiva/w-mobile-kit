@@ -37,7 +37,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 autoCompleteView.delegate = subject
                 autoCompleteView.dataSource = subject
                 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
                 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -60,11 +60,11 @@ class WAutoCompleteTextViewSpec: QuickSpec {
 
                 it("should init with coder correctly") {
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WAutoCompleteTextView")
+                    let locToSave = path.appendingPathComponent("WAutoCompleteTextView")
                     
                     NSKeyedArchiver.archiveRootObject(autoCompleteView, toFile: locToSave)
                     
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WAutoCompleteTextView
+                    let object = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WAutoCompleteTextView
                     
                     expect(object).toNot(equal(nil))
                     
@@ -104,16 +104,16 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should receive notification when keyboard will show") {
                     subject.view.addSubview(autoCompleteView)
                     
-                    let userInfo: [AnyHashable: Any] = [UIKeyboardFrameEndUserInfoKey: NSValue(CGRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
-                    let notification = NSNotification(name: UIKeyboardWillShowNotification, object: nil, userInfo: userInfo)
+                    let userInfo: [AnyHashable: Any] = [UIKeyboardFrameEndUserInfoKey: NSValue(cgRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
+                    let notification = NSNotification(name: NSNotification.Name.UIKeyboardWillShow, object: nil, userInfo: userInfo)
                     
-                    NSNotificationCenter.defaultCenter().postNotification(notification)
+                    NotificationCenter.default.post(notification as Notification)
                 }
                 
                 it("should set view to bottom when keyboard will hide") {
                     subject.view.addSubview(autoCompleteView)
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name.UIKeyboardWillHide, object: nil)
                     
                     expect(autoCompleteView.frame.origin.y).toEventually(beCloseTo(autoCompleteView.superview!.frame.size.height - autoCompleteView.frame.size.height, within: 0.1), timeout: 0.3)
                 }
@@ -121,7 +121,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should remove as observer when deinit") {
                     autoCompleteView = nil
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName(UIKeyboardWillHideNotification, object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name.UIKeyboardWillHide, object: nil)
                 }
             }
             
@@ -148,8 +148,9 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     
                     let textView = autoCompleteView.textView
                     textView.text = "@test"
-                    
-                    let range = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.endOfDocument)
+
+
+                    let range = textView.textRange(from: textView.beginningOfDocument, to: textView.endOfDocument)
                     textView.selectedTextRange = range
                     
                     autoCompleteView.textViewDidChange(textView)
@@ -159,21 +160,23 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should replace auto completions correctly") {
                     let initialText = "Unit testing @a"
                     let finalText = "Unit testing @auto completion "
+
+                    autoCompleteView.controlPrefix = "@"
                     autoCompleteView.textView.text = initialText
-                    let range = initialText.rangeOfString("@a")
-                    autoCompleteView.autoCompleteRange = range
-                    
+                    autoCompleteView.processWordAtCursor(autoCompleteView.textView)
+
                     autoCompleteView.acceptAutoCompletionWithString("auto completion")
                     
                     expect(autoCompleteView.textView.text).to(equal(finalText))
                 }
                 
                 it("should replace auto completions correctly in middle of string") {
+                    autoCompleteView.replacesControlPrefix = true
                     autoCompleteView.addSpaceAfterReplacement = false
                     let initialText = "Unit testing @a completion"
-                    let finalText = "Unit testing @auto completion"
+                    let finalText = "Unit testing auto completion"
                     autoCompleteView.textView.text = initialText
-                    let range = initialText.rangeOfString("@a")
+                    let range = initialText.range(of: "@a")
                     autoCompleteView.autoCompleteRange = range
                     
                     autoCompleteView.acceptAutoCompletionWithString("auto")
@@ -187,7 +190,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     let initialText = "Unit testing @a"
                     let finalText = "Unit testing auto completion"
                     autoCompleteView.textView.text = initialText
-                    let range = initialText.rangeOfString("@a")
+                    let range = initialText.range(of: "@a")
                     autoCompleteView.autoCompleteRange = range
                     
                     autoCompleteView.acceptAutoCompletionWithString("auto completion")
@@ -198,7 +201,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should dismiss auto complete when table cell is selected") {
                     autoCompleteView.autoCompleteTable.reloadData()
                     autoCompleteView.showAutoCompleteTable()
-                    autoCompleteView.tableView(autoCompleteView.autoCompleteTable, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    autoCompleteView.tableView(autoCompleteView.autoCompleteTable, didSelectRowAt: IndexPath(row: 0, section: 0))
                     
                     expect(autoCompleteView.isShowingAutoComplete()).toEventually(equal(false), timeout: 0.3)
                 }
@@ -231,8 +234,8 @@ class AutoCompleteTestViewController: UIViewController, WAutoCompletionTextViewD
         return 2
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.textLabel?.text = "Test"
         return cell
     }

@@ -39,8 +39,8 @@ class WTextViewTests: QuickSpec {
             
             describe("when text view has been init") {
                 let verifyCommonInit = {
-                    expect(textView.editable).to(beFalse())
-                    expect(textView.scrollEnabled).to(beFalse())
+                    expect(textView.isEditable).to(beFalse())
+                    expect(textView.isScrollEnabled).to(beFalse())
                     expect(textView.leftPaddingForLeftImage) == 4
                     expect(textView.verticalOffsetForLeftImage) == 0
                 }
@@ -49,11 +49,11 @@ class WTextViewTests: QuickSpec {
                     textView = WMarkdownTextView()
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WMarkdownTextView")
+                    let locToSave = path.appendingPathComponent("WMarkdownTextView")
 
                     NSKeyedArchiver.archiveRootObject(textView, toFile: locToSave)
 
-                    let textView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WMarkdownTextView
+                    let textView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WMarkdownTextView
 
                     expect(textView).toNot(equal(nil))
 
@@ -106,19 +106,19 @@ class WTextViewTests: QuickSpec {
                         
             describe("when text view has been init") {
                 let verifyCommonInit = {
-                    expect(textView.editable).to(beFalse())
-                    expect(textView.scrollEnabled).to(beFalse())
+                    expect(textView.isEditable).to(beFalse())
+                    expect(textView.isScrollEnabled).to(beFalse())
                 }
                 
                 it("should init with coder correctly and verify commonInit") {
                     textView = WTextView()
                     
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WTextView")
+                    let locToSave = path.appendingPathComponent("WTextView")
                     
                     NSKeyedArchiver.archiveRootObject(textView, toFile: locToSave)
                     
-                    let textView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTextView
+                    let textView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTextView
                     
                     expect(textView).toNot(equal(nil))
                     
@@ -129,14 +129,14 @@ class WTextViewTests: QuickSpec {
                 describe("when text view properties change") {
                     it("should propogate the font to the placeholder") {
                         textView = WTextView()
-                        textView.font = UIFont.systemFontOfSize(20)
+                        textView.font = UIFont.systemFont(ofSize: 20)
                         
                         expect(textView.placeholderLabel.font) == textView.font
                     }
                     
                     it("should propogate the text alignment to the placeholder") {
                         textView = WTextView()
-                        textView.textAlignment = .Center
+                        textView.textAlignment = .center
                         
                         expect(textView.placeholderLabel.textAlignment) == textView.textAlignment
                     }
@@ -150,9 +150,9 @@ class WTextViewTests: QuickSpec {
                     
                     it("should allow the placeholder text color to be specified") {
                         textView = WTextView()
-                        textView.placeholderTextColor = .redColor()
+                        textView.placeholderTextColor = .red
                         
-                        expect(textView.placeholderLabel.textColor) == UIColor.redColor()                 
+                        expect(textView.placeholderLabel.textColor) == UIColor.red                
                     }
                     
                     it("should hide/show the placeholder label as expected") {
@@ -162,10 +162,10 @@ class WTextViewTests: QuickSpec {
                         expect(textView.placeholderLabel.superview).toNot(beNil())
                         
                         textView.text = "Something"
-                        expect(textView.placeholderLabel.hidden) == true
+                        expect(textView.placeholderLabel.isHidden) == true
                         
                         textView.text = ""
-                        expect(textView.placeholderLabel.hidden) == false
+                        expect(textView.placeholderLabel.isHidden) == false
                     }
                     
                     it("should add a left image when specified") {
@@ -173,7 +173,7 @@ class WTextViewTests: QuickSpec {
                         expect(textView.leftImageView.superview).toNot(beNil())
                         expect(textView.leftImageView.image).to(beNil())
                         
-                        let image = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage1", ofType: "png")!)
+                        let image = UIImage(contentsOfFile: Bundle(for: type(of: self)).path(forResource: "testImage1", ofType: "png")!)
                         textView.leftImage = image
                         
                         expect(textView.leftImageView.image).toNot(beNil())

@@ -39,7 +39,7 @@ class WUserLogoViewTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -55,11 +55,11 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView(name: name1)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WUserLogoView")
+                    let locToSave = path.appendingPathComponent("WUserLogoView")
 
                     NSKeyedArchiver.archiveRootObject(userLogoView, toFile: locToSave)
 
-                    let object = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WUserLogoView
+                    let object = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WUserLogoView
 
                     expect(object).toNot(equal(nil))
 
@@ -89,8 +89,8 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView()
 
                     // Custom Settings
-                    userLogoView.bounds = CGRectMake(0, 0, 100, 100)
-                    userLogoView.color = .cyanColor()
+                    userLogoView.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
+                    userLogoView.color = .cyan
                     userLogoView.name = name2
                     userLogoView.lineWidth = 2.0
 
@@ -105,8 +105,8 @@ class WUserLogoViewTests: QuickSpec {
                     subject.view.layoutIfNeeded()
 
                     // public properties
-                    expect(userLogoView.bounds).to(equal(CGRectMake(0, 0, 100, 100)))
-                    expect(userLogoView.color).to(equal(UIColor.cyanColor()))
+                    expect(userLogoView.bounds).to(equal(CGRect(x: 0, y: 0, width: 100, height: 100)))
+                    expect(userLogoView.color).to(equal(UIColor.cyan))
                     expect(userLogoView.name).to(equal(name2))
                     expect(userLogoView.initialsLabel.text).to(equal("JJ"))
                     expect(userLogoView.lineWidth).to(equal(2.0))
@@ -168,14 +168,14 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.initialsLabel.text).to(equal("?"))
                     expect(userLogoView.name).to(equal(""))
                     expect(userLogoView.lineWidth).to(equal(1.0))
-                    expect(userLogoView.initialsLabel.textColor) == UIColor.grayColor()
+                    expect(userLogoView.initialsLabel.textColor) == UIColor.gray
                 }
 
                 it("should work correctly if the initials label has been removed") {
                     userLogoView = WUserLogoView(name: name5)
                     userLogoView.initialsLimit = 1
                     userLogoView.initialsLabel.removeFromSuperview()
-                    userLogoView.bounds = CGRectMake(0, 0, 80, 80)
+                    userLogoView.bounds = CGRect(x: 0, y: 0, width: 80, height: 80)
 
                     subject.view.addSubview(userLogoView)
                     userLogoView.snp.makeConstraints { (make) in
@@ -197,7 +197,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView(name: name7)
                     userLogoView.initialsLimit = 2
                     userLogoView.initialsLabel.removeFromSuperview()
-                    userLogoView.bounds = CGRectMake(0, 0, 80, 80)
+                    userLogoView.bounds = CGRect(x: 0, y: 0, width: 80, height: 80)
                     userLogoView.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
                     
                     subject.view.addSubview(userLogoView)
@@ -212,7 +212,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.setupUI()
                     expect(userLogoView.name).to(equal(name7))
                     expect(userLogoView.lineWidth).to(equal(1.0))
-                    expect(userLogoView.initialsLabel.hidden).toEventually(beTruthy(), timeout: 3.0)
+                    expect(userLogoView.initialsLabel.isHidden).toEventually(beTruthy(), timeout: 3.0)
                     expect(userLogoView.imageURL).toEventuallyNot(beNil(), timeout: 3.0)
                     expect(userLogoView.mappedColor) == UIColor(hex: 0xE3E3E3)
                 }               

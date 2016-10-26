@@ -32,7 +32,7 @@ class WSpinnerTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                let window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -56,30 +56,30 @@ class WSpinnerTests: QuickSpec {
                     }
 
                     // Initial colors should be set to the default
-                    expect(spinnerView.backgroundColor) == .clearColor()
-                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.CGColor
-                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.CGColor
+                    expect(spinnerView.backgroundColor) == .clear
+                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.cgColor
+                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.cgColor
 
                     // Background layer should be configured to the default
                     let bLayer = spinnerView.backgroundLayer
-                    expect(bLayer.frame) == CGRectZero
-                    expect(bLayer.fillColor) == UIColor.clearColor().CGColor
+                    expect(bLayer.frame) == CGRect.zero
+                    expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 3
                     expect(bLayer.lineCap) == kCALineCapRound
 
                     // Progress layer should be configured to the default
                     let pLayer = spinnerView.progressLayer
-                    expect(pLayer.frame) == CGRectZero
+                    expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 3
                     expect(pLayer.lineCap) == kCALineCapRound
 
                     // Icon layer should be configured to the default
                     let iLayer = spinnerView.iconLayer
-                    expect(iLayer.frame) == CGRectZero
+                    expect(iLayer.frame) == CGRect.zero
 
                     // Draw view
                     spinnerView.setNeedsDisplay()
-                    spinnerView.drawRect(spinnerView.bounds)
+                    spinnerView.draw(spinnerView.bounds)
 
                     // Icon layer should be configured correctly following drawing
                     expect(iLayer.frame) == spinnerView.bounds
@@ -90,16 +90,16 @@ class WSpinnerTests: QuickSpec {
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds
-                    let bCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let bCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let bRadius = (spinnerView.bounds.size.width - 3) / 2
-                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
+                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
                     expect(bLayer.strokeEnd) == 1
 
                     // Progress layer should be configured correctly following drawing
                     expect(pLayer.frame) == spinnerView.bounds
-                    let pCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let pCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let pRadius = (spinnerView.bounds.size.width - 3) / 2
-                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
+                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
                     expect(pLayer.strokeEnd) == 0
                 }
 
@@ -116,20 +116,20 @@ class WSpinnerTests: QuickSpec {
                     }
 
                     // Initial colors should be set to the default
-                    expect(spinnerView.backgroundColor) == .clearColor()
-                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.CGColor
-                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.CGColor
+                    expect(spinnerView.backgroundColor) == .clear
+                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.cgColor
+                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.cgColor
 
                     // Background layer should be configured to the default
                     let bLayer = spinnerView.backgroundLayer
-                    expect(bLayer.frame) == CGRectZero
-                    expect(bLayer.fillColor) == UIColor.clearColor().CGColor
+                    expect(bLayer.frame) == CGRect.zero
+                    expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 3
                     expect(bLayer.lineCap) == kCALineCapRound
 
                     // Progress layer should be configured to the default
                     let pLayer = spinnerView.progressLayer
-                    expect(pLayer.frame) == CGRectZero
+                    expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 3
                     expect(pLayer.lineCap) == kCALineCapRound
 
@@ -139,21 +139,21 @@ class WSpinnerTests: QuickSpec {
 
                         expect(animation.toValue as? Double) == M_PI * 2
                         expect(animation.duration) == 1.4
-                        expect(animation.cumulative).to(beTruthy())
+                        expect(animation.isCumulative).to(beTruthy())
                         expect(animation.repeatCount) == HUGE
-                        expect(animation.removedOnCompletion).to(beFalsy())
+                        expect(animation.isRemovedOnCompletion).to(beFalsy())
                     }
 
-                    verifyRotationAnimation(bLayer.animationForKey("rotationAnimation") as! CABasicAnimation)
-                    verifyRotationAnimation(pLayer.animationForKey("rotationAnimation") as! CABasicAnimation)
+                    verifyRotationAnimation(bLayer.animation(forKey: "rotationAnimation") as! CABasicAnimation)
+                    verifyRotationAnimation(pLayer.animation(forKey: "rotationAnimation") as! CABasicAnimation)
 
                     // Icon layer should be configured to the default
                     let iLayer = spinnerView.iconLayer
-                    expect(iLayer.frame) == CGRectZero
+                    expect(iLayer.frame) == CGRect.zero
 
                     // Draw view
                     spinnerView.setNeedsDisplay()
-                    spinnerView.drawRect(spinnerView.bounds)
+                    spinnerView.draw(spinnerView.bounds)
 
                     // Icon layer should be configured correctly following drawing
                     expect(iLayer.frame) == spinnerView.bounds
@@ -164,34 +164,34 @@ class WSpinnerTests: QuickSpec {
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds
-                    let bCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let bCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let bRadius = (spinnerView.bounds.size.width - 3) / 2
-                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
+                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
                     expect(bLayer.strokeEnd) == 1
 
                     // Progress layer should be configured correctly following drawing
                     expect(pLayer.frame) == spinnerView.bounds
-                    let pCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let pCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let pRadius = (spinnerView.bounds.size.width - 3) / 2
-                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
+                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
                     expect(pLayer.strokeEnd) == 0.15
 
                     // Should have a different progress layer path with a different indeterminate section length
                     spinnerView.indeterminateSectionLength = 0.3
                     expect(spinnerView.progress) == 0.30
                     spinnerView.drawProgress()
-                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).CGPath
+                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
                     expect(pLayer.strokeEnd) == 0.3
                 }
 
                 it("should successfully add and display a progress spinner view with custom settings") {
                     spinnerView = WSpinner()
-                    spinnerView.direction = .CounterClockwise
+                    spinnerView.direction = .counterClockwise
                     spinnerView.indeterminate = true // Should be overridden by progress
                     spinnerView.progress = 0.25
-                    spinnerView.backgroundColor = .whiteColor()
-                    spinnerView.progressLineColor = .blueColor()
-                    spinnerView.backgroundLineColor = .blueColor()
+                    spinnerView.backgroundColor = .white
+                    spinnerView.progressLineColor = .blue
+                    spinnerView.backgroundLineColor = .blue
                     spinnerView.lineWidth = 1
 
                     subject.view.addSubview(spinnerView)
@@ -203,30 +203,30 @@ class WSpinnerTests: QuickSpec {
                     }
 
                     // Custom colors should not be overridden by default
-                    expect(spinnerView.backgroundColor) == .whiteColor()
-                    expect(spinnerView.progressLayer.strokeColor) == UIColor.blueColor().CGColor
-                    expect(spinnerView.backgroundLayer.strokeColor) == UIColor.blueColor().CGColor
+                    expect(spinnerView.backgroundColor) == .white
+                    expect(spinnerView.progressLayer.strokeColor) == UIColor.blue.cgColor
+                    expect(spinnerView.backgroundLayer.strokeColor) == UIColor.blue.cgColor
 
                     // Background layer
                     let bLayer = spinnerView.backgroundLayer
-                    expect(bLayer.frame) == CGRectZero
-                    expect(bLayer.fillColor) == UIColor.clearColor().CGColor
+                    expect(bLayer.frame) == CGRect.zero
+                    expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 1
                     expect(bLayer.lineCap) == kCALineCapRound
 
                     // Progress layer
                     let pLayer = spinnerView.progressLayer
-                    expect(pLayer.frame) == CGRectZero
+                    expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 1
                     expect(pLayer.lineCap) == kCALineCapRound
 
                     // Icon layer should be still configured to the default
                     let iLayer = spinnerView.iconLayer
-                    expect(iLayer.frame) == CGRectZero
+                    expect(iLayer.frame) == CGRect.zero
 
                     // Draw view
                     spinnerView.setNeedsDisplay()
-                    spinnerView.drawRect(spinnerView.bounds)
+                    spinnerView.draw(spinnerView.bounds)
 
                     // Icon layer should be configured correctly following drawing
                     expect(iLayer.frame) == spinnerView.bounds
@@ -237,16 +237,16 @@ class WSpinnerTests: QuickSpec {
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds
-                    let bCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let bCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let bRadius = (spinnerView.bounds.size.width - 1) / 2
-                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: false).CGPath
+                    expect(bLayer.path) == UIBezierPath(arcCenter: bCenter, radius: bRadius, startAngle: startAngle, endAngle: endAngle, clockwise: false).cgPath
                     expect(bLayer.strokeEnd) == 1
 
                     // Progress layer should be configured correctly following drawing
                     expect(pLayer.frame) == spinnerView.bounds
-                    let pCenter = CGPointMake(spinnerView.bounds.size.width / 2, spinnerView.bounds.size.height / 2)
+                    let pCenter = CGPoint(x: spinnerView.bounds.size.width / 2, y: spinnerView.bounds.size.height / 2)
                     let pRadius = (spinnerView.bounds.size.width - 1) / 2
-                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: false).CGPath
+                    expect(pLayer.path) == UIBezierPath(arcCenter: pCenter, radius: pRadius, startAngle: startAngle, endAngle: endAngle, clockwise: false).cgPath
                     expect(pLayer.strokeEnd) == 0.25
                 }
 

@@ -40,11 +40,11 @@ class WPagingSelectorVCSpec: QuickSpec {
                 vc2 = WSideMenuContentVC()
                 vc3 = WSideMenuContentVC()
 
-                vc1!.view.backgroundColor = .greenColor()
-                vc2!.view.backgroundColor = .blueColor()
-                vc3!.view.backgroundColor = .redColor()
+                vc1!.view.backgroundColor = .green
+                vc2!.view.backgroundColor = .blue
+                vc3!.view.backgroundColor = .red
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -73,7 +73,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     expect(subject.tabSpacing) == 0.0
                     expect(subject.pagingControlHeight) == DEFAULT_PAGING_SELECTOR_HEIGHT
                     expect(subject.pagingControlSidePadding) == DEFAULT_PAGING_SELECTOR_SIDE_PADDING
-                    expect(subject.tabTextColor).to(equal(UIColor.blackColor()))
+                    expect(subject.tabTextColor).to(equal(UIColor.black))
                 }
                 
                 it("should set to default tab width if trying to set too small of a value") {
@@ -104,15 +104,15 @@ class WPagingSelectorVCSpec: QuickSpec {
                 }
                 
                 it("should set color on control when setting on the VC") {
-                    subject.tabTextColor = .blueColor()
+                    subject.tabTextColor = .blue
                     
-                    expect(subject.pagingSelectorControl!.tabTextColor) == UIColor.blueColor()
+                    expect(subject.pagingSelectorControl!.tabTextColor) == UIColor.blue
                 }
                 
                 it("should set color for the separator line on control when setting on the VC") {
-                    subject.separatorLineColor = .blueColor()
+                    subject.separatorLineColor = .blue
                     
-                    expect(subject.pagingSelectorControl!.separatorLineColor) == UIColor.blueColor()
+                    expect(subject.pagingSelectorControl!.separatorLineColor) == UIColor.blue
                 }
                 
                 it("should set separator line height on control when setting on the VC") {
@@ -156,11 +156,11 @@ class WPagingSelectorVCSpec: QuickSpec {
                     tabView = WTabView(title: "Tab")
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WTabView")
+                    let locToSave = path.appendingPathComponent("WTabView")
 
                     NSKeyedArchiver.archiveRootObject(tabView, toFile: locToSave)
 
-                    let tabView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTabView
+                    let tabView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTabView
 
                     expect(tabView).toNot(equal(nil))
                 }
@@ -177,11 +177,11 @@ class WPagingSelectorVCSpec: QuickSpec {
                     selectionIndicatorView = WSelectionIndicatorView()
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WSelectionIndicatorView")
+                    let locToSave = path.appendingPathComponent("WSelectionIndicatorView")
 
                     NSKeyedArchiver.archiveRootObject(selectionIndicatorView, toFile: locToSave)
 
-                    let selectionIndicatorView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSelectionIndicatorView
+                    let selectionIndicatorView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSelectionIndicatorView
 
                     expect(selectionIndicatorView).toNot(equal(nil))
                 }
@@ -195,21 +195,21 @@ class WPagingSelectorVCSpec: QuickSpec {
                 })
 
                 let verifyCommonInit = {
-                    expect(pagingSelectorControl.tabTextColor) == UIColor.grayColor()
+                    expect(pagingSelectorControl.tabTextColor) == UIColor.gray
                     expect(pagingSelectorControl.separatorLineColor) == WThemeManager.sharedInstance.currentTheme.pagingSelectorSeparatorColor
                     expect(pagingSelectorControl.separatorLineHeight) == 1.0
-                    expect(pagingSelectorControl.widthMode).to(equal(WPagingWidthMode.Dynamic))
+                    expect(pagingSelectorControl.widthMode).to(equal(WPagingWidthMode.dynamic))
                 }
 
                 it("should init with coder correctly and verify commonInit") {
                     pagingSelectorControl = WPagingSelectorControl(titles: titles)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WPagingSelectorControl")
+                    let locToSave = path.appendingPathComponent("WPagingSelectorControl")
 
                     NSKeyedArchiver.archiveRootObject(pagingSelectorControl, toFile: locToSave)
 
-                    let pagingSelectorControl = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WPagingSelectorControl
+                    let pagingSelectorControl = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WPagingSelectorControl
 
                     expect(pagingSelectorControl).toNot(equal(nil))
                     
@@ -294,14 +294,14 @@ class WPagingSelectorVCSpec: QuickSpec {
                 it("should set shadow properties correctly") {
                     let pagingControl = subject.pagingSelectorControl!
                     let shadowDisabledOpacity: Float = 0.0
-                    let shadowColor = UIColor.purpleColor().CGColor
+                    let shadowColor = UIColor.purple.cgColor
                     let shadowRadius: CGFloat = 5
                     
                     // First call sets up initial properties regardless and verify defaults
                     subject.setShadow(false, animated: false)
                     
                     expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
-                    expect(pagingControl.layer.shadowColor) == UIColor.blackColor().CGColor
+                    expect(pagingControl.layer.shadowColor) == UIColor.black.cgColor
                     expect(pagingControl.layer.shadowRadius) == 4
                     expect(pagingControl.layer.shadowOffset) == CGSize(width: 0, height: 0)
                     
@@ -326,7 +326,7 @@ class WPagingSelectorVCSpec: QuickSpec {
                     subject.setShadow(false, animated: false)
                     
                     expect(pagingControl.layer.shadowOpacity) == shadowDisabledOpacity
-                    expect(pagingControl.layer.shadowColor) == UIColor.blackColor().CGColor
+                    expect(pagingControl.layer.shadowColor) == UIColor.black.cgColor
                     expect(pagingControl.layer.shadowRadius) == 4
                     expect(pagingControl.layer.shadowOffset) == CGSize(width: 0, height: 0)
                     

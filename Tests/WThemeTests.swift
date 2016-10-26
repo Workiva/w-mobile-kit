@@ -25,7 +25,7 @@ class WThemeSpec: QuickSpec {
         describe("WThemeSpec") {
             beforeEach({
                 // Init the theme manager
-                WThemeManager.sharedInstance
+                _ = WThemeManager.sharedInstance
             })
 
             afterEach({

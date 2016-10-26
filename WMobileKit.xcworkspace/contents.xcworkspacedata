@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <Group
-      location = "container:"
-      name = "Config">
-      <FileRef
-         location = "group:WMobileKit.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:setup.sh">
-      </FileRef>
-      <FileRef
-         location = "group:smithy.sh">
-      </FileRef>
-      <FileRef
-         location = "group:smithy.yaml">
-      </FileRef>
-      <FileRef
-         location = "group:style-guide.md">
-      </FileRef>
-      <FileRef
-         location = "group:README.md">
-      </FileRef>
-   </Group>
    <FileRef
       location = "group:WMobileKit.xcodeproj">
    </FileRef>

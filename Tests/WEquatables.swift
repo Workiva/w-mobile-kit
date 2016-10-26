@@ -20,12 +20,12 @@
 
 import UIKit
 
-extension CGColor: Equatable {}
-public func ==(lhs: CGColor, rhs: CGColor) -> Bool {
-    return CGColorEqualToColor(lhs, rhs)
-}
-
-extension CGPath: Equatable {}
-public func ==(lhs: CGPath, rhs: CGPath) -> Bool {
-    return CGPathEqualToPath(lhs, rhs)
-}
+//extension CGColor: Equatable {}
+//public func ==(lhs: CGColor, rhs: CGColor) -> Bool {
+//    return CGColorEqualToColor(lhs, rhs)
+//}
+//
+//extension CGPath: Equatable {}
+//public func ==(lhs: CGPath, rhs: CGPath) -> Bool {
+//    return CGPathEqualToPath(lhs, rhs)
+//}

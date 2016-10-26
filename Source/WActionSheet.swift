@@ -595,19 +595,20 @@ open class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBa
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if ((indexPath as NSIndexPath).section == 0) {
             // perform handler
-            if let action: WAction<ActionDataType> = actionForIndexPath(indexPath) {
-                weak var weakAction = action
+            let action: WAction<ActionDataType> = actionForIndexPath(indexPath)
 
-                if (executeActionAfterDismissal) {
-                    animateOut(0.1, completion: {
-                        action.handler?(weakAction!)
-                    })
+            weak var weakAction = action
 
-                    return
-                }
+            if (executeActionAfterDismissal) {
+                animateOut(0.1, completion: {
+                    action.handler?(weakAction!)
+                })
 
-                action.handler?(weakAction!)
+                return
             }
+
+            action.handler?(weakAction!)
+
 
             if (dismissOnAction) {
                 animateOut(0.1)
@@ -1040,8 +1041,7 @@ open class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>,
     }
     
     open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if let action: WAction<ActionDataType> = actionForIndex(row) {
-            action.handler?(action)
-        }
+        let action: WAction<ActionDataType> = actionForIndex(row)
+        action.handler?(action)
     }
 }

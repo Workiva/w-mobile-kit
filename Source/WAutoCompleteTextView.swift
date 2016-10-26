@@ -292,7 +292,7 @@ open class WAutoCompleteTextView: UIView {
     open func acceptAutoCompletionWithAttributedString(_ attributedString: NSAttributedString) {
         var replaceText = attributedString
 
-        if var range = autoCompleteRange {
+        if let range = autoCompleteRange {
             var selection = textView.selectedTextRange
 
             if (addSpaceAfterReplacement) {
@@ -432,14 +432,14 @@ extension WAutoCompleteTextView: UITextViewDelegate {
 
     public func processWordAtCursor(_ textView: UITextView) {
         if let text = textView.text {
-            if var range = wordRangeAtCursor(textView) {
+            if let range = wordRangeAtCursor(textView) {
                 if let word = textView.text?.substring(with: range) {
                     if let prefix = controlPrefix {
                         if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
                             let offset = text.characters.distance(from: text.startIndex, to: range.lowerBound)
                             let pos = textView.position(from: textView.beginningOfDocument, offset: offset)
                             let wordWithoutPrefix = word.substring(from: word.characters.index(word.startIndex, offsetBy: prefix.characters.count))
-                            if (textView.offset(from: textView.selectedTextRange!.start, to: pos!) != 0) {                        
+                            if (textView.offset(from: textView.selectedTextRange!.start, to: pos!) != 0) {
                                 if (!replacesControlPrefix) {
                                     autoCompleteRange = text.index(range.lowerBound, offsetBy: 1)..<range.upperBound
                                 } else {
