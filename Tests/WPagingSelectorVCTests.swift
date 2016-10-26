@@ -355,7 +355,7 @@ class WPagingSelectorControlVCDelegateMock: WSideMenuContentVC, WPagingSelectorV
         view.addSubview(scrollView)
     }
     
-    func shouldShowShadow(sender: WPagingSelectorVC) -> Bool {
+    func shouldShowShadow(_ sender: WPagingSelectorVC) -> Bool {
         if (forceShowShadow) {
             return forceShowShadow
         }

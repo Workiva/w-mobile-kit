@@ -18,13 +18,33 @@
 
 import UIKit
 import SnapKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 @objc public protocol WSideMenuProtocol: NSObjectProtocol {
-    optional func sideMenuWillOpen()
-    optional func sideMenuWillClose()
-    optional func sideMenuDidOpen()
-    optional func sideMenuDidClose()
-    optional func sideMenuShouldOpenSideMenu () -> Bool
+    @objc optional func sideMenuWillOpen()
+    @objc optional func sideMenuWillClose()
+    @objc optional func sideMenuDidOpen()
+    @objc optional func sideMenuDidClose()
+    @objc optional func sideMenuShouldOpenSideMenu () -> Bool
 }
 
 public struct WSideMenuOptions {
@@ -40,37 +60,37 @@ public struct WSideMenuOptions {
     public var menuAnimationDuration = 0.3
     public var gesturesOpenSideMenu = true
     public var backgroundOpacity: CGFloat = 0.4
-    public var statusBarStyle: UIStatusBarStyle = .LightContent
-    public var drawerBorderColor: UIColor = .lightGrayColor()
+    public var statusBarStyle: UIStatusBarStyle = .lightContent
+    public var drawerBorderColor: UIColor = .lightGray
     public var drawerIcon: UIImage?
     public var backIcon: UIImage?
 }
 
 enum WSideMenuState {
-    case Open, Closed
+    case open, closed
 }
 
-public class WSideMenuVC: WSizeVC {
+open class WSideMenuVC: WSizeVC {
     // Setable properties
-    weak public var mainViewController: UIViewController?
-    public var leftSideMenuViewController: UIViewController?
-    public var backgroundView: UIView!
-    public var options: WSideMenuOptions?
-    public weak var delegate: WSideMenuProtocol?
+    weak open var mainViewController: UIViewController?
+    open var leftSideMenuViewController: UIViewController?
+    open var backgroundView: UIView!
+    open var options: WSideMenuOptions?
+    open weak var delegate: WSideMenuProtocol?
 
     // Internal properties
     var backgroundTapView = UIView()
     var mainContainerView = UIView()
     var leftSideMenuContainerView = UIView()
     var leftSideMenuBorderView = UIView()
-    var menuState: WSideMenuState = .Closed
+    var menuState: WSideMenuState = .closed
     var statusBarHidden = false
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -80,24 +100,24 @@ public class WSideMenuVC: WSizeVC {
         self.leftSideMenuViewController = leftSideMenuViewController
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // Needed for views to not show behind the nav bar
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
 
         setupMenu()
     }
 
-    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+    override open var preferredStatusBarStyle : UIStatusBarStyle {
         if let options = options {
             return options.statusBarStyle
         }
 
-        return .Default
+        return .default
     }
 
-    public func setupMenu() {
+    open func setupMenu() {
         if options == nil {
             // Use default options if not specified
             options = WSideMenuOptions()
@@ -111,24 +131,24 @@ public class WSideMenuVC: WSizeVC {
 
         view.addSubview(leftSideMenuContainerView)
 
-        mainContainerView.snp_makeConstraints { (make) in
+        mainContainerView.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.top.equalTo(view)
             make.right.equalTo(view)
             make.bottom.equalTo(view)
         }
 
-        backgroundTapView.snp_makeConstraints { (make) in
-            make.left.equalTo(leftSideMenuContainerView.snp_right)
+        backgroundTapView.snp.makeConstraints { (make) in
+            make.left.equalTo(leftSideMenuContainerView.snp.right)
             make.top.equalTo(view)
             make.right.equalTo(view)
             make.bottom.equalTo(view)
         }
 
-        leftSideMenuContainerView.snp_makeConstraints { (make) in
+        leftSideMenuContainerView.snp.makeConstraints { (make) in
             make.height.equalTo(view)
             make.width.equalTo(options!.menuWidth)
-            make.right.equalTo(view.snp_left)
+            make.right.equalTo(view.snp.left)
         }
 
         if let mainViewController = mainViewController {
@@ -136,7 +156,7 @@ public class WSideMenuVC: WSizeVC {
             // When the side menu is open, allow it to be tapped to close it
             let backgroundTapRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(WSideMenuVC.backgroundWasTapped(_:)))
-            backgroundTapView.hidden = true
+            backgroundTapView.isHidden = true
             backgroundTapView.addGestureRecognizer(backgroundTapRecognizer)
             
             if (options!.swipeToOpen) {
@@ -157,19 +177,19 @@ public class WSideMenuVC: WSizeVC {
 
         if let leftSideMenuViewController = leftSideMenuViewController {
             if options!.useBlur {
-                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight)) as UIVisualEffectView
+                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight)) as UIVisualEffectView
                 leftSideMenuContainerView.addSubview(blurView)
-                blurView.snp_makeConstraints(closure: { (make) in
+                blurView.snp.makeConstraints { (make) in
                     make.left.equalTo(leftSideMenuContainerView)
                     make.top.equalTo(leftSideMenuContainerView)
                     make.right.equalTo(leftSideMenuContainerView)
                     make.bottom.equalTo(leftSideMenuContainerView)
-                })
+                }
                 
                 leftSideMenuBorderView.backgroundColor = options!.drawerBorderColor
                 leftSideMenuContainerView.addSubview(leftSideMenuBorderView)
                 
-                leftSideMenuBorderView.snp_makeConstraints() { (make) in
+                leftSideMenuBorderView.snp.makeConstraints() { (make) in
                     make.right.equalTo(leftSideMenuContainerView)
                     make.bottom.equalTo(leftSideMenuContainerView)
                     make.top.equalTo(leftSideMenuContainerView)
@@ -181,42 +201,42 @@ public class WSideMenuVC: WSizeVC {
         }
     }
     
-    public func didPan(recognizer: UIPanGestureRecognizer) {
-        let velocity = recognizer.velocityInView(view)
+    open func didPan(_ recognizer: UIPanGestureRecognizer) {
+        let velocity = recognizer.velocity(in: view)
         let isMovingRight = velocity.x > 0
-        let location = recognizer.locationInView(view).x
-        let translation = recognizer.translationInView(view).x
+        let location = recognizer.location(in: view).x
+        let translation = recognizer.translation(in: view).x
         let width = options!.menuWidth
         
         switch recognizer.state {
-            case .Began:
+            case .began:
                 if (delegate?.sideMenuShouldOpenSideMenu?() == false) {
-                    recognizer.enabled = false
+                    recognizer.isEnabled = false
                     return
                 }
                 
-                if (menuState == .Closed) {
+                if (menuState == .closed) {
                     if (isMovingRight) {
                         // If the menu is closed only start to open if the touch began on the specified threshold
                         if (location > view.frame.width * options!.swipeToOpenThreshold) {
-                            recognizer.enabled = false
+                            recognizer.isEnabled = false
                         } else {
                             if options!.showAboveStatusBar {
                                 hideStatusBar(true)
                             }
-                            backgroundTapView.hidden = false
+                            backgroundTapView.isHidden = false
                         }
                     }
                 } else {
                     // A leftswipe anywhere outside the menu will start to close the menu
                     if (!isMovingRight && location < width) {
-                        recognizer.enabled = false
+                        recognizer.isEnabled = false
                     }
                 }
-            case .Changed:
-                leftSideMenuContainerView.snp_remakeConstraints { (make) in
-                    if (menuState == .Closed) {
-                        make.right.equalTo(view.snp_left).offset(min(translation, width))
+            case .changed:
+                leftSideMenuContainerView.snp.remakeConstraints { (make) in
+                    if (menuState == .closed) {
+                        make.right.equalTo(view.snp.left).offset(min(translation, width))
                     } else {
                         make.left.equalTo(view).offset(min(translation, 0))
                     }
@@ -228,8 +248,8 @@ public class WSideMenuVC: WSizeVC {
                 view.layoutIfNeeded()
                 
                 // animate the shadow based on the percentage the drawer has animated in
-                backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(percentageMoved() * options!.backgroundOpacity)
-            case .Ended:
+                backgroundTapView.backgroundColor = UIColor.black.withAlphaComponent(percentageMoved() * options!.backgroundOpacity)
+            case .ended:
                 let x = abs(leftSideMenuContainerView.frame.origin.x)
                 
                 // If the drawer has animated out past the threshold, open it
@@ -238,14 +258,14 @@ public class WSideMenuVC: WSizeVC {
                 } else {
                     closeSideMenu()
                 }
-            case .Cancelled:
-                recognizer.enabled = true
+            case .cancelled:
+                recognizer.isEnabled = true
             default:
                 break
         }
     }
     
-    public func changeMainViewController(newMainViewController: UIViewController) {
+    open func changeMainViewController(_ newMainViewController: UIViewController) {
         // Swaps out main view controller
         removeViewControllerFromContainer(mainViewController)
         mainViewController = newMainViewController
@@ -253,24 +273,24 @@ public class WSideMenuVC: WSizeVC {
         view.layoutIfNeeded()
     }
     
-    public func toggleSideMenu() {
+    open func toggleSideMenu() {
         switch menuState {
-        case .Closed:
+        case .closed:
             openSideMenu()
-        case .Open:
+        case .open:
             closeSideMenu()
         }
     }
     
-    public func hideStatusBar(hide: Bool) {
+    open func hideStatusBar(_ hide: Bool) {
         statusBarHidden = hide
         
-        if let window = UIApplication.sharedApplication().delegate?.window {
+        if let window = UIApplication.shared.delegate?.window {
             window?.windowLevel = hide ? UIWindowLevelStatusBar : UIWindowLevelNormal            
         }
     }
     
-    public func percentageMoved() -> CGFloat {
+    open func percentageMoved() -> CGFloat {
         if let width = options?.menuWidth {
             return 1 - (abs(leftSideMenuContainerView.frame.origin.x) / width)
         }
@@ -278,13 +298,13 @@ public class WSideMenuVC: WSizeVC {
         return 0
     }
 
-    public func openSideMenu() {
+    open func openSideMenu() {
         if (delegate?.sideMenuShouldOpenSideMenu?() == false) {
             return
         }
 
         // Enable the tap outside the drawer to close on when side menu is open
-        backgroundTapView.hidden = false
+        backgroundTapView.isHidden = false
 
         delegate?.sideMenuWillOpen?()
         
@@ -292,54 +312,54 @@ public class WSideMenuVC: WSizeVC {
             hideStatusBar(true)
         }
         
-        leftSideMenuContainerView.snp_remakeConstraints { (make) in
+        leftSideMenuContainerView.snp.remakeConstraints { (make) in
             make.height.equalTo(self.view)
             make.width.equalTo(self.options!.menuWidth)
             make.left.equalTo(self.view)
         }
         
-        UIView.animateWithDuration(options!.menuAnimationDuration,
+        UIView.animate(withDuration: options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
-                self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(self.options!.backgroundOpacity)
+                self.backgroundTapView.backgroundColor = UIColor.black.withAlphaComponent(self.options!.backgroundOpacity)
             },
             completion: { finished in
-                self.menuState = .Open
+                self.menuState = .open
                 self.delegate?.sideMenuDidOpen?()
             }
         )
     }
 
-    public func closeSideMenu() {
+    open func closeSideMenu() {
         delegate?.sideMenuWillClose?()
         
-        leftSideMenuContainerView.snp_remakeConstraints { (make) in
+        leftSideMenuContainerView.snp.remakeConstraints { (make) in
             make.height.equalTo(self.view)
             make.width.equalTo(self.options!.menuWidth)
-            make.right.equalTo(self.view.snp_left)
+            make.right.equalTo(self.view.snp.left)
         }
 
-        UIView.animateWithDuration(options!.menuAnimationDuration,
+        UIView.animate(withDuration: options!.menuAnimationDuration,
             animations: {
                 self.view.layoutIfNeeded()
-                self.backgroundTapView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+                self.backgroundTapView.backgroundColor = UIColor.black.withAlphaComponent(0)
             },
             completion: { finished in
                 if self.options!.showAboveStatusBar {
                     self.hideStatusBar(false)
                 }
                 
-                self.menuState = .Closed
+                self.menuState = .closed
                 self.delegate?.sideMenuDidClose?()
                 
                 // Disable the tap outside the drawer to close
-                self.backgroundTapView.hidden = true
+                self.backgroundTapView.isHidden = true
             }
         )
     }
 
     @objc
-    func backgroundWasTapped(sender: AnyObject) {
+    func backgroundWasTapped(_ sender: AnyObject) {
         closeSideMenu()
     }
     
@@ -349,34 +369,34 @@ public class WSideMenuVC: WSizeVC {
     }
 }
 
-public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
-    public var paddingBetweenBackAndMenuIcons: CGFloat = 20.0 {
+open class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
+    open var paddingBetweenBackAndMenuIcons: CGFloat = 20.0 {
         didSet {
             addWSideMenuButtons()
         }
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // Needed for views to not show behind the nav bar
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
     }
 
-    public func addWSideMenuButtons() {
+    open func addWSideMenuButtons() {
         // Adds a button to open the side menu
         // If this VC is not the first rootVc for its nav controller, add a back button as well
         var sideMenuButtonItem: UIBarButtonItem = UIBarButtonItem()
 
         if let sideMenuController = sideMenuController() {
-            if let menuIcon = sideMenuController.options?.drawerIcon?.imageWithRenderingMode(.AlwaysOriginal) {
+            if let menuIcon = sideMenuController.options?.drawerIcon?.withRenderingMode(.alwaysOriginal) {
                 sideMenuButtonItem = UIBarButtonItem(image: menuIcon,
-                    style: .Plain,
+                    style: .plain,
                     target: self,
                     action: #selector(WSideMenuContentVC.toggleSideMenu))
             } else {
                 sideMenuButtonItem = UIBarButtonItem(title: "Toggle",
-                    style: .Plain,
+                    style: .plain,
                     target: self,
                     action: #selector(WSideMenuContentVC.toggleSideMenu))
             }
@@ -388,12 +408,12 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
 
                 if let backIcon = sideMenuController.options?.backIcon {
                     backMenuButtonItem = UIBarButtonItem(image: backIcon,
-                        style: .Plain,
+                        style: .plain,
                         target: self,
                         action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
                 } else {
                     backMenuButtonItem = UIBarButtonItem(title: "Back",
-                        style: .Plain,
+                        style: .plain,
                         target: self,
                         action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
                 }
@@ -407,7 +427,7 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
         }
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         // Set the WSideMenu delegate when the VC appears
@@ -416,12 +436,12 @@ public class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
         addWSideMenuButtons()
     }
 
-    public func toggleSideMenu() {
+    open func toggleSideMenu() {
         sideMenuController()?.toggleSideMenu()
     }
 
-    public func backButtonItemWasTapped(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    open func backButtonItemWasTapped(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
 }
 
@@ -434,32 +454,32 @@ extension UIViewController {
             if viewController is WSideMenuVC {
                 return viewController as? WSideMenuVC
             }
-            viewController = viewController?.parentViewController
+            viewController = viewController?.parent
         }
         return nil;
     }
     
-    public func addViewControllerToContainer(containerView: UIView, viewController: UIViewController?) {
+    public func addViewControllerToContainer(_ containerView: UIView, viewController: UIViewController?) {
         // Adds a view controller as a child view controller and calls needed life cycle methods
         if let targetViewController = viewController {
             addChildViewController(targetViewController)
             containerView.addSubview(targetViewController.view)
             
-            targetViewController.view.snp_makeConstraints(closure: { (make) in
+            targetViewController.view.snp.makeConstraints { (make) in
                 make.left.equalTo(containerView)
                 make.top.equalTo(containerView)
                 make.right.equalTo(containerView)
                 make.bottom.equalTo(containerView)
-            })
+            }
             
-            targetViewController.didMoveToParentViewController(self)
+            targetViewController.didMove(toParentViewController: self)
         }
     }
     
-    public func removeViewControllerFromContainer(viewController: UIViewController?) {
+    public func removeViewControllerFromContainer(_ viewController: UIViewController?) {
         // Removes a child view controller and calls needed life cyle methods
         if let targetViewController = viewController {
-            targetViewController.willMoveToParentViewController(nil)
+            targetViewController.willMove(toParentViewController: nil)
             targetViewController.view.removeFromSuperview()
             targetViewController.removeFromParentViewController()
         }

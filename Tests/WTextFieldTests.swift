@@ -74,7 +74,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -123,7 +123,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -166,7 +166,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -199,7 +199,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -232,7 +232,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -266,7 +266,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
 
                     subject.view.addSubview(textField)
-                    textField.snp_makeConstraints { (make) in
+                    textField.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(160)
@@ -283,7 +283,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
                     textField.rightViewIsClearButton = true
 
-                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage2", ofType: "png")!)
 
                     expect(textField.rightView?.isKindOfClass(UIButton.self)) == true
                 }
@@ -292,7 +292,7 @@ class WTextFieldTests: QuickSpec {
                     textField = WTextField()
                     textField.rightViewIsClearButton = true
 
-                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                    textField.rightImage = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage2", ofType: "png")!)
                     textField.text = "Test"
                     textField.textFieldDidChange()
 

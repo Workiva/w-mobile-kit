@@ -431,7 +431,7 @@
 				PRODUCT_NAME = WMobileKitExample_Example;
 				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -450,7 +450,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WMobileKitExample_Example;
 				SWIFT_OBJC_BRIDGING_HEADER = "WMobileKitExample/WMobileKitExample-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

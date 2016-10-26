@@ -104,7 +104,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should receive notification when keyboard will show") {
                     subject.view.addSubview(autoCompleteView)
                     
-                    let userInfo: [NSObject: AnyObject] = [UIKeyboardFrameEndUserInfoKey: NSValue(CGRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
+                    let userInfo: [AnyHashable: Any] = [UIKeyboardFrameEndUserInfoKey: NSValue(CGRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
                     let notification = NSNotification(name: UIKeyboardWillShowNotification, object: nil, userInfo: userInfo)
                     
                     NSNotificationCenter.defaultCenter().postNotification(notification)
@@ -227,17 +227,17 @@ class WAutoCompleteTextViewSpec: QuickSpec {
 }
 
 class AutoCompleteTestViewController: UIViewController, WAutoCompletionTextViewDelegate, WAutoCompleteTextViewDataSource, UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
         cell.textLabel?.text = "Test"
         return cell
     }
     
-    func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat {
+    func heightForAutoCompleteTable(_ textView: WAutoCompleteTextView) -> CGFloat {
         return 100
     }
 }

@@ -19,16 +19,16 @@
 import Foundation
 import WMobileKit
 
-public class TextViewExamplesVC: WSideMenuContentVC {
-    public override func viewDidLoad() {
+open class TextViewExamplesVC: WSideMenuContentVC {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         // MARK: Text View with placeholder text.
         let noIconsLabel = UILabel()
         noIconsLabel.text = "This WTextView has placeholder text."
-        noIconsLabel.textAlignment = .Center
+        noIconsLabel.textAlignment = .center
         view.addSubview(noIconsLabel)
-        noIconsLabel.snp_makeConstraints { (make) in
+        noIconsLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(20)
             make.width.equalTo(300)
@@ -36,13 +36,13 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         }
         
         let noIconsTextView = WTextView()
-        noIconsTextView.editable = true
-        noIconsTextView.scrollEnabled = true
+        noIconsTextView.isEditable = true
+        noIconsTextView.isScrollEnabled = true
         noIconsTextView.placeholderText = "Type something to see this disappear"
         view.addSubview(noIconsTextView)
-        noIconsTextView.snp_makeConstraints { (make) in
+        noIconsTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(noIconsLabel.snp_bottom).offset(4)
+            make.top.equalTo(noIconsLabel.snp.bottom).offset(4)
             make.width.equalTo(300)
             make.height.equalTo(30)
         }
@@ -50,28 +50,28 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         // MARK: Text View with a left icon.
         let leftIconLabel = UILabel()
         leftIconLabel.text = "This WTextView has a left icon."
-        leftIconLabel.textAlignment = .Center
+        leftIconLabel.textAlignment = .center
         view.addSubview(leftIconLabel)
-        leftIconLabel.snp_makeConstraints { (make) in
+        leftIconLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(noIconsTextView.snp_bottom).offset(10)
+            make.top.equalTo(noIconsTextView.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
         
         let leftIconTextView = WTextView()
-        leftIconTextView.editable = true
+        leftIconTextView.isEditable = true
         leftIconTextView.placeholderText = "Text colors and alignment can be set"
-        leftIconTextView.scrollEnabled = true
+        leftIconTextView.isScrollEnabled = true
         leftIconTextView.leftImage = UIImage(named: "person")
-        leftIconTextView.textAlignment = .Right
-        leftIconTextView.textColor = UIColor.redColor()
-        leftIconTextView.placeholderTextColor = UIColor.purpleColor().colorWithAlphaComponent(0.3)
+        leftIconTextView.textAlignment = .right
+        leftIconTextView.textColor = UIColor.red
+        leftIconTextView.placeholderTextColor = UIColor.purple.withAlphaComponent(0.3)
 
         view.addSubview(leftIconTextView)
-        leftIconTextView.snp_makeConstraints { (make) in
+        leftIconTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(leftIconLabel.snp_bottom).offset(4)
+            make.top.equalTo(leftIconLabel.snp.bottom).offset(4)
             make.width.equalTo(300)
             make.height.equalTo(30)
         }
@@ -79,25 +79,25 @@ public class TextViewExamplesVC: WSideMenuContentVC {
         // MARK: Text View with both.
         let bothLabel = UILabel()
         bothLabel.text = "This WTextView has placeholder text and a left icon."
-        bothLabel.textAlignment = .Center
+        bothLabel.textAlignment = .center
         bothLabel.numberOfLines = 2
         view.addSubview(bothLabel)
-        bothLabel.snp_makeConstraints { (make) in
+        bothLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(leftIconTextView.snp_bottom).offset(10)
+            make.top.equalTo(leftIconTextView.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(60)
         }
         
         let bothTextView = WTextView()
-        bothTextView.editable = true
-        bothTextView.scrollEnabled = true
+        bothTextView.isEditable = true
+        bothTextView.isScrollEnabled = true
         bothTextView.placeholderText = "Enter the name of a person"
         bothTextView.leftImage = UIImage(named: "person")
         view.addSubview(bothTextView)
-        bothTextView.snp_makeConstraints { (make) in
+        bothTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(bothLabel.snp_bottom).offset(4)
+            make.top.equalTo(bothLabel.snp.bottom).offset(4)
             make.width.equalTo(300)
             make.height.equalTo(30)
         }

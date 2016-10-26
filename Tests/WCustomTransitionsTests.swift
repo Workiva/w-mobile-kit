@@ -85,19 +85,19 @@ class WCustomTransitioningContext: NSObject, UIViewControllerContextTransitionin
         return cView
     }
 
-    func viewControllerForKey(key: String) -> UIViewController? {
+    func viewControllerForKey(_ key: String) -> UIViewController? {
         return firstVC
     }
 
-    func viewForKey(key: String) -> UIView? {
+    func viewForKey(_ key: String) -> UIView? {
         return firstVC.view
     }
 
-    func initialFrameForViewController(vc: UIViewController) -> CGRect {
+    func initialFrameForViewController(_ vc: UIViewController) -> CGRect {
         return CGRectZero
     }
 
-    func finalFrameForViewController(vc: UIViewController) -> CGRect {
+    func finalFrameForViewController(_ vc: UIViewController) -> CGRect {
         return CGRectZero
     }
 
@@ -113,9 +113,9 @@ class WCustomTransitioningContext: NSObject, UIViewControllerContextTransitionin
         return .None
     }
 
-    func completeTransition(didComplete: Bool) {}
+    func completeTransition(_ didComplete: Bool) {}
 
-    func updateInteractiveTransition(percentComplete: CGFloat) {}
+    func updateInteractiveTransition(_ percentComplete: CGFloat) {}
 
     func finishInteractiveTransition() {}
 

@@ -19,14 +19,14 @@
 import Foundation
 import UIKit
 
-public class WBadge: UIView {
-    public var badgeColor = UIColor(hex: 0x0094FF) { //blue
+open class WBadge: UIView {
+    open var badgeColor = UIColor(hex: 0x0094FF) { //blue
         didSet {
             setupUI()
         }
     }
 
-    public var lockBadgeColor: Bool = true {
+    open var lockBadgeColor: Bool = true {
         didSet {
             badgeView.lockBackgroundColor = lockBadgeColor
             borderView.lockBackgroundColor = lockBadgeColor
@@ -34,75 +34,75 @@ public class WBadge: UIView {
         }
     }
     
-    public var countColor = UIColor.whiteColor() {
+    open var countColor = UIColor.white {
         didSet {
             setupUI()
         }
     }
 
-    public var borderColor = UIColor.clearColor() {
+    open var borderColor = UIColor.clear {
         didSet {
             setupUI()
         }
     }
     
-    public var borderWidth: CGFloat = 0 {
+    open var borderWidth: CGFloat = 0 {
         didSet {
             setupUI()
         }
     }
     
-    public var horizontalAlignment: xAlignment = .Left {
+    open var horizontalAlignment: xAlignment = .left {
         didSet {
             setupUI()
         }
     }
 
-    public var verticalAlignment: yAlignment = .Top {
+    open var verticalAlignment: yAlignment = .top {
         didSet {
             setupUI()
         }
     }
 
     // Will automatically hide the badge if less than 1
-    public var automaticallyHide: Bool = true {
+    open var automaticallyHide: Bool = true {
         didSet {
-            hidden = shouldHide()
+            isHidden = shouldHide()
         }
     }
 
-    public var showValue: Bool = true {
+    open var showValue: Bool = true {
         didSet {
             setupUI()
         }
     }
 
-    public var count: Int = 0 {
+    open var count: Int = 0 {
         didSet {
             layoutIfNeeded()
             setupUI()
         }
     }
 
-    public var widthPadding: CGFloat = 10.0 {
+    open var widthPadding: CGFloat = 10.0 {
         didSet {
             setupUI()
         }
     }
 
-    public var heightPadding: CGFloat = 0.0 {
+    open var heightPadding: CGFloat = 0.0 {
         didSet {
             setupUI()
         }
     }
 
-    public var font: UIFont = UIFont.boldSystemFontOfSize(12) {
+    open var font: UIFont = UIFont.boldSystemFont(ofSize: 12) {
         didSet {
             setupUI()
         }
     }
 
-    public var fontSize: CGFloat = 12.0 {
+    open var fontSize: CGFloat = 12.0 {
         didSet {
             font = UIFont(name:font.fontName, size:fontSize)!
             setupUI()
@@ -110,17 +110,17 @@ public class WBadge: UIView {
     }
 
     // Defaults to labelSize.height / 2 if not set
-    public var cornerRadius: CGFloat? {
+    open var cornerRadius: CGFloat? {
         didSet {
             setupUI()
         }
     }
 
-    public func increment() {
+    open func increment() {
         count = count + 1
     }
 
-    public func decrement() {
+    open func decrement() {
         count = count - 1
     }
 
@@ -145,42 +145,42 @@ public class WBadge: UIView {
     }
 
     public convenience init(_ count: Int) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
 
         self.count = count
 
         setupUI()
     }
 
-    public func commonInit() {
+    open func commonInit() {
         addSubview(borderView)
         addSubview(badgeView)
         badgeView.addSubview(countLabel)
     }
 
-    private var labelSize: CGSize = CGSizeZero
+    fileprivate var labelSize: CGSize = CGSize.zero
 
-    public func setupUI() {
-        hidden = shouldHide()
+    open func setupUI() {
+        isHidden = shouldHide()
 
         setBadgeCount(count)
 
-        badgeView.snp_remakeConstraints { (make) in
+        badgeView.snp.remakeConstraints { (make) in
             switch horizontalAlignment {
-            case .Left:
+            case .left:
                 make.left.equalTo(0)
-            case .Center:
+            case .center:
                 make.centerX.equalTo(self)
-            case .Right:
+            case .right:
                 make.right.equalTo(0)
             }
 
             switch verticalAlignment {
-            case .Top:
+            case .top:
                 make.top.equalTo(0)
-            case .Center:
+            case .center:
                 make.centerY.equalTo(self)
-            case .Bottom:
+            case .bottom:
                 make.bottom.equalTo(0)
             }
 
@@ -188,14 +188,14 @@ public class WBadge: UIView {
             make.height.equalTo(sizeForBadge().height)
         }
 
-        borderView.snp_remakeConstraints { (make) in
+        borderView.snp.remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
-            make.width.equalTo(badgeView.snp_width).offset(borderWidth)
-            make.height.equalTo(badgeView.snp_height).offset(borderWidth)
+            make.width.equalTo(badgeView.snp.width).offset(borderWidth)
+            make.height.equalTo(badgeView.snp.height).offset(borderWidth)
         }
         
-        countLabel.snp_remakeConstraints { (make) in
+        countLabel.snp.remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
             make.width.equalTo(labelSize.width)
@@ -223,12 +223,12 @@ public class WBadge: UIView {
     }
 
     internal func sizeForBadge() -> CGSize {
-        return CGSizeMake(labelSize.width + widthPadding + borderWidth + (shouldShowValue() ? 0 : 1), labelSize.height + heightPadding + borderWidth)
+        return CGSize(width: labelSize.width + widthPadding + borderWidth + (shouldShowValue() ? 0 : 1), height: labelSize.height + heightPadding + borderWidth)
     }
 
-    internal func setBadgeCount(count: Int) {
+    internal func setBadgeCount(_ count: Int) {
         countLabel.text = (!showValue) ? " " : String(count)
-        countLabel.textAlignment = .Center
+        countLabel.textAlignment = .center
         countLabel.font = font
         countLabel.textColor = countColor
         countLabel.sizeToFit()
@@ -240,7 +240,7 @@ public class WBadge: UIView {
 
     // Must have a invalidateIntrinsicContentSize() call in setupUI()
     // Adjusts the size of the enclosing view (user should not modify the height/width)
-    public override func intrinsicContentSize() -> CGSize {
+    open override var intrinsicContentSize : CGSize {
         return CGSize(width: sizeForBadge().width, height: sizeForBadge().height)
     }
 }
@@ -253,7 +253,7 @@ internal class WLockBackgroundView: UIView {
 
     override var backgroundColor: UIColor? {
         didSet {
-            if (lockBackgroundColor && UIColor.clearColor().isEqual(backgroundColor)) {
+            if (lockBackgroundColor && UIColor.clear.isEqual(backgroundColor)) {
                 backgroundColor = oldValue
             }
         }

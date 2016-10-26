@@ -19,15 +19,15 @@
 import Foundation
 import WMobileKit
 
-public class PagingControlVCExampleVC: WPagingSelectorVC {
+open class PagingControlVCExampleVC: WPagingSelectorVC {
     var scrollView: UIScrollView?
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         
         // Create simple VC's to send to pagingSelectorVC
-        let vc1 = mainStoryboard.instantiateViewControllerWithIdentifier("textVC") as! PagingSelectorDelegateVC
+        let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "textVC") as! PagingSelectorDelegateVC
         
         let vc2 = WSideMenuContentVC()
         vc2.view.backgroundColor = UIColor(hex: 0x0000B2) // dark blue
@@ -60,10 +60,10 @@ public class PagingControlVCExampleVC: WPagingSelectorVC {
         self.pages = pages
         
         separatorLineHeight = 3.0
-        shadowColor = UIColor.purpleColor().CGColor
+        shadowColor = UIColor.purple.cgColor
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Set the WSideMenu delegate when the VC appears
@@ -71,8 +71,8 @@ public class PagingControlVCExampleVC: WPagingSelectorVC {
     }
 }
 
-public class PagingSelectorDelegateVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
-    public func shouldShowShadow(sender: WPagingSelectorVC) -> Bool {
+open class PagingSelectorDelegateVC: WSideMenuContentVC, WPagingSelectorVCDelegate {
+    open func shouldShowShadow(_ sender: WPagingSelectorVC) -> Bool {
         if let scrollView = view.subviews[0] as? UIScrollView {
             return scrollView.contentOffset.y > 0
         }

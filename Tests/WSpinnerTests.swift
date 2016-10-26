@@ -48,7 +48,7 @@ class WSpinnerTests: QuickSpec {
                     spinnerView = WSpinner()
 
                     subject.view.addSubview(spinnerView)
-                    spinnerView.snp_makeConstraints { (make) in
+                    spinnerView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -108,7 +108,7 @@ class WSpinnerTests: QuickSpec {
                     spinnerView.indeterminate = true
 
                     subject.view.addSubview(spinnerView)
-                    spinnerView.snp_makeConstraints { (make) in
+                    spinnerView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -195,7 +195,7 @@ class WSpinnerTests: QuickSpec {
                     spinnerView.lineWidth = 1
 
                     subject.view.addSubview(spinnerView)
-                    spinnerView.snp_makeConstraints { (make) in
+                    spinnerView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)

@@ -227,7 +227,7 @@ class WSideMenuVCSpec: QuickSpec {
                 }
 
                 it("should add side menu buttons for a content VC with a drawer icon") {
-                    let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                    let image = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage1", ofType: "png")!)
 
                     subject.options?.drawerIcon = image
 

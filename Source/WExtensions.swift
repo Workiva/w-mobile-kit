@@ -20,11 +20,11 @@ import Foundation
 
 public extension String {
     // Returns the concatenation of the first letter of each word in a string
-    public func initials(limit: Int = 3) -> String {
+    public func initials(_ limit: Int = 3) -> String {
         let range = startIndex..<endIndex
         var initials = String()
 
-        enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, stop) -> () in
+        enumerateSubstrings(in: range, options: NSString.EnumerationOptions.byWords) { (substring, _, _, stop) -> () in
             let initial = substring!.characters.first! as Character
             initials = initials + String(initial)
             if (initials.characters.count >= limit) {
@@ -42,15 +42,15 @@ public extension String {
 }
 
 public extension CGPoint {
-    func distanceToPoint(point: CGPoint) -> CGFloat {
+    func distanceToPoint(_ point: CGPoint) -> CGFloat {
         return sqrt(pow(x-point.x, 2) + pow(y-point.y, 2));
     }
 }
 
 public extension UILongPressGestureRecognizer {
     func cancelGesture() {
-        enabled = false
-        enabled = true
+        isEnabled = false
+        isEnabled = true
     }
 }
 
@@ -60,13 +60,13 @@ public extension UILabel {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = frame.size.height
         paragraphStyle.maximumLineHeight = frame.size.height
-        paragraphStyle.lineBreakMode = .ByWordWrapping
+        paragraphStyle.lineBreakMode = .byWordWrapping
         let attributes: [String: AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
 
-        let size = text!.sizeWithAttributes(attributes)
+        let size = text!.size(attributes: attributes)
         let stringWidth = size.width
 
-        let constrainedSize = CGSizeMake(frame.size.width, CGFloat(Float.infinity))
+        let constrainedSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
 
         if ((constrainedSize.width == 0) || (stringWidth == 0)) {
             return 1
@@ -79,8 +79,8 @@ public extension UILabel {
 public extension UIApplication {
     func isRunningInFullScreen() -> Bool {
         if let w = self.keyWindow {
-            let maxScreenSize = max(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
-            let minScreenSize = min(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+            let maxScreenSize = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+            let minScreenSize = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
             let maxAppSize = max(w.bounds.size.width, w.bounds.size.height)
             let minAppSize = min(w.bounds.size.width, w.bounds.size.height)
             return maxScreenSize == maxAppSize && minScreenSize == minAppSize

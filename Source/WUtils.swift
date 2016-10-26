@@ -19,8 +19,8 @@
 import Foundation
 
 public enum xAlignment {
-    case Left, Center, Right
+    case left, center, right
 }
 public enum yAlignment {
-    case Top, Center, Bottom
+    case top, center, bottom
 }

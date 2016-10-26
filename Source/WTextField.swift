@@ -19,49 +19,49 @@
 import UIKit
 
 @objc public protocol WAutoCompleteTextFieldDelegate: UITextFieldDelegate {
-    func textFieldDidChangeSelection(textField: UITextField)
+    func textFieldDidChangeSelection(_ textField: UITextField)
 }
 
-public class WTextField: UITextField {
-    public var imageSquareSize: CGFloat = 16
-    public var paddingBetweenTextAndImage: CGFloat = 8
+open class WTextField: UITextField {
+    open var imageSquareSize: CGFloat = 16
+    open var paddingBetweenTextAndImage: CGFloat = 8
 
-    private var bottomLine = CALayer()
-    public var bottomLineWidth: CGFloat = 1 {
+    fileprivate var bottomLine = CALayer()
+    open var bottomLineWidth: CGFloat = 1 {
         didSet {
             setBottomBorder()
         }
     }
-    public var bottomLineWidthWithText: CGFloat = 2 {
+    open var bottomLineWidthWithText: CGFloat = 2 {
         didSet {
             setBottomBorder()
         }
     }
-    private var currentBottomLineWidth: CGFloat? // Used to preserve above set values
+    fileprivate var currentBottomLineWidth: CGFloat? // Used to preserve above set values
     
-    public weak var autoCompleteDelegate: WAutoCompleteTextFieldDelegate?
+    open weak var autoCompleteDelegate: WAutoCompleteTextFieldDelegate?
         
-    public override var selectedTextRange: UITextRange? {
+    open override var selectedTextRange: UITextRange? {
         didSet {
             autoCompleteDelegate?.textFieldDidChangeSelection(self)
         }
     }
 
-    public override var rightViewMode: UITextFieldViewMode {
+    open override var rightViewMode: UITextFieldViewMode {
         didSet {
             determineIfRightViewShouldBeHidden()
         }
     }
 
-    public var bottomLineColor: UIColor = .whiteColor() {
+    open var bottomLineColor: UIColor = .white {
         didSet {
             setBottomBorder()
         }
     }
 
-    public var clearPlacholderOnEditing: Bool = true
+    open var clearPlacholderOnEditing: Bool = true
 
-    public var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
+    open var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
         didSet {
             if (self.placeholder != nil) {
                 self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
@@ -71,19 +71,19 @@ public class WTextField: UITextField {
         }
     }
 
-    public var leftImage: UIImage? {
+    open var leftImage: UIImage? {
         didSet {
             setupUI()
         }
     }
 
-    public var rightImage: UIImage? {
+    open var rightImage: UIImage? {
         didSet {
             setupUI()
         }
     }
 
-    public var rightViewIsClearButton: Bool = false {
+    open var rightViewIsClearButton: Bool = false {
         didSet {
             setupUI()
         }
@@ -97,7 +97,7 @@ public class WTextField: UITextField {
     }
     
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -106,50 +106,50 @@ public class WTextField: UITextField {
         commonInit()
     }
 
-    public func commonInit() {
-        textColor = .whiteColor()
-        tintColor = .whiteColor()
+    open func commonInit() {
+        textColor = .white
+        tintColor = .white
         placeHolderTextColor = UIColor(hex: 0xFFFFFF, alpha: 0.55)
-        backgroundColor = .clearColor()
-        autocapitalizationType = .None
+        backgroundColor = .clear
+        autocapitalizationType = .none
         adjustsFontSizeToFitWidth = true
         minimumFontSize = 9
 
-        borderStyle = .None
+        borderStyle = .none
 
-        addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+        addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
 
-    public func setupUI() {
+    open func setupUI() {
         // Left View configuration
         if (leftImage != nil) {
             leftView = UIImageView(image: leftImage)
-            leftView?.contentMode = .ScaleAspectFit
-            leftViewMode = .Always
+            leftView?.contentMode = .scaleAspectFit
+            leftViewMode = .always
         }
 
         // Right View configuration
         if (rightImage != nil) {
             if (rightViewIsClearButton) {
                 let clearButton = UIButton()
-                clearButton.setImage(rightImage, forState: .Normal)
-                clearButton.addTarget(self, action: #selector(clearButtonWasPressed), forControlEvents: .TouchUpInside)
+                clearButton.setImage(rightImage, for: UIControlState())
+                clearButton.addTarget(self, action: #selector(clearButtonWasPressed), for: .touchUpInside)
                 rightView = clearButton
-                rightViewMode = .WhileEditing
-                rightView?.hidden = true
+                rightViewMode = .whileEditing
+                rightView?.isHidden = true
             } else {
                 rightView = UIImageView(image: rightImage)
-                rightViewMode = .Always
+                rightViewMode = .always
             }
-            rightView?.contentMode = .ScaleAspectFit
+            rightView?.contentMode = .scaleAspectFit
         }
     }
 
-    public func setBottomBorder() {
+    open func setBottomBorder() {
         currentBottomLineWidth = (text == nil && text!.isEmpty) ? bottomLineWidth : bottomLineWidthWithText
 
-        bottomLine.frame = CGRectMake(0, frame.height - bottomLineWidth, frame.width, currentBottomLineWidth!)
-        bottomLine.backgroundColor = bottomLineColor.CGColor
+        bottomLine.frame = CGRect(x: 0, y: frame.height - bottomLineWidth, width: frame.width, height: currentBottomLineWidth!)
+        bottomLine.backgroundColor = bottomLineColor.cgColor
 
         // Only add the layer if it has not yet been added.
         if (bottomLine.superlayer != layer) {
@@ -157,37 +157,37 @@ public class WTextField: UITextField {
         }
     }
 
-    private func setEmptyPlaceholder() {
+    fileprivate func setEmptyPlaceholder() {
         // We need to set the placeholder to an empty string in this case so that
         // the color persists when they "set" (now really change) the placeholder text
         self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
     }
 
     // MARK: - Custom Rect Sizings
-    public override func leftViewRectForBounds(bounds: CGRect) -> CGRect {
+    open override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         let originY = (bounds.size.height - imageSquareSize) / 2
-        return CGRectMake(0, originY, imageSquareSize, imageSquareSize)
+        return CGRect(x: 0, y: originY, width: imageSquareSize, height: imageSquareSize)
     }
 
-    public override func rightViewRectForBounds(bounds: CGRect) -> CGRect {
+    open override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         let originY = (bounds.size.height - imageSquareSize) / 2
-        return CGRectMake(bounds.size.width - imageSquareSize, originY, imageSquareSize, imageSquareSize)
+        return CGRect(x: bounds.size.width - imageSquareSize, y: originY, width: imageSquareSize, height: imageSquareSize)
     }
 
-    public override func editingRectForBounds(bounds: CGRect) -> CGRect {
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return wCustomTextRect(bounds)
     }
 
-    public override func placeholderRectForBounds(bounds: CGRect) -> CGRect {
+    open override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return wCustomTextRect(bounds)
     }
 
-    public override func textRectForBounds(bounds: CGRect) -> CGRect {
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
         setBottomBorder()
         return wCustomTextRect(bounds)
     }
 
-    private func wCustomTextRect(bounds: CGRect) -> CGRect {
+    fileprivate func wCustomTextRect(_ bounds: CGRect) -> CGRect {
         let imageWidthWithPadding: CGFloat = imageSquareSize + paddingBetweenTextAndImage
         var xPosition: CGFloat = bounds.origin.x
         var width = bounds.size.width
@@ -201,7 +201,7 @@ public class WTextField: UITextField {
             width -= imageWidthWithPadding
         }
 
-        return CGRectMake(xPosition, bounds.origin.y, width, bounds.size.height - 2)
+        return CGRect(x: xPosition, y: bounds.origin.y, width: width, height: bounds.size.height - 2)
     }
 
     func textFieldDidChange() {
@@ -211,21 +211,21 @@ public class WTextField: UITextField {
     func determineIfRightViewShouldBeHidden() {
         if (rightViewIsClearButton) {
             switch rightViewMode {
-            case .Always:
-                rightView?.hidden = false
-            case .Never:
-                rightView?.hidden = true
-            case .UnlessEditing:
-                rightView?.hidden = !(text == nil || text!.isEmpty)
-            case .WhileEditing:
-                rightView?.hidden = (text == nil || text!.isEmpty)
+            case .always:
+                rightView?.isHidden = false
+            case .never:
+                rightView?.isHidden = true
+            case .unlessEditing:
+                rightView?.isHidden = !(text == nil || text!.isEmpty)
+            case .whileEditing:
+                rightView?.isHidden = (text == nil || text!.isEmpty)
             }
         }
     }
 
     func clearButtonWasPressed() {
         text = ""
-        sendActionsForControlEvents(.EditingChanged)
+        sendActions(for: .editingChanged)
         determineIfRightViewShouldBeHidden()
     }
 }

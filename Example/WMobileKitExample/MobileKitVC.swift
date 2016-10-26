@@ -19,12 +19,12 @@
 import Foundation
 import WMobileKit
 
-public class MobileKitVC: WSideMenuContentVC {
-    public override func viewDidLoad() {
+open class MobileKitVC: WSideMenuContentVC {
+    open override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         // Set the WSideMenu delegate when the VC appears

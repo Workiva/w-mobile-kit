@@ -289,7 +289,7 @@ class WToastSpec: QuickSpec {
 
                 it("should successfully add and display a custom toast view with a set width") {
                     let showDuration = 1.0
-                    let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                    let image = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage1", ofType: "png")!)
 
                     toastView = WToastView()
                     toastView.showDuration = showDuration

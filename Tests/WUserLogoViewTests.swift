@@ -70,7 +70,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView(name: name1)
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -95,7 +95,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.lineWidth = 2.0
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(100)
@@ -116,7 +116,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView(name: name3)
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -136,7 +136,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.initialsLimit = 4
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -155,7 +155,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView = WUserLogoView(name: "")
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -178,7 +178,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.bounds = CGRectMake(0, 0, 80, 80)
 
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)
@@ -201,7 +201,7 @@ class WUserLogoViewTests: QuickSpec {
                     userLogoView.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
                     
                     subject.view.addSubview(userLogoView)
-                    userLogoView.snp_makeConstraints { (make) in
+                    userLogoView.snp.makeConstraints { (make) in
                         make.centerX.equalTo(subject.view)
                         make.top.equalTo(subject.view).offset(10)
                         make.width.equalTo(80)

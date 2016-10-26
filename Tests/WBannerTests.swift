@@ -21,7 +21,7 @@ import Nimble
 @testable import WMobileKit
 
 // Alpha doesn't always return a clean number.
-public func roundAlpha(alpha: CGFloat) -> CGFloat {
+public func roundAlpha(_ alpha: CGFloat) -> CGFloat {
     return CGFloat(round(1000*alpha)/1000)
 }
 
@@ -52,8 +52,8 @@ class WBannerSpec: QuickSpec {
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
 
-                image1 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
-                image2 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                image1 = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage1", ofType: "png")!)
+                image2 = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage2", ofType: "png")!)
             })
 
             afterEach({

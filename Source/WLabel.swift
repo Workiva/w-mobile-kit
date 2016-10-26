@@ -19,14 +19,14 @@
 import Foundation
 
 @objc public protocol WLabelDelegate {
-    optional func lineCountChanged(lineCount: Int)
+    @objc optional func lineCountChanged(_ lineCount: Int)
 }
 
-public class WLabel: UILabel {
-    public weak var delegate: WLabelDelegate?
+open class WLabel: UILabel {
+    open weak var delegate: WLabelDelegate?
 
     // Trigger on bounds change and notify the delegate of the new line count
-    public override var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             delegate?.lineCountChanged?(dynamicLineCount())
         }

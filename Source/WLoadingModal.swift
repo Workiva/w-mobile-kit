@@ -19,50 +19,50 @@
 import Foundation
 import UIKit
 
-public class WLoadingModal: UIView {
-    public var spinnerView: WSpinner = WSpinner()
+open class WLoadingModal: UIView {
+    open var spinnerView: WSpinner = WSpinner()
 
-    public var spinnerSize: CGFloat = 44 {
+    open var spinnerSize: CGFloat = 44 {
         didSet {
             self.remakeSpinnerConstraints()
         }
     }
 
-    public var paddingBetweenViewTopAndSpinner: CGFloat = 32 {
+    open var paddingBetweenViewTopAndSpinner: CGFloat = 32 {
         didSet {
             self.remakeAllConstraints()
         }
     }
 
-    public var paddingBetweenTitleAndSpinner: CGFloat = 32 {
+    open var paddingBetweenTitleAndSpinner: CGFloat = 32 {
         didSet {
             self.remakeTitleConstraints()
         }
     }
 
-    public var paddingBetweenDescriptionAndTitle: CGFloat = 32 {
+    open var paddingBetweenDescriptionAndTitle: CGFloat = 32 {
         didSet {
             self.remakeDescriptionConstraints()
         }
     }
 
-    public var titleLabel: UILabel = UILabel()
+    open var titleLabel: UILabel = UILabel()
 
-    public var titleLabelHeight: CGFloat = 20 {
+    open var titleLabelHeight: CGFloat = 20 {
         didSet  {
             self.remakeTitleConstraints()
         }
     }
 
-    public var descriptionLabel: UILabel = UILabel()
+    open var descriptionLabel: UILabel = UILabel()
 
-    public var descriptionLabelHeight: CGFloat = 60 {
+    open var descriptionLabelHeight: CGFloat = 60 {
         didSet {
             self.remakeDescriptionConstraints()
         }
     }
 
-    public var addBlurBackground: Bool = true {
+    open var addBlurBackground: Bool = true {
         didSet {
             blurEffectView.removeFromSuperview()
 
@@ -74,21 +74,21 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public var blurEffectStyle: UIBlurEffectStyle = .Dark {
+    open var blurEffectStyle: UIBlurEffectStyle = .dark {
         didSet {
             remakeBlurBackground()
         }
     }
 
-    public var blurEffectAutoResizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight] {
+    open var blurEffectAutoResizingMask: UIViewAutoresizing = [.flexibleWidth, .flexibleHeight] {
         didSet {
             remakeBlurBackground()
         }
     }
 
-    public var blurEffect = UIBlurEffect()
+    open var blurEffect = UIBlurEffect()
 
-    public var blurEffectView = UIVisualEffectView()
+    open var blurEffectView = UIVisualEffectView()
 
     // MARK: - Inits
     public convenience init(_ title: String) {
@@ -130,7 +130,7 @@ public class WLoadingModal: UIView {
         commonInit()
     }
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
         if (addBlurBackground) {
@@ -142,19 +142,19 @@ public class WLoadingModal: UIView {
         addSubview(spinnerView)
         remakeSpinnerConstraints()
 
-        titleLabel.textColor = .whiteColor()
-        titleLabel.textAlignment = .Center
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .center
         addSubview(titleLabel)
         remakeTitleConstraints()
 
-        descriptionLabel.textColor = .whiteColor()
-        descriptionLabel.textAlignment = .Center
+        descriptionLabel.textColor = .white
+        descriptionLabel.textAlignment = .center
         descriptionLabel.numberOfLines = 0
         addSubview(descriptionLabel)
         remakeDescriptionConstraints()
     }
 
-    private func remakeBlurBackground() {
+    fileprivate func remakeBlurBackground() {
         blurEffect = UIBlurEffect(style: blurEffectStyle)
         blurEffectView.effect = blurEffect
 
@@ -162,24 +162,24 @@ public class WLoadingModal: UIView {
         blurEffectView.autoresizingMask = blurEffectAutoResizingMask
     }
 
-    private func remakeAllConstraints() {
+    fileprivate func remakeAllConstraints() {
         remakeSpinnerConstraints()
         remakeTitleConstraints()
         remakeDescriptionConstraints()
     }
 
-    private func remakeSpinnerConstraints() {
-        spinnerView.snp_remakeConstraints { (make) in
-            make.top.equalTo(self.snp_top).offset(paddingBetweenViewTopAndSpinner)
+    fileprivate func remakeSpinnerConstraints() {
+        spinnerView.snp.remakeConstraints { (make) in
+            make.top.equalTo(self.snp.top).offset(paddingBetweenViewTopAndSpinner)
             make.centerX.equalTo(self)
             make.width.equalTo(spinnerSize)
             make.height.equalTo(spinnerSize)
         }
     }
 
-    private func remakeTitleConstraints() {
-        titleLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(spinnerView.snp_bottom).offset(paddingBetweenTitleAndSpinner)
+    fileprivate func remakeTitleConstraints() {
+        titleLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(spinnerView.snp.bottom).offset(paddingBetweenTitleAndSpinner)
             make.centerX.equalTo(self)
             make.left.equalTo(self)
             make.right.equalTo(self)
@@ -187,9 +187,9 @@ public class WLoadingModal: UIView {
         }
     }
 
-    private func remakeDescriptionConstraints() {
-        descriptionLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp_bottom).offset(paddingBetweenDescriptionAndTitle)
+    fileprivate func remakeDescriptionConstraints() {
+        descriptionLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(paddingBetweenDescriptionAndTitle)
             make.centerX.equalTo(self)
             make.left.equalTo(self)
             make.right.equalTo(self)
@@ -197,16 +197,16 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public func show(view: UIView) {
+    open func show(_ view: UIView) {
         self.show(view, insets: UIEdgeInsetsMake(0, 0, 0, 0))
     }
 
-    public func show(view: UIView, insets: UIEdgeInsets) {
+    open func show(_ view: UIView, insets: UIEdgeInsets) {
         hide()
 
         view.addSubview(self)
 
-        self.snp_makeConstraints { (make) in
+        self.snp.makeConstraints { (make) in
             make.top.equalTo(insets.top)
             make.right.equalTo(insets.right)
             make.bottom.equalTo(insets.bottom)
@@ -214,13 +214,13 @@ public class WLoadingModal: UIView {
         }
     }
 
-    public func hide() {
+    open func hide() {
         if (superview != nil) {
             removeFromSuperview()
         }
     }
 
-    public func setProgress(progress: CGFloat) {
+    open func setProgress(_ progress: CGFloat) {
         if (spinnerView.indeterminate) {
             spinnerView.indeterminate = false
         }

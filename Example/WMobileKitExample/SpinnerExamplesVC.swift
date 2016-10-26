@@ -19,87 +19,87 @@
 import Foundation
 import WMobileKit
 
-public class SpinnerExamplesVC: WSideMenuContentVC {
+open class SpinnerExamplesVC: WSideMenuContentVC {
     var currentProgress: CGFloat = 0
     let progressSpinner1 = WSpinner()
     let progressSpinner2 = WSpinner()
     let progressSpinner3 = WSpinner()
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // MARK: Indeterminate spinners.
-        let emptyProgressSpinner = WSpinner(frame: CGRectZero)
+        let emptyProgressSpinner = WSpinner(frame: .zero)
         view.addSubview(emptyProgressSpinner)
-        emptyProgressSpinner.snp_makeConstraints { (make) in
+        emptyProgressSpinner.snp.makeConstraints { (make) in
             make.top.equalTo(view).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(85)
             make.height.equalTo(85)
         }
 
-        let indeterminateSpinner2 = WSpinner(frame: CGRectZero)
+        let indeterminateSpinner2 = WSpinner(frame: .zero)
         view.addSubview(indeterminateSpinner2)
-        indeterminateSpinner2.snp_makeConstraints { (make) in
+        indeterminateSpinner2.snp.makeConstraints { (make) in
             make.centerY.equalTo(emptyProgressSpinner)
-            make.right.equalTo(emptyProgressSpinner.snp_left).offset(-12)
+            make.right.equalTo(emptyProgressSpinner.snp.left).offset(-12)
             make.width.equalTo(40)
             make.height.equalTo(40)
         }
         indeterminateSpinner2.indeterminate = true
-        indeterminateSpinner2.backgroundLineColor = .grayColor()
-        indeterminateSpinner2.progressLineColor = .blueColor()
+        indeterminateSpinner2.backgroundLineColor = .gray
+        indeterminateSpinner2.progressLineColor = .blue
 
-        let indeterminateSpinner3 = WSpinner(frame: CGRectZero)
+        let indeterminateSpinner3 = WSpinner(frame: .zero)
         view.addSubview(indeterminateSpinner3)
-        indeterminateSpinner3.snp_makeConstraints { (make) in
+        indeterminateSpinner3.snp.makeConstraints { (make) in
             make.centerY.equalTo(emptyProgressSpinner)
-            make.left.equalTo(emptyProgressSpinner.snp_right).offset(12)
+            make.left.equalTo(emptyProgressSpinner.snp.right).offset(12)
             make.width.equalTo(60)
             make.height.equalTo(60)
         }
         indeterminateSpinner3.indeterminate = true
-        indeterminateSpinner3.progressLineColor = .orangeColor()
+        indeterminateSpinner3.progressLineColor = .orange
 
         // MARK: Progress spinners.
         view.addSubview(progressSpinner1)
-        progressSpinner1.snp_makeConstraints { (make) in
-            make.top.equalTo(emptyProgressSpinner.snp_bottom).offset(10)
+        progressSpinner1.snp.makeConstraints { (make) in
+            make.top.equalTo(emptyProgressSpinner.snp.bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(80)
             make.height.equalTo(80)
         }
-        progressSpinner1.progressLineColor = .grayColor()
-        progressSpinner1.backgroundLineColor = .cyanColor()
+        progressSpinner1.progressLineColor = .gray
+        progressSpinner1.backgroundLineColor = .cyan
         progressSpinner1.icon = UIImage(named: "gear")!
 
         view.addSubview(progressSpinner2)
-        progressSpinner2.snp_makeConstraints { (make) in
+        progressSpinner2.snp.makeConstraints { (make) in
             make.centerY.equalTo(progressSpinner1)
-            make.right.equalTo(progressSpinner1.snp_left).offset(-12)
+            make.right.equalTo(progressSpinner1.snp.left).offset(-12)
             make.width.equalTo(55)
             make.height.equalTo(55)
         }
         progressSpinner2.lineWidth = 6
-        progressSpinner2.progressLineColor = .cyanColor()
+        progressSpinner2.progressLineColor = .cyan
 
         view.addSubview(progressSpinner3)
-        progressSpinner3.snp_makeConstraints { (make) in
+        progressSpinner3.snp.makeConstraints { (make) in
             make.centerY.equalTo(progressSpinner1)
-            make.left.equalTo(progressSpinner1.snp_right).offset(12)
+            make.left.equalTo(progressSpinner1.snp.right).offset(12)
             make.width.equalTo(40)
             make.height.equalTo(40)
         }
         progressSpinner3.lineWidth = 2
-        progressSpinner3.progressLineColor = .blackColor()
+        progressSpinner3.progressLineColor = .black
 
         // MARK: Intended styling.
-        let indeterminateSpinner4 = WSpinner(frame: CGRectZero)
+        let indeterminateSpinner4 = WSpinner(frame: .zero)
         indeterminateSpinner4.indeterminate = true
         view.addSubview(indeterminateSpinner4)
-        indeterminateSpinner4.snp_makeConstraints { (make) in
+        indeterminateSpinner4.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(progressSpinner1.snp_bottom).offset(10)
+            make.top.equalTo(progressSpinner1.snp.bottom).offset(10)
             make.width.equalTo(44)
             make.height.equalTo(44)
         }
@@ -107,14 +107,14 @@ public class SpinnerExamplesVC: WSideMenuContentVC {
         // MARK: Reset progress to allow a better demo.
         let resetProgressButton = UIButton()
         view.addSubview(resetProgressButton)
-        resetProgressButton.setTitle("Reset Progress", forState: .Normal)
-        resetProgressButton.setTitleColor(.whiteColor(), forState: .Normal)
-        resetProgressButton.backgroundColor = .clearColor()
-        resetProgressButton.layer.borderColor = UIColor.whiteColor().CGColor
+        resetProgressButton.setTitle("Reset Progress", for: .normal)
+        resetProgressButton.setTitleColor(.white, for: .normal)
+        resetProgressButton.backgroundColor = .clear
+        resetProgressButton.layer.borderColor = UIColor.white.cgColor
         resetProgressButton.layer.cornerRadius = 5
-        resetProgressButton.snp_makeConstraints { (make) in
+        resetProgressButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.bottom.equalTo(view.snp_bottom).offset(-12)
+            make.bottom.equalTo(view.snp.bottom).offset(-12)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
@@ -126,9 +126,9 @@ public class SpinnerExamplesVC: WSideMenuContentVC {
         startProgress()
     }
 
-    public func updateProgress(sender: AnyObject) {
-        if sender is NSTimer {
-            let timer = sender as! NSTimer;
+    open func updateProgress(_ sender: AnyObject) {
+        if sender is Timer {
+            let timer = sender as! Timer;
 
             currentProgress += 0.02
 
@@ -143,14 +143,14 @@ public class SpinnerExamplesVC: WSideMenuContentVC {
         setProgress(currentProgress)
     }
 
-    public func setProgress(progress: CGFloat) {
+    open func setProgress(_ progress: CGFloat) {
         progressSpinner1.progress = progress
         progressSpinner2.progress = progress
         progressSpinner3.progress = progress
     }
 
-    public func startProgress() {
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(SpinnerExamplesVC.updateProgress(_:)), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    open func startProgress() {
+        let timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SpinnerExamplesVC.updateProgress(_:)), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
     }
 }

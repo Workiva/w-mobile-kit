@@ -173,7 +173,7 @@ class WTextViewTests: QuickSpec {
                         expect(textView.leftImageView.superview).toNot(beNil())
                         expect(textView.leftImageView.image).to(beNil())
                         
-                        let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                        let image = UIImage(contentsOfFile: NSBundle(forClass: type(of: self)).pathForResource("testImage1", ofType: "png")!)
                         textView.leftImage = image
                         
                         expect(textView.leftImageView.image).toNot(beNil())
