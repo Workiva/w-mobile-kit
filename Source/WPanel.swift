@@ -94,14 +94,13 @@ public class WPanel: UIView {
 
 public class WPanelVC: WSideMenuContentVC {
     public var panelView = WPanel()
-    var panInterceptView = UIView()
-    var backgroundTapView = UIView()
+    public var floatingButton = WFAButton()
+    public var panInterceptView = UIView()
+    public var backgroundTapView = UIView()
 
     var topConstraint: Constraint?
     var originalYOffset: CGFloat?
     var initialYOffset: CGFloat?
-
-    var floatingButton = WFAButton()
 
     // Height Ratios for snapping, values can be any non-negative value where 1.0 equals full height of the view controller's view
     public var snapHeights: [CGFloat] = [0.0, 0.4, 0.96]
@@ -110,19 +109,29 @@ public class WPanelVC: WSideMenuContentVC {
     // 0.0 means no "rubber band" effect, 1.0 means they can drag as far as they want until it snaps back
     public var springValuePastMaxHeight: CGFloat = 0.02
 
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
+        commonInit()
+    }
+
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        commonInit()
+    }
+
+    public convenience init() {
+        self.init(nibName: nil, bundle: nil)
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        commonInit()
         setupUI()
     }
 
     public func commonInit() {
-        view.addSubview(backgroundTapView)
-        view.addSubview(floatingButton)
-        view.addSubview(panelView)
-        view.addSubview(panInterceptView)
-
         backgroundTapView.hidden = true
 
         floatingButton.icon = UIImage(named: "drawer")
@@ -138,6 +147,11 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     public func setupUI() {
+        view.addSubview(backgroundTapView)
+        view.addSubview(floatingButton)
+        view.addSubview(panelView)
+        view.addSubview(panInterceptView)
+
         let initialSnapRatio = getSmallestSnapRatio()
         originalYOffset = view.frame.height * initialSnapRatio
 
