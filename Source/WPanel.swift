@@ -193,6 +193,8 @@ public class WPanelVC: WSideMenuContentVC {
             make.height.width.equalTo(50)
         }
 
+        panelView.layer.cornerRadius = cornerRadius
+
         view.layoutIfNeeded()
     }
 
