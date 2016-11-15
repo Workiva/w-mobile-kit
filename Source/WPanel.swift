@@ -20,34 +20,28 @@ import Foundation
 import UIKit
 import SnapKit
 
-public class WPanel: UIView {
-    var headerView: UIView?
-    var headerHeight = 0
+protocol WPanelPageManagerDelegate: class {
+    func wPanelPageManager(pageManager: WPanelPageManagerVC, didUpdatePageCount count: Int)
+    func wPanelPageManager(pageManager: WPanelPageManagerVC, didUpdatePageIndex index: Int)
+}
 
+public class WPanel: UIView {
     var topDragLine = UIView()
     var bottomDragLine = UIView()
 
     public var dragLineWidth: CGFloat = 60.0
     public var containerView = UIView()
 
-    public var pages: [UIViewController]? {
-        didSet {
-            setupUI()
-        }
-    }
-
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         commonInit()
-        setupUI()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
         commonInit()
-        setupUI()
     }
 
     public convenience init() {
@@ -55,18 +49,19 @@ public class WPanel: UIView {
     }
 
     public func commonInit() {
-        backgroundColor = .whiteColor()
+        backgroundColor = .clearColor()
+        containerView.backgroundColor = .whiteColor()
 
         addSubview(containerView)
-
         addSubview(topDragLine)
         addSubview(bottomDragLine)
 
         topDragLine.backgroundColor = .grayColor()
         bottomDragLine.backgroundColor = .grayColor()
 
-        layer.cornerRadius = 5
         clipsToBounds = true
+
+        setupUI()
     }
 
     public func setupUI() {
@@ -98,13 +93,29 @@ public class WPanelVC: WSideMenuContentVC {
     public var panInterceptView = UIView()
     public var backgroundTapView = UIView()
 
+    public var outlineWidth: CGFloat = 0.5 {
+        didSet {
+            panelView.layer.borderWidth = outlineWidth
+        }
+    }
+
+    public var outlineColor: CGColor = UIColor.lightGrayColor().CGColor {
+        didSet {
+            panelView.layer.borderColor = outlineColor
+        }
+    }
+
+    public var cornerRadius: CGFloat = 5 {
+        didSet {
+            panelView.layer.cornerRadius = cornerRadius
+        }
+    }
+
     var topConstraint: Constraint?
-    var originalYOffset: CGFloat?
-    var initialYOffset: CGFloat?
 
     // Height Ratios for snapping, values can be any non-negative value where 1.0 equals full height of the view controller's view
     public var snapHeights: [CGFloat] = [0.0, 0.4, 0.96]
-    public var pages: [WPage]?
+
     // Cap value on how far user can drag the panel up before it snaps back to heighest value in snapHeights
     // 0.0 means no "rubber band" effect, 1.0 means they can drag as far as they want until it snaps back
     public var springValuePastMaxHeight: CGFloat = 0.02
@@ -152,8 +163,11 @@ public class WPanelVC: WSideMenuContentVC {
         view.addSubview(panelView)
         view.addSubview(panInterceptView)
 
+        panelView.layer.borderWidth = outlineWidth
+        panelView.layer.borderColor = outlineColor
+
         let initialSnapRatio = getSmallestSnapRatio()
-        originalYOffset = view.frame.height * initialSnapRatio
+        let originalYOffset = view.frame.height * initialSnapRatio
 
         backgroundTapView.snp_remakeConstraints { (make) in
             make.edges.equalTo(view)
@@ -162,8 +176,8 @@ public class WPanelVC: WSideMenuContentVC {
         panelView.snp_remakeConstraints { (make) in
             make.width.equalTo(view).offset(-20)
             make.centerX.equalTo(view)
-            topConstraint = make.top.equalTo(view.snp_bottom).offset(-originalYOffset!).constraint
-            make.bottom.equalTo(view).offset(5)
+            topConstraint = make.top.equalTo(view.snp_bottom).offset(-originalYOffset).constraint
+            make.bottom.equalTo(view).offset(cornerRadius)
         }
 
         panInterceptView.snp_remakeConstraints { (make) in
@@ -327,5 +341,251 @@ public class WPanelVC: WSideMenuContentVC {
 
     func floatingButtonWasPressed(sender: WFAButton) {
         movePanelToSnapRatio(snapHeights[1], animated: true)
+    }
+}
+
+public class WPagingPanelVC: WPanelVC {
+    // An array of the view controllers to be pages
+    public var pages: [UIViewController]? {
+        didSet {
+            pagingVC.pages = pages
+        }
+    }
+    // Height of the gray bar
+    public var pagingControlHeight: CGFloat = 50 {
+        didSet {
+            pagingVC.pagingHeight = pagingControlHeight
+        }
+    }
+    // When false, will only show paging bar when
+    public var alwaysShowPagingBar = false {
+        didSet {
+            pagingVC.alwaysShowPagingBar = alwaysShowPagingBar
+        }
+    }
+
+    // How close the paging bar will get to the top of the view before moving down
+    public var pagingBarHidePadding: CGFloat = 12 {
+        didSet {
+            pagingVC.pagingBarHidePadding = pagingBarHidePadding
+        }
+    }
+
+    public var pagingVC = WPanelPageControllerVC()
+
+    public override func commonInit() {
+        super.commonInit()
+
+        pagingVC.pagingHeight = pagingControlHeight
+        pagingVC.alwaysShowPagingBar = alwaysShowPagingBar
+        pagingVC.pagingBarHidePadding = pagingBarHidePadding
+        addViewControllerToContainer(panelView.containerView, viewController: pagingVC)
+    }
+}
+
+//
+// View Controllers and helper classes to support paging within the WPanel
+//
+
+// View Controller to contain UIPageViewController and separate UIPageControl for customization options
+public class WPanelPageControllerVC: UIViewController {
+    var pagingManager = WPanelPageManagerVC()
+    var pagingContainerView = UIView()
+
+    public var pages: [UIViewController]? {
+        didSet {
+            pagingManager.pages = pages
+            setupUI()
+        }
+    }
+
+    public var pagingView = WPanelPagingView()
+    public var pagingHeight: CGFloat = 50 {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var alwaysShowPagingBar = false {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var pagingBarHidePadding: CGFloat = 12 {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+
+        commonInit()
+        setupUI()
+    }
+
+    public func commonInit() {
+        view.addSubview(pagingView)
+        view.addSubview(pagingContainerView)
+        addViewControllerToContainer(pagingContainerView, viewController: pagingManager)
+
+        pagingManager.pageIndicatorDelegate = self
+    }
+
+    public func setupUI() {
+        if (alwaysShowPagingBar || pagingManager.pages?.count > 1) {
+            pagingView.hidden = false
+
+            pagingView.snp_remakeConstraints { (make) in
+                make.width.centerX.equalTo(view)
+                make.height.equalTo(pagingHeight)
+                make.bottom.greaterThanOrEqualTo(view)
+                make.top.equalTo(view).offset(pagingBarHidePadding).priorityMedium()
+            }
+
+            pagingContainerView.snp_remakeConstraints { (make) in
+                make.width.centerX.top.equalTo(view)
+                make.bottom.equalTo(pagingView.snp_top)
+            }
+        } else {
+            pagingView.hidden = true
+
+            pagingContainerView.snp_remakeConstraints { (make) in
+                make.edges.equalTo(view)
+            }
+        }
+    }
+}
+
+extension WPanelPageControllerVC: WPanelPageManagerDelegate {
+    func wPanelPageManager(pageManager: WPanelPageManagerVC, didUpdatePageCount count: Int) {
+        pagingView.pagingControl.numberOfPages = count
+    }
+
+    func wPanelPageManager(pageManager: WPanelPageManagerVC, didUpdatePageIndex index: Int) {
+        pagingView.pagingControl.currentPage = index
+    }
+}
+
+public class WPanelPageManagerVC: UIPageViewController {
+    var pages: [UIViewController]? {
+        didSet {
+            setupUI()
+        }
+    }
+
+    weak var pageIndicatorDelegate: WPanelPageManagerDelegate?
+
+    public override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
+        super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: options)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+
+        dataSource = self
+        delegate = self
+
+        setupUI()
+    }
+
+    public func setupUI() {
+        if let pages = pages, firstPage = pages.first {
+            setViewControllers([firstPage], direction: .Forward, animated: true, completion: nil)
+
+            pageIndicatorDelegate?.wPanelPageManager(self, didUpdatePageCount: pages.count)
+        }
+    }
+}
+
+extension WPanelPageManagerVC: UIPageViewControllerDelegate {
+    public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if let firstViewController = viewControllers?.first,
+            let index = pages?.indexOf(firstViewController) {
+
+            pageIndicatorDelegate?.wPanelPageManager(self, didUpdatePageIndex: index)
+        }
+    }
+}
+
+extension WPanelPageManagerVC: UIPageViewControllerDataSource {
+    public func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        if let pages = pages {
+            guard let viewControllerIndex = pages.indexOf(viewController) else {
+                return nil
+            }
+
+            let previousIndex = viewControllerIndex - 1
+
+            guard previousIndex >= 0 else {
+                return nil
+            }
+
+            guard pages.count > previousIndex else {
+                return nil
+            }
+            
+            return pages[previousIndex]
+        }
+
+        return nil
+    }
+
+    public func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        if let pages = pages {
+            guard let viewControllerIndex = pages.indexOf(viewController) else {
+                return nil
+            }
+
+            let nextIndex = viewControllerIndex + 1
+
+            guard pages.count != nextIndex else {
+                return nil
+            }
+            
+            return pages[nextIndex]
+        }
+
+        return nil
+    }
+}
+
+public class WPanelPagingView: UIView {
+    public var pagingControl = UIPageControl()
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
+        commonInit()
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        commonInit()
+    }
+
+    public convenience init() {
+        self.init(frame: CGRectZero)
+    }
+
+    public func commonInit() {
+        addSubview(pagingControl)
+
+        backgroundColor = .grayColor()
+
+        setupUI()
+    }
+
+    public func setupUI() {
+        pagingControl.snp_remakeConstraints { (make) in
+            make.center.width.equalTo(self)
+            make.height.equalTo(0)
+        }
     }
 }

@@ -19,15 +19,23 @@
 import Foundation
 import WMobileKit
 
-public class PanelExampleVC: WPanelVC {
+public class PanelExampleVC: WPagingPanelVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        addViewControllerToContainer(panelView.containerView, viewController: PanelContentVC())
+        let panelContent1 = PanelContentVC()
+        let panelContent2 = PanelContentVC()
+        panelContent2.contentType = 1
+        let panelContent3 = PanelContentVC()
+        panelContent3.contentType = 2
+
+        pages = [panelContent1, panelContent2, panelContent3]
     }
 }
 
-class PanelContentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PanelContentVC: WSideMenuContentVC, UITableViewDelegate, UITableViewDataSource {
+    var contentType: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,12 +52,12 @@ class PanelContentVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 10
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")!
-        cell.textLabel?.text = "Cell " + String(indexPath.row)
+        cell.textLabel?.text = "Cell " + String(indexPath.row + (contentType * tableView.numberOfRowsInSection(0)))
 
         return cell
     }
