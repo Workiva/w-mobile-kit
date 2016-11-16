@@ -70,14 +70,14 @@ public class WPanel: UIView {
         }
 
         topDragLine.snp_remakeConstraints { (make) in
-            make.top.equalTo(self).offset(3)
+            make.top.equalTo(self).offset(6)
             make.width.equalTo(dragLineWidth)
             make.centerX.equalTo(self)
             make.height.equalTo(1)
         }
 
         bottomDragLine.snp_remakeConstraints { (make) in
-            make.top.equalTo(topDragLine.snp_bottom).offset(3)
+            make.top.equalTo(topDragLine.snp_bottom).offset(4)
             make.height.equalTo(topDragLine)
             make.centerX.equalTo(topDragLine)
             make.width.equalTo(topDragLine)
@@ -354,7 +354,7 @@ public class WPagingPanelVC: WPanelVC {
         }
     }
     // Height of the gray bar
-    public var pagingControlHeight: CGFloat = 50 {
+    public var pagingControlHeight: CGFloat = 20 {
         didSet {
             pagingVC.pagingHeight = pagingControlHeight
         }
@@ -367,7 +367,7 @@ public class WPagingPanelVC: WPanelVC {
     }
 
     // How close the paging bar will get to the top of the view before moving down
-    public var pagingBarHidePadding: CGFloat = 12 {
+    public var pagingBarHidePadding: CGFloat = 20 {
         didSet {
             pagingVC.pagingBarHidePadding = pagingBarHidePadding
         }
@@ -402,7 +402,7 @@ public class WPanelPageControllerVC: UIViewController {
     }
 
     public var pagingView = WPanelPagingView()
-    public var pagingHeight: CGFloat = 50 {
+    public var pagingHeight: CGFloat = 20 {
         didSet {
             setupUI()
         }
@@ -560,6 +560,17 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
 public class WPanelPagingView: UIView {
     public var pagingControl = UIPageControl()
 
+    public var currentPageIndicatorTintColor: UIColor = UIColor.purpleColor() {
+        didSet {
+            pagingControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor
+        }
+    }
+    public var pageIndicatorTintColor: UIColor = UIColor.whiteColor() {
+        didSet {
+            pagingControl.pageIndicatorTintColor = pageIndicatorTintColor
+        }
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
@@ -586,8 +597,12 @@ public class WPanelPagingView: UIView {
 
     public func setupUI() {
         pagingControl.snp_remakeConstraints { (make) in
-            make.center.width.equalTo(self)
+            make.centerX.width.equalTo(self)
             make.height.equalTo(0)
+            make.centerY.equalTo(self).offset(-2)
         }
+
+        pagingControl.pageIndicatorTintColor = pageIndicatorTintColor
+        pagingControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor
     }
 }
