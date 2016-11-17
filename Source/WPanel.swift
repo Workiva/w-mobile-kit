@@ -198,8 +198,6 @@ public class WPanelVC: WSideMenuContentVC {
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-//        sidePanel = (size.width > widthCapForSidePanel)
-//        setupUI(size)
         coordinator.animateAlongsideTransition(
             { (context) in
                 self.setupUI()
@@ -239,6 +237,7 @@ public class WPanelVC: WSideMenuContentVC {
         panelView.snp_removeConstraints()
 
         sidePanel = view.frame.width > widthCapForSidePanel
+        sidePanelCoversContent = view.frame.width <= sidePanelCoversContentUpToWidth
 
         if (sidePanel) {
             currentPanelOffset = min(currentPanelOffset, sidePanelWidth)
@@ -257,7 +256,7 @@ public class WPanelVC: WSideMenuContentVC {
 
             contentContainerView.snp_remakeConstraints { (make) in
                 make.centerY.left.top.bottom.equalTo(view)
-                if (view.frame.width > sidePanelCoversContentUpToWidth) {
+                if (!sidePanelCoversContent) {
                     make.right.equalTo(panelView.snp_left)
                 } else {
                     make.right.equalTo(view)
@@ -383,9 +382,9 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     func panelWasTapped(recognizer: UIPanGestureRecognizer) {
-        if (sidePanel) {
+        if (sidePanel && sidePanelCoversContent) {
             movePanelToValue(0.0, animated: true)
-        } else {
+        } else if (!sidePanel) {
             movePanelToSnapRatio(snapHeights[0], animated: true)
         }
     }
