@@ -25,6 +25,12 @@ protocol WPanelPageManagerDelegate: class {
     func wPanelPageManager(pageManager: WPanelPageManagerVC, didUpdatePageIndex index: Int)
 }
 
+public protocol WPanelDelegate: class {
+    func isSidePanel() -> Bool
+    func setPanelRatio(ratio: CGFloat, animated: Bool)
+    func setPanelOffset(value: CGFloat, animated: Bool)
+}
+
 public class WPanel: UIView {
     var topDragLine = UIView()
     var bottomDragLine = UIView()
@@ -389,6 +395,15 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
+    func floatingButtonWasPressed(sender: WFAButton) {
+        if (sidePanel) {
+            movePanelToValue(sidePanelWidth, animated: true)
+        } else {
+            // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
+            movePanelToSnapRatio(getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio(), animated: true)
+        }
+    }
+
     // Snap Height Helpers
     func getNextSnapRatio(fromRatio: CGFloat) -> CGFloat? {
         var returnRatio: CGFloat?
@@ -477,14 +492,19 @@ public class WPanelVC: WSideMenuContentVC {
         floatingButton.hidden = value > 0.0
         backgroundTapView.hidden = value == 0.0
     }
+}
 
-    func floatingButtonWasPressed(sender: WFAButton) {
-        if (sidePanel) {
-            movePanelToValue(sidePanelWidth, animated: true)
-        } else {
-            // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
-            movePanelToSnapRatio(getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio(), animated: true)
-        }
+extension WPanelVC: WPanelDelegate {
+    public func isSidePanel() -> Bool {
+        return sidePanel
+    }
+
+    public func setPanelRatio(ratio: CGFloat, animated: Bool) {
+        movePanelToSnapRatio(ratio)
+    }
+
+    public func setPanelOffset(value: CGFloat, animated: Bool) {
+        movePanelToValue(value, animated: animated)
     }
 }
 
