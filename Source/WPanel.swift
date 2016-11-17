@@ -92,26 +92,49 @@ public class WPanelVC: WSideMenuContentVC {
     public var floatingButton = WFAButton()
     public var panInterceptView = UIView()
     public var backgroundTapView = UIView()
+    public var contentContainerView = UIView()
+    public var switchToSidePanelForLargeScreen = true
 
-    public var outlineWidth: CGFloat = 0.5 {
+    // Will either be side or top constraint to move the panel
+    var mutableConstraint: Constraint?
+
+    // Controls the constraint for the movement of the panel
+    var currentPanelOffset: CGFloat = 0 {
         didSet {
-            panelView.layer.borderWidth = outlineWidth
+            mutableConstraint?.updateOffset(-currentPanelOffset)
         }
     }
 
-    public var outlineColor: CGColor = UIColor.lightGrayColor().CGColor {
+    var currentPanelRatio: CGFloat = 0
+
+    // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
+    private var sidePanel = false
+
+    // This is calculated by modifying sidePanelCoversContentAtWidth
+    private var sidePanelCoversContent = true
+
+    // Width value in which if window width is greater than this value, panel will become side panel instead of bottom panel
+    // Set this to CGFloat.max if you never want the panel to switch to the side panel
+    public var widthCapForSidePanel: CGFloat = 675 {
         didSet {
-            panelView.layer.borderColor = outlineColor
+            setupUI()
         }
     }
 
-    public var cornerRadius: CGFloat = 5 {
+    // Width value in which if window width is greater than this value, side panel will cover content
+    // Set this to CGFloat.max if you never want the panel to cover content
+    public var sidePanelCoversContentUpToWidth: CGFloat = 1023 {
         didSet {
-            panelView.layer.cornerRadius = cornerRadius
+            setupUI()
         }
     }
 
-    var topConstraint: Constraint?
+    // Width of the panel
+    public var sidePanelWidth: CGFloat = 380 {
+        didSet {
+            setupUI()
+        }
+    }
 
     // Height Ratios for snapping, values can be any non-negative value where 1.0 equals full height of the view controller's view
     public var snapHeights: [CGFloat] = [0.0, 0.4, 0.96]
@@ -119,6 +142,25 @@ public class WPanelVC: WSideMenuContentVC {
     // Cap value on how far user can drag the panel up before it snaps back to heighest value in snapHeights
     // 0.0 means no "rubber band" effect, 1.0 means they can drag as far as they want until it snaps back
     public var springValuePastMaxHeight: CGFloat = 0.02
+
+    // Can set border/outline properties on the panel from the view controller for convenience
+    public var outlineWidth: CGFloat = 0.5 {
+        didSet {
+            panelView.layer.borderWidth = outlineWidth
+        }
+    }
+    public var outlineColor: CGColor = UIColor.lightGrayColor().CGColor {
+        didSet {
+            panelView.layer.borderColor = outlineColor
+        }
+    }
+
+    // Corner radius on the panel view
+    public var cornerRadius: CGFloat = 5 {
+        didSet {
+            panelView.layer.cornerRadius = cornerRadius
+        }
+    }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -139,7 +181,30 @@ public class WPanelVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let keyWindow = UIApplication.sharedApplication().keyWindow {
+            if (keyWindow.frame.size.width > widthCapForSidePanel) {
+                if (switchToSidePanelForLargeScreen) {
+                    sidePanel = true
+                }
+            }
+        }
+
+        currentPanelRatio = getSmallestSnapRatio()
+        currentPanelOffset = view.frame.height * currentPanelRatio
+
         setupUI()
+    }
+
+    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+//        sidePanel = (size.width > widthCapForSidePanel)
+//        setupUI(size)
+        coordinator.animateAlongsideTransition(
+            { (context) in
+                self.setupUI()
+            },
+            completion: nil)
     }
 
     public func commonInit() {
@@ -158,6 +223,7 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     public func setupUI() {
+        view.addSubview(contentContainerView)
         view.addSubview(backgroundTapView)
         view.addSubview(floatingButton)
         view.addSubview(panelView)
@@ -166,25 +232,65 @@ public class WPanelVC: WSideMenuContentVC {
         panelView.layer.borderWidth = outlineWidth
         panelView.layer.borderColor = outlineColor
 
-        let initialSnapRatio = getSmallestSnapRatio()
-        let originalYOffset = view.frame.height * initialSnapRatio
-
         backgroundTapView.snp_remakeConstraints { (make) in
             make.edges.equalTo(view)
         }
 
-        panelView.snp_remakeConstraints { (make) in
-            make.width.equalTo(view).offset(-20)
-            make.centerX.equalTo(view)
-            topConstraint = make.top.equalTo(view.snp_bottom).offset(-originalYOffset).constraint
-            make.bottom.equalTo(view).offset(cornerRadius)
-        }
+        panelView.snp_removeConstraints()
 
-        panInterceptView.snp_remakeConstraints { (make) in
-            make.width.equalTo(panelView)
-            make.top.equalTo(panelView).offset(-30)
-            make.bottom.equalTo(panelView.snp_top).offset(20)
-            make.centerX.equalTo(panelView)
+        sidePanel = view.frame.width > widthCapForSidePanel
+
+        if (sidePanel) {
+            currentPanelOffset = min(currentPanelOffset, sidePanelWidth)
+
+            panelView.snp_remakeConstraints { (make) in
+                make.width.equalTo(sidePanelWidth)
+                make.top.bottom.height.equalTo(view)
+                mutableConstraint = make.left.equalTo(view.snp_right).offset(-currentPanelOffset).constraint
+            }
+
+            panInterceptView.snp_remakeConstraints { (make) in
+                make.top.bottom.height.equalTo(panelView)
+                make.left.equalTo(panelView).offset(-20)
+                make.right.equalTo(panelView.snp_left).offset(15)
+            }
+
+            contentContainerView.snp_remakeConstraints { (make) in
+                make.centerY.left.top.bottom.equalTo(view)
+                if (view.frame.width > sidePanelCoversContentUpToWidth) {
+                    make.right.equalTo(panelView.snp_left)
+                } else {
+                    make.right.equalTo(view)
+                }
+            }
+
+            panelView.topDragLine.hidden = true
+            panelView.bottomDragLine.hidden = true
+            panelView.layer.cornerRadius = 0
+        } else {
+            currentPanelOffset = view.frame.height * currentPanelRatio
+
+            contentContainerView.snp_remakeConstraints { (make) in
+                make.edges.equalTo(view)
+            }
+
+            panelView.snp_remakeConstraints { (make) in
+                make.width.equalTo(view).offset(-20)
+                make.centerX.equalTo(view)
+                mutableConstraint = make.top.equalTo(view.snp_bottom).offset(-currentPanelOffset).constraint
+                make.bottom.equalTo(view).offset(cornerRadius)
+            }
+
+            panInterceptView.snp_remakeConstraints { (make) in
+                make.width.equalTo(panelView)
+                make.top.equalTo(panelView).offset(-30)
+                make.bottom.equalTo(panelView.snp_top).offset(20)
+                make.centerX.equalTo(panelView)
+            }
+
+            panelView.topDragLine.hidden = false
+            panelView.bottomDragLine.hidden = false
+            panelView.layer.cornerRadius = cornerRadius
         }
 
         floatingButton.snp_remakeConstraints { (make) in
@@ -193,75 +299,95 @@ public class WPanelVC: WSideMenuContentVC {
             make.height.width.equalTo(50)
         }
 
-        panelView.layer.cornerRadius = cornerRadius
-
         view.layoutIfNeeded()
     }
 
     func panelWasPanned(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began, .Changed:
-            let yLocation = recognizer.locationInView(view).y
-            var yOffset = view.frame.height - yLocation
-            let heightRatio: CGFloat = yOffset / view.frame.height
-            let largestRatio = getLargestSnapRatio()
+            if (sidePanel) {
+                let xTranslation = recognizer.translationInView(view).x
 
-            if (heightRatio > largestRatio) {
-                // Calculate how far to "spring" if user pulls above the max allowed height
-                let cappedYOffset = view.frame.height * largestRatio
-                let largestHeight = largestRatio * view.frame.height
-                let heightDiff = view.frame.height - largestHeight
-                let subRatioToFullHeight = (min(yOffset, view.frame.height) - largestHeight) / heightDiff
-                let springRatio = subRatioToFullHeight * springValuePastMaxHeight
-                let springOffsetAddition = springRatio * view.frame.height
+                currentPanelOffset = min(sidePanelWidth, sidePanelWidth - xTranslation)
+            } else {
+                let yLocation = recognizer.locationInView(view).y
+                var yOffset = view.frame.height - yLocation
+                let heightRatio: CGFloat = yOffset / view.frame.height
+                let largestRatio = getLargestSnapRatio()
 
-                yOffset = cappedYOffset + springOffsetAddition
-            }
+                if (heightRatio > largestRatio) {
+                    // Calculate how far to "spring" if user pulls above the max allowed height
+                    let cappedYOffset = view.frame.height * largestRatio
+                    let largestHeight = largestRatio * view.frame.height
+                    let heightDiff = view.frame.height - largestHeight
+                    let subRatioToFullHeight = (min(yOffset, view.frame.height) - largestHeight) / heightDiff
+                    let springRatio = subRatioToFullHeight * springValuePastMaxHeight
+                    let springOffsetAddition = springRatio * view.frame.height
 
-            if (topConstraint != nil) {
-                topConstraint!.updateOffset(-yOffset)
+                    yOffset = cappedYOffset + springOffsetAddition
+                }
+
+                currentPanelOffset = yOffset
             }
             view.layoutIfNeeded()
         case .Ended, .Cancelled, .Failed:
-            // Did the user just tap it, or did they move it
-            let yLocation = recognizer.locationInView(view).y
-            let yOffset = view.frame.height - yLocation
-            let currentSnapRatio: CGFloat = yOffset / view.frame.height
+            if (sidePanel) {
+                let xLocation = recognizer.locationInView(view).x
+                let xOffset = view.frame.width - xLocation
 
-            // Check which snap point is closest
-            var closestSnapRatio: CGFloat?
-            var distance: CGFloat = 1.0
-            for ratio in snapHeights {
-                let currDistance = fabs(ratio - currentSnapRatio)
-                if (currDistance < distance || closestSnapRatio == nil) {
-                    distance = currDistance
-                    closestSnapRatio = ratio
+                var closestWidthSnapValue = xOffset > (sidePanelWidth / 2) ? sidePanelWidth : 0
+                let xVelocity = recognizer.velocityInView(view).x
+                if (xVelocity > 150) {
+                    closestWidthSnapValue = 0
+                } else if (xVelocity < -150) {
+                    closestWidthSnapValue = sidePanelWidth
                 }
+
+                movePanelToValue(closestWidthSnapValue, animated: true)
+            } else {
+                let yLocation = recognizer.locationInView(view).y
+                let yOffset = view.frame.height - yLocation
+                let currentSnapRatio: CGFloat = yOffset / view.frame.height
+
+                // Check which snap point is closest
+                var closestSnapRatio: CGFloat?
+                var distance: CGFloat = 1.0
+                for ratio in snapHeights {
+                    let currDistance = fabs(ratio - currentSnapRatio)
+                    if (currDistance < distance || closestSnapRatio == nil) {
+                        distance = currDistance
+                        closestSnapRatio = ratio
+                    }
+                }
+
+                // In the case of no ratios existing, force it to snap to 0.0 (hidden)
+                closestSnapRatio = closestSnapRatio ?? 0.0
+
+                // Check velocity of pan if user is flinging panel up or down
+                let yVelocity = -recognizer.velocityInView(view).y
+                if (yVelocity > 150 && currentSnapRatio > closestSnapRatio) {
+                    if let nextRatio = getNextSnapRatio(closestSnapRatio!) {
+                        closestSnapRatio = nextRatio
+                    }
+                } else if (yVelocity < -150 && currentSnapRatio < closestSnapRatio) {
+                    if let prevRatio = getPreviousSnapRatio(closestSnapRatio!) {
+                        closestSnapRatio = prevRatio
+                    }
+                }
+                
+                movePanelToSnapRatio(closestSnapRatio!, animated: true)
             }
-
-            // In the case of no ratios existing, force it to snap to 0.0 (hidden)
-            closestSnapRatio = closestSnapRatio ?? 0.0
-
-            // Check velocity of pan if user is flinging panel up or down
-            let yVelocity = -recognizer.velocityInView(view).y
-            if (yVelocity > 150 && currentSnapRatio > closestSnapRatio) {
-                if let nextRatio = getNextSnapRatio(closestSnapRatio!) {
-                    closestSnapRatio = nextRatio
-                }
-            } else if (yVelocity < -150 && currentSnapRatio < closestSnapRatio) {
-                if let prevRatio = getPreviousSnapRatio(closestSnapRatio!) {
-                    closestSnapRatio = prevRatio
-                }
-            }
-
-            movePanelToSnapRatio(closestSnapRatio!, animated: true)
         default:
             break
         }
     }
 
     func panelWasTapped(recognizer: UIPanGestureRecognizer) {
-        movePanelToSnapRatio(snapHeights[0], animated: true)
+        if (sidePanel) {
+            movePanelToValue(0.0, animated: true)
+        } else {
+            movePanelToSnapRatio(snapHeights[0], animated: true)
+        }
     }
 
     // Snap Height Helpers
@@ -318,31 +444,48 @@ public class WPanelVC: WSideMenuContentVC {
     func movePanelToSnapRatio(ratio: CGFloat, animated: Bool = false) {
         // Get actual height
         let snapRatioOffset = view.frame.height * ratio
+        currentPanelRatio = ratio
 
+        movePanelToValue(snapRatioOffset, animated: animated)
+    }
+
+    func movePanelToValue(value: CGFloat, animated: Bool = false) {
         // Need to layout any pending changes before animation
         view.layoutIfNeeded()
 
-        if (topConstraint != nil) {
-            topConstraint!.updateOffset(-snapRatioOffset)
-        }
+        currentPanelOffset = value
 
         if (animated) {
-            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut,
-                animations: {
-                    self.view.layoutIfNeeded()
-                },
-                completion: nil
-            )
+            if (sidePanel) {
+                UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut,
+                    animations: {
+                        self.view.layoutIfNeeded()
+                    },
+                    completion: nil
+                )
+            } else {
+                UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut,
+                    animations: {
+                        self.view.layoutIfNeeded()
+                    },
+                    completion: nil
+                )
+            }
         } else {
             view.layoutIfNeeded()
         }
 
-        floatingButton.hidden = ratio > 0.0
-        backgroundTapView.hidden = ratio == 0.0
+        floatingButton.hidden = value > 0.0
+        backgroundTapView.hidden = value == 0.0
     }
 
     func floatingButtonWasPressed(sender: WFAButton) {
-        movePanelToSnapRatio(snapHeights[1], animated: true)
+        if (sidePanel) {
+            movePanelToValue(sidePanelWidth, animated: true)
+        } else {
+            // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
+            movePanelToSnapRatio(getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio(), animated: true)
+        }
     }
 }
 

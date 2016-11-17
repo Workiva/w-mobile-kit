@@ -30,6 +30,9 @@ public class PanelExampleVC: WPagingPanelVC {
         panelContent3.contentType = 2
 
         pages = [panelContent1, panelContent2, panelContent3]
+
+        // Can add content directly to contentContainerView
+        addViewControllerToContainer(contentContainerView, viewController: OuterContentVC())
     }
 }
 
@@ -60,5 +63,33 @@ class PanelContentVC: WSideMenuContentVC, UITableViewDelegate, UITableViewDataSo
         cell.textLabel?.text = "Cell " + String(indexPath.row + (contentType * tableView.numberOfRowsInSection(0)))
 
         return cell
+    }
+}
+
+class OuterContentVC: WSideMenuContentVC {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let whiteView = UIView()
+        whiteView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+
+        view.addSubview(whiteView)
+        whiteView.snp_makeConstraints { (make) in
+            make.edges.equalTo(view).inset(20).priorityHigh()
+        }
+
+        let label = UILabel()
+        whiteView.addSubview(label)
+
+        label.font = .systemFontOfSize(40)
+        label.numberOfLines = 0
+        label.textAlignment = .Center
+        label.lineBreakMode = .ByWordWrapping
+        label.text = "This is the content of the view controller"
+
+        label.snp_makeConstraints { (make) in
+            make.center.equalTo(whiteView).priorityHigh()
+            make.width.equalTo(whiteView).multipliedBy(0.9)
+        }
     }
 }
