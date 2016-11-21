@@ -115,11 +115,16 @@ public class WFAButton: UIControl {
         layoutIfNeeded()
 
         if (hasShadow) {
-            buttonBackgroundView.layer.masksToBounds = false
-            buttonBackgroundView.layer.shadowOpacity = 0.5
-            buttonBackgroundView.layer.shadowColor = UIColor.blackColor().CGColor
-            buttonBackgroundView.layer.shadowRadius = 3
-            buttonBackgroundView.layer.shadowOffset = CGSize(width: 3, height: 3)
+            var nonShadowLayer = buttonBackgroundView.hidden ? buttonBackgroundView.layer : imageView.layer
+            var shadowLayer = buttonBackgroundView.hidden ? imageView.layer : buttonBackgroundView.layer
+
+            shadowLayer.masksToBounds = false
+            shadowLayer.shadowOpacity = 0.5
+            shadowLayer.shadowColor = UIColor.blackColor().CGColor
+            shadowLayer.shadowRadius = 3
+            shadowLayer.shadowOffset = CGSize(width: 3, height: 3)
+
+            nonShadowLayer.shadowOpacity = 0.0
         }
     }
 
