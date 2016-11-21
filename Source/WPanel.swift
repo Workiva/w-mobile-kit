@@ -97,7 +97,6 @@ public class WPanelVC: WSideMenuContentVC {
     public var panelView = WPanel()
     public var floatingButton = WFAButton()
     public var panInterceptView = UIView()
-    public var backgroundTapView = UIView()
     public var contentContainerView = UIView()
     public var switchToSidePanelForLargeScreen = true
 
@@ -212,8 +211,6 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     public func commonInit() {
-        backgroundTapView.hidden = true
-
         floatingButton.addTarget(self, action: #selector(WPanelVC.floatingButtonWasPressed(_:)), forControlEvents: .TouchUpInside)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))
@@ -488,7 +485,6 @@ public class WPanelVC: WSideMenuContentVC {
         }
 
         floatingButton.hidden = value > 0.0
-        backgroundTapView.hidden = value == 0.0
     }
 }
 
@@ -541,6 +537,12 @@ public class WPagingPanelVC: WPanelVC {
         }
     }
 
+    public var canScrollWithOnlyOnePage = false {
+        didSet {
+            pagingVC.canScrollWithOnlyOnePage = canScrollWithOnlyOnePage
+        }
+    }
+
     public var pagingVC = WPanelPageControllerVC()
 
     public override func commonInit() {
@@ -588,6 +590,12 @@ public class WPanelPageControllerVC: UIViewController {
         }
     }
 
+    public var canScrollWithOnlyOnePage = false {
+        didSet {
+            calculateIfScrollingAllowed()
+        }
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -624,6 +632,22 @@ public class WPanelPageControllerVC: UIViewController {
             pagingContainerView.snp_remakeConstraints { (make) in
                 make.edges.equalTo(view)
             }
+        }
+    }
+
+    func setPageScrollEnabled(enabled: Bool = true) {
+        for view in self.view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.scrollEnabled = enabled
+            }
+        }
+    }
+
+    func calculateIfScrollingAllowed() {
+        if (pages?.count > 1 || canScrollWithOnlyOnePage) {
+            setPageScrollEnabled()
+        } else {
+            setPageScrollEnabled(false)
         }
     }
 }
