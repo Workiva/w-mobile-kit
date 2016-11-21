@@ -568,6 +568,7 @@ public class WPanelPageControllerVC: UIViewController {
         didSet {
             pagingManager.pages = pages
             setupUI()
+            calculateIfScrollingAllowed()
         }
     }
 
@@ -636,10 +637,8 @@ public class WPanelPageControllerVC: UIViewController {
     }
 
     func setPageScrollEnabled(enabled: Bool = true) {
-        for view in self.view.subviews {
-            if let subView = view as? UIScrollView {
-                subView.scrollEnabled = enabled
-            }
+        if let scrollView = view.subviews.last?.subviews.first?.subviews.first as? UIScrollView {
+            scrollView.scrollEnabled = enabled
         }
     }
 
