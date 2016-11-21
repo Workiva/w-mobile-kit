@@ -29,6 +29,8 @@ public class PanelExampleVC: WPagingPanelVC {
         let panelContent3 = PanelContentVC()
         panelContent3.contentType = 2
 
+        floatingButton.icon = UIImage(named: "drawer")
+
         pages = [panelContent1, panelContent2, panelContent3]
 
         // Can add content directly to contentContainerView

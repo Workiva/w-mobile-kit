@@ -214,7 +214,6 @@ public class WPanelVC: WSideMenuContentVC {
     public func commonInit() {
         backgroundTapView.hidden = true
 
-        floatingButton.icon = UIImage(named: "drawer")
         floatingButton.addTarget(self, action: #selector(WPanelVC.floatingButtonWasPressed(_:)), forControlEvents: .TouchUpInside)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))

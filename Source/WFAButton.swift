@@ -27,15 +27,28 @@ public class WFAButton: UIControl {
     }
     public var buttonColor: UIColor = .blueColor()
     public var pressedButtonColor: UIColor?
+
     // Can manually set cornerRadius, otherwise it will be circular
-    public var cornerRadius: CGFloat?
+    public var cornerRadius: CGFloat? {
+        didSet {
+            setupUI()
+        }
+    }
     public var hasShadow = true
+
     // How far the user can drag away from the button until it won't register press
     public var dragBuffer: CGFloat = 10
 
     var buttonBackgroundView = UIView()
     var imageView = UIImageView()
     var darkOverlay = UIView()
+
+    // If the icon already has the colored background view, set this to true and the background view will be hidden and the image view will fill the view instead of having insets
+    public var iconContainsBackgroundView = false {
+        didSet {
+            setupUI()
+        }
+    }
 
     public override var bounds: CGRect {
         didSet {
@@ -53,7 +66,7 @@ public class WFAButton: UIControl {
     public func commonInit() {
         addSubview(buttonBackgroundView)
         addSubview(imageView)
-        buttonBackgroundView.addSubview(darkOverlay)
+        addSubview(darkOverlay)
 
         buttonBackgroundView.backgroundColor = buttonColor
         darkOverlay.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
@@ -67,6 +80,10 @@ public class WFAButton: UIControl {
     }
 
     public func setupUI() {
+        if (CGRectEqualToRect(frame, CGRectZero)) {
+            return
+        }
+
         let smallestEdge = min(frame.size.height, frame.size.width)
         buttonBackgroundView.snp_remakeConstraints { (make) in
             make.center.equalTo(self)
@@ -75,13 +92,14 @@ public class WFAButton: UIControl {
 
         imageView.snp_remakeConstraints { (make) in
             make.center.equalTo(self)
-            make.height.width.equalTo(smallestEdge).offset(-10).priorityHigh()
+            make.height.width.equalTo(buttonBackgroundView).offset(iconContainsBackgroundView ? 0 : -10)
         }
 
         darkOverlay.snp_remakeConstraints { (make) in
             make.edges.equalTo(buttonBackgroundView)
         }
 
+        buttonBackgroundView.hidden = iconContainsBackgroundView
         buttonBackgroundView.layer.cornerRadius = cornerRadius ?? smallestEdge / 2
         buttonBackgroundView.clipsToBounds = true
         darkOverlay.layer.cornerRadius = cornerRadius ?? smallestEdge / 2
