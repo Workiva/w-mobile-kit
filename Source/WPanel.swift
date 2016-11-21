@@ -105,7 +105,7 @@ public class WPanelVC: WSideMenuContentVC {
     var mutableConstraint: Constraint?
 
     // Controls the constraint for the movement of the panel
-    var currentPanelOffset: CGFloat = 0 {
+    public var currentPanelOffset: CGFloat = 0 {
         didSet {
             mutableConstraint?.updateOffset(-currentPanelOffset)
         }
@@ -218,17 +218,20 @@ public class WPanelVC: WSideMenuContentVC {
         floatingButton.addTarget(self, action: #selector(WPanelVC.floatingButtonWasPressed(_:)), forControlEvents: .TouchUpInside)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))
+        tapRecognizer.cancelsTouchesInView = false
         panInterceptView.addGestureRecognizer(tapRecognizer)
+
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasPanned(_:)))
+        panRecognizer.cancelsTouchesInView = false
         panInterceptView.addGestureRecognizer(panRecognizer)
+
         let tapHideRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))
         tapHideRecognizer.cancelsTouchesInView = false
-        backgroundTapView.addGestureRecognizer(tapHideRecognizer)
+        contentContainerView.addGestureRecognizer(tapHideRecognizer)
     }
 
     public func setupUI() {
         view.addSubview(contentContainerView)
-        view.addSubview(backgroundTapView)
         view.addSubview(floatingButton)
         view.addSubview(panelView)
         view.addSubview(panInterceptView)
@@ -236,17 +239,14 @@ public class WPanelVC: WSideMenuContentVC {
         panelView.layer.borderWidth = outlineWidth
         panelView.layer.borderColor = outlineColor
 
-        backgroundTapView.snp_remakeConstraints { (make) in
-            make.edges.equalTo(view)
-        }
-
         panelView.snp_removeConstraints()
 
         sidePanel = view.frame.width > widthCapForSidePanel
         sidePanelCoversContent = view.frame.width <= sidePanelCoversContentUpToWidth
 
         if (sidePanel) {
-            currentPanelOffset = min(currentPanelOffset, sidePanelWidth)
+            currentPanelOffset = currentPanelOffset > 0.0 ? sidePanelWidth : 0.0
+            currentPanelRatio = currentPanelOffset > 0.0 ? getLargestSnapRatio() : 0.0
 
             panelView.snp_remakeConstraints { (make) in
                 make.width.equalTo(sidePanelWidth)
@@ -307,13 +307,12 @@ public class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
     }
 
-    func panelWasPanned(recognizer: UIPanGestureRecognizer) {
+    public func panelWasPanned(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began, .Changed:
             if (sidePanel) {
-                let xTranslation = recognizer.translationInView(view).x
-
-                currentPanelOffset = min(sidePanelWidth, sidePanelWidth - xTranslation)
+                let xLocation = recognizer.locationInView(view).x
+                currentPanelOffset = min(sidePanelWidth, view.frame.width - xLocation)
             } else {
                 let yLocation = recognizer.locationInView(view).y
                 var yOffset = view.frame.height - yLocation
@@ -455,7 +454,7 @@ public class WPanelVC: WSideMenuContentVC {
         return largestRatio
     }
 
-    func movePanelToSnapRatio(ratio: CGFloat, animated: Bool = false) {
+    public func movePanelToSnapRatio(ratio: CGFloat, animated: Bool = false) {
         // Get actual height
         let snapRatioOffset = view.frame.height * ratio
         currentPanelRatio = ratio
@@ -463,7 +462,7 @@ public class WPanelVC: WSideMenuContentVC {
         movePanelToValue(snapRatioOffset, animated: animated)
     }
 
-    func movePanelToValue(value: CGFloat, animated: Bool = false) {
+    public func movePanelToValue(value: CGFloat, animated: Bool = false) {
         // Need to layout any pending changes before animation
         view.layoutIfNeeded()
 
@@ -496,7 +495,15 @@ public class WPanelVC: WSideMenuContentVC {
 
 extension WPanelVC: WPanelDelegate {
     public func isSidePanel() -> Bool {
-        return sidePanel
+        if let keyWindow = UIApplication.sharedApplication().keyWindow {
+            if (keyWindow.frame.size.width > widthCapForSidePanel) {
+                if (switchToSidePanelForLargeScreen) {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     public func setPanelRatio(ratio: CGFloat, animated: Bool) {
