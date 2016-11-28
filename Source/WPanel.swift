@@ -71,8 +71,10 @@ public class WPanel: UIView {
     }
 
     public func setupUI() {
+        let cornerRadius = layer.cornerRadius
         containerView.snp_remakeConstraints { (make) in
-            make.edges.equalTo(self)
+            make.left.right.width.top.equalTo(self)
+            make.bottom.equalTo(self).offset(-cornerRadius)
         }
 
         topDragLine.snp_remakeConstraints { (make) in
@@ -164,6 +166,7 @@ public class WPanelVC: WSideMenuContentVC {
     public var cornerRadius: CGFloat = 5 {
         didSet {
             panelView.layer.cornerRadius = cornerRadius
+            panelView.setupUI()
         }
     }
 
@@ -242,7 +245,7 @@ public class WPanelVC: WSideMenuContentVC {
 
         if (sidePanel) {
             currentPanelOffset = currentPanelOffset > 0.0 ? sidePanelWidth : 0.0
-            currentPanelRatio = currentPanelOffset > 0.0 ? getLargestSnapRatio() : 0.0
+            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
 
             panelView.snp_remakeConstraints { (make) in
                 make.width.equalTo(sidePanelWidth)
@@ -300,6 +303,7 @@ public class WPanelVC: WSideMenuContentVC {
             make.height.width.equalTo(50)
         }
 
+        panelView.setupUI()
         view.layoutIfNeeded()
     }
 
@@ -634,6 +638,8 @@ public class WPanelPageControllerVC: UIViewController {
                 make.edges.equalTo(view)
             }
         }
+
+        view.layoutIfNeeded()
     }
 
     func setPageScrollEnabled(enabled: Bool = true) {
