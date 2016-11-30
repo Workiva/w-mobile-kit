@@ -275,7 +275,7 @@ class WPanelSpec: QuickSpec {
                 it ("should not move side panel past max width") {
                     let recognizer = UIPanGestureRecognizerMock()
                     recognizer.testState = .Changed
-                    recognizer.returnPoint = CGPointZero
+                    recognizer.returnPoint = CGPoint(x: -50, y: 0)
 
                     subject.widthCapForSidePanel = 100
 
