@@ -22,7 +22,11 @@ import SnapKit
 public class WFAButton: UIControl {
     public var icon: UIImage? {
         didSet {
-            setupUI()
+            if let icon = icon {
+                imageView.image = icon
+            } else {
+                imageView.image = nil
+            }
         }
     }
     public var buttonColor: UIColor = .blueColor()
@@ -73,6 +77,8 @@ public class WFAButton: UIControl {
         darkOverlay.hidden = true
         darkOverlay.userInteractionEnabled = false
 
+        imageView.userInteractionEnabled = false
+
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WFAButton.buttonWasLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.001
 
@@ -105,13 +111,6 @@ public class WFAButton: UIControl {
         darkOverlay.layer.cornerRadius = cornerRadius ?? smallestEdge / 2
         darkOverlay.clipsToBounds = true
 
-        if let icon = icon {
-            imageView.image = icon
-        } else {
-            imageView.image = nil
-        }
-        imageView.userInteractionEnabled = false
-
         layoutIfNeeded()
 
         if (hasShadow) {
@@ -141,7 +140,7 @@ public class WFAButton: UIControl {
                 darkOverlay.hidden = false
             }
         case .Changed:
-            if (pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
+            if (!pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
                 buttonBackgroundView.backgroundColor = buttonColor
                 darkOverlay.hidden = true
 
@@ -160,7 +159,7 @@ public class WFAButton: UIControl {
         case .Ended, .Cancelled, .Failed:
             buttonBackgroundView.backgroundColor = buttonColor
             darkOverlay.hidden = true
-            if (pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
+            if (!pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
                 sendActionsForControlEvents(.TouchUpOutside)
             } else {
                 sendActionsForControlEvents(.TouchUpInside)
@@ -171,6 +170,6 @@ public class WFAButton: UIControl {
     }
 
     func pointIsWithinView(point: CGPoint, withBuffer buffer: CGFloat) -> Bool {
-        return (point.x < -buffer || point.x > self.frame.size.width + buffer || point.y < -buffer || point.y > self.frame.size.height + buffer)
+        return !(point.x < -buffer || point.x > self.frame.size.width + buffer || point.y < -buffer || point.y > self.frame.size.height + buffer)
     }
 }

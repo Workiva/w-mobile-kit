@@ -100,7 +100,6 @@ public class WPanelVC: WSideMenuContentVC {
     public var floatingButton = WFAButton()
     public var panInterceptView = UIView()
     public var contentContainerView = UIView()
-    public var switchToSidePanelForLargeScreen = true
 
     // Will either be side or top constraint to move the panel
     var mutableConstraint: Constraint?
@@ -115,10 +114,10 @@ public class WPanelVC: WSideMenuContentVC {
     var currentPanelRatio: CGFloat = 0
 
     // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
-    private var sidePanel = false
+    private(set) var sidePanel = false
 
     // This is calculated by modifying sidePanelCoversContentAtWidth
-    private var sidePanelCoversContent = true
+    private(set) var sidePanelCoversContent = true
 
     // Width value in which if window width is greater than this value, panel will become side panel instead of bottom panel
     // Set this to CGFloat.max if you never want the panel to switch to the side panel
@@ -166,7 +165,7 @@ public class WPanelVC: WSideMenuContentVC {
     public var cornerRadius: CGFloat = 5 {
         didSet {
             panelView.layer.cornerRadius = cornerRadius
-            panelView.setupUI()
+            setupUI()
         }
     }
 
@@ -189,14 +188,6 @@ public class WPanelVC: WSideMenuContentVC {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let keyWindow = UIApplication.sharedApplication().keyWindow {
-            if (keyWindow.frame.size.width > widthCapForSidePanel) {
-                if (switchToSidePanelForLargeScreen) {
-                    sidePanel = true
-                }
-            }
-        }
-
         currentPanelRatio = getSmallestSnapRatio()
         currentPanelOffset = view.frame.height * currentPanelRatio
 
@@ -210,7 +201,8 @@ public class WPanelVC: WSideMenuContentVC {
             { (context) in
                 self.setupUI()
             },
-            completion: nil)
+            completion: nil
+        )
     }
 
     public func commonInit() {
@@ -386,7 +378,7 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    func panelWasTapped(recognizer: UIPanGestureRecognizer) {
+    func panelWasTapped(recognizer: UIGestureRecognizer) {
         if (sidePanel && sidePanelCoversContent) {
             movePanelToValue(0.0, animated: true)
         } else if (!sidePanel) {
@@ -494,19 +486,11 @@ public class WPanelVC: WSideMenuContentVC {
 
 extension WPanelVC: WPanelDelegate {
     public func isSidePanel() -> Bool {
-        if let keyWindow = UIApplication.sharedApplication().keyWindow {
-            if (keyWindow.frame.size.width > widthCapForSidePanel) {
-                if (switchToSidePanelForLargeScreen) {
-                    return true
-                }
-            }
-        }
-
-        return false
+        return view.frame.size.width > widthCapForSidePanel
     }
 
     public func setPanelRatio(ratio: CGFloat, animated: Bool) {
-        movePanelToSnapRatio(ratio)
+        movePanelToSnapRatio(ratio, animated: animated)
     }
 
     public func setPanelOffset(value: CGFloat, animated: Bool) {

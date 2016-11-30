@@ -33,8 +33,11 @@ public class PanelExampleVC: WPagingPanelVC {
 
         pages = [panelContent1, panelContent2, panelContent3]
 
+        let outerContentVC = OuterContentVC()
+        outerContentVC.panelDelegate = self
+
         // Can add content directly to contentContainerView
-        addViewControllerToContainer(contentContainerView, viewController: OuterContentVC())
+        addViewControllerToContainer(contentContainerView, viewController: outerContentVC)
     }
 }
 
@@ -69,6 +72,10 @@ class PanelContentVC: WSideMenuContentVC, UITableViewDelegate, UITableViewDataSo
 }
 
 class OuterContentVC: WSideMenuContentVC {
+    weak var panelDelegate: WPanelDelegate?
+
+    var label = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,18 +87,34 @@ class OuterContentVC: WSideMenuContentVC {
             make.edges.equalTo(view).inset(20).priorityHigh()
         }
 
-        let label = UILabel()
         whiteView.addSubview(label)
 
         label.font = .systemFontOfSize(40)
         label.numberOfLines = 0
         label.textAlignment = .Center
         label.lineBreakMode = .ByWordWrapping
-        label.text = "This is the content of the view controller"
+        if let panelDelegate = panelDelegate {
+            label.text = "This is the content of the view controller\nPanel: " + (panelDelegate.isSidePanel() ? "Side Panel" : "Vertical Panel")
+        } else {
+            label.text = "This is the content of the view controller"
+        }
 
         label.snp_makeConstraints { (make) in
             make.center.equalTo(whiteView).priorityHigh()
             make.width.equalTo(whiteView).multipliedBy(0.9)
         }
+    }
+
+    // Can use viewWillTransitionToSize and animating alongside coordinator to detect is panel changes between side panel
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+        coordinator.animateAlongsideTransition({ (context) in
+                if let panelDelegate = self.panelDelegate {
+                    self.label.text = "This is the content of the view controller\nPanel: " + (panelDelegate.isSidePanel() ? "Side Panel" : "Vertical Panel")
+                }
+            },
+            completion: nil
+        )
     }
 }
