@@ -281,7 +281,7 @@ class WPanelSpec: QuickSpec {
 
                     subject.panelWasPanned(recognizer)
 
-                    expect(subject.currentPanelOffset).to(beCloseTo(subject.sidePanelWidth, within: 0.1))
+                    expect(subject.currentPanelOffset) == subject.sidePanelWidth
                 }
 
                 it("should snap side panel to side panel width") {
