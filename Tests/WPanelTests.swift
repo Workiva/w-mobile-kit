@@ -56,22 +56,28 @@ class WPanelSpec: QuickSpec {
 
             describe("when app has been init") {
                 it("should have floating button visible with panel snapped to bottom") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     expect(subject.floatingButton.hidden) == false
                     expect(subject.panelView.frame.height) == subject.cornerRadius
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height
                 }
 
                 it("should move panel up based on ratio and hide floating button") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     let middleSnapRatio = subject.snapHeights[1]
                     let snapOffset = subject.view.frame.height * (1 - middleSnapRatio)
 
                     subject.movePanelToSnapRatio(middleSnapRatio, animated: false)
 
-                    expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.1))
+                    expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.15))
                     expect(subject.floatingButton.hidden) == true
                 }
 
                 it("should panel up based on offset value and hide floating button") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     subject.movePanelToValue(100, animated: false)
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
@@ -79,6 +85,8 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should reveal floating button when panel is moved to 0") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     subject.movePanelToValue(100, animated: false)
                     subject.movePanelToValue(0, animated: false)
 
@@ -87,11 +95,11 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should reveal vertical panel when pressing floating button") {
-                    subject.widthCapForSidePanel = 1000
+                    subject.widthCapForSidePanel = CGFloat.max
                     subject.floatingButtonWasPressed(subject.floatingButton)
 
                     expect(subject.floatingButton.hidden) == true
-                    expect(subject.panelView.frame.origin.y).to(beCloseTo(subject.view.frame.height * (1 - subject.snapHeights[1]), within: 0.1))
+                    expect(subject.panelView.frame.origin.y).to(beCloseTo(subject.view.frame.height * (1 - subject.snapHeights[1]), within: 0.15))
                 }
 
                 it("should reveal side panel when pressing floating button") {
@@ -119,12 +127,12 @@ class WPanelSpec: QuickSpec {
                     subject.widthCapForSidePanel = 100
                     expect(subject.sidePanel) == true
 
-                    subject.widthCapForSidePanel = 1000
+                    subject.widthCapForSidePanel = CGFloat.max
                     expect(subject.sidePanel) == false
                 }
 
                 it("should change if panel covers content by changing cap") {
-                    subject.sidePanelCoversContentUpToWidth = 1000
+                    subject.sidePanelCoversContentUpToWidth = CGFloat.max
                     expect(subject.sidePanelCoversContent) == true
 
                     subject.sidePanelCoversContentUpToWidth = 100
@@ -157,6 +165,8 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should modify cornerRadius and frame when changing property") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     let newRadius: CGFloat = 10
                     subject.cornerRadius = newRadius
 
@@ -196,21 +206,25 @@ class WPanelSpec: QuickSpec {
                     subject.widthCapForSidePanel = 100
                     expect(subject.isSidePanel()) == true
 
-                    subject.widthCapForSidePanel = 1000
+                    subject.widthCapForSidePanel = CGFloat.max
                     expect(subject.isSidePanel()) == false
                 }
 
-                it("should move side panel to ratio correctly") {
+                it("should move panel to ratio correctly") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     let middleSnapRatio = subject.snapHeights[1]
                     let snapOffset = subject.view.frame.height * (1 - middleSnapRatio)
 
                     subject.setPanelRatio(middleSnapRatio, animated: false)
 
-                    expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.1))
+                    expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.15))
                     expect(subject.floatingButton.hidden) == true
                 }
 
                 it("should panel up based on offset value and hide floating button") {
+                    subject.widthCapForSidePanel = CGFloat.max
+
                     subject.setPanelOffset(100, animated: false)
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
@@ -224,7 +238,7 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Changed
                     recognizer.returnPoint = subject.view.center
 
-                    subject.widthCapForSidePanel = 1000
+                    subject.widthCapForSidePanel = CGFloat.max
 
                     subject.panelWasPanned(recognizer)
 
@@ -238,7 +252,7 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Changed
                     recognizer.returnPoint = CGPointZero
 
-                    subject.widthCapForSidePanel = 1000
+                    subject.widthCapForSidePanel = CGFloat.max
 
                     subject.panelWasPanned(recognizer)
 
@@ -307,6 +321,7 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should hide panel when tapped") {
+                    subject.widthCapForSidePanel = CGFloat.max
                     subject.movePanelToSnapRatio(0.4)
                     expect(subject.currentPanelRatio) == 0.4
 
