@@ -185,7 +185,7 @@ class WSwitchSpec: QuickSpec {
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
                     pressRecognizer.testState = .Changed
-                    pressRecognizer.slideLeft = false
+                    pressRecognizer.returnPoint = CGPoint(x: switchControl.frame.width, y: 0)
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true

@@ -11,12 +11,16 @@
 		55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106301CAC849300495BBC /* WSideMenuVC.swift */; };
 		730364ED1CE6419F00F8F3D8 /* WSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730364EC1CE6419F00F8F3D8 /* WSwitch.swift */; };
 		730364F01CE641B300F8F3D8 /* WSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730364EE1CE641B300F8F3D8 /* WSwitchTests.swift */; };
+		7346548F1DEF6A2700245C97 /* WBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7346548E1DEF6A2700245C97 /* WBadgeTests.swift */; };
 		73A12C6D1CC00FE70092A3C2 /* WActionSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */; };
 		73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */; };
 		73B2B5CA1CD2B1D500053D22 /* WTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */; };
 		73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */; };
 		73B81F191CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */; };
 		73B81F1C1CE13DA1009A9D73 /* WAutoCompleteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */; };
+		73D44B8D1DEF365E0022120F /* WPanelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B8B1DEF35940022120F /* WPanelTests.swift */; };
+		73D44B8F1DEF368C0022120F /* WPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B8E1DEF368C0022120F /* WPanel.swift */; };
+		73D44B911DEF37080022120F /* WFAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B901DEF37080022120F /* WFAButton.swift */; };
 		99377122C922B8D426C0F92C /* Pods_WMobileKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */; };
 		D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D51201B91CC17F7C0000FC95 /* UIAppearance+SwiftTests.m */; };
 		D518B1DB1CDC08D20058B6A9 /* WExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D518B1DA1CDC08D20058B6A9 /* WExtensionsTests.swift */; };
@@ -35,7 +39,7 @@
 		D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */; };
 		D565A4451CE243A0007077F4 /* WRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D565A4441CE243A0007077F4 /* WRadioButton.swift */; };
 		D56DF0171CF8F4E3000893C1 /* WUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0161CF8F4E3000893C1 /* WUtils.swift */; };
-		D56DF01A1CF8F5AD000893C1 /* WBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */; };
+		D56DF01A1CF8F5AD000893C1 /* WFAButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0181CF8F5A4000893C1 /* WFAButtonTests.swift */; };
 		D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5728F361D41965E006178EC /* WSizeVCTests.swift */; };
 		D574D5861D49293C00BA7771 /* WLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574D5851D49293C00BA7771 /* WLabel.swift */; };
 		D574D5891D4955BD00BA7771 /* WLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574D5871D4955B300BA7771 /* WLabelTests.swift */; };
@@ -81,12 +85,16 @@
 		55A106301CAC849300495BBC /* WSideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVC.swift; sourceTree = "<group>"; };
 		730364EC1CE6419F00F8F3D8 /* WSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSwitch.swift; sourceTree = "<group>"; };
 		730364EE1CE641B300F8F3D8 /* WSwitchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSwitchTests.swift; sourceTree = "<group>"; };
+		7346548E1DEF6A2700245C97 /* WBadgeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadgeTests.swift; sourceTree = "<group>"; };
 		73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheetTests.swift; sourceTree = "<group>"; };
 		73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WActionSheet.swift; sourceTree = "<group>"; };
 		73B2B5C91CD2B1D500053D22 /* WTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextViewTests.swift; sourceTree = "<group>"; };
 		73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextView.swift; sourceTree = "<group>"; };
 		73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoCompleteTextViewTests.swift; sourceTree = "<group>"; };
 		73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoCompleteTextView.swift; sourceTree = "<group>"; };
+		73D44B8B1DEF35940022120F /* WPanelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPanelTests.swift; sourceTree = "<group>"; };
+		73D44B8E1DEF368C0022120F /* WPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPanel.swift; sourceTree = "<group>"; };
+		73D44B901DEF37080022120F /* WFAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WFAButton.swift; sourceTree = "<group>"; };
 		9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -109,7 +117,7 @@
 		D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSideMenuVCTests.swift; sourceTree = "<group>"; };
 		D565A4441CE243A0007077F4 /* WRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRadioButton.swift; sourceTree = "<group>"; };
 		D56DF0161CF8F4E3000893C1 /* WUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtils.swift; sourceTree = "<group>"; };
-		D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadgeTests.swift; sourceTree = "<group>"; };
+		D56DF0181CF8F5A4000893C1 /* WFAButtonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WFAButtonTests.swift; sourceTree = "<group>"; };
 		D5728F361D41965E006178EC /* WSizeVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSizeVCTests.swift; sourceTree = "<group>"; };
 		D574D5851D49293C00BA7771 /* WLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLabel.swift; sourceTree = "<group>"; };
 		D574D5871D4955B300BA7771 /* WLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLabelTests.swift; sourceTree = "<group>"; };
@@ -222,9 +230,11 @@
 				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
 				D77BA8631CDBDF2A0018944A /* WCustomTransitions.swift */,
+				73D44B901DEF37080022120F /* WFAButton.swift */,
 				D574D5851D49293C00BA7771 /* WLabel.swift */,
 				D7CC999D1CC95F8800572B6F /* WLoadingModal.swift */,
 				D53356C71CBC591100D9A6A9 /* WPagingSelectorVC.swift */,
+				73D44B8E1DEF368C0022120F /* WPanel.swift */,
 				D565A4441CE243A0007077F4 /* WRadioButton.swift */,
 				55A106301CAC849300495BBC /* WSideMenuVC.swift */,
 				D56186211D3EC11A00B28696 /* WSizeVC.swift */,
@@ -249,13 +259,15 @@
 				D518B1DA1CDC08D20058B6A9 /* WExtensionsTests.swift */,
 				73A12C6B1CC00F970092A3C2 /* WActionSheetTests.swift */,
 				73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */,
+				7346548E1DEF6A2700245C97 /* WBadgeTests.swift */,
 				D5409CE91CCFD07200F984D3 /* WBannerTests.swift */,
-				D56DF0181CF8F5A4000893C1 /* WBadgeTests.swift */,
 				D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */,
 				D73C27EE1CDA5E3800189426 /* WEquatables.swift */,
+				D56DF0181CF8F5A4000893C1 /* WFAButtonTests.swift */,
 				D574D5871D4955B300BA7771 /* WLabelTests.swift */,
 				D7CC999F1CC95FB000572B6F /* WLoadingModalTests.swift */,
 				D53356C91CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift */,
+				73D44B8B1DEF35940022120F /* WPanelTests.swift */,
 				D545B3651CEB7FB000615281 /* WRadioButtonTests.swift */,
 				D56482B61CB730140017AE96 /* WSideMenuVCTests.swift */,
 				D5728F361D41965E006178EC /* WSizeVCTests.swift */,
@@ -491,8 +503,10 @@
 				73A12C6F1CC0102A0092A3C2 /* WActionSheet.swift in Sources */,
 				D5F7A6521CF6401500636AB4 /* WBadge.swift in Sources */,
 				730364ED1CE6419F00F8F3D8 /* WSwitch.swift in Sources */,
+				73D44B911DEF37080022120F /* WFAButton.swift in Sources */,
 				73B81F1C1CE13DA1009A9D73 /* WAutoCompleteTextView.swift in Sources */,
 				D5409CE81CCE988000F984D3 /* WBanner.swift in Sources */,
+				73D44B8F1DEF368C0022120F /* WPanel.swift in Sources */,
 				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
 				D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
@@ -528,10 +542,12 @@
 				73A12C6D1CC00FE70092A3C2 /* WActionSheetTests.swift in Sources */,
 				D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
 				D592AB821CC830E200301C7F /* WToastTests.swift in Sources */,
+				7346548F1DEF6A2700245C97 /* WBadgeTests.swift in Sources */,
 				D531DD7E1CDBD7D8009CB2FF /* WEquatables.swift in Sources */,
-				D56DF01A1CF8F5AD000893C1 /* WBadgeTests.swift in Sources */,
+				D56DF01A1CF8F5AD000893C1 /* WFAButtonTests.swift in Sources */,
 				D574D5891D4955BD00BA7771 /* WLabelTests.swift in Sources */,
 				D545B3661CEB7FB000615281 /* WRadioButtonTests.swift in Sources */,
+				73D44B8D1DEF365E0022120F /* WPanelTests.swift in Sources */,
 				D71E55DE1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift in Sources */,
 				D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */,
 				D53356CB1CBD6ACC00D9A6A9 /* WPagingSelectorVCTests.swift in Sources */,

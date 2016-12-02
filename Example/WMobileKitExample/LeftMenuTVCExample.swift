@@ -40,6 +40,7 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextViewExampleVC") as! NavigationVC
     lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SwitchAndRadioExamplesVC") as! NavigationVC
     lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("BadgeExamplesVC") as! NavigationVC
+    lazy var panelExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("PanelExampleVC") as! NavigationVC
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
@@ -69,6 +70,8 @@ class LeftMenuTVCExample: UITableViewController {
             sideMenuController()?.changeMainViewController(switchAndRadioExamplesVC)
         case 12:
             sideMenuController()?.changeMainViewController(badgeExamplesVC)
+        case 13:
+            sideMenuController()?.changeMainViewController(panelExampleVC)
         default:
             break
         }
