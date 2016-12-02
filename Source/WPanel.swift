@@ -161,6 +161,8 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
+    public var velocityForSwipe: CGFloat = 150
+
     // Corner radius on the panel view
     public var cornerRadius: CGFloat = 5 {
         didSet {
@@ -333,9 +335,9 @@ public class WPanelVC: WSideMenuContentVC {
 
                 var closestWidthSnapValue = xOffset > (sidePanelWidth / 2) ? sidePanelWidth : 0
                 let xVelocity = recognizer.velocityInView(view).x
-                if (xVelocity > 150) {
+                if (xVelocity > velocityForSwipe) {
                     closestWidthSnapValue = 0
-                } else if (xVelocity < -150) {
+                } else if (xVelocity < -velocityForSwipe) {
                     closestWidthSnapValue = sidePanelWidth
                 }
 
@@ -361,11 +363,11 @@ public class WPanelVC: WSideMenuContentVC {
 
                 // Check velocity of pan if user is flinging panel up or down
                 let yVelocity = -recognizer.velocityInView(view).y
-                if (yVelocity > 150 && currentSnapRatio > closestSnapRatio) {
+                if (yVelocity > velocityForSwipe && currentSnapRatio > closestSnapRatio) {
                     if let nextRatio = getNextSnapRatio(closestSnapRatio!) {
                         closestSnapRatio = nextRatio
                     }
-                } else if (yVelocity < -150 && currentSnapRatio < closestSnapRatio) {
+                } else if (yVelocity < -velocityForSwipe && currentSnapRatio < closestSnapRatio) {
                     if let prevRatio = getPreviousSnapRatio(closestSnapRatio!) {
                         closestSnapRatio = prevRatio
                     }
