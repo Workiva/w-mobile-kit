@@ -461,6 +461,10 @@ public class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
 
         currentPanelOffset = value
+        // If side panel, set ratio as well in case we change back to vertical panel
+        if (sidePanel) {
+            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+        }
 
         if (animated) {
             if (sidePanel) {
