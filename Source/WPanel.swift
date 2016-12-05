@@ -192,6 +192,7 @@ public class WPanelVC: WSideMenuContentVC {
 
         currentPanelRatio = getSmallestSnapRatio()
         currentPanelOffset = view.frame.height * currentPanelRatio
+        panInterceptView.hidden = true
 
         setupUI()
     }
@@ -487,6 +488,7 @@ public class WPanelVC: WSideMenuContentVC {
         }
 
         floatingButton.hidden = value > 0.0
+        panInterceptView.hidden = value <= 0.0
     }
 }
 
