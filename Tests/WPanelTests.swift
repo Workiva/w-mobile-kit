@@ -55,10 +55,11 @@ class WPanelSpec: QuickSpec {
             })
 
             describe("when app has been init") {
-                it("should have floating button visible with panel snapped to bottom") {
+                it("should setup UI correctly") {
                     subject.widthCapForSidePanel = CGFloat.max
 
                     expect(subject.floatingButton.hidden) == false
+                    expect(subject.panInterceptView.hidden) == true
                     expect(subject.panelView.frame.height) == subject.cornerRadius
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height
                 }
@@ -73,6 +74,7 @@ class WPanelSpec: QuickSpec {
 
                     expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.25))
                     expect(subject.floatingButton.hidden) == true
+                    expect(subject.panInterceptView.hidden) == false
                 }
 
                 it("should panel up based on offset value and hide floating button") {
@@ -82,6 +84,7 @@ class WPanelSpec: QuickSpec {
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
                     expect(subject.floatingButton.hidden) == true
+                    expect(subject.panInterceptView.hidden) == false
                 }
 
                 it("should reveal floating button when panel is moved to 0") {
@@ -92,6 +95,7 @@ class WPanelSpec: QuickSpec {
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height
                     expect(subject.floatingButton.hidden) == false
+                    expect(subject.panInterceptView.hidden) == true
                 }
 
                 it("should reveal vertical panel when pressing floating button") {
@@ -99,14 +103,16 @@ class WPanelSpec: QuickSpec {
                     subject.floatingButtonWasPressed(subject.floatingButton)
 
                     expect(subject.floatingButton.hidden) == true
+                    expect(subject.panInterceptView.hidden) == false
                     expect(subject.panelView.frame.origin.y).to(beCloseTo(subject.view.frame.height * (1 - subject.snapHeights[1]), within: 0.25))
                 }
 
                 it("should reveal side panel when pressing floating button") {
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
                     subject.floatingButtonWasPressed(subject.floatingButton)
 
                     expect(subject.floatingButton.hidden) == true
+                    expect(subject.panInterceptView.hidden) == false
                     expect(subject.panelView.frame.origin.x) == subject.view.frame.width - subject.sidePanelWidth
                 }
 
@@ -124,7 +130,7 @@ class WPanelSpec: QuickSpec {
 
             describe("property setters") {
                 it("should change sidePanel property when changing width cap") {
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
                     expect(subject.sidePanel) == true
 
                     subject.widthCapForSidePanel = CGFloat.max
@@ -140,7 +146,7 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("shoud widen side panel when increasing width property") {
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
                     subject.movePanelToSnapRatio(0.4, animated: false)
 
                     subject.sidePanelWidth = 300
@@ -203,7 +209,7 @@ class WPanelSpec: QuickSpec {
 
             describe("panel delegate methods") {
                 it("should return correct side panel value") {
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
                     expect(subject.isSidePanel()) == true
 
                     subject.widthCapForSidePanel = CGFloat.max
@@ -265,7 +271,7 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Changed
                     recognizer.returnPoint = CGPoint(x: frame.width - 50, y: 0)
 
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
 
                     subject.panelWasPanned(recognizer)
 
@@ -277,7 +283,7 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Changed
                     recognizer.returnPoint = CGPoint(x: -50, y: 0)
 
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
 
                     subject.panelWasPanned(recognizer)
 
@@ -289,7 +295,7 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Ended
                     recognizer.returnPoint = CGPoint(x: subject.view.frame.width - subject.sidePanelWidth + 10, y: 0)
 
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
 
                     subject.panelWasPanned(recognizer)
 
@@ -301,15 +307,16 @@ class WPanelSpec: QuickSpec {
                     recognizer.testState = .Ended
                     recognizer.returnPoint = CGPoint(x: subject.view.frame.width - 10, y: 0)
 
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
 
                     subject.panelWasPanned(recognizer)
 
                     expect(subject.currentPanelOffset) == 0
                 }
 
-                it("should snap side panel to closest ratio") {
+                it("should snap vertical panel to closest ratio") {
                     subject.snapHeights = [0.0, 0.4]
+                    subject.widthCapForSidePanel = CGFloat.max
 
                     let recognizer = UIPanGestureRecognizerMock()
                     recognizer.testState = .Ended
@@ -332,7 +339,7 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should hide side panel when tapped") {
-                    subject.widthCapForSidePanel = 100
+                    subject.widthCapForSidePanel = CGFloat.min
 
                     subject.movePanelToValue(subject.sidePanelWidth)
                     expect(subject.currentPanelOffset) == subject.sidePanelWidth
@@ -341,6 +348,18 @@ class WPanelSpec: QuickSpec {
                     subject.panelWasTapped(recognizer)
 
                     expect(subject.currentPanelOffset) == 0.0
+                }
+
+                it("should default value when switching from side panel to vertical") {
+                    subject.snapHeights = [0.0, 0.2, 0.4, 0.8]
+                    subject.widthCapForSidePanel = CGFloat.max
+
+                    subject.movePanelToSnapRatio(0.4, animated: false)
+                    expect(subject.currentPanelRatio).to(beCloseTo(0.4, within: 0.05))
+
+                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.movePanelToValue(200, animated: false)
+                    expect(subject.currentPanelRatio) == 0.2
                 }
             }
 
