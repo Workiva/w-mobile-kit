@@ -377,6 +377,16 @@ class WPanelSpec: QuickSpec {
                     expect(pagingManager.pageViewController(pagingManager, viewControllerBeforeViewController: vc2!)) == vc1
                     expect(pagingManager.pageViewController(pagingManager, viewControllerBeforeViewController: vc3!)) == vc2
                 }
+
+                it("should change page programmatically") {
+                    let pagingVC = subject.pagingVC
+
+                    expect(pagingVC.pagingView.pagingControl.currentPage) == 0
+
+                    pagingVC.changeToPageIndex(false, index: 1)
+
+                    expect(pagingVC.pagingView.pagingControl.currentPage) == 1
+                }
             }
         }
     }

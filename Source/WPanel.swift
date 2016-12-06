@@ -114,7 +114,7 @@ public class WPanelVC: WSideMenuContentVC {
     var currentPanelRatio: CGFloat = 0
 
     // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
-    private(set) var sidePanel = false
+    public private(set) var sidePanel = false
 
     // This is calculated by modifying sidePanelCoversContentAtWidth
     private(set) var sidePanelCoversContent = true
@@ -381,7 +381,7 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    func panelWasTapped(recognizer: UIGestureRecognizer) {
+    public func panelWasTapped(recognizer: UIGestureRecognizer) {
         if (sidePanel && sidePanelCoversContent) {
             movePanelToValue(0.0, animated: true)
         } else if (!sidePanel) {
@@ -389,7 +389,7 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    func floatingButtonWasPressed(sender: WFAButton) {
+    public func floatingButtonWasPressed(sender: WFAButton) {
         if (sidePanel) {
             movePanelToValue(sidePanelWidth, animated: true)
         } else {
@@ -399,7 +399,7 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     // Snap Height Helpers
-    func getNextSnapRatio(fromRatio: CGFloat) -> CGFloat? {
+    public func getNextSnapRatio(fromRatio: CGFloat) -> CGFloat? {
         var returnRatio: CGFloat?
         var nextHighest: CGFloat = 1.0
         for ratio in snapHeights {
@@ -412,7 +412,7 @@ public class WPanelVC: WSideMenuContentVC {
         return returnRatio
     }
 
-    func getPreviousSnapRatio(fromRatio: CGFloat) -> CGFloat? {
+    public func getPreviousSnapRatio(fromRatio: CGFloat) -> CGFloat? {
         var returnRatio: CGFloat?
         var previousLowest: CGFloat = 0.0
         for ratio in snapHeights {
@@ -425,7 +425,7 @@ public class WPanelVC: WSideMenuContentVC {
         return returnRatio
     }
 
-    func getSmallestSnapRatio() -> CGFloat {
+    public func getSmallestSnapRatio() -> CGFloat {
         var smallestRatio: CGFloat = 1.0
 
         for ratio in snapHeights {
@@ -437,7 +437,7 @@ public class WPanelVC: WSideMenuContentVC {
         return smallestRatio
     }
 
-    func getLargestSnapRatio() -> CGFloat {
+    public func getLargestSnapRatio() -> CGFloat {
         var largestRatio: CGFloat = 0.0
 
         for ratio in snapHeights {
@@ -544,9 +544,6 @@ public class WPagingPanelVC: WPanelVC {
     public override func commonInit() {
         super.commonInit()
 
-        pagingVC.pagingHeight = pagingControlHeight
-        pagingVC.alwaysShowPagingBar = alwaysShowPagingBar
-        pagingVC.pagingBarHidePadding = pagingBarHidePadding
         addViewControllerToContainer(panelView.containerView, viewController: pagingVC)
     }
 }
@@ -557,7 +554,7 @@ public class WPagingPanelVC: WPanelVC {
 
 // View Controller to contain UIPageViewController and separate UIPageControl for customization options
 public class WPanelPageControllerVC: UIViewController {
-    var pagingManager = WPanelPageManagerVC()
+    public var pagingManager = WPanelPageManagerVC()
     var pagingContainerView = UIView()
 
     public var pages: [UIViewController]? {
@@ -645,6 +642,15 @@ public class WPanelPageControllerVC: UIViewController {
             setPageScrollEnabled()
         } else {
             setPageScrollEnabled(false)
+        }
+    }
+
+    public func changeToPageIndex(animated: Bool, index: Int) {
+        if let pages = pages {
+            if (index >= 0 && index < pages.count) {
+                pagingManager.setViewControllers([pages[index]], direction: .Forward, animated: animated, completion: nil)
+                wPanelPageManager(pagingManager, didUpdatePageIndex: index)
+            }
         }
     }
 }
@@ -747,7 +753,13 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
 }
 
 public class WPanelPagingView: UIView {
-    public var pagingControl = UIPageControl()
+    public var pagingControl = UIPageControl() {
+        didSet {
+            oldValue.removeFromSuperview()
+            addSubview(pagingControl)
+            setupUI()
+        }
+    }
 
     public var currentPageIndicatorTintColor: UIColor = UIColor.purpleColor() {
         didSet {
