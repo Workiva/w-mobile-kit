@@ -555,7 +555,7 @@ public class WPagingPanelVC: WPanelVC {
 // View Controller to contain UIPageViewController and separate UIPageControl for customization options
 public class WPanelPageControllerVC: UIViewController {
     public var pagingManager = WPanelPageManagerVC()
-    var pagingContainerView = UIView()
+    public var pagingContainerView = UIView()
 
     public var pages: [UIViewController]? {
         didSet {
