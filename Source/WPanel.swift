@@ -270,7 +270,12 @@ public class WPanelVC: WSideMenuContentVC {
             panelView.bottomDragLine.hidden = true
             panelView.layer.cornerRadius = 0
         } else {
-            currentPanelOffset = view.frame.height * currentPanelRatio
+            var offset = view.frame.height * currentPanelRatio
+            if let minimumSnapHeight = minimumSnapHeight where offset < minimumSnapHeight && offset > 0.0 {
+                offset = minimumSnapHeight
+            }
+
+            currentPanelOffset = offset
 
             contentContainerView.snp_remakeConstraints { (make) in
                 make.edges.equalTo(view)
@@ -482,6 +487,8 @@ public class WPanelVC: WSideMenuContentVC {
         // If side panel, set ratio as well in case we change back to vertical panel
         if (sidePanel) {
             currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+        } else {
+            currentPanelRatio = currentPanelOffset / view.frame.height
         }
 
         if (animated) {
