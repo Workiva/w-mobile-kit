@@ -114,8 +114,8 @@ public class WFAButton: UIControl {
         layoutIfNeeded()
 
         if (hasShadow) {
-            var nonShadowLayer = buttonBackgroundView.hidden ? buttonBackgroundView.layer : imageView.layer
-            var shadowLayer = buttonBackgroundView.hidden ? imageView.layer : buttonBackgroundView.layer
+            let nonShadowLayer = buttonBackgroundView.hidden ? buttonBackgroundView.layer : imageView.layer
+            let shadowLayer = buttonBackgroundView.hidden ? imageView.layer : buttonBackgroundView.layer
 
             shadowLayer.masksToBounds = false
             shadowLayer.shadowOpacity = 0.5
