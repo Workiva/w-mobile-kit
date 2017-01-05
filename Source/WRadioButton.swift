@@ -94,10 +94,6 @@ public class WRadioButton: UIControl {
 
     public override var selected: Bool {
         didSet {
-            if (oldValue != selected) {
-                sendActionsForControlEvents(.ValueChanged)
-            }
-
             if selected {
                 // Send selection notification with group id
                 NSNotificationCenter.defaultCenter().postNotificationName(wRadioButtonSelected,
@@ -114,6 +110,10 @@ public class WRadioButton: UIControl {
                     self.layoutIfNeeded()
                 }
             )
+
+            if (oldValue != selected) {
+                sendActionsForControlEvents(.ValueChanged)
+            }
         }
     }
 
