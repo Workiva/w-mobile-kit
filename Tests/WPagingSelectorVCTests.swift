@@ -135,11 +135,11 @@ class WPagingSelectorVCSpec: QuickSpec {
                 }
 
                 it("should change current index to the tab") {
-                    subject.didChangeToTab(subject.pagingSelectorControl!, tab: 0)
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 0)
 
                     expect(subject.currentPageIndex).to(equal(0))
 
-                    subject.didChangeToTab(subject.pagingSelectorControl!, tab: 1)
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 1)
 
                     expect(subject.currentPageIndex).to(equal(1))
                 }

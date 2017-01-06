@@ -170,7 +170,7 @@ public class WUserLogoView: UIView {
     }
 
     private func setupImage() {
-        if let profileImage = image {
+        if (image != nil) {
             initialsLabel.hidden = true
             profileImageView.hidden = false
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		55A106331CAC8B5400495BBC /* LeftMenuTVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */; };
 		730364EB1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */; };
+		7310E3661DD4E39500153C7F /* PanelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310E3651DD4E39500153C7F /* PanelExample.swift */; };
 		73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */; };
 		73B2B5CE1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */; };
 		73E59C441D1C96F000AADD51 /* PagingControlVCExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E59C431D1C96F000AADD51 /* PagingControlVCExampleVC.swift */; };
@@ -37,6 +38,7 @@
 		55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuTVCExample.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* WMobileKitExample_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMobileKitExample_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchAndRadioExamplesVC.swift; sourceTree = "<group>"; };
+		7310E3651DD4E39500153C7F /* PanelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelExample.swift; sourceTree = "<group>"; };
 		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; };
 		73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewExamplesVC.swift; sourceTree = "<group>"; };
 		73BE4C981CD94D4B0025E34E /* AutoCompleteTextViewExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextViewExampleVC.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */,
 				D5F7A6531CF640F800636AB4 /* BadgeExamplesVC.swift */,
 				CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */,
+				7310E3651DD4E39500153C7F /* PanelExample.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			files = (
 				D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */,
 				730364EB1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift in Sources */,
+				7310E3661DD4E39500153C7F /* PanelExample.swift in Sources */,
 				D53D0BC01CAB11B70065D106 /* AppDelegate.swift in Sources */,
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift in Sources */,
