@@ -114,7 +114,9 @@ public class WPanelVC: WSideMenuContentVC {
     var currentPanelRatio: CGFloat = 0
 
     // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
-    public private(set) var sidePanel = false
+    public var sidePanel: Bool {
+        return view.frame.size.width > widthCapForSidePanel
+    }
 
     // This is calculated by modifying sidePanelCoversContentAtWidth
     private(set) var sidePanelCoversContent = true
@@ -196,6 +198,10 @@ public class WPanelVC: WSideMenuContentVC {
         currentPanelRatio = getSmallestSnapRatio()
         currentPanelOffset = view.frame.height * currentPanelRatio
         panInterceptView.hidden = true
+    }
+
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
 
         setupUI()
     }
@@ -238,7 +244,6 @@ public class WPanelVC: WSideMenuContentVC {
 
         panelView.snp_removeConstraints()
 
-        sidePanel = view.frame.width > widthCapForSidePanel
         sidePanelCoversContent = view.frame.width <= sidePanelCoversContentUpToWidth
 
         if (sidePanel) {
@@ -484,7 +489,8 @@ public class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
 
         currentPanelOffset = value
-        // If side panel, set ratio as well in case we change back to vertical panel
+
+        // Set ratio as well for vertical panel in any case
         if (sidePanel) {
             currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
         } else {
@@ -518,7 +524,7 @@ public class WPanelVC: WSideMenuContentVC {
 
 extension WPanelVC: WPanelDelegate {
     public func isSidePanel() -> Bool {
-        return view.frame.size.width > widthCapForSidePanel
+        return sidePanel
     }
 
     public func setPanelRatio(ratio: CGFloat, animated: Bool) {
