@@ -434,7 +434,7 @@ public class WToastTwoLineView: WToastView {
 
         firstLabel.snp_remakeConstraints { (make) in
             make.top.equalTo(self).offset(8)
-            make.height.equalTo(frame.size.height/2)
+            make.height.equalTo(frame.size.height/2 - 8)
             make.left.equalTo(self).offset(frame.size.width / 10)
             make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
         }
@@ -442,7 +442,7 @@ public class WToastTwoLineView: WToastView {
 
         secondLabel.snp_remakeConstraints { (make) in
             make.bottom.equalTo(self).offset(-8)
-            make.height.equalTo(frame.size.height/2)
+            make.height.equalTo(frame.size.height/2 - 8)
             make.left.equalTo(self).offset(frame.size.width / 10)
             make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
         }

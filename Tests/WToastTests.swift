@@ -131,6 +131,9 @@ class WToastSpec: QuickSpec {
                         verifyCommonInit()
                         expect(twoLineToastView.firstLine) == "first"
                         expect(twoLineToastView.secondLine) == "second"
+
+                        expect(twoLineToastView.firstLabel.frame.height) == (twoLineToastView.frame.size.height / 2) - 8
+                        expect(twoLineToastView.secondLabel.frame.height) == (twoLineToastView.frame.size.height / 2) - 8
                         
                         // Verify the toast disappears
                         let displayTime = ceil(TOAST_DEFAULT_ANIMATION_DURATION + TOAST_DEFAULT_SHOW_DURATION)
