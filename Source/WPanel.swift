@@ -147,6 +147,9 @@ public class WPanelVC: WSideMenuContentVC {
     // Height Ratios for snapping, values can be any non-negative value where 1.0 equals full height of the view controller's view
     public var snapHeights: [CGFloat] = [0.0, 0.4, 0.96]
 
+    // Minimum height to snap to in case the screen height is too small for content you want to present
+    public var minimumSnapHeight: CGFloat?
+
     // Cap value on how far user can drag the panel up before it snaps back to heighest value in snapHeights
     // 0.0 means no "rubber band" effect, 1.0 means they can drag as far as they want until it snaps back
     public var springValuePastMaxHeight: CGFloat = 0.02
@@ -272,7 +275,12 @@ public class WPanelVC: WSideMenuContentVC {
             panelView.bottomDragLine.hidden = true
             panelView.layer.cornerRadius = 0
         } else {
-            currentPanelOffset = view.frame.height * currentPanelRatio
+            var offset = view.frame.height * currentPanelRatio
+            if let minimumSnapHeight = minimumSnapHeight where offset < minimumSnapHeight && offset > 0.0 {
+                offset = minimumSnapHeight
+            }
+
+            currentPanelOffset = offset
 
             contentContainerView.snp_remakeConstraints { (make) in
                 make.edges.equalTo(view)
@@ -378,8 +386,14 @@ public class WPanelVC: WSideMenuContentVC {
                         closestSnapRatio = prevRatio
                     }
                 }
-                
-                movePanelToSnapRatio(closestSnapRatio!, animated: true)
+
+                // Verify the height is not smaller than the minimum height if set
+                let actualHeight = view.frame.height * closestSnapRatio!
+                if let minimumSnapHeight = minimumSnapHeight where closestSnapRatio! > 0.0 && actualHeight < minimumSnapHeight {
+                    movePanelToValue(minimumSnapHeight, animated: true)
+                } else {
+                    movePanelToSnapRatio(closestSnapRatio!, animated: true)
+                }
             }
         default:
             break
@@ -399,7 +413,15 @@ public class WPanelVC: WSideMenuContentVC {
             movePanelToValue(sidePanelWidth, animated: true)
         } else {
             // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
-            movePanelToSnapRatio(getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio(), animated: true)
+            let snapRatio = getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()
+
+            // Verify the height is not smaller than the minimum height if set
+            let actualHeight = view.frame.height * snapRatio
+            if let minimumSnapHeight = minimumSnapHeight where actualHeight < minimumSnapHeight {
+                movePanelToValue(minimumSnapHeight, animated: true)
+            } else {
+                movePanelToSnapRatio(snapRatio, animated: true)
+            }
         }
     }
 
@@ -467,8 +489,13 @@ public class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
 
         currentPanelOffset = value
+
         // Set ratio as well for vertical panel in any case
-        currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+        if (sidePanel) {
+            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+        } else {
+            currentPanelRatio = currentPanelOffset / view.frame.height
+        }
 
         if (animated) {
             if (sidePanel) {

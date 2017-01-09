@@ -236,6 +236,16 @@ class WPanelSpec: QuickSpec {
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
                     expect(subject.floatingButton.hidden) == true
                 }
+
+                it("should move to minimum height if needed") {
+                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.minimumSnapHeight = 500
+
+                    subject.floatingButtonWasPressed(subject.floatingButton)
+
+                    expect(subject.panelView.frame.height) == 500 + subject.cornerRadius
+                    expect(subject.floatingButton.hidden) == true
+                }
             }
 
             describe("panel gestures") {
@@ -325,6 +335,20 @@ class WPanelSpec: QuickSpec {
                     subject.panelWasPanned(recognizer)
 
                     expect(subject.currentPanelRatio) == 0.0
+                }
+
+                it("should snap vertical panel to minimum height if needed") {
+                    subject.snapHeights = [0.0, 0.1]
+                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.minimumSnapHeight = 500
+
+                    let recognizer = UIPanGestureRecognizerMock()
+                    recognizer.testState = .Ended
+                    recognizer.returnPoint = CGPointZero
+
+                    subject.panelWasPanned(recognizer)
+
+                    expect(subject.currentPanelOffset) == 500
                 }
 
                 it("should hide panel when tapped") {

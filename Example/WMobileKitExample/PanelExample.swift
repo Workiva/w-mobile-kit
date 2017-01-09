@@ -31,6 +31,8 @@ public class PanelExampleVC: WPagingPanelVC {
 
         floatingButton.icon = UIImage(named: "drawer")
 
+        minimumSnapHeight = 240
+
         pages = [panelContent1, panelContent2, panelContent3]
 
         let outerContentVC = OuterContentVC()
@@ -47,15 +49,40 @@ class PanelContentVC: WSideMenuContentVC, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "tableCell")
+        if (contentType < 2) {
+            let tableView = UITableView()
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "tableCell")
 
-        view.addSubview(tableView)
+            view.addSubview(tableView)
 
-        tableView.snp_makeConstraints { (make) in
-            make.edges.equalTo(view)
+            tableView.snp_makeConstraints { (make) in
+                make.edges.equalTo(view)
+            }
+        } else {
+            let colorView = UIView()
+            colorView.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
+            view.addSubview(colorView)
+
+            let label = UILabel()
+            label.text = "This view has a set height, so we need a minimum height for smaller screen sizes"
+            label.numberOfLines = 0
+            label.lineBreakMode = .ByWordWrapping
+            label.textColor = .whiteColor()
+            label.font = .boldSystemFontOfSize(18)
+            label.textAlignment = .Center
+            colorView.addSubview(label)
+
+
+            colorView.snp_makeConstraints { (make) in
+                make.left.top.right.width.equalTo(view).inset(20)
+                make.height.equalTo(180)
+            }
+
+            label.snp_makeConstraints { (make) in
+                make.edges.equalTo(colorView).inset(8)
+            }
         }
     }
 

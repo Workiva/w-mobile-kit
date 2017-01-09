@@ -138,6 +138,20 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
+        let autoTwoLineToastButton = UIButton(type: UIButtonType.RoundedRect)
+        autoTwoLineToastButton.backgroundColor = .lightGrayColor()
+        autoTwoLineToastButton.tintColor = .greenColor()
+        autoTwoLineToastButton.setTitle("Auto Dismiss Two Line Toast", forState: UIControlState.Normal)
+        autoTwoLineToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        autoTwoLineToastButton.addTarget(self, action: #selector(presentAutoTwoLineToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(autoTwoLineToastButton)
+        autoTwoLineToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
         let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
         tapToastButton.backgroundColor = .lightGrayColor()
         tapToastButton.tintColor = .greenColor()
@@ -147,7 +161,7 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(tapToastButton)
         tapToastButton.snp_makeConstraints { (make) in
-            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
+            make.top.equalTo(autoTwoLineToastButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -383,6 +397,12 @@ public class ModalViewExamplesVC: WSideMenuContentVC {
         toast.showDuration = 3
         toast.placement = .Top
         toast.width = 250
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    public func presentAutoTwoLineToast(sender: UIButton) {
+        let toast = WToastTwoLineView(firstLine: "This is the first line, that will be truncated on its own.", secondLine: "This is the second line, notice how the first line did not hide this text.")
+        toast.showDuration = 3
         WToastManager.sharedInstance.showToast(toast)
     }
 
