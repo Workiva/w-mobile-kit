@@ -113,6 +113,11 @@ public class WPanelVC: WSideMenuContentVC {
 
     var currentPanelRatio: CGFloat = 0
 
+    // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
+    public var sidePanel: Bool {
+        return view.frame.size.width > widthCapForSidePanel
+    }
+
     // This is calculated by modifying sidePanelCoversContentAtWidth
     private(set) var sidePanelCoversContent = true
 
@@ -238,7 +243,7 @@ public class WPanelVC: WSideMenuContentVC {
 
         sidePanelCoversContent = view.frame.width <= sidePanelCoversContentUpToWidth
 
-        if (sidePanel()) {
+        if (sidePanel) {
             currentPanelOffset = currentPanelOffset > 0.0 ? sidePanelWidth : 0.0
             currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
 
@@ -305,7 +310,7 @@ public class WPanelVC: WSideMenuContentVC {
     public func panelWasPanned(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began, .Changed:
-            if (sidePanel()) {
+            if (sidePanel) {
                 let xLocation = recognizer.locationInView(view).x
                 currentPanelOffset = min(sidePanelWidth, view.frame.width - xLocation)
             } else {
@@ -330,7 +335,7 @@ public class WPanelVC: WSideMenuContentVC {
             }
             view.layoutIfNeeded()
         case .Ended, .Cancelled, .Failed:
-            if (sidePanel()) {
+            if (sidePanel) {
                 let xLocation = recognizer.locationInView(view).x
                 let xOffset = view.frame.width - xLocation
 
@@ -382,15 +387,15 @@ public class WPanelVC: WSideMenuContentVC {
     }
 
     public func panelWasTapped(recognizer: UIGestureRecognizer) {
-        if (sidePanel() && sidePanelCoversContent) {
+        if (sidePanel && sidePanelCoversContent) {
             movePanelToValue(0.0, animated: true)
-        } else if (!sidePanel()) {
+        } else if (!sidePanel) {
             movePanelToSnapRatio(snapHeights[0], animated: true)
         }
     }
 
     public func floatingButtonWasPressed(sender: WFAButton) {
-        if (sidePanel()) {
+        if (sidePanel) {
             movePanelToValue(sidePanelWidth, animated: true)
         } else {
             // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
@@ -466,7 +471,7 @@ public class WPanelVC: WSideMenuContentVC {
         currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
 
         if (animated) {
-            if (sidePanel()) {
+            if (sidePanel) {
                 UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut,
                     animations: {
                         self.view.layoutIfNeeded()
@@ -488,16 +493,11 @@ public class WPanelVC: WSideMenuContentVC {
         floatingButton.hidden = value > 0.0
         panInterceptView.hidden = value <= 0.0
     }
-
-    // Dictates if panel will slide from side, or bottom. This is calculated by modifying widthCapForSidePanel
-    public func sidePanel() -> Bool {
-        return view.frame.size.width > widthCapForSidePanel
-    }
 }
 
 extension WPanelVC: WPanelDelegate {
     public func isSidePanel() -> Bool {
-        return sidePanel()
+        return sidePanel
     }
 
     public func setPanelRatio(ratio: CGFloat, animated: Bool) {
