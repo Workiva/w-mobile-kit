@@ -402,7 +402,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var pagingControlSidePadding: CGFloat = DEFAULT_PAGING_SELECTOR_SIDE_PADDING {
         didSet {
-            updatePagingSelectorConstraints()
+            pagingControlConstraintsChanged()
         }
     }
 
@@ -497,7 +497,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
         pagingSelectorControl?.delegate = self
 
-        updatePagingSelectorConstraints()
+        pagingControlConstraintsChanged()
 
         if (pages.count > 0) {
             let newMainViewController = pages[0].viewController
@@ -507,7 +507,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
         }
     }
 
-    public func updatePagingSelectorConstraints() {
+    public func pagingControlConstraintsChanged() {
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
             pagingSelectorControl.separatorLineColor = separatorLineColor
@@ -527,10 +527,6 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
                 make.top.equalTo(pagingSelectorControl.snp_bottom)
             }
         }
-    }
-
-    public func pagingControlConstraintsChanged() {
-        updatePagingSelectorConstraints()
     }
 
     // Delegate methods
