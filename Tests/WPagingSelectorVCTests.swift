@@ -95,13 +95,6 @@ class WPagingSelectorVCSpec: QuickSpec {
                     
                     expect(selector!.superview).to(beNil())
                 }
-
-                it("should remove old paging selector when setting new side padding") {
-                    let selector = subject.pagingSelectorControl
-                    subject.pagingControlSidePadding = 10
-
-                    expect(selector!.superview).to(beNil())
-                }
                 
                 it("should set color on control when setting on the VC") {
                     subject.tabTextColor = .blueColor()

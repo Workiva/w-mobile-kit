@@ -396,7 +396,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
     public private(set) var pagingSelectorControl: WPagingSelectorControl?
     public var pagingControlHeight: CGFloat = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
-            pagingControlConstraintsChanged()
+            setupUI()
         }
     }
 
@@ -445,7 +445,7 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
     public var tabWidth: CGFloat? {
         didSet {
-            pagingControlConstraintsChanged()
+            setupUI()
         }
     }
 
@@ -497,12 +497,23 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
 
         pagingSelectorControl?.delegate = self
 
+        pagingControlConstraintsChanged()
+
+        if (pages.count > 0) {
+            let newMainViewController = pages[0].viewController
+            addViewControllerToContainer(mainContainerView, viewController: newMainViewController)
+
+            self.mainViewController = newMainViewController
+        }
+    }
+
+    public func pagingControlConstraintsChanged() {
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
             pagingSelectorControl.separatorLineColor = separatorLineColor
 
             view.addSubview(pagingSelectorControl)
-            pagingSelectorControl.snp_makeConstraints { (make) in
+            pagingSelectorControl.snp_remakeConstraints { (make) in
                 make.left.equalTo(view).offset(pagingControlSidePadding)
                 make.right.equalTo(view).offset(-pagingControlSidePadding)
                 make.height.equalTo(pagingControlHeight)
@@ -516,17 +527,6 @@ public class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelega
                 make.top.equalTo(pagingSelectorControl.snp_bottom)
             }
         }
-
-        if (pages.count > 0) {
-            let newMainViewController = pages[0].viewController
-            addViewControllerToContainer(mainContainerView, viewController: newMainViewController)
-
-            self.mainViewController = newMainViewController
-        }
-    }
-
-    public func pagingControlConstraintsChanged() {
-        setupUI()
     }
 
     // Delegate methods

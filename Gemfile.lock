@@ -78,6 +78,7 @@ GEM
     nanaimo (0.2.3)
     nap (1.1.0)
     netrc (0.7.8)
+    ocunit2junit (1.4)
     plist (3.2.0)
     ruby-macho (0.2.6)
     rubyzip (1.1.7)
@@ -103,7 +104,8 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (= 1.2.0.beta.1)
+  ocunit2junit
   xcov (= 0.11.2)
 
 BUNDLED WITH
-   1.12.5
+   1.13.1

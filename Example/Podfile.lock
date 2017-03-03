@@ -4,7 +4,7 @@ PODS:
     - SDWebImage/Core (= 3.8.0)
   - SDWebImage/Core (3.8.0)
   - SnapKit (0.22.0)
-  - WMobileKit (2.1.2):
+  - WMobileKit (2.1.4):
     - CryptoSwift (= 0.5.2)
     - SDWebImage (= 3.8)
     - SnapKit (= 0.22.0)
@@ -14,13 +14,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   WMobileKit:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
   SDWebImage: 7d9fe229266696de91eadf840c77ca15efd4bbd2
   SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
-  WMobileKit: 9b466fafd463b01be99bab5fbe795e98ef6232f1
+  WMobileKit: bc79f119a7061c45467d79f8babbf72d84a0a62e
 
 PODFILE CHECKSUM: 22b307ad95a73c481740aba61043b1ced16873a0
 
