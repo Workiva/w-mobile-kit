@@ -54,7 +54,13 @@ public class WRadioButton: UIControl {
         }
     }
 
-    public var borderColor: UIColor = .lightGrayColor() {
+    public var borderColorNotSelected: UIColor = .lightGrayColor() {
+        didSet {
+            setupUI()
+        }
+    }
+
+    public var borderColorSelected: UIColor = .lightGrayColor() {
         didSet {
             setupUI()
         }
@@ -112,6 +118,7 @@ public class WRadioButton: UIControl {
             )
 
             if (oldValue != selected) {
+                updateUISelectedChanged()
                 sendActionsForControlEvents(.ValueChanged)
             }
         }
@@ -183,10 +190,10 @@ public class WRadioButton: UIControl {
 
         radioCircle.backgroundColor = buttonColor
         radioCircle.layer.borderWidth = borderWidth
-        radioCircle.layer.borderColor = borderColor.CGColor
 
-        indicatorView.alpha = selected ? 1.0 : 0.0
         indicatorView.backgroundColor = indicatorColor
+
+        updateUISelectedChanged()
 
         // Need to set the frame first or will result in square
         layoutIfNeeded()
@@ -195,6 +202,12 @@ public class WRadioButton: UIControl {
         indicatorView.layer.cornerRadius = indicatorView.frame.size.width / 2
 
         invalidateIntrinsicContentSize()
+    }
+
+    public func updateUISelectedChanged() {
+        radioCircle.layer.borderColor = selected ? borderColorSelected.CGColor : borderColorNotSelected.CGColor
+
+        indicatorView.alpha = selected ? 1.0 : 0.0
     }
 
     public func radioButtonSelected(notification: NSNotification) {

@@ -52,7 +52,8 @@ class WRadioButtonSpec: QuickSpec {
                 expect(radioButton.buttonColor) == UIColor.whiteColor()
                 expect(radioButton.highlightColor) == UIColor.grayColor()
                 expect(radioButton.indicatorColor) == UIColor.darkGrayColor()
-                expect(radioButton.borderColor) == UIColor.lightGrayColor()
+                expect(radioButton.borderColorNotSelected) == UIColor.lightGrayColor()
+                expect(radioButton.borderColorSelected) == UIColor.lightGrayColor()
                 expect(radioButton.borderWidth) == 2.0
                 expect(radioButton.buttonRadius) == 12.0
                 expect(radioButton.indicatorRadius) == 6
@@ -116,7 +117,8 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton.buttonColor = UIColor.redColor()
                     radioButton.highlightColor = UIColor.blueColor()
                     radioButton.indicatorColor = UIColor.greenColor()
-                    radioButton.borderColor = UIColor.purpleColor()
+                    radioButton.borderColorNotSelected = UIColor.purpleColor()
+                    radioButton.borderColorSelected = UIColor.blueColor()
                     radioButton.borderWidth = 4
                     radioButton.buttonRadius = 14
                     radioButton.indicatorRadius = 7
@@ -135,7 +137,9 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton.buttonColor) == UIColor.redColor()
                     expect(radioButton.highlightColor) == UIColor.blueColor()
                     expect(radioButton.indicatorColor) == UIColor.greenColor()
-                    expect(radioButton.borderColor) == UIColor.purpleColor()
+                    expect(radioButton.borderColorNotSelected) == UIColor.purpleColor()
+                    expect(radioButton.borderColorSelected) == UIColor.blueColor()
+                    expect(radioButton.radioCircle.layer.borderColor) == UIColor.blueColor().CGColor
                     expect(radioButton.borderWidth) == 4
                     expect(radioButton.buttonRadius) == 14
                     expect(radioButton.indicatorRadius) == 7
