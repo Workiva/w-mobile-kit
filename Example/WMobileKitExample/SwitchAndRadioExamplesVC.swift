@@ -144,7 +144,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio6.groupID = 2
         radio6.buttonRadius = 20
         radio6.borderWidth = 5
-        radio6.borderColor = .redColor()
+        radio6.borderColorSelected = .redColor()
         radio6.highlightColor = .blueColor()
         radio6.indicatorColor = .redColor()
         radio6.indicatorRadius = 8
@@ -162,7 +162,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio5.buttonRadius = 20
         radio5.buttonColor = .yellowColor()
         radio5.borderWidth = 5
-        radio5.borderColor = .purpleColor()
+        radio5.borderColorSelected = .purpleColor()
         radio5.highlightColor = .blackColor()
 
         view.addSubview(radio7)
@@ -174,7 +174,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio7.groupID = 2
         radio7.buttonRadius = 20
         radio7.borderWidth = 5
-        radio7.borderColor = .blueColor()
+        radio7.borderColorSelected = .blueColor()
         radio7.highlightColor = .redColor()
         radio7.indicatorColor = .magentaColor()
         radio7.indicatorRadius = 7
@@ -189,7 +189,7 @@ public class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio8.buttonRadius = 20
         radio8.buttonColor = .lightGrayColor()
         radio8.borderWidth = 5
-        radio8.borderColor = .greenColor()
+        radio8.borderColorSelected = .greenColor()
         radio8.highlightColor = .yellowColor()
         radio8.indicatorColor = .blackColor()
         radio8.indicatorRadius = 6
