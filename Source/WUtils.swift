@@ -24,3 +24,31 @@ public enum xAlignment {
 public enum yAlignment {
     case Top, Center, Bottom
 }
+
+class WUtils {
+    public func generateExampleViews(count: Int) -> [UIView] {
+        var views: [UIView] = []
+
+        for _ in 0...count {
+            views.append(generateExampleView())
+        }
+
+        return views
+    }
+
+    public func generateExampleView() -> UIView {
+        // Size with width and height from 50-150
+        let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(101)) + 30, CGFloat(arc4random_uniform(101)) + 30))
+        view.backgroundColor = getRandomColor()
+
+        return view
+    }
+
+    public func getRandomColor() -> UIColor{
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+    }
+}

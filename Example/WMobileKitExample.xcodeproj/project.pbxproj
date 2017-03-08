@@ -23,6 +23,7 @@
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
 		D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */; };
 		D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0141CF7B515000893C1 /* MobileKitVC.swift */; };
+		D58F8FA81E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */; };
 		D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */; };
 		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
@@ -54,6 +55,7 @@
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuVCExample.swift; sourceTree = "<group>"; };
 		D56DF0141CF7B515000893C1 /* MobileKitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileKitVC.swift; sourceTree = "<group>"; };
+		D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoViewLayoutExampleVC.swift; sourceTree = "<group>"; };
 		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; };
 		D592B2BC1CC9498E00301C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				D5F7A6531CF640F800636AB4 /* BadgeExamplesVC.swift */,
 				CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */,
 				7310E3651DD4E39500153C7F /* PanelExample.swift */,
+				D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -179,12 +182,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "WMobileKitExample" */;
 			buildPhases = (
+				3EB43EB92E58032AF0667799 /* 📦 Check Pods Manifest.lock */,
 				98A5CCD15F7D28C68E4CCA77 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				8FC73EFBB362335A5F128DBD /* [CP] Embed Pods Frameworks */,
 				49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */,
+				05A9FF5587E4F95729BD1C5D /* 📦 Embed Pods Frameworks */,
+				4741DCE4EBCE20EBAAA2683C /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,6 +250,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05A9FF5587E4F95729BD1C5D /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EB43EB92E58032AF0667799 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4741DCE4EBCE20EBAAA2683C /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -303,6 +354,7 @@
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift in Sources */,
 				D50149E51CE3D90D00E5263E /* SpinnerExamplesVC.swift in Sources */,
+				D58F8FA81E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift in Sources */,
 				D50149E41CE3D90A00E5263E /* LoadingModalExamplesVC.swift in Sources */,
 				CE76EA541D1DA9E800B5F487 /* TextViewExamplesVC.swift in Sources */,
 				D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */,

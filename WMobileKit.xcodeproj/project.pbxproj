@@ -43,6 +43,8 @@
 		D5728F371D41965E006178EC /* WSizeVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5728F361D41965E006178EC /* WSizeVCTests.swift */; };
 		D574D5861D49293C00BA7771 /* WLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574D5851D49293C00BA7771 /* WLabel.swift */; };
 		D574D5891D4955BD00BA7771 /* WLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574D5871D4955B300BA7771 /* WLabelTests.swift */; };
+		D58F8FA51E70887900BFF6B2 /* WAutoViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F8FA41E70887900BFF6B2 /* WAutoViewLayout.swift */; };
+		D58F8FA61E70887900BFF6B2 /* WAutoViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F8FA41E70887900BFF6B2 /* WAutoViewLayout.swift */; };
 		D592AB781CC57DA000301C7F /* WUserLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB771CC57DA000301C7F /* WUserLogoView.swift */; };
 		D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */; };
 		D592AB7E1CC82FFE00301C7F /* WToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB7D1CC82FFE00301C7F /* WToast.swift */; };
@@ -121,6 +123,7 @@
 		D5728F361D41965E006178EC /* WSizeVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSizeVCTests.swift; sourceTree = "<group>"; };
 		D574D5851D49293C00BA7771 /* WLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLabel.swift; sourceTree = "<group>"; };
 		D574D5871D4955B300BA7771 /* WLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WLabelTests.swift; sourceTree = "<group>"; };
+		D58F8FA41E70887900BFF6B2 /* WAutoViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoViewLayout.swift; sourceTree = "<group>"; };
 		D592AB771CC57DA000301C7F /* WUserLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoView.swift; sourceTree = "<group>"; };
 		D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUserLogoViewTests.swift; sourceTree = "<group>"; };
 		D592AB7D1CC82FFE00301C7F /* WToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WToast.swift; sourceTree = "<group>"; };
@@ -226,6 +229,7 @@
 				D518B1D71CDBEE3D0058B6A9 /* Extensions */,
 				73A12C6E1CC0102A0092A3C2 /* WActionSheet.swift */,
 				73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */,
+				D58F8FA41E70887900BFF6B2 /* WAutoViewLayout.swift */,
 				D5F7A6511CF6401500636AB4 /* WBadge.swift */,
 				D5409CE71CCE988000F984D3 /* WBanner.swift */,
 				D592AB7F1CC8300700301C7F /* WConstants.swift */,
@@ -509,6 +513,7 @@
 				73D44B8F1DEF368C0022120F /* WPanel.swift in Sources */,
 				55A106311CAC849300495BBC /* WSideMenuVC.swift in Sources */,
 				D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */,
+				D58F8FA51E70887900BFF6B2 /* WAutoViewLayout.swift in Sources */,
 				D53356C81CBC591100D9A6A9 /* WPagingSelectorVC.swift in Sources */,
 				D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */,
 				D574D5861D49293C00BA7771 /* WLabel.swift in Sources */,
@@ -540,6 +545,7 @@
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,
 				730364F01CE641B300F8F3D8 /* WSwitchTests.swift in Sources */,
 				73A12C6D1CC00FE70092A3C2 /* WActionSheetTests.swift in Sources */,
+				D58F8FA61E70887900BFF6B2 /* WAutoViewLayout.swift in Sources */,
 				D7CC999C1CC9348E00572B6F /* WTextFieldTests.swift in Sources */,
 				D592AB821CC830E200301C7F /* WToastTests.swift in Sources */,
 				7346548F1DEF6A2700245C97 /* WBadgeTests.swift in Sources */,
