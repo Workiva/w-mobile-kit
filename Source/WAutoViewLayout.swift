@@ -19,7 +19,7 @@
 import UIKit
 import SnapKit
 
-public class AutoViewLayoutVC: UIViewController {
+public class WAutoViewLayoutVC: UIViewController {
     public var collectionView: UICollectionView!
     let reuseIdentifier = "cell"
 
@@ -47,44 +47,36 @@ public class AutoViewLayoutVC: UIViewController {
         collectionView.snp_remakeConstraints { (make) in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
+            make.left.equalToSuperview()
             make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
         }
     }
-
-    func generateExampleViews(count: Int) -> [UIView] {
-        var views: [UIView] = []
-
-        for _ in 0...count {
-            views.append(generateExampleView())
-        }
-
-        return views
-    }
-
-    func generateExampleView() -> UIView {
-        // Size with width and height from 50-150
-        let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(101)) + 30, CGFloat(arc4random_uniform(101)) + 30))
-        view.backgroundColor = getRandomColor()
-
-        return view
-    }
 }
 
-extension AutoViewLayoutVC: UICollectionViewDelegateFlowLayout {
+extension WAutoViewLayoutVC: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
         return views[indexPath.row].frame.size
     }
 }
 
-extension AutoViewLayoutVC: UICollectionViewDelegate {
+extension WAutoViewLayoutVC: UICollectionViewDelegate {
 }
 
-extension AutoViewLayoutVC: UICollectionViewDataSource {
+extension WAutoViewLayoutVC: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
-        cell.backgroundColor = getRandomColor()
+        cell.contentView.subviews.forEach({ $0.removeFromSuperview() })
+
+        let newView = views[indexPath.row]
+        cell.contentView.addSubview(newView)
+        newView.snp_makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
 
         return cell
     }
@@ -96,12 +88,4 @@ extension AutoViewLayoutVC: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return views.count
     }
-}
-
-func getRandomColor() -> UIColor{
-    let randomRed:CGFloat = CGFloat(drand48())
-    let randomGreen:CGFloat = CGFloat(drand48())
-    let randomBlue:CGFloat = CGFloat(drand48())
-    
-    return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
 }

@@ -25,26 +25,34 @@ public enum yAlignment {
     case Top, Center, Bottom
 }
 
-class WUtils {
-    public func generateExampleViews(count: Int) -> [UIView] {
+public class WUtils {
+    public class func generateExampleViews(count: Int) -> [UIView] {
         var views: [UIView] = []
 
         for _ in 0...count {
-            views.append(generateExampleView())
+            views.append(generateExampleView(30, maxWidthHeight: 120))
         }
 
         return views
     }
 
-    public func generateExampleView() -> UIView {
-        // Size with width and height from 50-150
-        let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(101)) + 30, CGFloat(arc4random_uniform(101)) + 30))
+    public class func generateExampleView(minWidthHeight: Int, maxWidthHeight: Int) -> UIView {
+        // Size with width and height from min to max
+        let min = UInt32(minWidthHeight)
+        var max = UInt32(maxWidthHeight)
+
+        if (max < min) {
+            max = min
+        }
+
+        let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(max-min) + min),
+                                                  CGFloat(arc4random_uniform(max-min) + min)))
         view.backgroundColor = getRandomColor()
 
         return view
     }
 
-    public func getRandomColor() -> UIColor{
+    public class func getRandomColor() -> UIColor{
         let randomRed:CGFloat = CGFloat(drand48())
         let randomGreen:CGFloat = CGFloat(drand48())
         let randomBlue:CGFloat = CGFloat(drand48())

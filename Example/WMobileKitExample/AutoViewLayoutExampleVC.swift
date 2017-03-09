@@ -23,13 +23,13 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let scrollView = UIScrollView()
 
     var views: [UIView] = []
-    var autoViewLayoutVC = AutoViewLayoutVC()
+    var autoViewLayoutVC = WAutoViewLayoutVC()
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Step 1: Add views list to controller
-        autoViewLayoutVC.views = WUtils.generateExampleViews(15)
+        autoViewLayoutVC.views = WUtils.generateExampleViews(18)
 
         scrollView.contentSize = view.frame.size
         view.addSubview(scrollView)
@@ -51,29 +51,3 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         }
     }
 }
-
-//func generateExampleViews(count: Int) -> [UIView] {
-//    var views: [UIView] = []
-//
-//    for _ in 0...count {
-//        views.append(generateExampleView())
-//    }
-//
-//    return views
-//}
-//
-//func generateExampleView() -> UIView {
-//    // Size with width and height from 50-150
-//    let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(101)) + 30, CGFloat(arc4random_uniform(101)) + 30))
-//    view.backgroundColor = getRandomColor()
-//
-//    return view
-//}
-//
-//func getRandomColor() -> UIColor{
-//    let randomRed:CGFloat = CGFloat(drand48())
-//    let randomGreen:CGFloat = CGFloat(drand48())
-//    let randomBlue:CGFloat = CGFloat(drand48())
-//
-//    return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-//}
