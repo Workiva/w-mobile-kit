@@ -21,17 +21,18 @@ import WMobileKit
 
 public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let scrollView = UIScrollView()
-
+    let contentView = UIView()
     var views: [UIView] = []
     var autoViewLayoutVC = WAutoViewLayoutVC()
+
+    let descriptionLabelHeight: CGFloat = 175
+    let padding: CGFloat = 0
+    let topPadding: CGFloat = 20.0
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Step 1: Add views list to controller
-        autoViewLayoutVC.views = WUtils.generateExampleViews(18)
-
-        scrollView.contentSize = view.frame.size
+        // Setup scroll view
         view.addSubview(scrollView)
         scrollView.snp_remakeConstraints { (make) in
             make.top.equalToSuperview()
@@ -40,14 +41,93 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
             make.left.equalToSuperview()
         }
 
-        // Step 2: Add controller's view to your view
-        scrollView.addSubview(autoViewLayoutVC.view)
-        autoViewLayoutVC.view.snp_remakeConstraints { (make) in
+//        scrollView.frame = view.frame
+
+        scrollView.addSubview(contentView)
+        contentView.snp_remakeConstraints { (make) in
             make.top.equalToSuperview()
+//            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+//            make.height.equalToSuperview()
+            make.left.equalToSuperview()
+        }
+
+        let descriptionLabel = UILabel()
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.font = UIFont.systemFontOfSize(16.0)
+        descriptionLabel.text = "    Automatically adds as many of the provided views as possible to each row as determinted by the controller's width and wraps to the next row for any remaining views.\n    Adjusts the height to fit the content, which is available as a property making it great to use for static headers or any view containing a set amount of content!"
+
+
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.snp_remakeConstraints { (make) in
+            make.top.equalTo(scrollView).offset(topPadding)
+            make.left.equalTo(20)
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(descriptionLabelHeight)
+        }
+
+        // Step 1: Add views list to controller
+        autoViewLayoutVC.views = WUtils.generateExampleViews(50)
+
+        // Optional: Customize autoViewLayoutVC
+        autoViewLayoutVC.leftSpacing = 2
+        autoViewLayoutVC.rightSpacing = 2
+        autoViewLayoutVC.topSpacing = 2
+        autoViewLayoutVC.bottomSpacing = 2
+        autoViewLayoutVC.collectionView.backgroundColor = UIColor.whiteColor()
+
+
+
+
+
+        // Step 2: Add autoViewLayoutVC to current view controller
+        addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
+
+        // Or Step 2: Add controller's view to your view (will not get controller functionality like resizing on rotation)
+//        scrollView.addSubview(autoViewLayoutVC.view)
+
+
+        autoViewLayoutVC.view.snp_remakeConstraints { (make) in
+            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
+//            make.width.equalToSuperview().offset(-(padding*2))
+//            make.left.equalTo(padding)
+//            make.right.equalTo(-padding)
+
+//            make.right.equalToSuperview()
+            make.left.equalToSuperview()
             make.width.equalToSuperview()
 
             // Step 3: Adjust the height of the view
             make.height.equalTo(autoViewLayoutVC.fittedHeight)
         }
+
+//        scrollView.frame = CGRectMake(<#T##x: CGFloat##CGFloat#>, <#T##y: CGFloat##CGFloat#>, <#T##width: CGFloat##CGFloat#>, <#T##height: CGFloat##CGFloat#>)
+        // Optional: Set the content size to make the scroll view scroll
+//        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+
+//        scrollView.contentSize = CGSize(width: view.frame.size.width, height: 3000)
+
+//        // Optional: Can change the views and the autoViewLayoutVC will update the UI
+//        autoViewLayoutVC.views = WUtils.generateExampleViews(30)
+//
+//        // Optional: Set the content size to make the scroll view scroll
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+//
+        contentView.snp_updateConstraints { (make) in
+            // Step 3: Adjust the height of the view
+            make.height.equalTo(descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+        }
+    }
+
+    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+        coordinator.animateAlongsideTransition(nil, completion:  { _ in
+//            self.collectionView.snp_updateConstraints { (make) in
+//                make.height.equalTo(self.collectionView.collectionViewLayout.collectionViewContentSize().height)
+//            }
+
+             self.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.descriptionLabelHeight + (self.topPadding*2) + self.autoViewLayoutVC.fittedHeight)
+        })
     }
 }
