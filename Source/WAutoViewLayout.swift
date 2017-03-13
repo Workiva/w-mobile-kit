@@ -25,7 +25,7 @@ public class WAutoViewLayoutVC: UIViewController {
 
     public var views: [UIView] = [] {
         didSet {
-//            collectionView.reloadData()
+            collectionView.reloadData()
 
             collectionView.snp_updateConstraints { (make) in
                 make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
