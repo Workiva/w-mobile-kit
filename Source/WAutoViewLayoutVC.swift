@@ -108,6 +108,12 @@ public class WAutoViewLayoutVC: UIViewController {
         }
     }
 
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+        refreshAutoViewLayout()
+    }
+
     func updateCollectionView() {
         flowLayout.sectionInset = UIEdgeInsets(top: topSpacing, left: leftSpacing, bottom: bottomSpacing, right: rightSpacing)
         collectionView.collectionViewLayout = flowLayout

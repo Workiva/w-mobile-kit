@@ -26,7 +26,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     var autoViewLayoutVC = WAutoViewLayoutVC()
 
     let descriptionLabelHeight: CGFloat = 175
-    let sideAutoViewLayoutPadding: CGFloat = 0.0
+    let sideAutoViewLayoutPadding: CGFloat = 30.0
     let topPadding: CGFloat = 20.0
 
     let descriptionLabel = UILabel()
@@ -89,10 +89,10 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.collectionView.backgroundColor = .whiteColor()
 
         // Step 3: Add autoViewLayoutVC to current view controller
-//        addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
+        addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
 
-        // Or Step 3: Add controller's view to your view (may have some rotation issues)
-        scrollView.addSubview(autoViewLayoutVC.view)
+        // Or Step 3: Add controller's view to your view (can cause some view issues)
+//        scrollView.addSubview(autoViewLayoutVC.view)
 
         // Step 4: Adjust the height and width of the view
         autoViewLayoutVC.view.snp_remakeConstraints { (make) in
@@ -120,6 +120,13 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
             print("WAutoViewLayoutVC estimated and actual heights are the same!")
         }
     }
+
+    // Required if using addSubview instead of addViewControllerToContainer
+//    public override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        autoViewLayoutVC.refreshAutoViewLayout()
+//    }
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
