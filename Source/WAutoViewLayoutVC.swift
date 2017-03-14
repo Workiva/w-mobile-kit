@@ -1,5 +1,5 @@
 //
-//  WAutoViewLayout.swift
+//  WAutoViewLayoutVC.swift
 //  WMobileKit
 //
 //  Copyright 2016 Workiva Inc.

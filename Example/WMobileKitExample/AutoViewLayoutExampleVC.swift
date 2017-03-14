@@ -19,14 +19,8 @@
 import Foundation
 import WMobileKit
 
-class WScrollView: UIScrollView {
-    override func touchesShouldCancelInContentView(view: UIView) -> Bool {
-        return false
-    }
-}
-
 public class AutoViewLayoutExampleVC: WSideMenuContentVC {
-    let scrollView = WScrollView()
+    let scrollView = UIScrollView()
     let contentView = UIView()
     var views: [UIView] = []
     var autoViewLayoutVC = WAutoViewLayoutVC()
