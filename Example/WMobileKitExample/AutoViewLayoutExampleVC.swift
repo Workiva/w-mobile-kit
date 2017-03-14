@@ -106,10 +106,19 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         scrollView.contentSize = scrollContentSize()
 
         // Optional: Can change the views and the autoViewLayoutVC will update the UI
-        autoViewLayoutVC.views = WUtils.generateExampleViews(30)
+        let sampleViews = WUtils.generateExampleViews(30)
+        autoViewLayoutVC.views = sampleViews
 
         // Optional: Set the content size to make the scroll view scroll
         scrollView.contentSize = scrollContentSize()
+
+        // Optional: Compare if the estimated height equals your actual height!
+        let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(sampleViews, constrainedWidth: (view.frame.size.width-(sideAutoViewLayoutPadding*2)), leftSpacing: 2, rightSpacing: 2, topSpacing: 2, bottomSpacing: 2)
+        let actualHeight = autoViewLayoutVC.fittedHeight
+
+        if (estimatedHeight == actualHeight) {
+            print("WAutoViewLayoutVC estimated and actual heights are the same!")
+        }
     }
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

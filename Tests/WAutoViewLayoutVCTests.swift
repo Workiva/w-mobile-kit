@@ -96,6 +96,35 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     expect(subject.collectionView(subject.collectionView, cellForItemAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))).toNot(equal(nil))
                 }
             }
+
+            describe("estimating height") {
+                it("should estimate the correct height for the given views and spacing") {
+                    let sampleViews = WUtils.generateExampleViews(30)
+
+                    subject.views = sampleViews
+
+                    let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(sampleViews, constrainedWidth: viewController.view.frame.size.width)
+                    let actualHeight = subject.fittedHeight
+
+                    expect(estimatedHeight) == actualHeight
+                }
+
+                it("should estimate the correct height for the given views and spacing") {
+                    let sampleViews = WUtils.generateExampleViews(30)
+                    let spacing: CGFloat = 8
+
+                    subject.views = sampleViews
+                    subject.rightSpacing = spacing
+                    subject.leftSpacing = spacing
+                    subject.topSpacing = spacing
+                    subject.bottomSpacing = spacing
+
+                    let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(sampleViews, constrainedWidth: viewController.view.frame.size.width, leftSpacing: spacing, rightSpacing: spacing, topSpacing: spacing, bottomSpacing: spacing)
+                    let actualHeight = subject.fittedHeight
+
+                    expect(estimatedHeight) == actualHeight
+                }
+            }
         }
     }
 }

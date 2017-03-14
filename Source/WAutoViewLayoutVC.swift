@@ -56,6 +56,20 @@ public class WAutoViewLayoutVC: UIViewController {
         }
     }
 
+    public class func estimatedFittedHeight(views: [UIView], constrainedWidth: CGFloat, leftSpacing: CGFloat = 5, topSpacing: CGFloat = 5, rightSpacing: CGFloat = 5, bottomSpacing: CGFloat = 5) -> CGFloat {
+        let autoViewLayoutVC = WAutoViewLayoutVC()
+        autoViewLayoutVC.leftSpacing = leftSpacing
+        autoViewLayoutVC.topSpacing = topSpacing
+        autoViewLayoutVC.rightSpacing = rightSpacing
+        autoViewLayoutVC.bottomSpacing = bottomSpacing
+
+        autoViewLayoutVC.view.frame = CGRectMake(0, 0, constrainedWidth, CGFloat.max)
+
+        autoViewLayoutVC.views = views
+
+        return autoViewLayoutVC.fittedHeight
+    }
+
     let reuseIdentifier = "cell"
 
     required public init?(coder aDecoder: NSCoder) {
