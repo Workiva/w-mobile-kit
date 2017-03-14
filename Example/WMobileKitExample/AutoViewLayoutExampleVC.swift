@@ -32,7 +32,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     var autoViewLayoutVC = WAutoViewLayoutVC()
 
     let descriptionLabelHeight: CGFloat = 175
-    let padding: CGFloat = 0
+    let sideAutoViewLayoutPadding: CGFloat = 0.0
     let topPadding: CGFloat = 20.0
 
     let descriptionLabel = UILabel()
@@ -63,24 +63,10 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
             make.left.equalToSuperview()
         }
 
-//        scrollView.frame = view.frame
-
-
-
-//        scrollView.userInteractionEnabled = true
-//        scrollView.exclusiveTouch = true
-//        scrollView.canCancelContentTouches = true
-        scrollView.delaysContentTouches = false
-
-//        scrollView.delaysContentTouches = false
-
-//        contentView.userInteractionEnabled = true
         scrollView.addSubview(contentView)
         contentView.snp_remakeConstraints { (make) in
             make.top.equalToSuperview()
-//            make.bottom.equalToSuperview()
             make.width.equalToSuperview()
-//            make.height.equalToSuperview()
             make.left.equalToSuperview()
         }
 
@@ -95,32 +81,8 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
             make.height.equalTo(descriptionLabelHeight)
         }
 
-//        let randomButton = UIButton(type: UIButtonType.RoundedRect)
-////        randomButton.userInteractionEnabled = true
-//        randomButton.backgroundColor = .lightGrayColor()
-//        randomButton.tintColor = .greenColor()
-//        randomButton.setTitle("Randomize Count", forState: UIControlState.Normal)
-//        randomButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
-////        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: .TouchUpInside)
-////        randomButton.addTarget(self, action: Selector(randomizeViewCount()), forControlEvents: .TouchUpInside)
-////        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
-//randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
-////        #selector(MyClass.buttonAction)
-//
-//
-////        randomButton.setTitle("Randomize Count", forState: .Normal)
-////        randomButton.backgroundColor = .whiteColor()
-////        randomButton.addTarget(self, action: ), forControlEvents: .TouchUpInside)
-//        contentView.addSubview(randomButton)
-//        randomButton.snp_remakeConstraints { (make) in
-//            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
-//            make.centerX.equalTo(descriptionLabel.snp_centerX)
-//            make.width.equalTo(160)
-//            make.height.equalTo(30)
-//        }
-
         // Step 1: Add views list to controller
-        autoViewLayoutVC.views = WUtils.generateExampleViews(3)
+        autoViewLayoutVC.views = WUtils.generateExampleViews(10)
 
         // Optional: Customize autoViewLayoutVC
         autoViewLayoutVC.leftSpacing = 2
@@ -135,51 +97,32 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         // Or Step 2: Add controller's view to your view (will not get controller functionality like resizing on rotation)
 //        scrollView.addSubview(autoViewLayoutVC.view)
 
-
         autoViewLayoutVC.view.snp_remakeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
-//            make.width.equalToSuperview().offset(-(padding*2))
-//            make.left.equalTo(padding)
-//            make.right.equalTo(-padding)
-
-//            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.width.equalToSuperview()
+            make.left.equalToSuperview().offset(sideAutoViewLayoutPadding)
+            make.width.equalToSuperview().offset(-(sideAutoViewLayoutPadding*2))
 
             // Step 3: Adjust the height of the view
             make.height.equalTo(autoViewLayoutVC.fittedHeight)
         }
 
-//        scrollView.frame = CGRectMake(<#T##x: CGFloat##CGFloat#>, <#T##y: CGFloat##CGFloat#>, <#T##width: CGFloat##CGFloat#>, <#T##height: CGFloat##CGFloat#>)
         // Optional: Set the content size to make the scroll view scroll
-//        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
-
-//        scrollView.contentSize = CGSize(width: view.frame.size.width, height: 3000)
-
-//        // Optional: Can change the views and the autoViewLayoutVC will update the UI
-//        autoViewLayoutVC.views = WUtils.generateExampleViews(30)
-//
-//        // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
-//
-//        contentView.snp_updateConstraints { (make) in
-//            // Step 3: Adjust the height of the view
-//            make.height.equalTo(descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
-//        }
-
+        scrollView.contentSize = scrollContentSize()
 
         // Optional: Can change the views and the autoViewLayoutVC will update the UI
         autoViewLayoutVC.views = WUtils.generateExampleViews(30)
 
         // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
+        scrollView.contentSize = scrollContentSize()
     }
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-        coordinator.animateAlongsideTransition(nil, completion:  { _ in
-             self.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.descriptionLabelHeight + self.topPadding + self.autoViewLayoutVC.fittedHeight)
+        coordinator.animateAlongsideTransition(nil, completion:  { [weak self] _ in
+            if let weakSelf = self {
+                weakSelf.scrollView.contentSize = weakSelf.scrollContentSize()
+            }
         })
     }
 
@@ -189,6 +132,10 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.views = WUtils.generateExampleViews(randomCount)
 
         // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
+        scrollView.contentSize = scrollContentSize()
+    }
+
+    public func scrollContentSize() -> CGSize {
+        return CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
     }
 }

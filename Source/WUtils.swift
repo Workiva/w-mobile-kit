@@ -29,7 +29,11 @@ public class WUtils {
     public class func generateExampleViews(count: Int) -> [UIView] {
         var views: [UIView] = []
 
-        for _ in 0...count {
+        if (count < 1) {
+            return views
+        }
+
+        for _ in 1...count {
             views.append(generateExampleView(30, maxWidthHeight: 120))
         }
 

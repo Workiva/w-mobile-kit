@@ -25,11 +25,7 @@ public class WAutoViewLayoutVC: UIViewController {
 
     public var views: [UIView] = [] {
         didSet {
-            collectionView.reloadData()
-
-            collectionView.snp_updateConstraints { (make) in
-                make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
-            }
+            refreshAutoViewLayout()
         }
     }
 
@@ -105,11 +101,17 @@ public class WAutoViewLayoutVC: UIViewController {
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-        coordinator.animateAlongsideTransition(nil, completion:  { _ in
-            self.collectionView.snp_updateConstraints { (make) in
-                make.height.equalTo(self.collectionView.collectionViewLayout.collectionViewContentSize().height)
-            }
+        coordinator.animateAlongsideTransition(nil, completion:  { [weak self] _ in
+            self?.refreshAutoViewLayout()
         })
+    }
+
+    public func refreshAutoViewLayout() {
+        collectionView.reloadData()
+
+        collectionView.snp_updateConstraints { (make) in
+            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
+        }
     }
 }
 
