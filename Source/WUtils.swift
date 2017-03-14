@@ -42,8 +42,11 @@ public class WUtils {
 
     public class func generateExampleView(minWidthHeight: Int, maxWidthHeight: Int) -> UIView {
         // Size with width and height from min to max
-        let min = UInt32(minWidthHeight)
-        var max = UInt32(maxWidthHeight)
+        var min: UInt32!
+        var max: UInt32!
+
+        min = (minWidthHeight < 0) ? 0 : UInt32(minWidthHeight)
+        max = (maxWidthHeight < 0) ? 0 : UInt32(maxWidthHeight)
 
         if (max < min) {
             max = min

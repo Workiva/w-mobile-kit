@@ -59,6 +59,7 @@
 		D5A4F5FF1CAEDA290041BB98 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */; };
 		D5C4B4451CADBD9A009B4104 /* WTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4B4441CADBD9A009B4104 /* WTheme.swift */; };
 		D5D1E7C01E77C8B600172DA1 /* WAutoViewLayoutVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1E7BF1E77C8B600172DA1 /* WAutoViewLayoutVCTests.swift */; };
+		D5D1E7C21E77D66500172DA1 /* WUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1E7C11E77D66500172DA1 /* WUtilsTests.swift */; };
 		D5F7A6521CF6401500636AB4 /* WBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7A6511CF6401500636AB4 /* WBadge.swift */; };
 		D71E55DE1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */; };
 		D7310D7B1CC7D55A00130C7B /* WTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7310D7A1CC7D55A00130C7B /* WTextField.swift */; };
@@ -139,6 +140,7 @@
 		D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		D5C4B4441CADBD9A009B4104 /* WTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTheme.swift; sourceTree = "<group>"; };
 		D5D1E7BF1E77C8B600172DA1 /* WAutoViewLayoutVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WAutoViewLayoutVCTests.swift; sourceTree = "<group>"; };
+		D5D1E7C11E77D66500172DA1 /* WUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtilsTests.swift; sourceTree = "<group>"; };
 		D5F7A6511CF6401500636AB4 /* WBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBadge.swift; sourceTree = "<group>"; };
 		D71E55DD1CECBC7D00A7D1CB /* WCustomTransitionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCustomTransitionsTests.swift; sourceTree = "<group>"; };
 		D7310D7A1CC7D55A00130C7B /* WTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextField.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				D592AB811CC830E200301C7F /* WToastTests.swift */,
 				D592AB791CC57E5400301C7F /* WUserLogoViewTests.swift */,
 				D545B3671CEBD4E600615281 /* WTestUtils.swift */,
+				D5D1E7C11E77D66500172DA1 /* WUtilsTests.swift */,
 				D51201B81CC17F7B0000FC95 /* WMobileKitTests-Bridging-Header.h */,
 				D53D0BB31CAB0FE60065D106 /* Info.plist */,
 				D592B2A81CC943AF00301C7F /* Test Images */,
@@ -542,6 +545,7 @@
 				D51201BA1CC17F7C0000FC95 /* UIAppearance+SwiftTests.m in Sources */,
 				D518B1DB1CDC08D20058B6A9 /* WExtensionsTests.swift in Sources */,
 				D592AB7A1CC57E5400301C7F /* WUserLogoViewTests.swift in Sources */,
+				D5D1E7C21E77D66500172DA1 /* WUtilsTests.swift in Sources */,
 				D545B3681CEBD4E600615281 /* WTestUtils.swift in Sources */,
 				D7CC99A01CC95FB000572B6F /* WLoadingModalTests.swift in Sources */,
 				D56482B81CB730420017AE96 /* WSideMenuVCTests.swift in Sources */,

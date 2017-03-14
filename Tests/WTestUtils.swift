@@ -31,20 +31,6 @@ public class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
     public override func locationInView(view: UIView?) -> CGPoint {
         return returnPoint ?? CGPointZero
     }
-    
-//    public override func locationInView(view: UIView?) -> CGPoint {
-//        if view != nil {
-//            if view!.isKindOfClass(WSwitch) {
-//                if !slideLeft {
-//                    return CGPoint(x: view!.frame.origin.x + view!.frame.size.width, y: view!.frame.origin.y)
-//                }
-//
-//                return CGPointZero
-//            }
-//        }
-//
-//        return CGPointZero
-//    }
 }
 
 public class UIPanGestureRecognizerMock: UIPanGestureRecognizer {
