@@ -75,6 +75,7 @@ public class WAutoViewLayoutVC: UIViewController {
         collectionView.delegate = self
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.scrollEnabled = false
+        collectionView.backgroundColor = .clearColor()
 
         updateCollectionView()
     }

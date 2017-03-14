@@ -75,8 +75,11 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
             make.height.equalTo(descriptionLabelHeight)
         }
 
-        // Step 1: Add views list to controller
-        autoViewLayoutVC.views = WUtils.generateExampleViews(10)
+        // Step 1: Gather your views you wish to display as a list. Their frames must be set.
+        let viewsList = WUtils.generateExampleViews(10)
+
+        // Step 2: Add views list to controller
+        autoViewLayoutVC.views = viewsList
 
         // Optional: Customize autoViewLayoutVC
         autoViewLayoutVC.leftSpacing = 2
@@ -85,18 +88,17 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.bottomSpacing = 2
         autoViewLayoutVC.collectionView.backgroundColor = .whiteColor()
 
-        // Step 2: Add autoViewLayoutVC to current view controller
-        addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
+        // Step 3: Add autoViewLayoutVC to current view controller
+//        addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
 
-        // Or Step 2: Add controller's view to your view (will not get controller functionality like resizing on rotation)
-//        scrollView.addSubview(autoViewLayoutVC.view)
+        // Or Step 3: Add controller's view to your view (may have some rotation issues)
+        scrollView.addSubview(autoViewLayoutVC.view)
 
+        // Step 4: Adjust the height and width of the view
         autoViewLayoutVC.view.snp_remakeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
             make.left.equalToSuperview().offset(sideAutoViewLayoutPadding)
             make.width.equalToSuperview().offset(-(sideAutoViewLayoutPadding*2))
-
-            // Step 3: Adjust the height of the view
             make.height.equalTo(autoViewLayoutVC.fittedHeight)
         }
 

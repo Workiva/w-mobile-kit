@@ -52,6 +52,7 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     expect(subject.topSpacing) == 5
                     expect(subject.bottomSpacing) == 5
                     expect(subject.views.count) == 0
+                    expect(subject.collectionView.backgroundColor) == UIColor.clearColor()
                 }
 
                 it("should init with coder correctly") {
