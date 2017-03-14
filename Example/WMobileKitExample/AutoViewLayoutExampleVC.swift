@@ -19,8 +19,14 @@
 import Foundation
 import WMobileKit
 
+class WScrollView: UIScrollView {
+    override func touchesShouldCancelInContentView(view: UIView) -> Bool {
+        return false
+    }
+}
+
 public class AutoViewLayoutExampleVC: WSideMenuContentVC {
-    let scrollView = UIScrollView()
+    let scrollView = WScrollView()
     let contentView = UIView()
     var views: [UIView] = []
     var autoViewLayoutVC = WAutoViewLayoutVC()
@@ -30,18 +36,28 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let topPadding: CGFloat = 20.0
 
     let descriptionLabel = UILabel()
-//    let randomButton = UIButton(type: UIButtonType.RoundedRect)
+    let randomButton = UIButton(type: UIButtonType.RoundedRect)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-//        view.userInteractionEnabled = true
+        randomButton.backgroundColor = .lightGrayColor()
+        randomButton.tintColor = .greenColor()
+        randomButton.setTitle("Randomize Count", forState: UIControlState.Normal)
+        randomButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), forControlEvents: .TouchUpInside)
+        view.addSubview(randomButton)
+        randomButton.snp_remakeConstraints { (make) in
+            make.top.equalTo(view.snp_top).offset(topPadding)
+            make.centerX.equalTo(view.snp_centerX)
+            make.width.equalTo(160)
+            make.height.equalTo(30)
+        }
 
-        scrollView.userInteractionEnabled = true
         // Setup scroll view
         view.addSubview(scrollView)
         scrollView.snp_remakeConstraints { (make) in
-            make.top.equalToSuperview()
+            make.top.equalTo(randomButton.snp_bottom).offset(topPadding)
             make.bottom.equalToSuperview()
             make.right.equalToSuperview()
             make.left.equalToSuperview()
@@ -49,7 +65,16 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
 
 //        scrollView.frame = view.frame
 
-        contentView.userInteractionEnabled = true
+
+
+//        scrollView.userInteractionEnabled = true
+//        scrollView.exclusiveTouch = true
+//        scrollView.canCancelContentTouches = true
+        scrollView.delaysContentTouches = false
+
+//        scrollView.delaysContentTouches = false
+
+//        contentView.userInteractionEnabled = true
         scrollView.addSubview(contentView)
         contentView.snp_remakeConstraints { (make) in
             make.top.equalToSuperview()
@@ -64,35 +89,35 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         descriptionLabel.text = "    Automatically adds as many of the provided views as possible to each row as determinted by the controller's width and wraps to the next row for any remaining views.\n    Adjusts the height to fit the content, which is available as a property making it great to use for static headers or any view containing a set amount of content!"
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp_remakeConstraints { (make) in
-            make.top.equalTo(scrollView).offset(topPadding)
+            make.top.equalTo(scrollView)
             make.left.equalTo(20)
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(descriptionLabelHeight)
         }
 
-        let randomButton = UIButton(type: UIButtonType.RoundedRect)
-        randomButton.userInteractionEnabled = true
-        randomButton.backgroundColor = .lightGrayColor()
-        randomButton.tintColor = .greenColor()
-        randomButton.setTitle("Randomize Count", forState: UIControlState.Normal)
-        randomButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
-//        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: .TouchUpInside)
-//        randomButton.addTarget(self, action: Selector(randomizeViewCount()), forControlEvents: .TouchUpInside)
-//        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
-randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
-//        #selector(MyClass.buttonAction)
-
-
-//        randomButton.setTitle("Randomize Count", forState: .Normal)
-//        randomButton.backgroundColor = .whiteColor()
-//        randomButton.addTarget(self, action: ), forControlEvents: .TouchUpInside)
-        contentView.addSubview(randomButton)
-        randomButton.snp_remakeConstraints { (make) in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
-            make.centerX.equalTo(descriptionLabel.snp_centerX)
-            make.width.equalTo(160)
-            make.height.equalTo(30)
-        }
+//        let randomButton = UIButton(type: UIButtonType.RoundedRect)
+////        randomButton.userInteractionEnabled = true
+//        randomButton.backgroundColor = .lightGrayColor()
+//        randomButton.tintColor = .greenColor()
+//        randomButton.setTitle("Randomize Count", forState: UIControlState.Normal)
+//        randomButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+////        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: .TouchUpInside)
+////        randomButton.addTarget(self, action: Selector(randomizeViewCount()), forControlEvents: .TouchUpInside)
+////        randomButton.addTarget(self, action: #selector(randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
+//randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), forControlEvents: UIControlEvents.TouchUpInside)
+////        #selector(MyClass.buttonAction)
+//
+//
+////        randomButton.setTitle("Randomize Count", forState: .Normal)
+////        randomButton.backgroundColor = .whiteColor()
+////        randomButton.addTarget(self, action: ), forControlEvents: .TouchUpInside)
+//        contentView.addSubview(randomButton)
+//        randomButton.snp_remakeConstraints { (make) in
+//            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
+//            make.centerX.equalTo(descriptionLabel.snp_centerX)
+//            make.width.equalTo(160)
+//            make.height.equalTo(30)
+//        }
 
         // Step 1: Add views list to controller
         autoViewLayoutVC.views = WUtils.generateExampleViews(3)
@@ -112,7 +137,7 @@ randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomize
 
 
         autoViewLayoutVC.view.snp_remakeConstraints { (make) in
-            make.top.equalTo(randomButton.snp_bottom).offset(topPadding)
+            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
 //            make.width.equalToSuperview().offset(-(padding*2))
 //            make.left.equalTo(padding)
 //            make.right.equalTo(-padding)
@@ -135,7 +160,7 @@ randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomize
 //        autoViewLayoutVC.views = WUtils.generateExampleViews(30)
 //
 //        // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
 //
 //        contentView.snp_updateConstraints { (make) in
 //            // Step 3: Adjust the height of the view
@@ -147,14 +172,14 @@ randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomize
         autoViewLayoutVC.views = WUtils.generateExampleViews(30)
 
         // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
     }
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
         coordinator.animateAlongsideTransition(nil, completion:  { _ in
-             self.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.descriptionLabelHeight + (self.topPadding*2) + self.autoViewLayoutVC.fittedHeight)
+             self.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.descriptionLabelHeight + self.topPadding + self.autoViewLayoutVC.fittedHeight)
         })
     }
 
@@ -164,6 +189,6 @@ randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomize
         autoViewLayoutVC.views = WUtils.generateExampleViews(randomCount)
 
         // Optional: Set the content size to make the scroll view scroll
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + (topPadding*2) + autoViewLayoutVC.fittedHeight)
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: descriptionLabelHeight + topPadding + autoViewLayoutVC.fittedHeight)
     }
 }
