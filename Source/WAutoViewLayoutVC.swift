@@ -19,9 +19,55 @@
 import UIKit
 import SnapKit
 
+class WLeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+       var attributes = super.layoutAttributesForElementsInRect(rect)
+
+        if let originalAttributes = attributes {
+            // Make a copy to avoid warnings
+            attributes = NSArray(array: originalAttributes, copyItems: true) as? [UICollectionViewLayoutAttributes]
+        }
+
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        attributes?.forEach { layoutAttribute in
+            if (layoutAttribute.frame.origin.y >= maxY) {
+                leftMargin = sectionInset.left
+            }
+
+            layoutAttribute.frame.origin.x = leftMargin
+
+            leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+            maxY = max(layoutAttribute.frame.maxY , maxY)
+        }
+
+        return attributes
+    }
+}
+
 public class WAutoViewLayoutVC: UIViewController {
     public var collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
     public var flowLayout = UICollectionViewFlowLayout()
+
+    public var alignment: xAlignment = .Center {
+        didSet {
+            if (alignment != oldValue) {
+                switch alignment {
+                case .Right:
+                    print("Only left and centered are currently supported. Defaulting to centered...")
+                    alignment = .Center
+                    flowLayout = UICollectionViewFlowLayout()
+                case .Left:
+                    flowLayout = WLeftAlignedCollectionViewFlowLayout()
+                case .Center:
+                    flowLayout = UICollectionViewFlowLayout()
+                }
+
+                updateCollectionView()
+                refreshAutoViewLayout()
+            }
+        }
+    }
 
     public var views: [UIView] = [] {
         didSet {

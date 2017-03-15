@@ -53,6 +53,7 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     expect(subject.bottomSpacing) == 5
                     expect(subject.views.count) == 0
                     expect(subject.collectionView.backgroundColor) == UIColor.clearColor()
+                    expect(subject.alignment) == xAlignment.Center
                 }
 
                 it("should init with coder correctly") {
@@ -94,6 +95,20 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     subject.views = WUtils.generateExampleViews(10)
 
                     expect(subject.collectionView(subject.collectionView, cellForItemAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))).toNot(equal(nil))
+                }
+
+                it("should be able to change alignment") {
+                    expect(subject.alignment) == xAlignment.Center
+                    expect(subject.flowLayout is WLeftAlignedCollectionViewFlowLayout) == false
+
+                    subject.alignment = xAlignment.Left
+                    expect(subject.alignment) == xAlignment.Left
+                    expect(subject.flowLayout is WLeftAlignedCollectionViewFlowLayout) == true
+
+                    // Cannot yet align right
+                    subject.alignment = xAlignment.Right
+                    expect(subject.alignment) == xAlignment.Center
+                    expect(subject.flowLayout is WLeftAlignedCollectionViewFlowLayout) == false
                 }
             }
 

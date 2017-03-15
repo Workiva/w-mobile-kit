@@ -119,6 +119,8 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         if (estimatedHeight == actualHeight) {
             print("WAutoViewLayoutVC estimated and actual heights are the same!")
         }
+
+        autoViewLayoutVC.alignment = .Right
     }
 
     // Required if using addSubview instead of addViewControllerToContainer
