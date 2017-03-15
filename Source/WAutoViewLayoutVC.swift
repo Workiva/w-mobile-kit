@@ -118,6 +118,19 @@ public class WAutoViewLayoutVC: UIViewController {
 
     let reuseIdentifier = "cell"
 
+    /// Use so that the size of the collection view is correct
+    public convenience init(size: CGSize) {
+        self.init()
+
+        updateSize(size)
+    }
+
+    /// Use if the size of the collection view is not set on the init
+    public func updateSize(size: CGSize) {
+        view.frame.size = size
+        collectionView.frame.size = size
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
@@ -152,12 +165,6 @@ public class WAutoViewLayoutVC: UIViewController {
             make.left.equalToSuperview()
             make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
         }
-    }
-
-    public override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-        refreshAutoViewLayout()
     }
 
     func updateCollectionView() {

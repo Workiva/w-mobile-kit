@@ -23,7 +23,8 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let scrollView = UIScrollView()
     let contentView = UIView()
     var views: [UIView] = []
-    var autoViewLayoutVC = WAutoViewLayoutVC()
+//    var autoViewLayoutVC = WAutoViewLayoutVC()
+    var autoViewLayoutVC: WAutoViewLayoutVC!
 
     let descriptionLabelHeight: CGFloat = 175
     let sideAutoViewLayoutPadding: CGFloat = 30.0
@@ -78,7 +79,16 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         // Step 1: Gather your views you wish to display as a list. Their frames must be set.
         let viewsList = WUtils.generateExampleViews(10)
 
-        // Step 2: Add views list to controller
+        // Step: 2: Set the initial size of the new collection view.
+        // Set with init
+        autoViewLayoutVC = WAutoViewLayoutVC(size: CGSize(width: view.frame.size.width-(sideAutoViewLayoutPadding*2), height: view.frame.size.height))
+
+        // Or Step: 2: after
+//        autoViewLayoutVC = WAutoViewLayoutVC()
+//        autoViewLayoutVC.updateSize(CGSize(width: view.frame.size.width-(sideAutoViewLayoutPadding*2), height: view.frame.size.height))
+
+
+        // Step 3: Add views list to controller
         autoViewLayoutVC.views = viewsList
 
         // Optional: Customize autoViewLayoutVC
@@ -88,13 +98,13 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.bottomSpacing = 2
         autoViewLayoutVC.collectionView.backgroundColor = .whiteColor()
 
-        // Step 3: Add autoViewLayoutVC to current view controller
+        // Step 4: Add autoViewLayoutVC to current view controller
         addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
 
-        // Or Step 3: Add controller's view to your view (can cause some view issues)
+        // Or Step 4: Add controller's view to your view (can cause some view issues)
 //        scrollView.addSubview(autoViewLayoutVC.view)
 
-        // Step 4: Adjust the height and width of the view
+        // Step 5: Adjust the height and width of the view
         autoViewLayoutVC.view.snp_remakeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
             make.left.equalToSuperview().offset(sideAutoViewLayoutPadding)
@@ -123,19 +133,15 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.alignment = .Right
     }
 
-    // Required if using addSubview instead of addViewControllerToContainer
-//    public override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        autoViewLayoutVC.refreshAutoViewLayout()
-//    }
-
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
         coordinator.animateAlongsideTransition(nil, completion:  { [weak self] _ in
             if let weakSelf = self {
                 weakSelf.scrollView.contentSize = weakSelf.scrollContentSize()
+
+                // Required if adding using scrollView.addSubview(autoViewLayoutVC.view)
+//                weakSelf.autoViewLayoutVC.refreshAutoViewLayout()
             }
         })
     }
