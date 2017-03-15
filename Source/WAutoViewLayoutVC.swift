@@ -103,13 +103,11 @@ public class WAutoViewLayoutVC: UIViewController {
     }
 
     public class func estimatedFittedHeight(views: [UIView], constrainedWidth: CGFloat, leftSpacing: CGFloat = 5, topSpacing: CGFloat = 5, rightSpacing: CGFloat = 5, bottomSpacing: CGFloat = 5) -> CGFloat {
-        let autoViewLayoutVC = WAutoViewLayoutVC()
+        let autoViewLayoutVC = WAutoViewLayoutVC(width: constrainedWidth)
         autoViewLayoutVC.leftSpacing = leftSpacing
         autoViewLayoutVC.topSpacing = topSpacing
         autoViewLayoutVC.rightSpacing = rightSpacing
         autoViewLayoutVC.bottomSpacing = bottomSpacing
-
-        autoViewLayoutVC.view.frame = CGRectMake(0, 0, constrainedWidth, CGFloat.max)
 
         autoViewLayoutVC.views = views
 
@@ -119,16 +117,15 @@ public class WAutoViewLayoutVC: UIViewController {
     let reuseIdentifier = "cell"
 
     /// Use so that the size of the collection view is correct
-    public convenience init(size: CGSize) {
+    public convenience init(width: CGFloat) {
         self.init()
-
-        updateSize(size)
+        updateWidth(width)
     }
 
-    /// Use if the size of the collection view is not set on the init
-    public func updateSize(size: CGSize) {
-        view.frame.size = size
-        collectionView.frame.size = size
+    /// Use if the height of the collection view is not set on the init
+    public func updateWidth(width: CGFloat) {
+        view.frame.size = CGSizeMake(width, CGFloat.max)
+        collectionView.frame.size = CGSizeMake(width, CGFloat.max)
     }
 
     required public init?(coder aDecoder: NSCoder) {

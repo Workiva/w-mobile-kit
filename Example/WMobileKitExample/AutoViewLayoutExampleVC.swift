@@ -81,12 +81,11 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
 
         // Step: 2: Set the initial size of the new collection view.
         // Set with init
-        autoViewLayoutVC = WAutoViewLayoutVC(size: CGSize(width: view.frame.size.width-(sideAutoViewLayoutPadding*2), height: view.frame.size.height))
+        autoViewLayoutVC = WAutoViewLayoutVC(width: view.frame.size.width-(sideAutoViewLayoutPadding*2))
 
         // Or Step: 2: after
 //        autoViewLayoutVC = WAutoViewLayoutVC()
-//        autoViewLayoutVC.updateSize(CGSize(width: view.frame.size.width-(sideAutoViewLayoutPadding*2), height: view.frame.size.height))
-
+//        autoViewLayoutVC.updateWidth(view.frame.size.width-(sideAutoViewLayoutPadding*2))
 
         // Step 3: Add views list to controller
         autoViewLayoutVC.views = viewsList
