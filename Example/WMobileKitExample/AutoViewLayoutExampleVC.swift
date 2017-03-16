@@ -23,7 +23,6 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let scrollView = UIScrollView()
     let contentView = UIView()
     var views: [UIView] = []
-//    var autoViewLayoutVC = WAutoViewLayoutVC()
     var autoViewLayoutVC: WAutoViewLayoutVC!
 
     let descriptionLabelHeight: CGFloat = 175

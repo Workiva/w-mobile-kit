@@ -2,7 +2,7 @@
 //  WAutoViewLayoutVC.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -119,13 +119,14 @@ public class WAutoViewLayoutVC: UIViewController {
     /// Use so that the size of the collection view is correct
     public convenience init(width: CGFloat) {
         self.init()
+        
         updateWidth(width)
     }
 
-    /// Use if the height of the collection view is not set on the init
+    /// If the height of the collection view is not set during init, call this method to update the width.
     public func updateWidth(width: CGFloat) {
-        view.frame.size = CGSizeMake(width, CGFloat.max)
-        collectionView.frame.size = CGSizeMake(width, CGFloat.max)
+        view.frame.size.width = width
+        collectionView.frame.size.width = width
     }
 
     required public init?(coder aDecoder: NSCoder) {

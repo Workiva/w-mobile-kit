@@ -4,7 +4,7 @@
 //
 //  All extensions on C Types to conform to `Equatable` should live in here.
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
