@@ -2,7 +2,7 @@
 //  WTestUtils.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -31,20 +31,6 @@ public class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
     public override func locationInView(view: UIView?) -> CGPoint {
         return returnPoint ?? CGPointZero
     }
-    
-//    public override func locationInView(view: UIView?) -> CGPoint {
-//        if view != nil {
-//            if view!.isKindOfClass(WSwitch) {
-//                if !slideLeft {
-//                    return CGPoint(x: view!.frame.origin.x + view!.frame.size.width, y: view!.frame.origin.y)
-//                }
-//
-//                return CGPointZero
-//            }
-//        }
-//
-//        return CGPointZero
-//    }
 }
 
 public class UIPanGestureRecognizerMock: UIPanGestureRecognizer {

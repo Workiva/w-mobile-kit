@@ -22,7 +22,7 @@
 //  With a tab bar controller, its delegate can provide an animation controller in its
 //  tabBarController(_:animationControllerForTransitionFromViewController:toViewController:) method.
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.

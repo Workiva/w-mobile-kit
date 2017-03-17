@@ -2,7 +2,7 @@
 //  WUtils.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -23,4 +23,47 @@ public enum xAlignment {
 }
 public enum yAlignment {
     case Top, Center, Bottom
+}
+
+public class WUtils {
+    public class func generateExampleViews(count: Int) -> [UIView] {
+        var views: [UIView] = []
+
+        if (count < 1) {
+            return views
+        }
+
+        for _ in 1...count {
+            views.append(generateExampleView(30, maxWidthHeight: 120))
+        }
+
+        return views
+    }
+
+    public class func generateExampleView(minWidthHeight: Int, maxWidthHeight: Int) -> UIView {
+        // Size with width and height from min to max
+        var min: UInt32!
+        var max: UInt32!
+
+        min = (minWidthHeight < 0) ? 0 : UInt32(minWidthHeight)
+        max = (maxWidthHeight < 0) ? 0 : UInt32(maxWidthHeight)
+
+        if (max < min) {
+            max = min
+        }
+
+        let view = UIView(frame: CGRectMake(0, 0, CGFloat(arc4random_uniform(max-min) + min),
+                                                  CGFloat(arc4random_uniform(max-min) + min)))
+        view.backgroundColor = getRandomColor()
+
+        return view
+    }
+
+    public class func getRandomColor() -> UIColor{
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+    }
 }

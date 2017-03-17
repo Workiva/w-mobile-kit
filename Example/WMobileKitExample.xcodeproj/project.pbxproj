@@ -23,6 +23,7 @@
 		D53D0BC21CAB11B70065D106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53D0BBB1CAB11B70065D106 /* Main.storyboard */; };
 		D53D0BC51CAB11B70065D106 /* SideMenuVCExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */; };
 		D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56DF0141CF7B515000893C1 /* MobileKitVC.swift */; };
+		D58F8FA81E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */; };
 		D592AB761CC55F7C00301C7F /* ModalViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */; };
 		D592B2BD1CC9498E00301C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D592B2BC1CC9498E00301C7F /* Images.xcassets */; };
 		D5A4F6151CB3305A0041BB98 /* PagingControlExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */; };
@@ -33,34 +34,35 @@
 /* Begin PBXFileReference section */
 		1A1FAB8DBB3EC373E4196E5E /* Pods_WMobileKitExample_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitExample_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21EC645DF7BC64E4457C7E25 /* Pods-WMobileKitExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample.debug.xcconfig"; sourceTree = "<group>"; };
-		247C519CD26182EC4FBEC62F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		247C519CD26182EC4FBEC62F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; lineEnding = 0; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 		5249D1D1F78B1D0399095335 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuTVCExample.swift; sourceTree = "<group>"; };
+		55A106321CAC8B5400495BBC /* LeftMenuTVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LeftMenuTVCExample.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		607FACD01AFB9204008FA782 /* WMobileKitExample_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMobileKitExample_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchAndRadioExamplesVC.swift; sourceTree = "<group>"; };
-		7310E3651DD4E39500153C7F /* PanelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelExample.swift; sourceTree = "<group>"; };
-		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; };
-		73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewExamplesVC.swift; sourceTree = "<group>"; };
-		73BE4C981CD94D4B0025E34E /* AutoCompleteTextViewExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextViewExampleVC.swift; sourceTree = "<group>"; };
-		73E59C431D1C96F000AADD51 /* PagingControlVCExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlVCExampleVC.swift; sourceTree = "<group>"; };
+		730364EA1CE4FFA600F8F3D8 /* SwitchAndRadioExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SwitchAndRadioExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7310E3651DD4E39500153C7F /* PanelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PanelExample.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MarkdownTextViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73BE4C981CD94D4B0025E34E /* AutoCompleteTextViewExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AutoCompleteTextViewExampleVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73E59C431D1C96F000AADD51 /* PagingControlVCExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PagingControlVCExampleVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		86294297CE93610FE8E6B978 /* Pods-WMobileKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample.release.xcconfig"; sourceTree = "<group>"; };
 		8BFF613940B2D6813A6FAFE6 /* Pods-WMobileKitExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewExamplesVC.swift; sourceTree = "<group>"; };
+		CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TextViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WMobileKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerExamplesVC.swift; sourceTree = "<group>"; };
-		D53D0BB81CAB11B70065D106 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D50149E11CE3C85D00E5263E /* SpinnerExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SpinnerExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D53D0BB81CAB11B70065D106 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D53D0BBA1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D53D0BBC1CAB11B70065D106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D53D0BBE1CAB11B70065D106 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuVCExample.swift; sourceTree = "<group>"; };
-		D56DF0141CF7B515000893C1 /* MobileKitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileKitVC.swift; sourceTree = "<group>"; };
-		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; };
+		D53D0BBF1CAB11B70065D106 /* SideMenuVCExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SideMenuVCExample.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D56DF0141CF7B515000893C1 /* MobileKitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MobileKitVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AutoViewLayoutExampleVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D592AB751CC55F7C00301C7F /* ModalViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ModalViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D592B2BC1CC9498E00301C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5A4F6111CAF1E380041BB98 /* WMobileKitExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMobileKitExample-Bridging-Header.h"; sourceTree = "<group>"; };
-		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; };
-		D5F7A6531CF640F800636AB4 /* BadgeExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeExamplesVC.swift; sourceTree = "<group>"; };
-		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; };
-		D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingModalExamplesVC.swift; sourceTree = "<group>"; };
+		D5A4F6141CB3305A0041BB98 /* PagingControlExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PagingControlExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D5F7A6531CF640F800636AB4 /* BadgeExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BadgeExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D7310D7C1CC7FA0B00130C7B /* TextFieldExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TextFieldExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D7A022E81CCA8ACE00CC12E0 /* LoadingModalExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingModalExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EA767C41664512B3B27DD252 /* WMobileKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WMobileKit.podspec; path = ../WMobileKit.podspec; sourceTree = "<group>"; };
 		F3D15B471A0B1EBD86760A29 /* Pods-WMobileKitExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample_Tests/Pods-WMobileKitExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 				D5F7A6531CF640F800636AB4 /* BadgeExamplesVC.swift */,
 				CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */,
 				7310E3651DD4E39500153C7F /* PanelExample.swift */,
+				D58F8FA71E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift */,
 			);
 			name = "Content View Controllers";
 			sourceTree = "<group>";
@@ -179,12 +182,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "WMobileKitExample" */;
 			buildPhases = (
+				3EB43EB92E58032AF0667799 /* [CP] Check Pods Manifest.lock */,
 				98A5CCD15F7D28C68E4CCA77 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				8FC73EFBB362335A5F128DBD /* [CP] Embed Pods Frameworks */,
 				49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */,
+				05A9FF5587E4F95729BD1C5D /* 📦 Embed Pods Frameworks */,
+				4741DCE4EBCE20EBAAA2683C /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,6 +250,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05A9FF5587E4F95729BD1C5D /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EB43EB92E58032AF0667799 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4741DCE4EBCE20EBAAA2683C /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		49E7A25303633E37FE83C756 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -303,6 +354,7 @@
 				D7310D7D1CC7FA0B00130C7B /* TextFieldExamplesVC.swift in Sources */,
 				73B2B5CE1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift in Sources */,
 				D50149E51CE3D90D00E5263E /* SpinnerExamplesVC.swift in Sources */,
+				D58F8FA81E7089F400BFF6B2 /* AutoViewLayoutExampleVC.swift in Sources */,
 				D50149E41CE3D90A00E5263E /* LoadingModalExamplesVC.swift in Sources */,
 				CE76EA541D1DA9E800B5F487 /* TextViewExamplesVC.swift in Sources */,
 				D56DF0151CF7B515000893C1 /* MobileKitVC.swift in Sources */,
