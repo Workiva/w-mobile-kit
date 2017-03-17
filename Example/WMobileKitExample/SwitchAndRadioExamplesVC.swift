@@ -2,7 +2,7 @@
 //  SwitchAndRadioExamplesVC.swift
 //  WMobileKitExample
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -144,9 +144,11 @@ open class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio6.groupID = 2
         radio6.buttonRadius = 20
         radio6.borderWidth = 5
-        radio6.borderColor = .red
+
+        radio6.borderColorSelected = .red
         radio6.highlightColor = .blue
         radio6.indicatorColor = .red
+
         radio6.indicatorRadius = 8
         radio6.isSelected = true
 
@@ -162,7 +164,8 @@ open class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio5.buttonRadius = 20
         radio5.buttonColor = .yellow
         radio5.borderWidth = 5
-        radio5.borderColor = .purple
+
+        radio5.borderColorSelected = .purple
         radio5.highlightColor = .black
 
         view.addSubview(radio7)
@@ -174,9 +177,11 @@ open class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio7.groupID = 2
         radio7.buttonRadius = 20
         radio7.borderWidth = 5
-        radio7.borderColor = .blue
+
+        radio7.borderColorSelected = .blue
         radio7.highlightColor = .red
         radio7.indicatorColor = .magenta
+
         radio7.indicatorRadius = 7
 
         view.addSubview(radio8)
@@ -189,9 +194,11 @@ open class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         radio8.buttonRadius = 20
         radio8.buttonColor = .lightGray
         radio8.borderWidth = 5
-        radio8.borderColor = .green
+
+        radio8.borderColorSelected = .green
         radio8.highlightColor = .yellow
         radio8.indicatorColor = .black
+
         radio8.indicatorRadius = 6
 
         // Group3: Storyboard group

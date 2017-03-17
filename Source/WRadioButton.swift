@@ -2,7 +2,7 @@
 //  WRadioButton.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -54,7 +54,14 @@ open class WRadioButton: UIControl {
         }
     }
 
-    open var borderColor: UIColor = .lightGray {
+
+    open var borderColorNotSelected: UIColor = .lightGrayColor {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var borderColorSelected: UIColor = .lightGrayColor {
         didSet {
             setupUI()
         }
@@ -94,10 +101,6 @@ open class WRadioButton: UIControl {
 
     open override var isSelected: Bool {
         didSet {
-            if (oldValue != isSelected) {
-                sendActions(for: .valueChanged)
-            }
-
             if isSelected {
                 // Send selection notification with group id
                 NotificationCenter.default.post(name: Notification.Name(rawValue: wRadioButtonSelected),
@@ -114,6 +117,11 @@ open class WRadioButton: UIControl {
                     self.layoutIfNeeded()
                 }
             )
+
+            if (oldValue != isSelected) {
+                updateUISelectedChanged()
+                sendActions(for: .valueChanged)
+            }
         }
     }
 
@@ -183,10 +191,10 @@ open class WRadioButton: UIControl {
 
         radioCircle.backgroundColor = buttonColor
         radioCircle.layer.borderWidth = borderWidth
-        radioCircle.layer.borderColor = borderColor.cgColor
 
-        indicatorView.alpha = isSelected ? 1.0 : 0.0
         indicatorView.backgroundColor = indicatorColor
+
+        updateUISelectedChanged()
 
         // Need to set the frame first or will result in square
         layoutIfNeeded()
@@ -197,7 +205,15 @@ open class WRadioButton: UIControl {
         invalidateIntrinsicContentSize()
     }
 
-    open func radioButtonSelected(_ notification: Notification) {
+
+    open func updateUISelectedChanged() {
+        radioCircle.layer.borderColor = isSelected ? borderColorSelected.cgColor : borderColorNotSelected.cgColor
+
+        indicatorView.alpha = isSelected ? 1.0 : 0.0
+    }
+
+    open func radioButtonSelected(notification: NSNotification) {
+
         let sender: WRadioButton? = notification.object as! WRadioButton?
 
         if groupID == sender?.groupID {

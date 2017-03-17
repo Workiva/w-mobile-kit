@@ -2,7 +2,7 @@
 //  WPagingSelectorVCTests.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -95,13 +95,6 @@ class WPagingSelectorVCSpec: QuickSpec {
                     
                     expect(selector!.superview).to(beNil())
                 }
-
-                it("should remove old paging selector when setting new side padding") {
-                    let selector = subject.pagingSelectorControl
-                    subject.pagingControlSidePadding = 10
-
-                    expect(selector!.superview).to(beNil())
-                }
                 
                 it("should set color on control when setting on the VC") {
                     subject.tabTextColor = .blue
@@ -135,11 +128,11 @@ class WPagingSelectorVCSpec: QuickSpec {
                 }
 
                 it("should change current index to the tab") {
-                    subject.didChangeToTab(subject.pagingSelectorControl!, tab: 0)
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 0)
 
                     expect(subject.currentPageIndex).to(equal(0))
 
-                    subject.didChangeToTab(subject.pagingSelectorControl!, tab: 1)
+                    subject.willChangeToTab(subject.pagingSelectorControl!, tab: 1)
 
                     expect(subject.currentPageIndex).to(equal(1))
                 }

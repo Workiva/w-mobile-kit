@@ -2,7 +2,7 @@
 //  WRadioButtonTests.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -49,10 +49,13 @@ class WRadioButtonSpec: QuickSpec {
                 expect(radioButton.indicatorView.clipsToBounds) == true
                 expect(radioButton.groupID) == 0
                 expect(radioButton.buttonID) == 0
+
                 expect(radioButton.buttonColor) == UIColor.white
                 expect(radioButton.highlightColor) == UIColor.gray
                 expect(radioButton.indicatorColor) == UIColor.darkGray
-                expect(radioButton.borderColor) == UIColor.lightGray
+                expect(radioButton.borderColorNotSelected) == UIColor.lightGray
+                expect(radioButton.borderColorSelected) == UIColor.lightGray
+
                 expect(radioButton.borderWidth) == 2.0
                 expect(radioButton.buttonRadius) == 12.0
                 expect(radioButton.indicatorRadius) == 6
@@ -113,10 +116,13 @@ class WRadioButtonSpec: QuickSpec {
 
                     radioButton.groupID = 1
                     radioButton.buttonID = 2
+
                     radioButton.buttonColor = UIColor.red
                     radioButton.highlightColor = UIColor.blue
                     radioButton.indicatorColor = UIColor.green
-                    radioButton.borderColor = UIColor.purple
+                    radioButton.borderColorNotSelected = UIColor.purple
+                    radioButton.borderColorSelected = UIColor.blue
+
                     radioButton.borderWidth = 4
                     radioButton.buttonRadius = 14
                     radioButton.indicatorRadius = 7
@@ -132,10 +138,14 @@ class WRadioButtonSpec: QuickSpec {
                     expect(radioButton.indicatorView.clipsToBounds) == true
                     expect(radioButton.groupID) == 1
                     expect(radioButton.buttonID) == 2
+
                     expect(radioButton.buttonColor) == UIColor.red
                     expect(radioButton.highlightColor) == UIColor.blue
                     expect(radioButton.indicatorColor) == UIColor.green
-                    expect(radioButton.borderColor) == UIColor.purple
+                    expect(radioButton.borderColorNotSelected) == UIColor.purple
+                    expect(radioButton.borderColorSelected) == UIColor.blue
+                    expect(radioButton.radioCircle.layer.borderColor) == UIColor.blue.cgColor
+
                     expect(radioButton.borderWidth) == 4
                     expect(radioButton.buttonRadius) == 14
                     expect(radioButton.indicatorRadius) == 7

@@ -2,7 +2,7 @@
 //  WToast.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -348,5 +348,109 @@ open class WToastView: UIView {
                 }
             )
         }
+    }
+}
+
+public class WToastTwoLineView: WToastView {
+    public var firstLine = "" {
+        didSet {
+            firstLabel.text = message
+        }
+    }
+
+    public var secondLine = "" {
+        didSet {
+            secondLabel.text = message
+        }
+    }
+
+    public var firstLabel = UILabel()
+    public var secondLabel = UILabel()
+
+    public convenience init(firstLine: String, secondLine: String, icon: UIImage? = nil, toastColor: UIColor = .blackColor(),
+                            toastAlpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
+        self.init(frame: CGRectZero)
+
+        self.firstLine = firstLine
+        self.secondLine = secondLine
+        self.toastColor = toastColor
+        self.backgroundView.alpha = toastAlpha
+        self.rightIcon = icon
+        self.showDuration = showDuration
+        rightIconImageView.alpha = toastAlpha
+    }
+
+    private override func commonInit() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WToastView.hide), name: WConstants.NotificationKey.KillAllToasts, object: nil)
+
+        addSubview(backgroundView)
+        addSubview(firstLabel)
+        addSubview(secondLabel)
+        addSubview(rightIconImageView)
+
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(WToastViewDelegate.toastWasTapped(_:)))
+        addGestureRecognizer(recognizer)
+
+        // Set defaults here instead of the setupUI so they will not be
+        // overwritten by custom user values
+        firstLabel.numberOfLines = 1
+        firstLabel.textAlignment = .Center
+        firstLabel.font = UIFont.systemFontOfSize(16)
+        firstLabel.textColor = .whiteColor()
+
+        secondLabel.numberOfLines = 1
+        secondLabel.textAlignment = .Center
+        secondLabel.font = UIFont.systemFontOfSize(16)
+        secondLabel.textColor = .whiteColor()
+
+        layer.cornerRadius = 5.0
+        clipsToBounds = true
+        backgroundColor = .clearColor()
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    public override func setupUI() {
+        // Do not set any defaults here as they will overwrite any custom
+        // values when the toast is shown.
+        // Values set by variables should still be set.
+        backgroundView.snp_remakeConstraints { (make) in
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.bottom.equalTo(self)
+            make.top.equalTo(self)
+        }
+        backgroundView.backgroundColor = toastColor
+
+        rightIconImageView.snp_remakeConstraints { (make) in
+            make.centerY.equalTo(self)
+            make.right.equalTo(self).offset(-frame.size.width / 10)
+            make.height.equalTo(14)
+            make.width.equalTo(14)
+        }
+        rightIconImageView.image = rightIcon
+
+        firstLabel.snp_remakeConstraints { (make) in
+            make.top.equalTo(self).offset(8)
+            make.height.equalTo(frame.size.height/2 - 8)
+            make.left.equalTo(self).offset(frame.size.width / 10)
+            make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
+        }
+        firstLabel.text = firstLine
+
+        secondLabel.snp_remakeConstraints { (make) in
+            make.bottom.equalTo(self).offset(-8)
+            make.height.equalTo(frame.size.height/2 - 8)
+            make.left.equalTo(self).offset(frame.size.width / 10)
+            make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
+        }
+        secondLabel.text = secondLine
+
+        backgroundView.alpha = toastAlpha
+        rightIconImageView.alpha = toastAlpha
+        
+        layoutIfNeeded()
     }
 }

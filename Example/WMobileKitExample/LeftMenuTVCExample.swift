@@ -2,7 +2,7 @@
 //  LeftMenuVCExample.swift
 //  WMobileKitExample
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ class LeftMenuTVCExample: UITableViewController {
     lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "AutoCompleteTextViewExampleVC") as! NavigationVC
     lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "SwitchAndRadioExamplesVC") as! NavigationVC
     lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "BadgeExamplesVC") as! NavigationVC
+    lazy var panelExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "PanelExampleVC") as! NavigationVC
+    lazy var autoViewLayoutExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "AutoViewLayoutExampleVC") as! NavigationVC
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath as NSIndexPath).row {
@@ -69,6 +71,10 @@ class LeftMenuTVCExample: UITableViewController {
             sideMenuController()?.changeMainViewController(switchAndRadioExamplesVC)
         case 12:
             sideMenuController()?.changeMainViewController(badgeExamplesVC)
+        case 13:
+            sideMenuController()?.changeMainViewController(panelExampleVC)
+        case 14:
+            sideMenuController()?.changeMainViewController(autoViewLayoutExampleVC)
         default:
             break
         }

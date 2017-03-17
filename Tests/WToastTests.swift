@@ -2,7 +2,7 @@
 //  WToastTests.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -92,6 +92,53 @@ class WToastSpec: QuickSpec {
                     // Verify the toast disappears
                     let displayTime = ceil(TOAST_DEFAULT_ANIMATION_DURATION + TOAST_DEFAULT_SHOW_DURATION)
                     expect(toastView.isVisible()).toEventually(beFalsy(), timeout: displayTime)
+                }
+
+                describe("two line toast view") {
+                    var twoLineToastView: WToastTwoLineView!
+
+                    let verifyCommonInit = {
+                        // Other properties are tested through WToastSpec
+                        expect(twoLineToastView.message) == ""
+                        expect(twoLineToastView.messageLabel.superview).to(beNil())
+                    }
+
+                    it("should init with coder correctly and verify commonInit") {
+                        twoLineToastView = WToastTwoLineView(firstLine: "first", secondLine: "second")
+
+                        let path = NSTemporaryDirectory() as NSString
+                        let locToSave = path.stringByAppendingPathComponent("WToastTwoLineView")
+
+                        NSKeyedArchiver.archiveRootObject(twoLineToastView, toFile: locToSave)
+
+                        let twoLineToastView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WToastTwoLineView
+
+                        expect(twoLineToastView).toNot(equal(nil))
+
+                        // default settings from commonInit
+                        verifyCommonInit()
+                    }
+
+                    it("should successfully add and display a toast view with default settings") {
+                        twoLineToastView = WToastTwoLineView(firstLine: "first", secondLine: "second")
+
+                        WToastManager.sharedInstance.showToast(twoLineToastView)
+
+                        // Toast is displayed
+                        expect(twoLineToastView.isVisible()).to(beTruthy())
+
+                        // public properties
+                        verifyCommonInit()
+                        expect(twoLineToastView.firstLine) == "first"
+                        expect(twoLineToastView.secondLine) == "second"
+
+                        expect(twoLineToastView.firstLabel.frame.height) == (twoLineToastView.frame.size.height / 2) - 8
+                        expect(twoLineToastView.secondLabel.frame.height) == (twoLineToastView.frame.size.height / 2) - 8
+                        
+                        // Verify the toast disappears
+                        let displayTime = ceil(TOAST_DEFAULT_ANIMATION_DURATION + TOAST_DEFAULT_SHOW_DURATION)
+                        expect(twoLineToastView.isVisible()).toEventually(beFalsy(), timeout: displayTime)
+                    }
                 }
             }
 

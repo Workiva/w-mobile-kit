@@ -7,6 +7,21 @@ code_coverage_threshold=90
 # Make sure we're using the rbenv version of ruby
 PATH="$(cd ~/; pwd)/.rbenv/shims:$(cd ~/; pwd)/.rbenv/bin:$PATH"
 
+function build_example_app() {
+    print_heading "Building example app"
+
+    cd Example
+
+    xcodebuild -workspace WMobileKitExample.xcworkspace -scheme WMobileKit-Example -configuration Debug
+
+    # Error out if the example app does not build properly
+    if [ $? -ne 0 ]; then
+        print_error "ERROR: Unable to build example app. See above for details."
+    fi
+
+    cd ..
+}
+
 function run_unit_tests() {
     print_heading "Starting $1 unit tests."
 
@@ -48,9 +63,11 @@ function archive_code_coverage {
 print_heading "Validating WMobileKit.podspec"
 bundle exec pod lib lint WMobileKit.podspec --allow-warnings
 if [ $? -ne 0 ]; then
-  print_error "ERROR: Library validation failed. Verify WMobileKit.podspec."
+    print_error "ERROR: Library validation failed. Verify WMobileKit.podspec."
 fi
 
+# Verify example app builds properly
+build_example_app
 
 # Running unit tests, we need to open the simulator to make sure xcodebuild knows that it is open.
 clean_previous_build
@@ -73,8 +90,8 @@ bundle exec xcov -m 90 -w WMobileKit.xcworkspace -s WMobileKit -o xcov  \
 
 # If code coverage is not at least the minimum, stop here.
 if [ $? -ne 0 ]; then
-  archive_code_coverage
-  print_error "ERROR: Code coverage failed. Needs to be at least $code_coverage_threshold%. See above for details."
+    archive_code_coverage
+    print_error "ERROR: Code coverage failed. Needs to be at least $code_coverage_threshold%. See above for details."
 fi
 
 archive_code_coverage

@@ -2,7 +2,7 @@
 //  WActionSheet.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -410,6 +410,7 @@ open class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBa
         tableView.bounces = false
         tableView.allowsMultipleSelection = false
         tableView.separatorStyle = .none
+        tableView.accessibilityIdentifier = "actionSheetTableView"
 
         tableView.register(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
         tableView.register(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)

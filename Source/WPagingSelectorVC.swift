@@ -2,7 +2,7 @@
 //  WPagingSelectorControl.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -248,7 +248,12 @@ open class WPagingSelectorControl: UIControl {
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+<<<<<<< HEAD
         scrollView.isScrollEnabled = true
+=======
+        scrollView.scrollEnabled = true
+        accessibilityIdentifier = "pagingSelectorControl"
+>>>>>>> d14bf7402eab89acb52a37016c44f30eb9b5476a
 
         addSubview(scrollView)
         scrollView.snp.makeConstraints { (make) in
@@ -370,24 +375,27 @@ open class WPagingSelectorControl: UIControl {
             return
         }
         moveToTabIndex(index)
-
-        delegate?.willChangeToTab?(self, tab: index)
     }
 
     open func moveToTabIndex(_ tabIndex: NSInteger) {
         selectedPage = tabIndex
 
         let newSelectedContainer = tabViews[tabIndex]
+<<<<<<< HEAD
 
         selectedContainer?.label.font = UIFont.systemFont(ofSize: selectedContainer!.label.font.pointSize)
 
         newSelectedContainer.label.font = UIFont.boldSystemFont(ofSize: newSelectedContainer.label.font.pointSize)
+=======
+        selectedContainer?.label.font = UIFont.systemFontOfSize(selectedContainer!.label.font.pointSize)
+        newSelectedContainer.label.font = UIFont.boldSystemFontOfSize(newSelectedContainer.label.font.pointSize)
+>>>>>>> d14bf7402eab89acb52a37016c44f30eb9b5476a
 
         selectedContainer = newSelectedContainer
-
         scrollView.scrollRectToVisible(selectedContainer!.frame, animated: true)
-
         selectionIndicatorView.moveToSelection(selectedContainer!, numberOfSections: pages.count, contentView: contentView)
+
+        delegate?.willChangeToTab?(self, tab: tabIndex)
 
         isAnimating = true
         UIView.animate(withDuration: ANIMATION_DURATION,
@@ -397,7 +405,8 @@ open class WPagingSelectorControl: UIControl {
             completion: { finished in
                 self.delegate?.didChangeToTab?(self, tab: tabIndex)
                 self.isAnimating = false
-        })
+            }
+        )
     }
 }
 
@@ -419,7 +428,7 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
     open fileprivate(set) var pagingSelectorControl: WPagingSelectorControl?
     open var pagingControlHeight: CGFloat = DEFAULT_PAGING_SELECTOR_HEIGHT {
         didSet {
-            pagingControlConstraintsChanged()
+            setupUI()
         }
     }
 
@@ -446,15 +455,16 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
             pagingSelectorControl?.separatorLineHeight = separatorLineHeight
         }
     }
-    
+
     open var shadowColor: CGColor = UIColor.black.cgColor
     open var shadowRadius: CGFloat = 4
     open var shadowOpacity: Float = 0.3
     open var shadowAnimationDuration = 0.2
     open fileprivate(set) var mainContainerView = UIView()
+    open fileprivate(set) var mainViewController: UIViewController?
 
-    var mainViewController: UIViewController?    
     var currentPageIndex = 0
+    var pageToSet: Int?
     var isShowingShadow = false
     
     open weak var delegate: WPagingSelectorVCDelegate?
@@ -467,7 +477,7 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
 
     open var tabWidth: CGFloat? {
         didSet {
-            pagingControlConstraintsChanged()
+            setupUI()
         }
     }
 
@@ -497,6 +507,14 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
         sideMenuController()?.delegate = self
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let page = pageToSet {
+            setPage(index: page)
+        }
+    }
+
     open func setupUI() {
         if let pagingSelector = pagingSelectorControl {
             pagingSelector.removeFromSuperview()
@@ -511,11 +529,23 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
 
         pagingSelectorControl?.delegate = self
 
+        pagingControlConstraintsChanged()
+
+        if (pages.count > 0) {
+            let newMainViewController = pages[0].viewController
+            addViewControllerToContainer(mainContainerView, viewController: newMainViewController)
+
+            self.mainViewController = newMainViewController
+        }
+    }
+
+    public func pagingControlConstraintsChanged() {
         if let pagingSelectorControl = pagingSelectorControl {
             pagingSelectorControl.tabTextColor = tabTextColor
             pagingSelectorControl.separatorLineColor = separatorLineColor
 
             view.addSubview(pagingSelectorControl)
+
             pagingSelectorControl.snp.makeConstraints { (make) in
                 make.left.equalTo(view).offset(pagingControlSidePadding)
                 make.right.equalTo(view).offset(-pagingControlSidePadding)
@@ -530,23 +560,13 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
                 make.top.equalTo(pagingSelectorControl.snp.bottom)
             }
         }
-
-        if (pages.count > 0) {
-            let newMainViewController = pages[0].viewController
-            addViewControllerToContainer(mainContainerView, viewController: newMainViewController)
-
-            self.mainViewController = newMainViewController
-        }
-    }
-
-    open func pagingControlConstraintsChanged() {
-        setupUI()
     }
 
     // Delegate methods
     func willChangeToTab(_ sender: WPagingSelectorControl, tab: Int) {
         // Store old main view controller to remove after animation
         let oldMainViewController = mainViewController
+        currentPageIndex = tab
 
         if let newMainViewController = pages[tab].viewController {
             mainViewController = newMainViewController
@@ -610,6 +630,15 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
             }
         }
     }
+
+    public func setPage(index: Int) {
+        if (view.window == nil) {
+            pageToSet = index
+        } else if (index != currentPageIndex) {
+            pagingSelectorControl?.moveToTabIndex(index)
+            pageToSet = nil
+        }
+    }
     
     open func setShadow(_ enabled: Bool, animated: Bool = false) {
         pagingSelectorControl?.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -632,10 +661,6 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
                 pagingSelectorControl?.layer.shadowOpacity = enabled ? shadowOpacity : 0.0
             }
         }
-    }
-
-    @objc internal func didChangeToTab(_ sender: WPagingSelectorControl, tab: Int) {
-        currentPageIndex = tab
     }
 }
 

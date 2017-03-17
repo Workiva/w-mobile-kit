@@ -2,7 +2,7 @@
 //  WSwitchTests.swift
 //  WMobileKit
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -184,8 +184,10 @@ class WSwitchSpec: QuickSpec {
                     switchControl.setupUI()
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
+
                     pressRecognizer.testState = .changed
-                    pressRecognizer.slideLeft = false
+                    pressRecognizer.returnPoint = CGPoint(x: switchControl.frame.width, y: 0)
+
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true

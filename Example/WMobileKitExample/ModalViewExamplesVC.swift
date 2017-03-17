@@ -6,7 +6,7 @@
 //
 //  Includes: WActionSheetVC, WToast, WBanner
 //
-//  Copyright 2016 Workiva Inc.
+//  Copyright 2017 Workiva Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -138,16 +138,30 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
-        let tapToastButton = UIButton(type: UIButtonType.roundedRect)
-        tapToastButton.backgroundColor = .lightGray
-        tapToastButton.tintColor = .green
-        tapToastButton.setTitle("Tap Dismiss Toast", for: UIControlState.normal)
-        tapToastButton.setTitleColor(.white, for: UIControlState.normal)
-        tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), for: UIControlEvents.touchUpInside)
+        let autoTwoLineToastButton = UIButton(type: UIButtonType.RoundedRect)
+        autoTwoLineToastButton.backgroundColor = .lightGrayColor()
+        autoTwoLineToastButton.tintColor = .greenColor()
+        autoTwoLineToastButton.setTitle("Auto Dismiss Two Line Toast", forState: UIControlState.Normal)
+        autoTwoLineToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        autoTwoLineToastButton.addTarget(self, action: #selector(presentAutoTwoLineToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
+        view.addSubview(autoTwoLineToastButton)
+        autoTwoLineToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
+
+        let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
+        tapToastButton.backgroundColor = .lightGrayColor()
+        tapToastButton.tintColor = .greenColor()
+        tapToastButton.setTitle("Tap Dismiss Toast", forState: UIControlState.Normal)
+        tapToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
+        tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         view.addSubview(tapToastButton)
-        tapToastButton.snp.makeConstraints { (make) in
-            make.top.equalTo(autoToastButton.snp.bottom).offset(10)
+        tapToastButton.snp_makeConstraints { (make) in
+            make.top.equalTo(autoTwoLineToastButton.snp_bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
@@ -386,7 +400,13 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         WToastManager.sharedInstance.showToast(toast)
     }
 
-    open func presentTapToast(_ sender: UIButton) {
+    open func presentAutoTwoLineToast(sender: UIButton) {
+        let toast = WToastTwoLineView(firstLine: "This is the first line, that will be truncated on its own.", secondLine: "This is the second line, notice how the first line did not hide this text.")
+        toast.showDuration = 3
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    open func presentTapToast(sender: UIButton) {
         let toast = WToastView(message: "Tap Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 0
         toast.flyInDirection = .fromRight
