@@ -229,6 +229,7 @@ public class WPagingSelectorControl: UIControl {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollEnabled = true
+        accessibilityIdentifier = "pagingSelectorControl"
 
         addSubview(scrollView)
         scrollView.snp_makeConstraints { (make) in
