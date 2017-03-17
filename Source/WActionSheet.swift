@@ -402,6 +402,7 @@ public class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, W
         tableView.bounces = false
         tableView.allowsMultipleSelection = false
         tableView.separatorStyle = .None
+        tableView.accessibilityIdentifier = "actionSheetTableView"
 
         tableView.registerClass(WHeaderView.self, forHeaderFooterViewReuseIdentifier: HEADER_VIEW)
         tableView.registerClass(WTableViewCell<ActionDataType>.self, forCellReuseIdentifier: ACTION_CELL)
