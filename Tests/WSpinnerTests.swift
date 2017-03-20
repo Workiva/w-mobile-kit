@@ -26,8 +26,8 @@ class WSpinnerTests: QuickSpec {
             var subject: UIViewController!
             var spinnerView: WSpinner!
 
-            let whiteColor: UIColor = UIColor(hex: 0xffffff, alpha: 0.75)
-            let greyColor: UIColor = UIColor(hex: 0xbfe4ff, alpha: 0.45)
+            let whiteColor: UIColor = UIColor(white: 0xffffff, alpha: 0.75)
+            let greyColor: UIColor = UIColor(white: 0xbfe4ff, alpha: 0.45)
 
             beforeEach({
                 subject = UIViewController()

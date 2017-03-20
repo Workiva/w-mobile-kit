@@ -55,13 +55,13 @@ open class WRadioButton: UIControl {
     }
 
 
-    open var borderColorNotSelected: UIColor = .lightGrayColor {
+    open var borderColorNotSelected: UIColor = .lightGray {
         didSet {
             setupUI()
         }
     }
 
-    open var borderColorSelected: UIColor = .lightGrayColor {
+    open var borderColorSelected: UIColor = .lightGray {
         didSet {
             setupUI()
         }
@@ -167,7 +167,7 @@ open class WRadioButton: UIControl {
         indicatorView.clipsToBounds = true
 
         NotificationCenter.default.addObserver(self,
-            selector: #selector(WRadioButton.radioButtonSelected(_:)),
+            selector: #selector(WRadioButton.radioButtonSelected(notification:)),
             name: NSNotification.Name(rawValue: wRadioButtonSelected),
             object: nil)
     }

@@ -20,7 +20,7 @@ import Foundation
 import WMobileKit
 
 public class PanelExampleVC: WPagingPanelVC {
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         let panelContent1 = PanelContentVC()
@@ -53,46 +53,46 @@ class PanelContentVC: WSideMenuContentVC, UITableViewDelegate, UITableViewDataSo
             let tableView = UITableView()
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "tableCell")
+            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tableCell")
 
             view.addSubview(tableView)
 
-            tableView.snp_makeConstraints { (make) in
+            tableView.snp.makeConstraints { (make) in
                 make.edges.equalTo(view)
             }
         } else {
             let colorView = UIView()
-            colorView.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
+            colorView.backgroundColor = UIColor.blue.withAlphaComponent(0.6)
             view.addSubview(colorView)
 
             let label = UILabel()
             label.text = "This view has a set height, so we need a minimum height for smaller screen sizes"
             label.numberOfLines = 0
-            label.lineBreakMode = .ByWordWrapping
-            label.textColor = .whiteColor()
-            label.font = .boldSystemFontOfSize(18)
-            label.textAlignment = .Center
+            label.lineBreakMode = .byWordWrapping
+            label.textColor = .white
+            label.font = .boldSystemFont(ofSize: 18)
+            label.textAlignment = .center
             colorView.addSubview(label)
 
 
-            colorView.snp_makeConstraints { (make) in
+            colorView.snp.makeConstraints { (make) in
                 make.left.top.right.width.equalTo(view).inset(20)
                 make.height.equalTo(180)
             }
 
-            label.snp_makeConstraints { (make) in
+            label.snp.makeConstraints { (make) in
                 make.edges.equalTo(colorView).inset(8)
             }
         }
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")!
-        cell.textLabel?.text = "Cell " + String(indexPath.row + (contentType * tableView.numberOfRowsInSection(0)))
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell")!
+        cell.textLabel?.text = "Cell " + String(indexPath.row + (contentType * tableView.numberOfRows(inSection: 0)))
 
         return cell
     }
@@ -107,36 +107,36 @@ class OuterContentVC: WSideMenuContentVC {
         super.viewDidLoad()
 
         let whiteView = UIView()
-        whiteView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        whiteView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
 
         view.addSubview(whiteView)
-        whiteView.snp_makeConstraints { (make) in
-            make.edges.equalTo(view).inset(20).priorityHigh()
+        whiteView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view).inset(20).priority(1000)
         }
 
         whiteView.addSubview(label)
 
-        label.font = .systemFontOfSize(40)
+        label.font = .systemFont(ofSize: 40)
         label.numberOfLines = 0
-        label.textAlignment = .Center
-        label.lineBreakMode = .ByWordWrapping
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
         if let panelDelegate = panelDelegate {
             label.text = "This is the content of the view controller\nPanel: " + (panelDelegate.isSidePanel() ? "Side Panel" : "Vertical Panel")
         } else {
             label.text = "This is the content of the view controller"
         }
 
-        label.snp_makeConstraints { (make) in
+        label.snp.makeConstraints { (make) in
             make.center.equalTo(whiteView).priorityHigh()
             make.width.equalTo(whiteView).multipliedBy(0.9)
         }
     }
 
     // Can use viewWillTransitionToSize and animating alongside coordinator to detect is panel changes between side panel
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
 
-        coordinator.animateAlongsideTransition({ (context) in
+        coordinator.animate(alongsideTransition: { (context) in
                 if let panelDelegate = self.panelDelegate {
                     self.label.text = "This is the content of the view controller\nPanel: " + (panelDelegate.isSidePanel() ? "Side Panel" : "Vertical Panel")
                 }

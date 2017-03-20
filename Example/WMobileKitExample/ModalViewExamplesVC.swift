@@ -138,30 +138,30 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
-        let autoTwoLineToastButton = UIButton(type: UIButtonType.RoundedRect)
-        autoTwoLineToastButton.backgroundColor = .lightGrayColor()
-        autoTwoLineToastButton.tintColor = .greenColor()
-        autoTwoLineToastButton.setTitle("Auto Dismiss Two Line Toast", forState: UIControlState.Normal)
-        autoTwoLineToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
-        autoTwoLineToastButton.addTarget(self, action: #selector(presentAutoTwoLineToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let autoTwoLineToastButton = UIButton(type: UIButtonType.roundedRect)
+        autoTwoLineToastButton.backgroundColor = .lightGray
+        autoTwoLineToastButton.tintColor = .green
+        autoTwoLineToastButton.setTitle("Auto Dismiss Two Line Toast", for: UIControlState.normal)
+        autoTwoLineToastButton.setTitleColor(.white, for: UIControlState.normal)
+        autoTwoLineToastButton.addTarget(self, action: #selector(presentAutoTwoLineToast(sender:)), for: UIControlEvents.touchUpInside)
 
         view.addSubview(autoTwoLineToastButton)
-        autoTwoLineToastButton.snp_makeConstraints { (make) in
-            make.top.equalTo(autoToastButton.snp_bottom).offset(10)
+        autoTwoLineToastButton.snp.makeConstraints { (make) in
+            make.top.equalTo(autoToastButton.snp.bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }
 
-        let tapToastButton = UIButton(type: UIButtonType.RoundedRect)
-        tapToastButton.backgroundColor = .lightGrayColor()
-        tapToastButton.tintColor = .greenColor()
-        tapToastButton.setTitle("Tap Dismiss Toast", forState: UIControlState.Normal)
-        tapToastButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
-        tapToastButton.addTarget(self, action: #selector(presentTapToast(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        let tapToastButton = UIButton(type: UIButtonType.roundedRect)
+        tapToastButton.backgroundColor = .lightGray
+        tapToastButton.tintColor = .green
+        tapToastButton.setTitle("Tap Dismiss Toast", for: UIControlState.normal)
+        tapToastButton.setTitleColor(.white, for: UIControlState.normal)
+        tapToastButton.addTarget(self, action: #selector(presentTapToast(sender:)), for: UIControlEvents.touchUpInside)
 
         view.addSubview(tapToastButton)
-        tapToastButton.snp_makeConstraints { (make) in
-            make.top.equalTo(autoTwoLineToastButton.snp_bottom).offset(10)
+        tapToastButton.snp.makeConstraints { (make) in
+            make.top.equalTo(autoTwoLineToastButton.snp.bottom).offset(10)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
         }

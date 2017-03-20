@@ -1,3 +1,4 @@
+
 //
 //  WFAButtonTests.swift
 //  WMobileKit
@@ -30,7 +31,7 @@ class WFAButtonSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 button = WFAButton()
@@ -50,17 +51,17 @@ class WFAButtonSpec: QuickSpec {
 
                 // Custom properties
                 expect(button.dragBuffer) == 10
-                expect(button.buttonColor) == UIColor.blueColor()
+                expect(button.buttonColor) == UIColor.blue
             }
 
             describe("when app has been init") {
                 it("should init with coder correctly and verify commonInit") {
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WFAButton")
+                    let locToSave = path.appendingPathComponent("WFAButton")
 
                     NSKeyedArchiver.archiveRootObject(button, toFile: locToSave)
 
-                    let button = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WFAButton
+                    let button = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WFAButton
 
                     expect(button).toNot(equal(nil))
 
@@ -83,36 +84,36 @@ class WFAButtonSpec: QuickSpec {
                 })
 
                 it("should reveal dark overlay when pressed") {
-                    recognizer.testState = .Began
+                    recognizer.testState = .began
 
-                    button.buttonWasLongPressed(recognizer)
-                    expect(button.darkOverlay.hidden) == false
+                    button.buttonWasLongPressed(recognizer: recognizer)
+                    expect(button.darkOverlay.isHidden) == false
                 }
 
                 it("should high dark overlay when done pressing") {
-                    recognizer.testState = .Ended
+                    recognizer.testState = .ended
 
-                    button.buttonWasLongPressed(recognizer)
-                    expect(button.darkOverlay.hidden) == true
+                    button.buttonWasLongPressed(recognizer: recognizer)
+                    expect(button.darkOverlay.isHidden) == true
                 }
 
                 it("should hide dark overlay when dragged beyond buffer") {
-                    recognizer.testState = .Began
+                    recognizer.testState = .began
 
-                    button.buttonWasLongPressed(recognizer)
-                    expect(button.darkOverlay.hidden) == false
+                    button.buttonWasLongPressed(recognizer: recognizer)
+                    expect(button.darkOverlay.isHidden) == false
 
                     recognizer.returnPoint = CGPoint(x: -11, y: 0)
-                    recognizer.testState = .Changed
+                    recognizer.testState = .changed
 
-                    button.buttonWasLongPressed(recognizer)
-                    expect(button.darkOverlay.hidden) == true
+                    button.buttonWasLongPressed(recognizer: recognizer)
+                    expect(button.darkOverlay.isHidden) == true
 
-                    recognizer.returnPoint = CGPointZero
-                    recognizer.testState = .Changed
+                    recognizer.returnPoint = CGPoint.zero
+                    recognizer.testState = .changed
 
-                    button.buttonWasLongPressed(recognizer)
-                    expect(button.darkOverlay.hidden) == false
+                    button.buttonWasLongPressed(recognizer: recognizer)
+                    expect(button.darkOverlay.isHidden) == false
                 }
             }
         }

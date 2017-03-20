@@ -248,12 +248,11 @@ open class WPagingSelectorControl: UIControl {
         scrollView.scrollsToTop = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-<<<<<<< HEAD
+
         scrollView.isScrollEnabled = true
-=======
-        scrollView.scrollEnabled = true
+
+        scrollView.isScrollEnabled = true
         accessibilityIdentifier = "pagingSelectorControl"
->>>>>>> d14bf7402eab89acb52a37016c44f30eb9b5476a
 
         addSubview(scrollView)
         scrollView.snp.makeConstraints { (make) in
@@ -381,15 +380,9 @@ open class WPagingSelectorControl: UIControl {
         selectedPage = tabIndex
 
         let newSelectedContainer = tabViews[tabIndex]
-<<<<<<< HEAD
 
         selectedContainer?.label.font = UIFont.systemFont(ofSize: selectedContainer!.label.font.pointSize)
-
         newSelectedContainer.label.font = UIFont.boldSystemFont(ofSize: newSelectedContainer.label.font.pointSize)
-=======
-        selectedContainer?.label.font = UIFont.systemFontOfSize(selectedContainer!.label.font.pointSize)
-        newSelectedContainer.label.font = UIFont.boldSystemFontOfSize(newSelectedContainer.label.font.pointSize)
->>>>>>> d14bf7402eab89acb52a37016c44f30eb9b5476a
 
         selectedContainer = newSelectedContainer
         scrollView.scrollRectToVisible(selectedContainer!.frame, animated: true)

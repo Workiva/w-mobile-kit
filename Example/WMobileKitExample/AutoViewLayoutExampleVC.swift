@@ -30,45 +30,45 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let topPadding: CGFloat = 20.0
 
     let descriptionLabel = UILabel()
-    let randomButton = UIButton(type: UIButtonType.RoundedRect)
+    let randomButton = UIButton(type: UIButtonType.roundedRect)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        randomButton.backgroundColor = .lightGrayColor()
-        randomButton.tintColor = .greenColor()
-        randomButton.setTitle("Randomize Count", forState: UIControlState.Normal)
-        randomButton.setTitleColor(.whiteColor(), forState: UIControlState.Normal)
-        randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), forControlEvents: .TouchUpInside)
+        randomButton.backgroundColor = .lightGray
+        randomButton.tintColor = .green
+        randomButton.setTitle("Randomize Count", for: UIControlState.normal)
+        randomButton.setTitleColor(.white, for: UIControlState.normal)
+        randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), for: .touchUpInside)
         view.addSubview(randomButton)
-        randomButton.snp_remakeConstraints { (make) in
-            make.top.equalTo(view.snp_top).offset(topPadding)
-            make.centerX.equalTo(view.snp_centerX)
+        randomButton.snp.remakeConstraints { (make) in
+            make.top.equalTo(view.snp.top).offset(topPadding)
+            make.centerX.equalTo(view.snp.centerX)
             make.width.equalTo(160)
             make.height.equalTo(30)
         }
 
         // Setup scroll view
         view.addSubview(scrollView)
-        scrollView.snp_remakeConstraints { (make) in
-            make.top.equalTo(randomButton.snp_bottom).offset(topPadding)
+        scrollView.snp.remakeConstraints { (make) in
+            make.top.equalTo(randomButton.snp.bottom).offset(topPadding)
             make.bottom.equalToSuperview()
             make.right.equalToSuperview()
             make.left.equalToSuperview()
         }
 
         scrollView.addSubview(contentView)
-        contentView.snp_remakeConstraints { (make) in
+        contentView.snp.remakeConstraints { (make) in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
             make.left.equalToSuperview()
         }
 
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.systemFontOfSize(16.0)
+        descriptionLabel.font = UIFont.systemFont(ofSize: 16.0)
         descriptionLabel.text = "    Automatically adds as many of the provided views as possible to each row as determinted by the controller's width and wraps to the next row for any remaining views.\n    Adjusts the height to fit the content, which is available as a property making it great to use for static headers or any view containing a set amount of content!"
         contentView.addSubview(descriptionLabel)
-        descriptionLabel.snp_remakeConstraints { (make) in
+        descriptionLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(scrollView)
             make.left.equalTo(20)
             make.width.equalToSuperview().offset(-40)
@@ -76,7 +76,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         }
 
         // Step 1: Gather your views you wish to display as a list. Their frames must be set.
-        let viewsList = WUtils.generateExampleViews(10)
+        let viewsList = WUtils.generateExampleViews(count: 10)
 
         // Step: 2: Set the initial size of the new collection view.
         // Set with init
@@ -94,7 +94,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.rightSpacing = 2
         autoViewLayoutVC.topSpacing = 2
         autoViewLayoutVC.bottomSpacing = 2
-        autoViewLayoutVC.collectionView.backgroundColor = .whiteColor()
+        autoViewLayoutVC.collectionView.backgroundColor = .white
 
         // Step 4: Add autoViewLayoutVC to current view controller
         addViewControllerToContainer(contentView, viewController: autoViewLayoutVC)
@@ -103,8 +103,8 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
 //        scrollView.addSubview(autoViewLayoutVC.view)
 
         // Step 5: Adjust the height and width of the view
-        autoViewLayoutVC.view.snp_remakeConstraints { (make) in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(topPadding)
+        autoViewLayoutVC.view.snp.remakeConstraints { (make) in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(topPadding)
             make.left.equalToSuperview().offset(sideAutoViewLayoutPadding)
             make.width.equalToSuperview().offset(-(sideAutoViewLayoutPadding*2))
             make.height.equalTo(autoViewLayoutVC.fittedHeight)
@@ -114,27 +114,27 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         scrollView.contentSize = scrollContentSize()
 
         // Optional: Can change the views and the autoViewLayoutVC will update the UI
-        let sampleViews = WUtils.generateExampleViews(30)
+        let sampleViews = WUtils.generateExampleViews(count: 30)
         autoViewLayoutVC.views = sampleViews
 
         // Optional: Set the content size to make the scroll view scroll
         scrollView.contentSize = scrollContentSize()
 
         // Optional: Compare if the estimated height equals your actual height!
-        let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(sampleViews, constrainedWidth: (view.frame.size.width-(sideAutoViewLayoutPadding*2)), leftSpacing: 2, rightSpacing: 2, topSpacing: 2, bottomSpacing: 2)
+        let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(views: sampleViews, constrainedWidth: (view.frame.size.width-(sideAutoViewLayoutPadding*2)), leftSpacing: 2, topSpacing: 2, rightSpacing: 2, bottomSpacing: 2)
         let actualHeight = autoViewLayoutVC.fittedHeight
 
         if (estimatedHeight == actualHeight) {
             print("WAutoViewLayoutVC estimated and actual heights are the same!")
         }
 
-        autoViewLayoutVC.alignment = .Right
+        autoViewLayoutVC.alignment = .right
     }
 
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
 
-        coordinator.animateAlongsideTransition(nil, completion:  { [weak self] _ in
+        coordinator.animate(alongsideTransition: nil, completion:  { [weak self] _ in
             if let weakSelf = self {
                 weakSelf.scrollView.contentSize = weakSelf.scrollContentSize()
 
@@ -147,7 +147,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     public func randomizeViewCount() {
         // Optional: Can change the views and the autoViewLayoutVC will update the UI
         let randomCount = Int(arc4random_uniform(55) + 5)
-        autoViewLayoutVC.views = WUtils.generateExampleViews(randomCount)
+        autoViewLayoutVC.views = WUtils.generateExampleViews(count: randomCount)
 
         // Optional: Set the content size to make the scroll view scroll
         scrollView.contentSize = scrollContentSize()

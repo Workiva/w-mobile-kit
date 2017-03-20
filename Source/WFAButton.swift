@@ -29,7 +29,7 @@ public class WFAButton: UIControl {
             }
         }
     }
-    public var buttonColor: UIColor = .blueColor()
+    public var buttonColor: UIColor = .blue
     public var pressedButtonColor: UIColor?
 
     // Can manually set cornerRadius, otherwise it will be circular
@@ -61,7 +61,7 @@ public class WFAButton: UIControl {
     }
 
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
 
         commonInit()
         setupUI()
@@ -73,39 +73,39 @@ public class WFAButton: UIControl {
         addSubview(darkOverlay)
 
         buttonBackgroundView.backgroundColor = buttonColor
-        darkOverlay.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
-        darkOverlay.hidden = true
-        darkOverlay.userInteractionEnabled = false
+        darkOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        darkOverlay.isHidden = true
+        darkOverlay.isUserInteractionEnabled = false
 
-        imageView.userInteractionEnabled = false
+        imageView.isUserInteractionEnabled = false
 
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WFAButton.buttonWasLongPressed(_:)))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WFAButton.buttonWasLongPressed(recognizer:)))
         longPressRecognizer.minimumPressDuration = 0.001
 
         addGestureRecognizer(longPressRecognizer)
     }
 
     public func setupUI() {
-        if (CGRectEqualToRect(frame, CGRectZero)) {
+        if (frame.equalTo(CGRect.zero)) {
             return
         }
 
         let smallestEdge = min(frame.size.height, frame.size.width)
-        buttonBackgroundView.snp_remakeConstraints { (make) in
+        buttonBackgroundView.snp.remakeConstraints { (make) in
             make.center.equalTo(self)
             make.height.width.equalTo(smallestEdge)
         }
 
-        imageView.snp_remakeConstraints { (make) in
+        imageView.snp.remakeConstraints { (make) in
             make.center.equalTo(self)
             make.height.width.equalTo(buttonBackgroundView).offset(iconContainsBackgroundView ? 0 : -10)
         }
 
-        darkOverlay.snp_remakeConstraints { (make) in
+        darkOverlay.snp.remakeConstraints { (make) in
             make.edges.equalTo(buttonBackgroundView)
         }
 
-        buttonBackgroundView.hidden = iconContainsBackgroundView
+        buttonBackgroundView.isHidden = iconContainsBackgroundView
         buttonBackgroundView.layer.cornerRadius = cornerRadius ?? smallestEdge / 2
         buttonBackgroundView.clipsToBounds = true
         darkOverlay.layer.cornerRadius = cornerRadius ?? smallestEdge / 2
@@ -114,12 +114,12 @@ public class WFAButton: UIControl {
         layoutIfNeeded()
 
         if (hasShadow) {
-            let nonShadowLayer = buttonBackgroundView.hidden ? buttonBackgroundView.layer : imageView.layer
-            let shadowLayer = buttonBackgroundView.hidden ? imageView.layer : buttonBackgroundView.layer
+            let nonShadowLayer = buttonBackgroundView.isHidden ? buttonBackgroundView.layer : imageView.layer
+            let shadowLayer = buttonBackgroundView.isHidden ? imageView.layer : buttonBackgroundView.layer
 
             shadowLayer.masksToBounds = false
             shadowLayer.shadowOpacity = 0.5
-            shadowLayer.shadowColor = UIColor.blackColor().CGColor
+            shadowLayer.shadowColor = UIColor.black.cgColor
             shadowLayer.shadowRadius = 3
             shadowLayer.shadowOffset = CGSize(width: 3, height: 3)
 
@@ -128,41 +128,41 @@ public class WFAButton: UIControl {
     }
 
     public func buttonWasLongPressed(recognizer: UILongPressGestureRecognizer) {
-        let touchLocation = recognizer.locationInView(self)
+        let touchLocation = recognizer.location(in: self)
 
         switch recognizer.state {
-        case .Began:
+        case .began:
             if let pressedButtonColor = pressedButtonColor {
                 buttonBackgroundView.backgroundColor = pressedButtonColor
-                darkOverlay.hidden = true
+                darkOverlay.isHidden = true
             } else {
                 buttonBackgroundView.backgroundColor = buttonColor
-                darkOverlay.hidden = false
+                darkOverlay.isHidden = false
             }
-        case .Changed:
-            if (!pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
+        case .changed:
+            if (!pointIsWithinView(point: touchLocation, withBuffer: dragBuffer)) {
                 buttonBackgroundView.backgroundColor = buttonColor
-                darkOverlay.hidden = true
+                darkOverlay.isHidden = true
 
-                sendActionsForControlEvents(.TouchDragOutside)
+                sendActions(for: .touchDragOutside)
             } else {
                 if let pressedButtonColor = pressedButtonColor {
                     buttonBackgroundView.backgroundColor = pressedButtonColor
-                    darkOverlay.hidden = true
+                    darkOverlay.isHidden = true
                 } else {
                     buttonBackgroundView.backgroundColor = buttonColor
-                    darkOverlay.hidden = false
+                    darkOverlay.isHidden = false
                 }
 
-                sendActionsForControlEvents(.TouchDragInside)
+                sendActions(for: .touchDragInside)
             }
-        case .Ended, .Cancelled, .Failed:
+        case .ended, .cancelled, .failed:
             buttonBackgroundView.backgroundColor = buttonColor
-            darkOverlay.hidden = true
-            if (!pointIsWithinView(touchLocation, withBuffer: dragBuffer)) {
-                sendActionsForControlEvents(.TouchUpOutside)
+            darkOverlay.isHidden = true
+            if (!pointIsWithinView(point: touchLocation, withBuffer: dragBuffer)) {
+                sendActions(for: .touchUpOutside)
             } else {
-                sendActionsForControlEvents(.TouchUpInside)
+                sendActions(for: .touchUpInside)
             }
         default:
             break

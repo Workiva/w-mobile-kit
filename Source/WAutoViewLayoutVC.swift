@@ -20,8 +20,8 @@ import UIKit
 import SnapKit
 
 class WLeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-       var attributes = super.layoutAttributesForElementsInRect(rect)
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+       var attributes = super.layoutAttributesForElements(in: rect)
 
         if let originalAttributes = attributes {
             // Make a copy to avoid warnings
@@ -46,20 +46,20 @@ class WLeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
 }
 
 public class WAutoViewLayoutVC: UIViewController {
-    public var collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+    public var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     public var flowLayout = UICollectionViewFlowLayout()
 
-    public var alignment: xAlignment = .Center {
+    public var alignment: xAlignment = .center {
         didSet {
             if (alignment != oldValue) {
                 switch alignment {
-                case .Right:
+                case .right:
                     print("Only left and centered are currently supported. Defaulting to centered...")
-                    alignment = .Center
+                    alignment = .center
                     flowLayout = UICollectionViewFlowLayout()
-                case .Left:
+                case .left:
                     flowLayout = WLeftAlignedCollectionViewFlowLayout()
-                case .Center:
+                case .center:
                     flowLayout = UICollectionViewFlowLayout()
                 }
 
@@ -98,7 +98,7 @@ public class WAutoViewLayoutVC: UIViewController {
 
     public var fittedHeight: CGFloat {
         get {
-            return collectionView.collectionViewLayout.collectionViewContentSize().height
+            return collectionView.collectionViewLayout.collectionViewContentSize.height
         }
     }
 
@@ -120,7 +120,7 @@ public class WAutoViewLayoutVC: UIViewController {
     public convenience init(width: CGFloat) {
         self.init()
         
-        updateWidth(width)
+        updateWidth(width: width)
     }
 
     /// If the height of the collection view is not set during init, call this method to update the width.
@@ -135,7 +135,7 @@ public class WAutoViewLayoutVC: UIViewController {
         commonInit()
     }
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         commonInit()
@@ -144,9 +144,9 @@ public class WAutoViewLayoutVC: UIViewController {
     func commonInit() {
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.scrollEnabled = false
-        collectionView.backgroundColor = .clearColor()
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .clear
 
         updateCollectionView()
     }
@@ -157,11 +157,11 @@ public class WAutoViewLayoutVC: UIViewController {
         collectionView.frame = view.frame
 
         view.addSubview(collectionView)
-        collectionView.snp_remakeConstraints { (make) in
+        collectionView.snp.remakeConstraints { (make) in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
             make.left.equalToSuperview()
-            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
+            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize.height)
         }
     }
 
@@ -170,10 +170,10 @@ public class WAutoViewLayoutVC: UIViewController {
         collectionView.collectionViewLayout = flowLayout
     }
 
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
 
-        coordinator.animateAlongsideTransition(nil, completion:  { [weak self] _ in
+        coordinator.animate(alongsideTransition: nil, completion:  { [weak self] _ in
             self?.refreshAutoViewLayout()
         })
     }
@@ -181,14 +181,14 @@ public class WAutoViewLayoutVC: UIViewController {
     public func refreshAutoViewLayout() {
         collectionView.reloadData()
 
-        collectionView.snp_updateConstraints { (make) in
-            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize().height)
+        collectionView.snp.updateConstraints { (make) in
+            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize.height)
         }
     }
 }
 
 extension WAutoViewLayoutVC: UICollectionViewDelegateFlowLayout {
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return views[indexPath.row].frame.size
     }
 }
@@ -196,15 +196,16 @@ extension WAutoViewLayoutVC: UICollectionViewDelegateFlowLayout {
 extension WAutoViewLayoutVC: UICollectionViewDelegate {}
 
 extension WAutoViewLayoutVC: UICollectionViewDataSource {
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    @available(iOS 6.0, *)
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)
 
         cell.contentView.subviews.forEach({ $0.removeFromSuperview() })
 
         if (indexPath.row < views.count) {
             let newView = views[indexPath.row]
             cell.contentView.addSubview(newView)
-            newView.snp_makeConstraints { (make) in
+            newView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview()
                 make.left.equalToSuperview()
                 make.right.equalToSuperview()
@@ -215,7 +216,7 @@ extension WAutoViewLayoutVC: UICollectionViewDataSource {
         return cell
     }
 
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return views.count
     }
 }

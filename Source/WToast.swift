@@ -367,9 +367,9 @@ public class WToastTwoLineView: WToastView {
     public var firstLabel = UILabel()
     public var secondLabel = UILabel()
 
-    public convenience init(firstLine: String, secondLine: String, icon: UIImage? = nil, toastColor: UIColor = .blackColor(),
-                            toastAlpha: CGFloat = 0.7, showDuration: NSTimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
-        self.init(frame: CGRectZero)
+    public convenience init(firstLine: String, secondLine: String, icon: UIImage? = nil, toastColor: UIColor = .black,
+                            toastAlpha: CGFloat = 0.7, showDuration: TimeInterval = TOAST_DEFAULT_SHOW_DURATION) {
+        self.init(frame: CGRect.zero)
 
         self.firstLine = firstLine
         self.secondLine = secondLine
@@ -380,8 +380,8 @@ public class WToastTwoLineView: WToastView {
         rightIconImageView.alpha = toastAlpha
     }
 
-    private override func commonInit() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WToastView.hide), name: WConstants.NotificationKey.KillAllToasts, object: nil)
+    fileprivate override func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(WToastView.hide), name: NSNotification.Name(rawValue: WConstants.NotificationKey.KillAllToasts), object: nil)
 
         addSubview(backgroundView)
         addSubview(firstLabel)
@@ -394,29 +394,29 @@ public class WToastTwoLineView: WToastView {
         // Set defaults here instead of the setupUI so they will not be
         // overwritten by custom user values
         firstLabel.numberOfLines = 1
-        firstLabel.textAlignment = .Center
-        firstLabel.font = UIFont.systemFontOfSize(16)
-        firstLabel.textColor = .whiteColor()
+        firstLabel.textAlignment = .center
+        firstLabel.font = UIFont.systemFont(ofSize: 16)
+        firstLabel.textColor = .white
 
         secondLabel.numberOfLines = 1
-        secondLabel.textAlignment = .Center
-        secondLabel.font = UIFont.systemFontOfSize(16)
-        secondLabel.textColor = .whiteColor()
+        secondLabel.textAlignment = .center
+        secondLabel.font = UIFont.systemFont(ofSize: 16)
+        secondLabel.textColor = .white
 
         layer.cornerRadius = 5.0
         clipsToBounds = true
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     public override func setupUI() {
         // Do not set any defaults here as they will overwrite any custom
         // values when the toast is shown.
         // Values set by variables should still be set.
-        backgroundView.snp_remakeConstraints { (make) in
+        backgroundView.snp.remakeConstraints { (make) in
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.bottom.equalTo(self)
@@ -424,7 +424,7 @@ public class WToastTwoLineView: WToastView {
         }
         backgroundView.backgroundColor = toastColor
 
-        rightIconImageView.snp_remakeConstraints { (make) in
+        rightIconImageView.snp.remakeConstraints { (make) in
             make.centerY.equalTo(self)
             make.right.equalTo(self).offset(-frame.size.width / 10)
             make.height.equalTo(14)
@@ -432,7 +432,7 @@ public class WToastTwoLineView: WToastView {
         }
         rightIconImageView.image = rightIcon
 
-        firstLabel.snp_remakeConstraints { (make) in
+        firstLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(self).offset(8)
             make.height.equalTo(frame.size.height/2 - 8)
             make.left.equalTo(self).offset(frame.size.width / 10)
@@ -440,7 +440,7 @@ public class WToastTwoLineView: WToastView {
         }
         firstLabel.text = firstLine
 
-        secondLabel.snp_remakeConstraints { (make) in
+        secondLabel.snp.remakeConstraints { (make) in
             make.bottom.equalTo(self).offset(-8)
             make.height.equalTo(frame.size.height/2 - 8)
             make.left.equalTo(self).offset(frame.size.width / 10)

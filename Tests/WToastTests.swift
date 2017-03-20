@@ -107,11 +107,11 @@ class WToastSpec: QuickSpec {
                         twoLineToastView = WToastTwoLineView(firstLine: "first", secondLine: "second")
 
                         let path = NSTemporaryDirectory() as NSString
-                        let locToSave = path.stringByAppendingPathComponent("WToastTwoLineView")
+                        let locToSave = path.appendingPathComponent("WToastTwoLineView")
 
                         NSKeyedArchiver.archiveRootObject(twoLineToastView, toFile: locToSave)
 
-                        let twoLineToastView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WToastTwoLineView
+                        let twoLineToastView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WToastTwoLineView
 
                         expect(twoLineToastView).toNot(equal(nil))
 
