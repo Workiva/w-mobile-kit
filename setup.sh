@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Ensure correct dependencies are installed
+gem install bundler
+
 bundle install
 echo
 # Install pods for the Framework
