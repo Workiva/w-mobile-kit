@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function update_pods() {
+  bundle exec pod install --repo-update
+}
+
 # Ensure correct dependencies are installed
 gem install bundler
 
@@ -8,7 +12,7 @@ echo
 # Install pods for the Framework
 echo "Installing pods for framework"
 echo
-bundle exec pod install --repo-update
+update_pods
 echo
 
 cd ./Example
@@ -16,6 +20,6 @@ cd ./Example
 echo
 echo "Installing pods for example project"
 echo
-bundle exec pod install --repo-update
+update_pods
 
 cd -
