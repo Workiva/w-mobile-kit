@@ -136,6 +136,28 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     expect(estimatedHeight) == actualHeight
                 }
             }
+
+            describe("WLeftAlignedCollectionViewFlowLayout") {
+                it("should layout elements to the left") {
+                    let sampleViews = WUtils.generateExampleViews(count: 30)
+
+                    subject.views = sampleViews
+                    subject.alignment = .left
+
+                    expect(subject.collectionView.collectionViewLayout is WLeftAlignedCollectionViewFlowLayout) == true
+
+                    subject.collectionView.collectionViewLayout.layoutAttributesForElements(in: CGRect(x: 0, y: 0, width: 100, height: 100))
+                }
+
+                it("should not be set when layout is set to center") {
+                    let sampleViews = WUtils.generateExampleViews(count: 30)
+
+                    subject.views = sampleViews
+                    subject.alignment = .center
+
+                    expect(subject.collectionView.collectionViewLayout is WLeftAlignedCollectionViewFlowLayout) == false
+                }
+            }
         }
     }
 }

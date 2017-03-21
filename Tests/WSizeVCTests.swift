@@ -50,6 +50,8 @@ class WSizeVCSpec: QuickSpec {
                     } else {
                         expect(subject.currentSizeType()) == SizeType.iPhone
                     }
+
+                    subject.updateContentContainerPadding()
                 }
             }
         }
