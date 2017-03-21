@@ -11,9 +11,6 @@ script:
 artifacts:
   - code_coverage/*.zip
   - test_reports/*.xml
-  dependencies:
-   - Podfile.lock
-   - Example/Podfile.lock
 
 test_reports:
   - test-reports/*.xml
