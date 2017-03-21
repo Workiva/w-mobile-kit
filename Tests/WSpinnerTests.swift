@@ -26,8 +26,8 @@ class WSpinnerTests: QuickSpec {
             var subject: UIViewController!
             var spinnerView: WSpinner!
 
-            let whiteColor: UIColor = UIColor(white: 0xffffff, alpha: 0.75)
-            let greyColor: UIColor = UIColor(white: 0xbfe4ff, alpha: 0.45)
+            let whiteColor: UIColor = UIColor(hex: 0xffffff, alpha: 0.75)
+            let greyColor: UIColor = UIColor(hex: 0xbfe4ff, alpha: 0.45)
 
             beforeEach({
                 subject = UIViewController()
@@ -57,8 +57,8 @@ class WSpinnerTests: QuickSpec {
 
                     // Initial colors should be set to the default
                     expect(spinnerView.backgroundColor) == .clear
-                    expect(spinnerView.progressLayer.strokeColor) == UIColor(hex: 0xffffff, alpha: 0.75).cgColor
-                    expect(spinnerView.backgroundLayer.strokeColor) == UIColor(hex: 0xbfe4ff, alpha: 0.45).cgColor
+                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.cgColor
+                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.cgColor
 
                     // Background layer should be configured to the default
                     let bLayer = spinnerView.backgroundLayer
@@ -117,8 +117,8 @@ class WSpinnerTests: QuickSpec {
 
                     // Initial colors should be set to the default
                     expect(spinnerView.backgroundColor) == .clear
-                    expect(spinnerView.progressLayer.strokeColor) == UIColor(hex: 0xffffff, alpha: 0.75).cgColor
-                    expect(spinnerView.backgroundLayer.strokeColor) == UIColor(hex: 0xbfe4ff, alpha: 0.45).cgColor
+                    expect(spinnerView.progressLayer.strokeColor) == whiteColor.cgColor
+                    expect(spinnerView.backgroundLayer.strokeColor) == greyColor.cgColor
 
                     // Background layer should be configured to the default
                     let bLayer = spinnerView.backgroundLayer
