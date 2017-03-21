@@ -3,7 +3,7 @@ use_frameworks!
 
 def common_pods
   pod 'SnapKit', '3.2.0'
-  pod 'CryptoSwift', '0.6.8'
+  pod 'CryptoSwift', '0.6.3'
   pod 'SDWebImage', '4.0.0'
 end
 
