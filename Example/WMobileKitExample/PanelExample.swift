@@ -127,7 +127,7 @@ class OuterContentVC: WSideMenuContentVC {
         }
 
         label.snp.makeConstraints { (make) in
-            make.center.equalTo(whiteView).priorityHigh()
+            make.center.equalTo(whiteView).priority(750)
             make.width.equalTo(whiteView).multipliedBy(0.9)
         }
     }

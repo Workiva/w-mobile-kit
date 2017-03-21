@@ -66,7 +66,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
 
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.systemFont(ofSize: 16.0)
-        descriptionLabel.text = "    Automatically adds as many of the provided views as possible to each row as determinted by the controller's width and wraps to the next row for any remaining views.\n    Adjusts the height to fit the content, which is available as a property making it great to use for static headers or any view containing a set amount of content!"
+        descriptionLabel.text = "    Automatically adds as many of the provided views as possible to each row as determined by the controller's width and wraps to the next row for any remaining views.\n    Adjusts the height to fit the content, which is available as a property making it great to use for static headers or any view containing a set amount of content!"
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(scrollView)
@@ -80,11 +80,11 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
 
         // Step: 2: Set the initial size of the new collection view.
         // Set with init
-        autoViewLayoutVC = WAutoViewLayoutVC(width: view.frame.size.width-(sideAutoViewLayoutPadding*2))
+        autoViewLayoutVC = WAutoViewLayoutVC(width: view.frame.size.width-(sideAutoViewLayoutPadding * 2))
 
         // Or Step: 2: after
 //        autoViewLayoutVC = WAutoViewLayoutVC()
-//        autoViewLayoutVC.updateWidth(view.frame.size.width-(sideAutoViewLayoutPadding*2))
+//        autoViewLayoutVC.updateWidth(view.frame.size.width-(sideAutoViewLayoutPadding * 2))
 
         // Step 3: Add views list to controller
         autoViewLayoutVC.views = viewsList
@@ -106,7 +106,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         autoViewLayoutVC.view.snp.remakeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(topPadding)
             make.left.equalToSuperview().offset(sideAutoViewLayoutPadding)
-            make.width.equalToSuperview().offset(-(sideAutoViewLayoutPadding*2))
+            make.width.equalToSuperview().offset(-(sideAutoViewLayoutPadding * 2))
             make.height.equalTo(autoViewLayoutVC.fittedHeight)
         }
 
@@ -121,7 +121,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         scrollView.contentSize = scrollContentSize()
 
         // Optional: Compare if the estimated height equals your actual height!
-        let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(views: sampleViews, constrainedWidth: (view.frame.size.width-(sideAutoViewLayoutPadding*2)), leftSpacing: 2, topSpacing: 2, rightSpacing: 2, bottomSpacing: 2)
+        let estimatedHeight = WAutoViewLayoutVC.estimatedFittedHeight(views: sampleViews, constrainedWidth: (view.frame.size.width - (sideAutoViewLayoutPadding * 2)), leftSpacing: 2, topSpacing: 2, rightSpacing: 2, bottomSpacing: 2)
         let actualHeight = autoViewLayoutVC.fittedHeight
 
         if (estimatedHeight == actualHeight) {
