@@ -391,23 +391,18 @@ class WPanelSpec: QuickSpec {
             describe("page manager") {
                 it("should return correct next view controller") {
                     let pagingManager = subject.pagingVC.pagingManager
+
                     expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc1!)) == vc2
                     expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc2!)) == vc3
                     expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc3!)).to(beNil())
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerAfterViewController: vc1!)) == vc2
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerAfterViewController: vc2!)) == vc3
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerAfterViewController: vc3!)).to(beNil())
                 }
 
                 it("should return correct previous view controller") {
                     let pagingManager = subject.pagingVC.pagingManager
 
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc1!)).to(beNil())
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc2!)) == vc1
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc3!)) == vc2
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerBeforeViewController: vc1!)).to(beNil())
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerBeforeViewController: vc2!)) == vc1
-//                    expect(pagingManager.pageViewController(pageManager: pagingManager, viewControllerBeforeViewController: vc3!)) == vc2
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc1!)).to(beNil())
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc2!)) == vc1
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc3!)) == vc2
                 }
 
                 it("should change page programmatically") {
