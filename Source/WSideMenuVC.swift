@@ -465,7 +465,7 @@ extension UIViewController {
             addChildViewController(targetViewController)
             containerView.addSubview(targetViewController.view)
             
-            targetViewController.view.snp.makeConstraints { (make) in
+            targetViewController.view.snp.remakeConstraints { (make) in
                 make.left.equalTo(containerView)
                 make.top.equalTo(containerView)
                 make.right.equalTo(containerView)

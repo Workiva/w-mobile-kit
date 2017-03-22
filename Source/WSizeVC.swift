@@ -86,7 +86,7 @@ open class WSizeVC: UIViewController {
 
     open func updateContentContainerPadding() {
         if (view.subviews.contains(sizeContentContainer())) {
-            sizeContentContainer().snp.updateConstraints{ (make) in
+            sizeContentContainer().snp.remakeConstraints { (make) in
                 make.left.equalTo(view).offset(contentContainerSidePadding)
                 make.right.equalTo(view).offset(-contentContainerSidePadding)
                 make.top.equalTo(view).offset(contentContainerTopPadding)
