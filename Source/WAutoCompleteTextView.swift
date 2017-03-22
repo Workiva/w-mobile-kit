@@ -244,12 +244,12 @@ open class WAutoCompleteTextView: UIView {
         updateHeight()
 
         UIView.animate(withDuration: 0.3,
-            animations: {
-                self.superview?.layoutIfNeeded()
-            },
-            completion: { finished in
-                self.autoCompleteTable.isHidden = !animateIn
-            }
+                       animations: {
+                        self.superview?.layoutIfNeeded()
+        },
+                       completion: { finished in
+                        self.autoCompleteTable.isHidden = !animateIn
+        }
         )
     }
 
@@ -299,18 +299,17 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    mutableCopy.append(attributedSuffix)
-
-
-                    mutableCopy.addAttribute(NSFontAttributeName,
+                    attributedSuffix.addAttribute(NSFontAttributeName,
                                                   value: textView.font!,
                                                   range: NSRange(location:0,
-                                                                 length:mutableCopy.length))
+                                                                 length:attributedSuffix.length))
 
-                    mutableCopy.addAttribute(NSForegroundColorAttributeName,
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
                                                   value: textView.textColor!,
                                                   range: NSRange(location:0,
-                                                                 length:mutableCopy.length))
+                                                                 length:attributedSuffix.length))
+
+                    mutableCopy.append(attributedSuffix)
 
                     replaceText = mutableCopy
                 }
@@ -341,7 +340,7 @@ open class WAutoCompleteTextView: UIView {
                     replaceText = mutableCopy
                 }
             }
-            
+
             if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
                 mutableCopy.append(replaceText)
                 textView.attributedText = mutableCopy
@@ -394,10 +393,10 @@ extension WAutoCompleteTextView: UITextViewDelegate {
                 }
 
                 UIView.animate(withDuration: 0.2,
-                    animations: {
-                        self.superview?.layoutIfNeeded()
-                    },
-                    completion: nil)
+                               animations: {
+                                self.superview?.layoutIfNeeded()
+                },
+                               completion: nil)
             }
         }
     }
@@ -463,7 +462,7 @@ extension WAutoCompleteTextView: UITextViewDelegate {
     open func textViewDidChangeSelection(_ textView: UITextView) {
         processWordAtCursor(textView)
     }
-
+    
     open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if let delegate = (textView as? WTextView)?.wTextViewDelegate , text == "\n" {
             return delegate.textViewShouldReturn(textView as! WTextView)
