@@ -336,7 +336,20 @@ open class WAutoCompleteTextView: UIView {
         } else {
             if (addSpaceAfterReplacement) {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
-                    mutableCopy.append(NSAttributedString(string: " "))
+                    let attributedSuffix = NSMutableAttributedString(string: " ")
+
+                    attributedSuffix.addAttribute(NSFontAttributeName,
+                        value: textView.font!,
+                        range: NSRange(location:0,
+                            length:attributedSuffix.length))
+
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                        value: textView.textColor!,
+                        range: NSRange(location:0,
+                            length:attributedSuffix.length))
+
+                    mutableCopy.append(attributedSuffix)
+
                     replaceText = mutableCopy
                 }
             }
