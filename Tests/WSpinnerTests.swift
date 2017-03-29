@@ -85,8 +85,8 @@ class WSpinnerTests: QuickSpec {
                     expect(iLayer.frame) == spinnerView.bounds
                     expect(spinnerView.progress) == 0
                     
-                    let startAngle = CGFloat(3 * M_PI / 2)
-                    let endAngle = CGFloat(2 * M_PI) + startAngle
+                    let startAngle = CGFloat(3 * Double.pi / 2)
+                    let endAngle = CGFloat(2 * Double.pi) + startAngle
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds
@@ -137,7 +137,7 @@ class WSpinnerTests: QuickSpec {
                     let verifyRotationAnimation = {
                         (animation: CABasicAnimation) -> Void in
 
-                        expect(animation.toValue as? Double) == M_PI * 2
+                        expect(animation.toValue as? Double) == Double.pi * 2
                         expect(animation.duration) == 1.4
                         expect(animation.isCumulative).to(beTruthy())
                         expect(animation.repeatCount) == HUGE
@@ -159,8 +159,8 @@ class WSpinnerTests: QuickSpec {
                     expect(iLayer.frame) == spinnerView.bounds
                     expect(spinnerView.progress) == 0.15 // indeterminate progress set to 0.15
                     
-                    let startAngle = CGFloat(3 * M_PI / 2)
-                    let endAngle = CGFloat(2 * M_PI) + startAngle
+                    let startAngle = CGFloat(3 * Double.pi / 2)
+                    let endAngle = CGFloat(2 * Double.pi) + startAngle
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds
@@ -232,8 +232,8 @@ class WSpinnerTests: QuickSpec {
                     expect(iLayer.frame) == spinnerView.bounds
                     expect(spinnerView.progress) == 0.25
                     
-                    let startAngle = CGFloat(3 * M_PI / 2)
-                    let endAngle = startAngle - CGFloat(2 * M_PI)
+                    let startAngle = CGFloat(3 * Double.pi / 2)
+                    let endAngle = startAngle - CGFloat(2 * Double.pi)
 
                     // Background layer should be configured correctly following drawing
                     expect(bLayer.frame) == spinnerView.bounds

@@ -90,7 +90,7 @@ open class WSpinner: UIControl {
                 progress = self.indeterminateSectionLength
 
                 let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-                rotationAnimation.toValue = direction == .clockwise ? M_PI * 2 : -M_PI * 2
+                rotationAnimation.toValue = direction == .clockwise ? Double.pi * 2 : -Double.pi * 2
                 rotationAnimation.duration = 1.4
                 rotationAnimation.isCumulative = true
                 rotationAnimation.repeatCount = HUGE
@@ -200,8 +200,8 @@ open class WSpinner: UIControl {
 
     fileprivate func circlePath(_ backgroundPath: Bool) -> CGPath {
         let isClockwise = direction == .clockwise
-        let startAngle = CGFloat(3 * M_PI / 2)
-        let endAngle = isClockwise ? startAngle + CGFloat(2 * M_PI) : startAngle - CGFloat(2 * M_PI)
+        let startAngle = CGFloat(3 * Double.pi / 2)
+        let endAngle = isClockwise ? startAngle + CGFloat(2 * Double.pi) : startAngle - CGFloat(2 * Double.pi)
         let center = CGPoint(x: bounds.size.width / 2, y: bounds.size.height / 2)
         let radius = (bounds.size.width - lineWidth) / 2
 
