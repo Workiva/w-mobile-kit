@@ -76,8 +76,6 @@ extension AutoCompleteTextViewExampleVC: UITableViewDataSource {
         
         return cell
     }
-
-
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count

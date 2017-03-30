@@ -136,7 +136,7 @@
 		D592B2B81CC9494900301C7F /* testImage5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage5.png; sourceTree = "<group>"; };
 		D592B2BA1CC9495300301C7F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D5A4F5FC1CAEDA290041BB98 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D5A4F5FD1CAEDA290041BB98 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
 		D5C4B4441CADBD9A009B4104 /* WTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTheme.swift; sourceTree = "<group>"; };
 		D5D1E7BF1E77C8B600172DA1 /* WAutoViewLayoutVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WAutoViewLayoutVCTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D5D1E7C11E77D66500172DA1 /* WUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WUtilsTests.swift; sourceTree = "<group>"; };

@@ -29,7 +29,6 @@ open class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
         return testState
     }
 
-
     open override func location(in view: UIView?) -> CGPoint {
         return returnPoint ?? CGPoint.zero
     }

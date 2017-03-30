@@ -163,7 +163,6 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     autoCompleteView.controlPrefix = "@"
                     autoCompleteView.textView.text = initialText
                     autoCompleteView.processWordAtCursor(autoCompleteView.textView)
-
                     autoCompleteView.acceptAutoCompletionWithString("auto completion")
                     
                     expect(autoCompleteView.textView.text).to(equal(finalText))

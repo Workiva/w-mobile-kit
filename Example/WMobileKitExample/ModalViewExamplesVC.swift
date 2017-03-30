@@ -326,18 +326,6 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
-        actionSheetSort.addAction(WAction(title: "Subtitle",
-            handler: { action in
-                NSLog(action.title! + " was tapped")
-                weakActionSheet?.deselectAction()
-                weakActionSheet?.setSelectedAction(action)
-        }))
-        actionSheetSort.addAction(WAction(title: "Section",
-            handler: { action in
-                NSLog(action.title! + " was tapped")
-                weakActionSheet?.deselectAction()
-                weakActionSheet?.setSelectedAction(action)
-        }))
         actionSheetSort.addAction(WAction(title: "Modified Date", enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
