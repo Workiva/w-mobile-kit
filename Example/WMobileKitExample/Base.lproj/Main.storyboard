@@ -936,29 +936,29 @@ See the nice shadow?</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eyO-mV-rg1" customClass="WRadioButton" customModule="WMobileKit">
-                                <rect key="frame" x="248" y="221" width="44" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eyO-mV-rg1" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="135.5" y="231" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" placeholder="YES" id="S4q-dC-v9W"/>
                                     <constraint firstAttribute="width" constant="44" placeholder="YES" id="xW7-eL-Hoh"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tJ1-6l-hqe" customClass="WRadioButton" customModule="WMobileKit">
-                                <rect key="frame" x="306" y="221" width="44" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tJ1-6l-hqe" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="193.5" y="231" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" placeholder="YES" id="X7b-Ot-07j"/>
                                     <constraint firstAttribute="height" constant="44" placeholder="YES" id="fWs-WU-m8B"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sb8-eU-o12" customClass="WRadioButton" customModule="WMobileKit">
-                                <rect key="frame" x="190" y="221" width="44" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sb8-eU-o12" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="77.5" y="231" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" placeholder="YES" id="CiZ-e7-Xg6"/>
                                     <constraint firstAttribute="height" constant="44" placeholder="YES" id="r8G-lN-StA"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3In-hJ-JK6" customClass="WRadioButton" customModule="WMobileKit">
-                                <rect key="frame" x="364" y="221" width="44" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3In-hJ-JK6" customClass="WRadioButton" customModule="WMobileKit">
+                                <rect key="frame" x="251.5" y="231" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" placeholder="YES" id="6sO-xR-3lW"/>
                                     <constraint firstAttribute="height" constant="44" placeholder="YES" id="KH5-cn-xZe"/>

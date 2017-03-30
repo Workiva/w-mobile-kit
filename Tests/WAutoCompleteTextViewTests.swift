@@ -148,7 +148,6 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     let textView = autoCompleteView.textView
                     textView.text = "@test"
 
-
                     let range = textView.textRange(from: textView.beginningOfDocument, to: textView.endOfDocument)
                     textView.selectedTextRange = range
                     
