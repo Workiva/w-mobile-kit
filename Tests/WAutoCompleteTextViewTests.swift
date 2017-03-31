@@ -148,7 +148,6 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     let textView = autoCompleteView.textView
                     textView.text = "@test"
 
-
                     let range = textView.textRange(from: textView.beginningOfDocument, to: textView.endOfDocument)
                     textView.selectedTextRange = range
                     
@@ -163,7 +162,6 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                     autoCompleteView.controlPrefix = "@"
                     autoCompleteView.textView.text = initialText
                     autoCompleteView.processWordAtCursor(autoCompleteView.textView)
-
                     autoCompleteView.acceptAutoCompletionWithString("auto completion")
                     
                     expect(autoCompleteView.textView.text).to(equal(finalText))
