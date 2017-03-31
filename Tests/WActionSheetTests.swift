@@ -23,15 +23,15 @@ import Nimble
 class WActionSheetSpec: QuickSpec {
     override func spec() {
         describe("WActionSheetSpec") {
-            var subject: WActionSheetVC<NSObject>!
-            var action: WAction<NSObject>?
+            var subject: WActionSheetVC<Any>!
+            var action: WAction<Any>!
             var table: UITableView!
-            var cell1: WTableViewCell<NSObject>!
-            var cell2: WTableViewCell<NSObject>!
-            var cell3: WTableViewCell<NSObject>!
+            var cell1: WTableViewCell<Any>!
+            var cell2: WTableViewCell<Any>!
+            var cell3: WTableViewCell<Any>!
             
-            beforeEach({
-                subject = WActionSheetVC<NSObject>()
+            beforeEach {
+                subject = WActionSheetVC<Any>()
                 action = WAction(title: "Action 1")
                 
                 subject.addAction(action!)
@@ -42,18 +42,18 @@ class WActionSheetSpec: QuickSpec {
                 subject.hasCancel = true
                 
                 table = subject.tableView
-                cell1 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! WTableViewCell<NSObject>
-                cell2 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0)) as! WTableViewCell<NSObject>
-                cell3 = subject.tableView(table, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 0)) as! WTableViewCell<NSObject>
+                cell1 = subject.tableView(table, cellForRowAt: IndexPath(row: 0, section: 0)) as! WTableViewCell<Any>
+                cell2 = subject.tableView(table, cellForRowAt: IndexPath(row: 1, section: 0)) as! WTableViewCell<Any>
+                cell3 = subject.tableView(table, cellForRowAt: IndexPath(row: 2, section: 0)) as! WTableViewCell<Any>
                 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                let window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
                 
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
                 
                 table.reloadData()
-            })
+            }
             
             describe("when app has been init") {
                 it("should have the correct height with cancel") {
@@ -82,64 +82,64 @@ class WActionSheetSpec: QuickSpec {
                 }
                 
                 it("should have correct cell properties for destructive only separator style") {
-                    expect(cell2.separatorBar.hidden).to(equal(true))
+                    expect(cell2.separatorBar.isHidden).to(equal(true))
                 }
                 
                 it("should have correct cell properties for all separator style") {
-                    subject.sheetSeparatorStyle = .All
-                    cell3 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as! WTableViewCell<NSObject>
+                    subject.sheetSeparatorStyle = .all
+                    cell3 = table.cellForRow(at: IndexPath(row: 2, section: 0)) as! WTableViewCell<Any>
                     
-                    expect(cell3.separatorBar.hidden).to(equal(false))
+                    expect(cell3.separatorBar.isHidden).to(equal(false))
                 }
                 
                 it("should init table cell with coder correctly") {
-                    let tableCell = WTableViewCell<NSObject>(frame: CGRectZero)
+                    let tableCell = WTableViewCell<Any>(frame: CGRect.zero)
                     
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("testsActionSheet")
+                    let locToSave = path.appendingPathComponent("testsActionSheet")
                     
                     NSKeyedArchiver.archiveRootObject(tableCell, toFile: locToSave)
                     
-                    let newTableCell = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WTableViewCell<NSObject>
+                    let newTableCell = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTableViewCell<Any>
                     
                     expect(newTableCell).toNot(equal(nil))
-                    expect(newTableCell.selectBar.hidden).to(equal(true))
+                    expect(newTableCell.selectBar.isHidden).to(equal(true))
                     expect(newTableCell.separatorBar).toNot(equal(nil))
                 }
                 
                 it("should init table header with coder correctly") {
-                    let headerView = WHeaderView(frame: CGRectZero)
+                    let headerView = WHeaderView(frame: CGRect.zero)
                     
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("testsActionSheet")
+                    let locToSave = path.appendingPathComponent("testsActionSheet")
                     
                     NSKeyedArchiver.archiveRootObject(headerView, toFile: locToSave)
                     
-                    let newHeaderView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WHeaderView
+                    let newHeaderView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WHeaderView
                     
                     expect(newHeaderView).toNot(equal(nil))
                 }
                 
                 it("should have default status bar settings") {
-                    expect(subject.prefersStatusBarHidden()) == false
-                    expect(subject.preferredStatusBarStyle()) == UIStatusBarStyle.Default
+                    expect(subject.prefersStatusBarHidden) == false
+                    expect(subject.preferredStatusBarStyle) == UIStatusBarStyle.default
                 }
                 
                 it("should use stored settings for status bar style") {
-                    subject.previousStatusBarStyle = .LightContent
+                    subject.previousStatusBarStyle = .lightContent
                     subject.previousStatusBarHidden = true
                     
-                    expect(subject.statusBarStyleController.prefersStatusBarHidden()) == true
-                    expect(subject.statusBarStyleController.preferredStatusBarStyle()) == UIStatusBarStyle.LightContent
+                    expect(subject.statusBarStyleController.prefersStatusBarHidden) == true
+                    expect(subject.statusBarStyleController.preferredStatusBarStyle) == UIStatusBarStyle.lightContent
                 }
                 
                 it("should set window and subview properties correctly") {
                     expect(subject.presentingWindow).toNot(beNil())
-                    expect(subject.presentingWindow!.hidden) == false
+                    expect(subject.presentingWindow!.isHidden) == false
                     expect(subject.presentingWindow!.windowLevel) == UIWindowLevelStatusBar + 1
                     expect(subject.presentingWindow!.rootViewController) == subject.statusBarStyleController
                     
-                    expect(subject.tapRecognizerView.backgroundColor) == UIColor.blackColor().colorWithAlphaComponent(0.4)
+                    expect(subject.tapRecognizerView.backgroundColor) == UIColor.black.withAlphaComponent(0.4)
                     expect(subject.tapRecognizerView.gestureRecognizers?.count) == 1
                 }
 
@@ -154,17 +154,17 @@ class WActionSheetSpec: QuickSpec {
                     subject.actions[1].enabled = false
                     table.reloadData()
 
-                    let indexPath = NSIndexPath(forItem: 1, inSection: 0)
-                    let disabledCell = table.cellForRowAtIndexPath(indexPath)
+                    let indexPath = IndexPath(row: 1, section: 0)
+                    let disabledCell = table.cellForRow(at: indexPath)
 
-                    expect(disabledCell!.subviews[disabledCell!.subviews.count - 1].backgroundColor) == UIColor.whiteColor().colorWithAlphaComponent(0.5)
-                    expect(subject.tableView(table, shouldHighlightRowAtIndexPath: indexPath)) == false
+                    expect(disabledCell!.subviews[disabledCell!.subviews.count - 1].backgroundColor) == UIColor.white.withAlphaComponent(0.5)
+                    expect(subject.tableView(table, shouldHighlightRowAt: indexPath)) == false
                 }
             }
 
             describe("max sheet height") {
                 it("should have a max sheet height of 80% of the sheet height if a max height is not set") {
-                    expect(subject.defaultMaxSheetHeight()) == UIScreen.mainScreen().bounds.size.height * 0.8
+                    expect(subject.defaultMaxSheetHeight()) == UIScreen.main.bounds.size.height * 0.8
                 }
 
                 it("should use a custom max sheet height if a custom value is set") {
@@ -176,51 +176,51 @@ class WActionSheetSpec: QuickSpec {
             
             describe("cell selection") {
                 it("should select correctly") {
-                    subject.tableView(table, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    subject.tableView(table, didSelectRowAt: IndexPath(row: 0, section: 0))
                 }
             }
             
             describe("when cell action has been selected") {
                 it("should have the correct properties selected by index") {
                     subject.setSelectedAction(1)
-                    cell2 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell2 = table.cellForRow(at: IndexPath(row: 1, section: 0)) as! WTableViewCell<Any>
                     
-                    expect(cell2.selectBar.hidden).to(equal(false))
+                    expect(cell2.selectBar.isHidden).to(equal(false))
                 }
                 
                 it("should have the correct properties selected by action") {
                     subject.setSelectedAction(action!)
-                    cell1 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell1 = table.cellForRow(at: IndexPath(row: 0, section: 0)) as! WTableViewCell<Any>
                     
-                    expect(cell1.selectBar.hidden).to(equal(false))
+                    expect(cell1.selectBar.isHidden).to(equal(false))
                 }
                 
                 it("should have the correct properties toggled by index") {
                     subject.toggleSelectedAction(1)
-                    cell2 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell2 = table.cellForRow(at: IndexPath(row: 1, section: 0)) as! WTableViewCell<Any>
                     
-                    expect(cell2.selectBar.hidden).to(equal(false))
+                    expect(cell2.selectBar.isHidden).to(equal(false))
                 }
                 
                 it("should have the correct properties toggled twice by index") {
                     subject.toggleSelectedAction(1)
                     subject.toggleSelectedAction(1)
-                    cell2 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell2 = table.cellForRow(at: IndexPath(row: 1, section: 0)) as! WTableViewCell<Any>
                     
                     expect(cell2.isSelectedAction).to(equal(false))
                 }
                 
                 it("should have the correct properties toggled by action") {
                     subject.toggleSelectedAction(action!)
-                    cell1 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell1 = table.cellForRow(at: IndexPath(row: 0, section: 0)) as! WTableViewCell<Any>
                     
-                    expect(cell1.selectBar.hidden).to(equal(false))
+                    expect(cell1.selectBar.isHidden).to(equal(false))
                 }
                 
                 it("should have the correct properties toggled twice by action") {
                     subject.toggleSelectedAction(action!)
                     subject.toggleSelectedAction(action!)
-                    cell1 = table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! WTableViewCell<NSObject>
+                    cell1 = table.cellForRow(at: IndexPath(row: 0, section: 0)) as! WTableViewCell<Any>
                     
                     expect(cell1.isSelectedAction).to(equal(false))
                 }
@@ -279,11 +279,11 @@ class WActionSheetSpec: QuickSpec {
         }
 
         describe("WPickerActionSheetVCSpec") {
-            var subject: WPickerActionSheet<NSObject>!
-            var action: WAction<NSObject>?
+            var subject: WPickerActionSheet<Any>!
+            var action: WAction<Any>!
 
-            beforeEach({
-                subject = WPickerActionSheet<NSObject>()
+            beforeEach {
+                subject = WPickerActionSheet<Any>()
                 action = WAction(title: "Option 1")
 
                 subject.addAction(action!)
@@ -294,14 +294,14 @@ class WActionSheetSpec: QuickSpec {
 
                 subject.hasCancel = true
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                let window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
 
                 subject.pickerView.reloadAllComponents()
-            })
+            }
 
             describe("when app has been init") {
                 it("should have everything initalized properly") {
@@ -316,24 +316,19 @@ class WActionSheetSpec: QuickSpec {
                     expect(subject.pickerView).toNot(beNil())
 
                     // All views added programatically
-                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarCancelButton)).to(beTruthy())
-                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarDoneButton)).to(beTruthy())
+                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarCancelButton)) == true
+                    expect(subject.toolbarContainerView.subviews.contains(subject.toolbarDoneButton)) == true
 
                     // Properties are all set up
-                    expect(subject.toolbarCancelButton.titleLabel?.text).to(equal("Cancel"))
-                    expect(subject.toolbarCancelButton.titleLabel?.textColor).to(equal(UIColor.blueColor()))
-                    expect(subject.toolbarCancelButton.allTargets().contains(subject)).to(beTruthy())
+                    expect(subject.toolbarDoneButton.title(for: .normal)) == "Done"
+                    expect(subject.toolbarDoneButton.titleColor(for: .normal)) == .blue
 
-                    expect(subject.toolbarDoneButton.titleLabel?.text).to(equal("Done"))
-                    expect(subject.toolbarDoneButton.titleLabel?.textColor).to(equal(UIColor.blueColor()))
-                    expect(subject.toolbarDoneButton.allTargets().contains(subject)) == true
-
-                    expect(subject.toolbarContainerView.backgroundColor).to(equal(UIColor.whiteColor()))
-                    expect(subject.pickerView.backgroundColor).to(equal(UIColor.whiteColor()))
+                    expect(subject.toolbarContainerView.backgroundColor) == .white
+                    expect(subject.pickerView.backgroundColor) == .white
                 }
 
                 it("should have the correct height for having actions") {
-                    expect(subject.heightForActionSheet()).to(equal(subject.PICKER_VIEW_HEIGHT))
+                    expect(subject.heightForActionSheet()) == subject.PICKER_VIEW_HEIGHT
                 }
             }
 
@@ -359,7 +354,7 @@ class WActionSheetSpec: QuickSpec {
 
             describe("pickerview delegate method calls") {
                 it("should have the correct number of rows") {
-                    expect(subject.pickerView.numberOfRowsInComponent(0)).to(equal(5))
+                    expect(subject.pickerView.numberOfRows(inComponent: 0)).to(equal(5))
                 }
 
                 it("should have the correct number of components") {

@@ -43,44 +43,44 @@ extension UIColor {
     }
 }
 
-public class WTheme: NSObject {
+open class WTheme: NSObject {
     public override init(){}
 
     // Accessible Colors
-    public var primaryTextColor: UIColor = .blackColor()
-    public var secondaryTextColor: UIColor = .grayColor()
+    open var primaryTextColor: UIColor = .black
+    open var secondaryTextColor: UIColor = .gray
 
     // Colors that apply directly to theme
-    public var backgroundColor: UIColor = UIColor(hex: 0x32B0CA) // teal
+    open var backgroundColor: UIColor = UIColor(hex: 0x32B0CA) // teal
 
     // Paging Selector
-    public var pagingSelectorControlColor: UIColor = .lightGrayColor()
-    public var pagingSelectionIndicatorColor: UIColor = .whiteColor()
-    public var pagingSelectorSeparatorColor: UIColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
+    open var pagingSelectorControlColor: UIColor = .lightGray
+    open var pagingSelectionIndicatorColor: UIColor = .white
+    open var pagingSelectorSeparatorColor: UIColor = UIColor.lightGray.withAlphaComponent(0.5)
     
     // Action Sheet
-    public var actionSheetSelectColor: UIColor = .blueColor()
+    open var actionSheetSelectColor: UIColor = .blue
 
     // Navigation Bar
-    public var navigationBarColor: UIColor = .blueColor()
-    public var navigationTintColor: UIColor = .whiteColor()
-    public var navigationTextColor: UIColor = .whiteColor()
+    open var navigationBarColor: UIColor = .blue
+    open var navigationTintColor: UIColor = .white
+    open var navigationTextColor: UIColor = .white
     
     // Toast
-    public var toastBGColor: UIColor = .greenColor()
+    open var toastBGColor: UIColor = .green
     
     // Switch
-    public var switchOutlineColor: UIColor = .blueColor()
-    public var switchBarColor: UIColor = .blueColor()
+    open var switchOutlineColor: UIColor = .blue
+    open var switchBarColor: UIColor = .blue
 
     // Loading Modal
-    public var loadingModalBackgroundColor: UIColor = .clearColor()
+    open var loadingModalBackgroundColor: UIColor = .clear
 }
 
 // Theme with all default values
-public class DefaultTheme: WTheme {}
+open class DefaultTheme: WTheme {}
 
-public class GreenTheme: WTheme {
+open class GreenTheme: WTheme {
     public override init() {
         super.init()
 
@@ -90,7 +90,7 @@ public class GreenTheme: WTheme {
     }
 }
 
-public class CustomTheme: WTheme {
+open class CustomTheme: WTheme {
     public override init() {
         super.init()
 
@@ -112,21 +112,21 @@ public class CustomTheme: WTheme {
     }
 }
 
-public class WThemeManager: NSObject {
-    public static let sharedInstance = WThemeManager()
+open class WThemeManager: NSObject {
+    open static let sharedInstance = WThemeManager()
 
-    private override init() {
+    fileprivate override init() {
         super.init()
         setTheme(currentTheme)
     }
 
-    public var currentTheme: WTheme = DefaultTheme() {
+    open var currentTheme: WTheme = DefaultTheme() {
         didSet {
             setTheme(currentTheme)
         }
     }
 
-    private func setTheme(theme: WTheme) {
+    fileprivate func setTheme(_ theme: WTheme) {
         customizePagingSelectorControl(theme)
         customizeActionSheet(theme)
         customizeNavigationBar(theme)
@@ -135,32 +135,32 @@ public class WThemeManager: NSObject {
         customizeSwitch(theme)
     }
 
-    private func customizePagingSelectorControl(theme: WTheme) {
+    fileprivate func customizePagingSelectorControl(_ theme: WTheme) {
         WPagingSelectorControl.appearance().backgroundColor = theme.pagingSelectorControlColor
         WSelectionIndicatorView.appearance().backgroundColor = theme.pagingSelectionIndicatorColor
     }
     
-    private func customizeActionSheet(theme: WTheme) {
+    fileprivate func customizeActionSheet(_ theme: WTheme) {
         WSelectBar.appearance().backgroundColor = theme.actionSheetSelectColor
     }
 
-    private func customizeNavigationBar(theme: WTheme) {
+    fileprivate func customizeNavigationBar(_ theme: WTheme) {
         UINavigationBar.appearance().barTintColor = theme.navigationBarColor
         UINavigationBar.appearance().tintColor = theme.navigationTintColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.navigationTextColor]
 
         // Needed for views to not show behind the nav bar
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
     }
     
-    private func customizeToast(theme: WTheme) {
+    fileprivate func customizeToast(_ theme: WTheme) {
         WToastView.appearance().backgroundColor = theme.toastBGColor
     }
     
-    private func customizeSwitch(theme: WTheme) {
+    fileprivate func customizeSwitch(_ theme: WTheme) {
         WSwitchOutlineCircleView.appearance().backgroundColor = theme.switchOutlineColor
         WSwitchBarView.appearance().backgroundColor = theme.switchBarColor
     }
 
-    private func customizeSideMenuVC(theme: WTheme) {}
+    fileprivate func customizeSideMenuVC(_ theme: WTheme) {}
 }

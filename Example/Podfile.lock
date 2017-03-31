@@ -1,13 +1,13 @@
 PODS:
-  - CryptoSwift (0.5.2)
-  - SDWebImage (3.8.0):
-    - SDWebImage/Core (= 3.8.0)
-  - SDWebImage/Core (3.8.0)
-  - SnapKit (0.22.0)
-  - WMobileKit (2.1.6):
-    - CryptoSwift (= 0.5.2)
-    - SDWebImage (= 3.8)
-    - SnapKit (= 0.22.0)
+  - CryptoSwift (0.6.3)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
+  - SnapKit (3.2.0)
+  - WMobileKit (2.1.7):
+    - CryptoSwift (= 0.6.3)
+    - SDWebImage (= 4.0.0)
+    - SnapKit (= 3.2.0)
 
 DEPENDENCIES:
   - WMobileKit (from `../`)
@@ -17,11 +17,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  SDWebImage: 7d9fe229266696de91eadf840c77ca15efd4bbd2
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
-  WMobileKit: 351adf90b6afce59c30eb5a2e079ff27a7bda4f1
+  CryptoSwift: 623f81faf4bc34caf78b792f8625fda9fc309abd
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  WMobileKit: f54b9df8fe0359b82ffa81b127946c2efc6e6280
 
-PODFILE CHECKSUM: 22b307ad95a73c481740aba61043b1ced16873a0
+PODFILE CHECKSUM: fb0ddbcd40ed7b9c9487bbb0e366869765e5df23
 
 COCOAPODS: 1.2.0.beta.1

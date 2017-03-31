@@ -1,26 +1,26 @@
 PODS:
-  - CryptoSwift (0.5.2)
-  - Nimble (4.1.0)
-  - Quick (0.9.3)
-  - SDWebImage (3.8.0):
-    - SDWebImage/Core (= 3.8.0)
-  - SDWebImage/Core (3.8.0)
-  - SnapKit (0.22.0)
+  - CryptoSwift (0.6.3)
+  - Nimble (6.0.1)
+  - Quick (1.1.0)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
+  - SnapKit (3.2.0)
 
 DEPENDENCIES:
-  - CryptoSwift (= 0.5.2)
-  - Nimble (= 4.1.0)
-  - Quick (= 0.9.3)
-  - SDWebImage (= 3.8)
-  - SnapKit (= 0.22.0)
+  - CryptoSwift (= 0.6.3)
+  - Nimble (= 6.0.1)
+  - Quick (= 1.1.0)
+  - SDWebImage (= 4.0.0)
+  - SnapKit (= 3.2.0)
 
 SPEC CHECKSUMS:
-  CryptoSwift: c1ef79f901b86099a6fe8b3c7524cf9f3f3c8c40
-  Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
-  SDWebImage: 7d9fe229266696de91eadf840c77ca15efd4bbd2
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
+  CryptoSwift: 623f81faf4bc34caf78b792f8625fda9fc309abd
+  Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 3f24b841d20e711f46476aa458dbc1b76b8ac021
+PODFILE CHECKSUM: 99ce8942b5fdd2efd6176cf6d0072e2f868e556b
 
 COCOAPODS: 1.2.0.beta.1

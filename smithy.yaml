@@ -14,4 +14,3 @@ artifacts:
 
 test_reports:
   - test-reports/*.xml
-#  - code_coverage/*.html

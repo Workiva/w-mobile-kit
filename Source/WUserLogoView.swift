@@ -21,44 +21,44 @@ import UIKit
 import CryptoSwift
 import SDWebImage
 
-public class WUserLogoView: UIView {
-    public var initialsLimit = 3 {
+open class WUserLogoView: UIView {
+    open var initialsLimit = 3 {
         didSet {
             setupUI()
         }
     }
-    public var initialsLabel = UILabel()
+    open var initialsLabel = UILabel()
     internal var circleLayer = CAShapeLayer()
     internal var profileImageView = UIImageView()
 
-    internal var mappedColor = UIColor.clearColor()
+    internal var mappedColor = UIColor.clear
 
     // Overrides the mapped color
-    public var color: UIColor? {
+    open var color: UIColor? {
         didSet {
             updateMappedColor()
         }
     }
 
-    public var name: String? {
+    open var name: String? {
         didSet {
             initials = name?.initials(initialsLimit)
         }
     }
 
-    public var initials: String? {
+    open var initials: String? {
         didSet {
             setupUI()
         }
     }
 
-    public var lineWidth: CGFloat = 1.0 {
+    open var lineWidth: CGFloat = 1.0 {
         didSet {
             setupUI()
         }
     }
 
-    public override var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             if (!subviews.contains(initialsLabel)) {
                 commonInit()
@@ -68,18 +68,18 @@ public class WUserLogoView: UIView {
         }
     }
 
-    private var image: UIImage? {
+    fileprivate var image: UIImage? {
         didSet {
             setupUIMainThread()
         }
     }
     
-    public var imageURL: String? {
+    open var imageURL: String? {
         didSet {
             if (imageURL != nil) {
                 // Only update when necessary or when the URL has changed
                 if (image == nil || imageURL != oldValue) {
-                    if let checkedUrl = NSURL(string: imageURL!) {
+                    if let checkedUrl = URL(string: imageURL!) {
                         downloadImage(checkedUrl)
                     }
                 }
@@ -102,13 +102,13 @@ public class WUserLogoView: UIView {
     }
 
     public convenience init(name: String) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
 
         self.name = name
     }
 
-    public func commonInit() {
-        opaque = false
+    open func commonInit() {
+        isOpaque = false
 
         addSubview(initialsLabel)
         addSubview(profileImageView)
@@ -116,25 +116,25 @@ public class WUserLogoView: UIView {
         layer.addSublayer(circleLayer)
     }
 
-    private func setupUIMainThread() {
-        dispatch_async(dispatch_get_main_queue()) {
+    fileprivate func setupUIMainThread() {
+        DispatchQueue.main.async {
             self.setupUI()
         }
     }
 
-    public func setupUI() {
-        if (CGRectEqualToRect(frame, CGRectZero)) {
+    open func setupUI() {
+        if (frame.equalTo(CGRect.zero)) {
             return
         }
 
-        initialsLabel.snp_remakeConstraints { (make) in
+        initialsLabel.snp.remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.width.equalTo(self).multipliedBy(0.8)
             make.height.equalTo(self).multipliedBy(0.8)
         }
 
-        profileImageView.snp_remakeConstraints { (make) in
+        profileImageView.snp.remakeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.height.equalTo(self).offset(-2) // Prevents image from bleeding outside circle
@@ -154,43 +154,43 @@ public class WUserLogoView: UIView {
         setupCircle()
     }
 
-    private func setupInitials() {
-        initialsLabel.hidden = false
-        profileImageView.hidden = true
+    fileprivate func setupInitials() {
+        initialsLabel.isHidden = false
+        profileImageView.isHidden = true
 
         let spacing = max(frame.size.width, 30) / 30 - 1
         let attributedString = NSMutableAttributedString(string: initials!)
         attributedString.addAttribute(NSKernAttributeName, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
 
         initialsLabel.attributedText = attributedString
-        initialsLabel.textAlignment = NSTextAlignment.Center
-        initialsLabel.font = UIFont.systemFontOfSize(frame.width / 2.5)
+        initialsLabel.textAlignment = NSTextAlignment.center
+        initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
         initialsLabel.textColor = mappedColor
     }
 
-    private func setupImage() {
+    fileprivate func setupImage() {
         if (image != nil) {
-            initialsLabel.hidden = true
-            profileImageView.hidden = false
+            initialsLabel.isHidden = true
+            profileImageView.isHidden = false
 
             profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
             profileImageView.clipsToBounds = true
-            profileImageView.contentMode = .ScaleAspectFill
+            profileImageView.contentMode = .scaleAspectFill
         }
     }
 
-    private func setupCircle() {
+    fileprivate func setupCircle() {
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
 
-        circleLayer.path = path.CGPath
-        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.path = path.cgPath
+        circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineWidth = lineWidth
-        circleLayer.strokeColor = mappedColor.CGColor
+        circleLayer.strokeColor = mappedColor.cgColor
     }
 
-    private func updateMappedColor() {
+    fileprivate func updateMappedColor() {
         if (image != nil) {
             // Color for when an image is in use
             mappedColor = WUserLogoView.mapImageDataToColor(image)
@@ -207,12 +207,12 @@ public class WUserLogoView: UIView {
             if (initials != "?") {
                 initials = "?"
             }
-            mappedColor = .grayColor()
+            mappedColor = .gray
         }
     }
 
     // Can be overridden for differnt mappings
-    public class func mapNameToColor(name: String) -> UIColor {
+    open class func mapNameToColor(_ name: String) -> UIColor {
         // CRC32 decimal
         let colorMapValue = name.crc32int() % 5
 
@@ -231,18 +231,21 @@ public class WUserLogoView: UIView {
     }
 
     // Can be overridden for differnt mappings
-    public class func mapImageDataToColor(image: UIImage?) -> UIColor {
+    open class func mapImageDataToColor(_ image: UIImage?) -> UIColor {
         return UIColor(hex: 0xE3E3E3) // Gray89
     }
 
-    private func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-            }.resume()
+    fileprivate func getDataFromUrl(_ url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+//        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+//            completion(data, response, error)
+//            }).resume()
+        URLSession.shared.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
+            completion(data, response, error)
+        }.resume()
     }
 
-    private func downloadImage(url: NSURL){
-        profileImageView.sd_setImageWithURL(url, completed: { (image, error, cacheType, url) in
+    fileprivate func downloadImage(_ url: URL){
+        profileImageView.sd_setImage(with: url, completed: { (image, error, cacheType, url) in
             if (error == nil) {
                 self.image = image
             } else {

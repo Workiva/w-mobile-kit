@@ -24,70 +24,70 @@ let KEY_RANGE_LINK = "LinkRange"
 let KEY_RANGE_ADDRESS = "AddressRange"
 
 public protocol WTextViewDelegate: UITextViewDelegate {
-    func textViewShouldReturn(textView: WTextView) -> Bool
+    func textViewShouldReturn(_ textView: WTextView) -> Bool
 }
 
-public class WTextView: UITextView, UITextViewDelegate {
+open class WTextView: UITextView, UITextViewDelegate {
     let leftImageView: UIImageView = UIImageView()
     let placeholderLabel: UILabel = UILabel()
     let testLabel: UILabel = UILabel()
 
-    public weak var wTextViewDelegate: WTextViewDelegate?
+    open weak var wTextViewDelegate: WTextViewDelegate?
 
-    override public var text: String! {
+    override open var text: String! {
         didSet {
             textDidChange()
         }
     }
 
-    override public var attributedText: NSAttributedString! {
+    override open var attributedText: NSAttributedString! {
         didSet {
             textDidChange()
         }
     }
         
-    public var placeholderText: String = "" {
+    open var placeholderText: String = "" {
         didSet {
             placeholderLabel.text = placeholderText
             textDidChange()
         }
     }
     
-    public var placeholderTextColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22) {
+    open var placeholderTextColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22) {
         didSet {
             placeholderLabel.textColor = placeholderTextColor
             textDidChange()
         }
     }
     
-    public var leftImage: UIImage? {
+    open var leftImage: UIImage? {
         didSet {
             leftImageView.image = leftImage
             updateUI()
         }
     }
     
-    override public var font: UIFont? {
+    override open var font: UIFont? {
         didSet {
             placeholderLabel.font = font
             textDidChange()
         }
     }
     
-    override public var textAlignment: NSTextAlignment {
+    override open var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
             textDidChange()
         }
     }
 
-    public var verticalOffsetForLeftImage: CGFloat = 0 {
+    open var verticalOffsetForLeftImage: CGFloat = 0 {
         didSet {
             updateUI()
         }
     }
 
-    public var leftPaddingForLeftImage: CGFloat = 4 {
+    open var leftPaddingForLeftImage: CGFloat = 4 {
         didSet {
             updateUI()
         }
@@ -106,18 +106,18 @@ public class WTextView: UITextView, UITextViewDelegate {
     }
     
     public convenience init(_ text: String) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         
         commonInit()
     }
     
-    public override func didMoveToSuperview() {
+    open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
         updateUI()
     }
 
-    public override func becomeFirstResponder() -> Bool {
+    open override func becomeFirstResponder() -> Bool {
         let returnValue = super.becomeFirstResponder()
 
         updateUI()
@@ -125,14 +125,14 @@ public class WTextView: UITextView, UITextViewDelegate {
         return returnValue
     }
     
-    public func commonInit() {
-        editable = false
-        scrollEnabled = false
+    open func commonInit() {
+        isEditable = false
+        isScrollEnabled = false
         delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(textDidChange),
-                                                         name: UITextViewTextDidChangeNotification,
+                                                         name: NSNotification.Name.UITextViewTextDidChange,
                                                          object: nil)
 
         addSubview(leftImageView)
@@ -146,19 +146,19 @@ public class WTextView: UITextView, UITextViewDelegate {
 
         placeholderLabel.text = placeholderText
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.backgroundColor = UIColor.clearColor()
-        placeholderLabel.hidden = !text.isEmpty
+        placeholderLabel.backgroundColor = UIColor.clear
+        placeholderLabel.isHidden = !text.isEmpty
     }
 
-    @objc private func textDidChange() {
+    @objc fileprivate func textDidChange() {
         updateUI()
     }
     
-    private func updateUI() {
+    fileprivate func updateUI() {
         placeholderLabel.font = font
         placeholderLabel.textColor = placeholderTextColor
         placeholderLabel.textAlignment = textAlignment
-        placeholderLabel.hidden = !text.isEmpty
+        placeholderLabel.isHidden = !text.isEmpty
 
         if (self.superview != nil) {
             let imageWidthHeight = 20
@@ -168,16 +168,16 @@ public class WTextView: UITextView, UITextViewDelegate {
 
             textContainerInset = UIEdgeInsets(top: 8, left: leftInset, bottom: 8, right: 0)
 
-            leftImageView.snp_remakeConstraints() { (make) in
+            leftImageView.snp.remakeConstraints() { (make) in
                 make.centerY.equalTo(self).offset(verticalOffsetForLeftImage)
                 make.left.equalTo(self).offset(leftPaddingForLeftImage)
                 make.width.equalTo(imageWidthHeight)
                 make.height.equalTo(imageWidthHeight)
             }
 
-            placeholderLabel.snp_remakeConstraints() { (make) in
+            placeholderLabel.snp.remakeConstraints() { (make) in
                 make.centerY.equalTo(self).offset(0.5)
-                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priorityHigh()
+                make.width.equalTo(self).offset(-leftPlaceholderOffset - 5).priority(750)
                 make.left.equalTo(self).offset(leftPlaceholderOffset)
                 make.height.equalTo(self)
             }
@@ -186,22 +186,22 @@ public class WTextView: UITextView, UITextViewDelegate {
         }
     }
 
-    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if let delegate = wTextViewDelegate where text == "\n" {
+    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if let delegate = wTextViewDelegate , text == "\n" {
             return delegate.textViewShouldReturn(self)
         }
         return true
     }
         
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: UITextViewTextDidChangeNotification,
-                                                            object: nil)
+        NotificationCenter.default.removeObserver(self,
+            name: NSNotification.Name.UITextViewTextDidChange,
+            object: nil)
     }
 }
 
-public class WMarkdownTextView: WTextView {
-    override public var text: String! {
+open class WMarkdownTextView: WTextView {
+    override open var text: String! {
         didSet {
             textDidChange()
             buildTextView(text)
@@ -209,38 +209,38 @@ public class WMarkdownTextView: WTextView {
     }
     
     public convenience init(_ text: String) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
                 
         commonInit()
         buildTextView(text)
     }
     
-    public func buildTextView(text: String) {
+    open func buildTextView(_ text: String) {
         let attribString = NSMutableAttributedString(string: text)
         
         if let markdownArray = rangeForMarkdownURL(text) {
-            for markdownDict in markdownArray.reverse() {
+            for markdownDict in markdownArray.reversed() {
                 let totalRange = markdownDict[KEY_RANGE_TOTAL]
                 let linkRange = markdownDict[KEY_RANGE_LINK]
                 let addressRange = markdownDict[KEY_RANGE_ADDRESS]
                 
-                let linkString = text.substringWithRange(linkRange!)
-                let addressString = text.substringWithRange(addressRange!)
+                let linkString = text.substring(with: linkRange!)
+                let addressString = text.substring(with: addressRange!)
                 
-                let startIndexDistance = text.startIndex.distanceTo(totalRange!.startIndex)
-                let replaceRange = NSMakeRange(startIndexDistance, text.startIndex.distanceTo(totalRange!.endIndex) - startIndexDistance)
+                let startIndexDistance = text.characters.distance(from: text.startIndex, to: totalRange!.lowerBound)
+                let replaceRange = NSMakeRange(startIndexDistance, text.characters.distance(from: text.startIndex, to: totalRange!.upperBound) - startIndexDistance)
                 
                 let replacedAttribString = NSMutableAttributedString(string: linkString)
                 replacedAttribString.addAttribute(NSLinkAttributeName, value: addressString, range: NSMakeRange(0, linkString.characters.count))
                 
-                attribString.replaceCharactersInRange(replaceRange, withAttributedString: replacedAttribString)
+                attribString.replaceCharacters(in: replaceRange, with: replacedAttribString)
             }
         }
         
         self.attributedText = attribString
     }
     
-    public func rangeForMarkdownURL(text: String) -> Array<Dictionary<String, Range<String.Index>>>? {
+    open func rangeForMarkdownURL(_ text: String) -> Array<Dictionary<String, Range<String.Index>>>? {
         var numOpeningBrackets = 0
         var openBracketPos, closeBracketPos, openParenPos, closeParenPos: Int?
         var foundURLString = false
@@ -257,7 +257,7 @@ public class WMarkdownTextView: WTextView {
         }
         
         // find end of url string
-        for (index, char) in text.characters.enumerate() {
+        for (index, char) in text.characters.enumerated() {
             switch char {
             case "[":
                 if (foundURLString) {
@@ -297,9 +297,9 @@ public class WMarkdownTextView: WTextView {
                 closeParenPos = index
                 
                 // Create ranges of form Range<String.Index>
-                let totalRange = text.startIndex.advancedBy(openBracketPos!)..<text.startIndex.advancedBy(closeParenPos! + 1)
-                let linkRange = text.startIndex.advancedBy(openBracketPos! + 1)..<text.startIndex.advancedBy(closeBracketPos!)
-                let addressRange = text.startIndex.advancedBy(openParenPos! + 1)..<text.startIndex.advancedBy(closeParenPos!)
+                let totalRange = text.characters.index(text.startIndex, offsetBy: openBracketPos!)..<text.characters.index(text.startIndex, offsetBy: closeParenPos! + 1)
+                let linkRange = text.characters.index(text.startIndex, offsetBy: openBracketPos! + 1)..<text.characters.index(text.startIndex, offsetBy: closeBracketPos!)
+                let addressRange = text.characters.index(text.startIndex, offsetBy: openParenPos! + 1)..<text.characters.index(text.startIndex, offsetBy: closeParenPos!)
                 
                 let markdownDict = [KEY_RANGE_TOTAL: totalRange, KEY_RANGE_LINK: linkRange, KEY_RANGE_ADDRESS: addressRange]
                 markdownArray.append(markdownDict)
@@ -321,7 +321,7 @@ public class WMarkdownTextView: WTextView {
         return nil
     }
     
-    public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    open func textView(_ textView: UITextView, shouldInteractWithURL URL: Foundation.URL, inRange characterRange: NSRange) -> Bool {
         return true
     }    
 }

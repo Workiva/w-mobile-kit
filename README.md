@@ -28,6 +28,7 @@ Component | Demo
 <b>WBadge</b><br> Custom number badge that provides the ability to change color, spacing, shape, location, and how the number displays/expands. | <img src="Gifs/WBadge.gif">
 <b>WSpinner</b><br> Custom progress spinner allowing for custom colors, the addition of images.  | <img src="Gifs/WSpinner.gif">
 <b>WUserLogoView</b><br> An image used to represent a user. Can use either a name which is hashed into a color or and image that is cropped to fit the view. | <img src="Gifs/WUserLogoView.gif">
+<b>WAutoLayoutView</b><br> View that automatically adds as many of the provided views as possible to each row as determined by the controller's width and wraps to the next row for any remaining views while adjusting the height to fit the content. | <img src="Gifs/WAutoLayoutView.gif">
 
 ### Modal Components
 Component | Demo

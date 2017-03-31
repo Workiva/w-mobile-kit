@@ -21,18 +21,18 @@ import WMobileKit
 
 let autoCellIdentifier = "autoCompleteCell"
 
-public class AutoCompleteTextViewExampleVC: WSideMenuContentVC {
-    public var searchResults = [String]()
-    public var autoCompleteView = WAutoCompleteTextView()
+open class AutoCompleteTextViewExampleVC: WSideMenuContentVC {
+    open var searchResults = [String]()
+    open var autoCompleteView = WAutoCompleteTextView()
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         // These values are not set by default, must be set for full functionality
         autoCompleteView.controlPrefix = "@"
         autoCompleteView.dataSource = self
         autoCompleteView.delegate = self
-        autoCompleteView.autoCompleteTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: autoCellIdentifier)
+        autoCompleteView.autoCompleteTable.register(UITableViewCell.self, forCellReuseIdentifier: autoCellIdentifier)
         
         // These values have defaults, but are set differently for the example
         autoCompleteView.autoCompleteTable.rowHeight = 40
@@ -50,34 +50,34 @@ public class AutoCompleteTextViewExampleVC: WSideMenuContentVC {
 // MARK: Table View Data Source
 //       Must be implemented for auto completion
 extension AutoCompleteTextViewExampleVC: WAutoCompleteTextViewDataSource {
-    public func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat {
+    public func heightForAutoCompleteTable(_ textView: WAutoCompleteTextView) -> CGFloat {
         return CGFloat(searchResults.count * 40)
     }
     
-    public func didChangeAutoCompletionPrefix(textView: WAutoCompleteTextView, prefix: String, word: String) {
+    public func didChangeAutoCompletionPrefix(_ textView: WAutoCompleteTextView, prefix: String, word: String) {
         searchResults.removeAll()
         
         // For the example, just show options of whatever the user typed with 1-4 appended to end
         for i in 1...4 {
-            searchResults.append(word.stringByAppendingString(String(i)))
+            searchResults.append(word + String(i))
         }
         autoCompleteView.showAutoCompleteTable()
     }
 }
 
 extension AutoCompleteTextViewExampleVC: UITableViewDataSource {
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Auto completion cells show data from search results
-        let cell = tableView.dequeueReusableCellWithIdentifier(autoCellIdentifier)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: autoCellIdentifier)!
         if (indexPath.row < searchResults.count) {
             cell.textLabel?.text = searchResults[indexPath.row]
         }
-        cell.userInteractionEnabled = true
+        cell.isUserInteractionEnabled = true
         
         return cell
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
 }
@@ -85,7 +85,7 @@ extension AutoCompleteTextViewExampleVC: UITableViewDataSource {
 // MARK: Auto Complete Text View Delegate
 //       Must be implemented for auto completion
 extension AutoCompleteTextViewExampleVC: WAutoCompletionTextViewDelegate {
-    public func didSelectAutoCompletion(data: AnyObject) {
+    public func didSelectAutoCompletion(_ data: AnyObject) {
         // Word was chosen, called after word has been replaced
     }
 }

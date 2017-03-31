@@ -30,7 +30,7 @@ class WRadioButtonSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
                 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
                 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -42,18 +42,20 @@ class WRadioButtonSpec: QuickSpec {
             })
 
             let verifyCommonInit = {
-                expect(radioButton.selected) == false
+                expect(radioButton.isSelected) == false
                 expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
                     size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
                 expect(radioButton.radioCircle.clipsToBounds) == true
                 expect(radioButton.indicatorView.clipsToBounds) == true
                 expect(radioButton.groupID) == 0
                 expect(radioButton.buttonID) == 0
-                expect(radioButton.buttonColor) == UIColor.whiteColor()
-                expect(radioButton.highlightColor) == UIColor.grayColor()
-                expect(radioButton.indicatorColor) == UIColor.darkGrayColor()
-                expect(radioButton.borderColorNotSelected) == UIColor.lightGrayColor()
-                expect(radioButton.borderColorSelected) == UIColor.lightGrayColor()
+
+                expect(radioButton.buttonColor) == UIColor.white
+                expect(radioButton.highlightColor) == UIColor.gray
+                expect(radioButton.indicatorColor) == UIColor.darkGray
+                expect(radioButton.borderColorNotSelected) == UIColor.lightGray
+                expect(radioButton.borderColorSelected) == UIColor.lightGray
+
                 expect(radioButton.borderWidth) == 2.0
                 expect(radioButton.buttonRadius) == 12.0
                 expect(radioButton.indicatorRadius) == 6
@@ -69,11 +71,11 @@ class WRadioButtonSpec: QuickSpec {
                     subject.view.addSubview(radioButton)
                     
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WRadioButton")
+                    let locToSave = path.appendingPathComponent("WRadioButton")
                     
                     NSKeyedArchiver.archiveRootObject(radioButton, toFile: locToSave)
                     
-                    let radioButton = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WRadioButton
+                    let radioButton = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WRadioButton
                     
                     expect(radioButton).toNot(equal(nil))
                     
@@ -96,14 +98,14 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton.setupUI()
                     
                     // true init changes
-                    expect(radioButton.selected) == true
+                    expect(radioButton.isSelected) == true
                     expect(radioButton.indicatorView.alpha) == 1.0
                 }
 
                 it("should have correct intrinsic size") {
                     radioButton = WRadioButton()
                     
-                    expect(radioButton.intrinsicContentSize()) == CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2)
+                    expect(radioButton.intrinsicContentSize) == CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2)
                 }
             }
             
@@ -114,32 +116,36 @@ class WRadioButtonSpec: QuickSpec {
 
                     radioButton.groupID = 1
                     radioButton.buttonID = 2
-                    radioButton.buttonColor = UIColor.redColor()
-                    radioButton.highlightColor = UIColor.blueColor()
-                    radioButton.indicatorColor = UIColor.greenColor()
-                    radioButton.borderColorNotSelected = UIColor.purpleColor()
-                    radioButton.borderColorSelected = UIColor.blueColor()
+
+                    radioButton.buttonColor = UIColor.red
+                    radioButton.highlightColor = UIColor.blue
+                    radioButton.indicatorColor = UIColor.green
+                    radioButton.borderColorNotSelected = UIColor.purple
+                    radioButton.borderColorSelected = UIColor.blue
+
                     radioButton.borderWidth = 4
                     radioButton.buttonRadius = 14
                     radioButton.indicatorRadius = 7
                     radioButton.borderWidth = 4
                     radioButton.animationTime = 0.1
-                    radioButton.selected = true
+                    radioButton.isSelected = true
 
                     // settings from commonInit/setupUI
-                    expect(radioButton.selected) == true
+                    expect(radioButton.isSelected) == true
                     expect(radioButton.bounds) == CGRect(origin: radioButton.bounds.origin,
                         size: CGSize(width: radioButton.buttonRadius * 2, height: radioButton.buttonRadius * 2))
                     expect(radioButton.radioCircle.clipsToBounds) == true
                     expect(radioButton.indicatorView.clipsToBounds) == true
                     expect(radioButton.groupID) == 1
                     expect(radioButton.buttonID) == 2
-                    expect(radioButton.buttonColor) == UIColor.redColor()
-                    expect(radioButton.highlightColor) == UIColor.blueColor()
-                    expect(radioButton.indicatorColor) == UIColor.greenColor()
-                    expect(radioButton.borderColorNotSelected) == UIColor.purpleColor()
-                    expect(radioButton.borderColorSelected) == UIColor.blueColor()
-                    expect(radioButton.radioCircle.layer.borderColor) == UIColor.blueColor().CGColor
+
+                    expect(radioButton.buttonColor) == UIColor.red
+                    expect(radioButton.highlightColor) == UIColor.blue
+                    expect(radioButton.indicatorColor) == UIColor.green
+                    expect(radioButton.borderColorNotSelected) == UIColor.purple
+                    expect(radioButton.borderColorSelected) == UIColor.blue
+                    expect(radioButton.radioCircle.layer.borderColor) == UIColor.blue.cgColor
+
                     expect(radioButton.borderWidth) == 4
                     expect(radioButton.buttonRadius) == 14
                     expect(radioButton.indicatorRadius) == 7
@@ -154,11 +160,11 @@ class WRadioButtonSpec: QuickSpec {
                     subject.view.addSubview(radioButton)
 
                     radioButton.animationTime = 0.1
-                    radioButton.selected = true
-                    radioButton.selected = false
-                    radioButton.selected = true
+                    radioButton.isSelected = true
+                    radioButton.isSelected = false
+                    radioButton.isSelected = true
 
-                    expect(radioButton.selected) == true
+                    expect(radioButton.isSelected) == true
                     expect(radioButton.animationTime) == 0.1
                     expect(radioButton.indicatorView.alpha).toEventually(equal(1.0), timeout: 1)
                 }
@@ -192,105 +198,105 @@ class WRadioButtonSpec: QuickSpec {
                     radioButton6.groupID = 3
 
                     // Selected actions
-                    radioButton2.selected = true
-                    radioButton4.selected = true
-                    radioButton5.selected = true
-                    radioButton6.selected = true
+                    radioButton2.isSelected = true
+                    radioButton4.isSelected = true
+                    radioButton5.isSelected = true
+                    radioButton6.isSelected = true
 
-                    expect(radioButton.selected) == false
-                    expect(radioButton2.selected) == false
-                    expect(radioButton3.selected) == false
+                    expect(radioButton.isSelected) == false
+                    expect(radioButton2.isSelected) == false
+                    expect(radioButton3.isSelected) == false
                     // Last button in group to be selected
-                    expect(radioButton4.selected) == true
+                    expect(radioButton4.isSelected) == true
                     // Buttons in separate group should not be deselected
-                    expect(radioButton5.selected) == true
-                    expect(radioButton6.selected) == true
+                    expect(radioButton5.isSelected) == true
+                    expect(radioButton6.isSelected) == true
                 }
 
                 it("should handle button presses on touch began") {
                     radioButton = WRadioButton()
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Began
+                    pressRecognizer.testState = .began
                     radioButton.buttonWasPressed(pressRecognizer)
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
-                    expect(radioButton.selected) == false
+                    expect(radioButton.isSelected) == false
                 }
 
                 it("should handle button presses on touch ended and set selected if currently highlighted") {
                     radioButton = WRadioButton()
 
                     let pressRecognizerStart = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizerStart.testState = .Began
+                    pressRecognizerStart.testState = .began
                     radioButton.buttonWasPressed(pressRecognizerStart)
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     radioButton.buttonWasPressed(pressRecognizer)
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
-                    expect(radioButton.selected) == true
+                    expect(radioButton.isSelected) == true
                 }
 
                 it("should handle button presses on touch ended and not set selected if currently not highlighted") {
                     radioButton = WRadioButton()
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     radioButton.buttonWasPressed(pressRecognizer)
 
                     // Currently not highlighted so not within the threshold
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
-                    expect(radioButton.selected) == false
+                    expect(radioButton.isSelected) == false
                 }
 
                 it("should handle button presses on touch changed when at or below threshold") {
                     radioButton = WRadioButton()
-                    radioButton.center = CGPointMake(radioButton.touchThreshold, 0)
+                    radioButton.center = CGPoint(x: radioButton.touchThreshold, y: 0)
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Changed
+                    pressRecognizer.testState = .changed
                     // LocationInView set to CGPointZero for mock
                     radioButton.buttonWasPressed(pressRecognizer)
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.highlightColor
-                    expect(radioButton.selected) == false
+                    expect(radioButton.isSelected) == false
                 }
 
                 it("should handle button presses on touch changed when over threshold") {
                     radioButton = WRadioButton()
-                    radioButton.center = CGPointMake(radioButton.touchThreshold+1, 0)
+                    radioButton.center = CGPoint(x: radioButton.touchThreshold + 1, y: 0)
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Changed
+                    pressRecognizer.testState = .changed
                     // LocationInView set to CGPointZero for mock
                     radioButton.buttonWasPressed(pressRecognizer)
 
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
-                    expect(radioButton.selected) == false
+                    expect(radioButton.isSelected) == false
                 }
                 
                 it("should not handle button presses on touch when button is not enabled") {
                     radioButton = WRadioButton()
-                    radioButton.enabled = false
+                    radioButton.isEnabled = false
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Began
+                    pressRecognizer.testState = .began
                     radioButton.buttonWasPressed(pressRecognizer)
                     
                     // Should not highlight
                     expect(radioButton.radioCircle.backgroundColor) == radioButton.buttonColor
-                    expect(radioButton.selected) == false
+                    expect(radioButton.isSelected) == false
                 }
 
                 it("should handle button presses on other events") {
                     radioButton = WRadioButton()
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: radioButton, action: nil)
-                    pressRecognizer.testState = .Cancelled
+                    pressRecognizer.testState = .cancelled
                     radioButton.buttonWasPressed(pressRecognizer)
                 }
             }

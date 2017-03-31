@@ -20,24 +20,24 @@ import Foundation
 import UIKit
 import SnapKit
 
-public class WSwitch: UIControl {
-    public var barView = WSwitchBarView()
-    public var backCircle = WSwitchOutlineCircleView()
-    public var frontCircle = UIView()
+open class WSwitch: UIControl {
+    open var barView = WSwitchBarView()
+    open var backCircle = WSwitchOutlineCircleView()
+    open var frontCircle = UIView()
 
-    public var barWidth: CGFloat = 44.0 {
+    open var barWidth: CGFloat = 44.0 {
         didSet {
             setupUI()
         }
     }
 
-    public var barHeight: CGFloat = 12.0 {
+    open var barHeight: CGFloat = 12.0 {
         didSet {
             setupUI()
         }
     }
 
-    public var circleRadius: CGFloat = 10.0 {
+    open var circleRadius: CGFloat = 10.0 {
         didSet {
             setupUI()
         }
@@ -45,23 +45,23 @@ public class WSwitch: UIControl {
 
     /** Controls whether or not the .ValueChanged event is sent. Used when programmatically
      toggling the switch. */
-    private var shouldSendActionEvent = true
+    fileprivate var shouldSendActionEvent = true
 
-    public var on: Bool = false {
+    open var on: Bool = false {
         didSet {
             if (oldValue != on) {
                 setupUI()
                 if (shouldSendActionEvent) {
-                    sendActionsForControlEvents(.ValueChanged)
+                    sendActions(for: .valueChanged)
                 }
             }
         }
     }
 
     /// Threshold for touch up events registering
-    public var touchThreshold: CGFloat = 25.0
+    open var touchThreshold: CGFloat = 25.0
 
-    private var animatedFlag = false
+    fileprivate var animatedFlag = false
     internal var didSlideSwitch = false
     internal var didCommonInit = false
     internal var pressRecognizer: UILongPressGestureRecognizer!
@@ -82,7 +82,7 @@ public class WSwitch: UIControl {
     }
 
     public convenience init(_ on: Bool) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
 
         self.on = on
         setupUI()
@@ -94,14 +94,14 @@ public class WSwitch: UIControl {
         setupUI()
     }
 
-    public func commonInit() {
+    open func commonInit() {
         addSubview(barView)
         barView.alpha = 0.45
 
         addSubview(backCircle)
 
         addSubview(frontCircle)
-        frontCircle.backgroundColor = .whiteColor()
+        frontCircle.backgroundColor = .white
 
         pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(WSwitch.switchWasPressed(_:)))
         pressRecognizer.minimumPressDuration = 0.001
@@ -110,19 +110,19 @@ public class WSwitch: UIControl {
         didCommonInit = true
     }
 
-    public func setupUI() {
+    open func setupUI() {
         if (!didCommonInit) {
             return
         }
 
-        barView.snp_remakeConstraints { make in
+        barView.snp.remakeConstraints { make in
             make.width.equalTo(barWidth)
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.height.equalTo(barHeight)
         }
 
-        backCircle.snp_remakeConstraints { make in
+        backCircle.snp.remakeConstraints { make in
             if (on) {
                 make.right.equalTo(barView)
             } else {
@@ -134,7 +134,7 @@ public class WSwitch: UIControl {
             make.width.equalTo(circleRadius * 2)
         }
 
-        frontCircle.snp_remakeConstraints { make in
+        frontCircle.snp.remakeConstraints { make in
             make.centerX.equalTo(backCircle)
             make.centerY.equalTo(backCircle)
             make.height.equalTo(backCircle).offset(-2)
@@ -147,7 +147,7 @@ public class WSwitch: UIControl {
 
         if (animatedFlag) {
             animatedFlag = false
-            UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState],
+            UIView.animate(withDuration: 0.3, delay: 0, options: .beginFromCurrentState,
                 animations: {
                     self.layoutIfNeeded()
                     startingBlock()
@@ -170,46 +170,46 @@ public class WSwitch: UIControl {
         invalidateIntrinsicContentSize()
     }
 
-    public func setOn(on: Bool, animated: Bool, triggerEvent: Bool = true) {
+    open func setOn(_ on: Bool, animated: Bool, triggerEvent: Bool = true) {
         shouldSendActionEvent = triggerEvent
         animatedFlag = animated
         self.on = on
         shouldSendActionEvent = true
     }
 
-    public func switchWasPressed(sender: UILongPressGestureRecognizer) {
-        if (!enabled) {
+    open func switchWasPressed(_ sender: UILongPressGestureRecognizer) {
+        if (!isEnabled) {
             return
         }
 
         switch sender.state {
-        case .Began:
+        case .began:
             frontCircle.alpha = 0.5
-        case .Changed:
-            let distance: CGFloat = sender.locationInView(superview).distanceToPoint(center)
+        case .changed:
+            let distance: CGFloat = sender.location(in: superview).distanceToPoint(center)
             if distance > touchThreshold {
                 // User has dragged too far. Cancelling touch gesture.
                 sender.cancelGesture()
                 break
             }
 
-            if (sender.locationInView(self).x > ((frame.size.width / 2) + 5) && !on) {
+            if (sender.location(in: self).x > ((frame.size.width / 2) + 5) && !on) {
                 setOn(true, animated: true)
                 didSlideSwitch = true
-            } else if (sender.locationInView(self).x < ((frame.size.width / 2) - 5) && on) {
+            } else if (sender.location(in: self).x < ((frame.size.width / 2) - 5) && on) {
                 setOn(false, animated: true)
                 didSlideSwitch = true
             } else {
                 frontCircle.alpha = 0.5
             }
-        case .Ended:
+        case .ended:
             if (!didSlideSwitch) {
                 setOn(!on, animated: true)
             } else {
                 frontCircle.alpha = on ? 1.0 : 0.0
                 didSlideSwitch = false
             }
-        case .Cancelled, .Failed:
+        case .cancelled, .failed:
             frontCircle.alpha = on ? 1.0 : 0.0
             didSlideSwitch = false
         default:
@@ -218,11 +218,11 @@ public class WSwitch: UIControl {
     }
 
     // Must have a invalidateIntrinsicContentSize() call in setupUI()
-    public override func intrinsicContentSize() -> CGSize {
+    open override var intrinsicContentSize : CGSize {
         return CGSize(width: barWidth, height: max(barHeight, circleRadius * 2))
     }
 }
 
-public class WSwitchOutlineCircleView: UIView { }
+open class WSwitchOutlineCircleView: UIView { }
 
-public class WSwitchBarView: UIView { }
+open class WSwitchBarView: UIView { }

@@ -20,26 +20,26 @@ import UIKit
 import Foundation
 
 public enum SizeType {
-    case iPad, iPhone, Unknown
+    case iPad, iPhone, unknown
 }
 
-public class WSizeVC: UIViewController {
-    public var contentContainerSidePadding: CGFloat = 0
-    public var contentContainerTopPadding: CGFloat = 0
-    public var contentContainerBottomPadding: CGFloat = 0
+open class WSizeVC: UIViewController {
+    open var contentContainerSidePadding: CGFloat = 0
+    open var contentContainerTopPadding: CGFloat = 0
+    open var contentContainerBottomPadding: CGFloat = 0
 
     var _contentContainer = UIView()
     /// Add all content to this view so padding can easily be added.
     /// Needs to be added to the VC in the viewDidLoad()
-    public func sizeContentContainer() -> UIView {
+    open func sizeContentContainer() -> UIView {
         return _contentContainer
     }
 
     /// Must be checked on viewWillAppear() or later for an accurate result
-    public func currentSizeType() -> SizeType {
-        if ((traitCollection.horizontalSizeClass == .Unspecified) || (traitCollection.verticalSizeClass == .Unspecified)) {
-            return .Unknown
-        } else if ((traitCollection.horizontalSizeClass == .Compact) || (traitCollection.verticalSizeClass == .Compact)) {
+    open func currentSizeType() -> SizeType {
+        if ((traitCollection.horizontalSizeClass == .unspecified) || (traitCollection.verticalSizeClass == .unspecified)) {
+            return .unknown
+        } else if ((traitCollection.horizontalSizeClass == .compact) || (traitCollection.verticalSizeClass == .compact)) {
             return .iPhone
         } else {
             return .iPad
@@ -47,7 +47,7 @@ public class WSizeVC: UIViewController {
     }
 
     /// Should be accessed externally through traitCollection.horizontalSizeClass for the latest value
-    var horizontalSizeClass = UIUserInterfaceSizeClass.Unspecified {
+    var horizontalSizeClass = UIUserInterfaceSizeClass.unspecified {
         didSet {
             if oldValue != horizontalSizeClass {
                 horizontalSizeClassChanged(horizontalSizeClass)
@@ -56,7 +56,7 @@ public class WSizeVC: UIViewController {
     }
 
     /// Should be accessed externally through traitCollection.verticalSizeClass for the latest value
-    var verticalSizeClass = UIUserInterfaceSizeClass.Unspecified {
+    var verticalSizeClass = UIUserInterfaceSizeClass.unspecified {
         didSet {
             if oldValue != verticalSizeClass {
                 verticalSizeClassChanged(verticalSizeClass)
@@ -69,29 +69,29 @@ public class WSizeVC: UIViewController {
         verticalSizeClass = traitCollection.verticalSizeClass
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         updateSizes()
     }
 
-    public override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         updateSizes()
     }
 
-    public func horizontalSizeClassChanged(horizontalSizeClass: UIUserInterfaceSizeClass) {}
-    public func verticalSizeClassChanged(verticalSizeClass: UIUserInterfaceSizeClass) {}
+    open func horizontalSizeClassChanged(_ horizontalSizeClass: UIUserInterfaceSizeClass) {}
+    open func verticalSizeClassChanged(_ verticalSizeClass: UIUserInterfaceSizeClass) {}
 
-    public func updateContentContainerPadding() {
+    open func updateContentContainerPadding() {
         if (view.subviews.contains(sizeContentContainer())) {
-            sizeContentContainer().snp_updateConstraints(closure: { (make) in
+            sizeContentContainer().snp.remakeConstraints { (make) in
                 make.left.equalTo(view).offset(contentContainerSidePadding)
                 make.right.equalTo(view).offset(-contentContainerSidePadding)
                 make.top.equalTo(view).offset(contentContainerTopPadding)
                 make.bottom.equalTo(view).offset(-contentContainerBottomPadding)
-            })
+            }
         }
     }
 }

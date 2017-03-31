@@ -30,7 +30,7 @@ class WSwitchSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
                 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
                 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -41,8 +41,8 @@ class WSwitchSpec: QuickSpec {
                 let verifyCommonInit = {
                     expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 1.0
-                    expect(switchControl.frontCircle.hidden) == false
-                    expect(switchControl.frontCircle.backgroundColor) == UIColor.whiteColor()
+                    expect(switchControl.frontCircle.isHidden) == false
+                    expect(switchControl.frontCircle.backgroundColor) == UIColor.white
                 }
 
                 it("should init with coder correctly and verify commonInit") {
@@ -50,11 +50,11 @@ class WSwitchSpec: QuickSpec {
                     subject.view.addSubview(switchControl)
                     
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WSwitch")
+                    let locToSave = path.appendingPathComponent("WSwitch")
                     
                     NSKeyedArchiver.archiveRootObject(switchControl, toFile: locToSave)
                     
-                    let switchControl = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSwitch
+                    let switchControl = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSwitch
                     
                     expect(switchControl).toNot(equal(nil))
                     
@@ -70,7 +70,7 @@ class WSwitchSpec: QuickSpec {
                     // verify UI is setup correctly
                     expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 1.0
-                    expect(switchControl.frontCircle.hidden) == false
+                    expect(switchControl.frontCircle.isHidden) == false
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x + switchControl.barView.frame.size.width - switchControl.backCircle.frame.size.width
                 }
                 
@@ -81,7 +81,7 @@ class WSwitchSpec: QuickSpec {
                     // verify UI is setup correctly
                     expect(switchControl.barView.alpha).to(beCloseTo(0.45, within: 0.1))
                     expect(switchControl.frontCircle.alpha) == 0.0
-                    expect(switchControl.frontCircle.backgroundColor) == UIColor.whiteColor()
+                    expect(switchControl.frontCircle.backgroundColor) == UIColor.white
                     expect(switchControl.backCircle.frame.origin.x) == switchControl.barView.frame.origin.x
                 }
                 
@@ -102,7 +102,7 @@ class WSwitchSpec: QuickSpec {
                 it("should have correct intrinsic size") {
                     switchControl = WSwitch()
                     
-                    expect(switchControl.intrinsicContentSize()) == CGSize(width: switchControl.barWidth, height: switchControl.circleRadius * 2)
+                    expect(switchControl.intrinsicContentSize) == CGSize(width: switchControl.barWidth, height: switchControl.circleRadius * 2)
                 }
                 
                 it("should not crash when trying to setup UI without having commonInit") {
@@ -148,7 +148,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.didSlideSwitch = false
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true
@@ -160,7 +160,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.didSlideSwitch = false
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.on) == false
@@ -172,7 +172,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.setupUI()
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Changed
+                    pressRecognizer.testState = .changed
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == false
@@ -184,8 +184,10 @@ class WSwitchSpec: QuickSpec {
                     switchControl.setupUI()
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Changed
+
+                    pressRecognizer.testState = .changed
                     pressRecognizer.returnPoint = CGPoint(x: switchControl.frame.width, y: 0)
+
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true
@@ -199,7 +201,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.didSlideSwitch = true
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == false
@@ -213,7 +215,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.didSlideSwitch = true
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.on) == true
@@ -223,10 +225,10 @@ class WSwitchSpec: QuickSpec {
                     switchControl = WSwitch()
                     subject.view.addSubview(switchControl)
                     switchControl.setupUI()
-                    switchControl.enabled = false
+                    switchControl.isEnabled = false
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Ended
+                    pressRecognizer.testState = .ended
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true
@@ -236,7 +238,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl = WSwitch()
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Began
+                    pressRecognizer.testState = .began
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.frontCircle.alpha) == 0.5
@@ -245,10 +247,10 @@ class WSwitchSpec: QuickSpec {
                 it("should handle button presses on touch changed when over threshold starting on") {
                     switchControl = WSwitch()
                     switchControl.on = true
-                    switchControl.center = CGPointMake(switchControl.touchThreshold+1, 0)
+                    switchControl.center = CGPoint(x: switchControl.touchThreshold + 1, y: 0)
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Changed
+                    pressRecognizer.testState = .changed
                     // LocationInView set to CGPointZero for mock
                     switchControl.switchWasPressed(pressRecognizer)
 
@@ -260,10 +262,10 @@ class WSwitchSpec: QuickSpec {
                 it("should handle button presses on touch changed when over threshold starting off") {
                     switchControl = WSwitch()
                     switchControl.on = false
-                    switchControl.center = CGPointMake(switchControl.touchThreshold+1, 0)
+                    switchControl.center = CGPoint(x: switchControl.touchThreshold + 1, y: 0)
 
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Changed
+                    pressRecognizer.testState = .changed
                     // LocationInView set to CGPointZero for mock
                     switchControl.switchWasPressed(pressRecognizer)
 
@@ -281,7 +283,7 @@ class WSwitchSpec: QuickSpec {
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
 
                     // Cancelled
-                    pressRecognizer.testState = .Cancelled
+                    pressRecognizer.testState = .cancelled
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.frontCircle.alpha) == 1.0
@@ -289,7 +291,7 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.on) == true
 
                     // Finished
-                    pressRecognizer.testState = .Failed
+                    pressRecognizer.testState = .failed
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.frontCircle.alpha) == 1.0
@@ -306,7 +308,7 @@ class WSwitchSpec: QuickSpec {
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
 
                     // Cancelled
-                    pressRecognizer.testState = .Cancelled
+                    pressRecognizer.testState = .cancelled
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.frontCircle.alpha) == 0.0
@@ -314,7 +316,7 @@ class WSwitchSpec: QuickSpec {
                     expect(switchControl.on) == false
 
                     // Finished
-                    pressRecognizer.testState = .Failed
+                    pressRecognizer.testState = .failed
                     switchControl.switchWasPressed(pressRecognizer)
 
                     expect(switchControl.frontCircle.alpha) == 0.0
@@ -328,7 +330,7 @@ class WSwitchSpec: QuickSpec {
                     switchControl.setupUI()
                     
                     let pressRecognizer = UILongPressGestureRecognizerMock(target: switchControl, action: nil)
-                    pressRecognizer.testState = .Possible
+                    pressRecognizer.testState = .possible
                     switchControl.switchWasPressed(pressRecognizer)
                     
                     expect(switchControl.on) == true

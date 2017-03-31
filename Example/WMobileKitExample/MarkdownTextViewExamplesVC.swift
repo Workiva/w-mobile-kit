@@ -19,16 +19,16 @@
 import Foundation
 import WMobileKit
 
-public class MarkdownTextViewExamplesVC: WSideMenuContentVC {
-    public override func viewDidLoad() {
+open class MarkdownTextViewExamplesVC: WSideMenuContentVC {
+    open override func viewDidLoad() {
         super.viewDidLoad()
                 
         // MARK: Text View with correct Markdown URL
         let correctTextView = WMarkdownTextView("This WMarkdownTextView has a [correct]() Markdown URL")
-        correctTextView.backgroundColor = .clearColor()
-        correctTextView.textAlignment = .Center
+        correctTextView.backgroundColor = .clear
+        correctTextView.textAlignment = .center
         view.addSubview(correctTextView)
-        correctTextView.snp_makeConstraints { (make) in
+        correctTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(20)
             make.width.equalTo(view).multipliedBy(0.8)
@@ -36,59 +36,59 @@ public class MarkdownTextViewExamplesVC: WSideMenuContentVC {
         }
         
         let incorrectTextView = WMarkdownTextView("This WMarkdownTextView has an [incorrect](() Markdown URL")
-        incorrectTextView.textAlignment = .Center
+        incorrectTextView.textAlignment = .center
         view.addSubview(incorrectTextView)
-        incorrectTextView.snp_makeConstraints { (make) in
+        incorrectTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(correctTextView.snp_bottom).offset(20)
+            make.top.equalTo(correctTextView.snp.bottom).offset(20)
             make.width.equalTo(view).multipliedBy(0.8)
             make.height.equalTo(35)
         }
         
         let multipleCorrectTextView = WMarkdownTextView("This WMarkdownTextView has [multiple]() correct [Markdown]() URLs")
-        multipleCorrectTextView.textAlignment = .Center
-        multipleCorrectTextView.backgroundColor = .clearColor()
-        multipleCorrectTextView.linkTextAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                                                      NSForegroundColorAttributeName: UIColor.purpleColor()]
+        multipleCorrectTextView.textAlignment = .center
+        multipleCorrectTextView.backgroundColor = .clear
+        multipleCorrectTextView.linkTextAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                                                      NSForegroundColorAttributeName: UIColor.purple]
         view.addSubview(multipleCorrectTextView)
-        multipleCorrectTextView.snp_makeConstraints { (make) in
+        multipleCorrectTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(incorrectTextView.snp_bottom).offset(20)
+            make.top.equalTo(incorrectTextView.snp.bottom).offset(20)
             make.width.equalTo(view).multipliedBy(0.8)
             make.height.equalTo(35)
         }
         
         let mixedTextView = WMarkdownTextView()
         mixedTextView.text = "This WMarkdownTextView has [some](() [incorrect]]() URLs with [some]() correct [ones]() as well"
-        mixedTextView.textAlignment = .Center
+        mixedTextView.textAlignment = .center
         view.addSubview(mixedTextView)
-        mixedTextView.snp_makeConstraints { (make) in
+        mixedTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(multipleCorrectTextView.snp_bottom).offset(20)
+            make.top.equalTo(multipleCorrectTextView.snp.bottom).offset(20)
             make.width.equalTo(view).multipliedBy(0.8)
             make.height.equalTo(45)
         }
         
         let complexTextView = WMarkdownTextView()
         complexTextView.text = "This WMarkdownTextView has a [co[mpl]ex]   () URL"
-        complexTextView.backgroundColor = .clearColor()
-        complexTextView.textAlignment = .Center
-        complexTextView.linkTextAttributes = [NSForegroundColorAttributeName: UIColor.yellowColor(),
-                                              NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleThick.rawValue]
+        complexTextView.backgroundColor = .clear
+        complexTextView.textAlignment = .center
+        complexTextView.linkTextAttributes = [NSForegroundColorAttributeName: UIColor.yellow,
+                                              NSUnderlineStyleAttributeName: NSUnderlineStyle.styleThick.rawValue]
         view.addSubview(complexTextView)
-        complexTextView.snp_makeConstraints { (make) in
+        complexTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(mixedTextView.snp_bottom).offset(20)
+            make.top.equalTo(mixedTextView.snp.bottom).offset(20)
             make.width.equalTo(view).multipliedBy(0.8)
             make.height.equalTo(35)
         }
         
         let realLinkTextView = WMarkdownTextView("This WMarkdownTextView has a link that will take you directly to [Wdesk.com](https://wdesk.com)")
-        realLinkTextView.textAlignment = .Center
+        realLinkTextView.textAlignment = .center
         view.addSubview(realLinkTextView)
-        realLinkTextView.snp_makeConstraints { (make) in
+        realLinkTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(complexTextView.snp_bottom).offset(20)
+            make.top.equalTo(complexTextView.snp.bottom).offset(20)
             make.width.equalTo(view).multipliedBy(0.6)
             make.height.equalTo(45)
         }

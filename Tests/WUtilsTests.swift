@@ -25,28 +25,28 @@ class WUtilsTests: QuickSpec {
         describe("WUtilsSpec") {
             describe("example views") {
                 it("should generate the correct number of example views") {
-                    expect(WUtils.generateExampleViews(12).count) == 12
+                    expect(WUtils.generateExampleViews(count: 12).count) == 12
                 }
 
                 it("should not generate an invalid number of example views") {
-                    expect(WUtils.generateExampleViews(-9).count) == 0
+                    expect(WUtils.generateExampleViews(count: -9).count) == 0
                 }
 
                 it("should generate a view with a valid min and max") {
-                    let view = WUtils.generateExampleView(10, maxWidthHeight: 40)
+                    let view = WUtils.generateExampleView(minWidthHeight: 10, maxWidthHeight: 40)
                     expect(view.frame.width) >= 10
                     expect(view.frame.height) <= 40
                     expect(view.frame.height) >= 10
                 }
 
                 it("should not generate a view with an invalid min and max") {
-                    let view = WUtils.generateExampleView(-40, maxWidthHeight: -10)
+                    let view = WUtils.generateExampleView(minWidthHeight: -40, maxWidthHeight: -10)
                     expect(view.frame.width) == 0
                     expect(view.frame.height) == 0
                 }
 
                 it("should not generate a view with a min < max") {
-                    let view = WUtils.generateExampleView(40, maxWidthHeight: 10)
+                    let view = WUtils.generateExampleView(minWidthHeight: 40, maxWidthHeight: 10)
                     expect(view.frame.width) == 40
                     expect(view.frame.height) == 40
                 }

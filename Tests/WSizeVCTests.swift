@@ -29,13 +29,13 @@ class WSizeVCSpec: QuickSpec {
             beforeEach({
                 subject = WSizeVC()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
             })
 
             describe("size assumptions") {
                 it("should return unknown if the view is not ready") {
-                    expect(subject.currentSizeType()) == SizeType.Unknown
+                    expect(subject.currentSizeType()) == SizeType.unknown
                 }
 
                 it("should correct type for size assuming not in a split view") {
@@ -45,11 +45,13 @@ class WSizeVCSpec: QuickSpec {
                     subject.beginAppearanceTransition(true, animated: false)
                     subject.endAppearanceTransition()
 
-                    if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+                    if (UIDevice.current.userInterfaceIdiom == .pad) {
                         expect(subject.currentSizeType()) == SizeType.iPad
                     } else {
                         expect(subject.currentSizeType()) == SizeType.iPhone
                     }
+
+                    subject.updateContentContainerPadding()
                 }
             }
         }

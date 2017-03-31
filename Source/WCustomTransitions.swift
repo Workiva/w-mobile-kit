@@ -38,43 +38,43 @@
 
 import UIKit
 
-public class SlideAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
-    public var presenting = true // Presenting or Dismissing (== push or pop)
-    public var transitionDuration = 1.0
+open class SlideAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+    open var presenting = true // Presenting or Dismissing (== push or pop)
+    open var transitionDuration = 1.0
 
-    public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         // If the reference to these views does not exist, we cannot animate a transition.
-        guard let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey),
-            let toView = transitionContext.viewForKey(UITransitionContextToViewKey) else {
+        guard let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from),
+            let toView = transitionContext.view(forKey: UITransitionContextViewKey.to) else {
                 return
         }
 
-        let container = transitionContext.containerView()
+        let container = transitionContext.containerView
 
         // Transforms we will use in the animations.
-        let fromOffScreenOnRight = CGAffineTransformMakeTranslation(container.frame.width, 0)
-        let fromOffScreenOnLeft = CGAffineTransformMakeTranslation(-container.frame.width, 0)
+        let fromOffScreenOnRight = CGAffineTransform(translationX: container.frame.width, y: 0)
+        let fromOffScreenOnLeft = CGAffineTransform(translationX: -container.frame.width, y: 0)
 
         toView.transform = presenting ? fromOffScreenOnRight : fromOffScreenOnLeft
 
         container.addSubview(toView)
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext),
+        UIView.animate(withDuration: self.transitionDuration(using: transitionContext),
             delay: 0.0,
             usingSpringWithDamping: 1,
             initialSpringVelocity: 1,
-            options: .CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: {
                 fromView.transform = self.presenting ? fromOffScreenOnLeft : fromOffScreenOnRight
-                toView.transform = CGAffineTransformIdentity
+                toView.transform = CGAffineTransform.identity
             },
             completion: { finished in
                 transitionContext.completeTransition(true)
-                fromView.transform = CGAffineTransformIdentity
+                fromView.transform = CGAffineTransform.identity
             })
     }
 
-    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return transitionDuration
     }
 }

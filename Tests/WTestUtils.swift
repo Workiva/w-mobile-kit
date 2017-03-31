@@ -20,33 +20,34 @@ import Foundation
 import UIKit
 @testable import WMobileKit
 
-public class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
-    public var testState: UIGestureRecognizerState!
-    public var returnPoint: CGPoint?
+open class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
+    open var testState: UIGestureRecognizerState!
+    open var returnPoint: CGPoint?
 
-    public override var state: UIGestureRecognizerState {
+
+    open override var state: UIGestureRecognizerState {
         return testState
     }
 
-    public override func locationInView(view: UIView?) -> CGPoint {
-        return returnPoint ?? CGPointZero
+    open override func location(in view: UIView?) -> CGPoint {
+        return returnPoint ?? CGPoint.zero
     }
 }
 
-public class UIPanGestureRecognizerMock: UIPanGestureRecognizer {
-    public var testState: UIGestureRecognizerState!
-    public var returnPoint: CGPoint?
-    public var returnVelocity: CGPoint?
+open class UIPanGestureRecognizerMock: UIPanGestureRecognizer {
+    open var testState: UIGestureRecognizerState!
+    open var returnPoint: CGPoint?
+    open var returnVelocity: CGPoint?
 
-    public override var state: UIGestureRecognizerState {
+    open override var state: UIGestureRecognizerState {
         return testState
     }
 
-    public override func locationInView(view: UIView?) -> CGPoint {
-        return returnPoint ?? CGPointZero
+    open override func location(in view: UIView?) -> CGPoint {
+        return returnPoint ?? CGPoint.zero
     }
 
-    public override func velocityInView(view: UIView?) -> CGPoint {
-        return returnVelocity ?? CGPointZero
+    open override func velocity(in view: UIView?) -> CGPoint {
+        return returnVelocity ?? CGPoint.zero
     }
 }

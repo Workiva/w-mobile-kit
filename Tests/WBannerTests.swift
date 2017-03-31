@@ -21,7 +21,7 @@ import Nimble
 @testable import WMobileKit
 
 // Alpha doesn't always return a clean number.
-public func roundAlpha(alpha: CGFloat) -> CGFloat {
+public func roundAlpha(_ alpha: CGFloat) -> CGFloat {
     return CGFloat(round(1000*alpha)/1000)
 }
 
@@ -34,8 +34,8 @@ class WBannerSpec: QuickSpec {
 
             let titleMessage = "title"
             let bodyMessage = "body"
-            let color1 = UIColor.blackColor()
-            let color2 = UIColor.cyanColor()
+            let color1 = UIColor.black
+            let color2 = UIColor.cyan
             let alpha1: CGFloat = 0.2
             let alpha2: CGFloat = 0.9
             var image1: UIImage!
@@ -44,7 +44,7 @@ class WBannerSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 window.addSubview(subject.view)
@@ -52,8 +52,8 @@ class WBannerSpec: QuickSpec {
                 subject.beginAppearanceTransition(true, animated: false)
                 subject.endAppearanceTransition()
 
-                image1 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
-                image2 = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage2", ofType: "png")!)
+                image1 = UIImage(contentsOfFile: Bundle(for: type(of: self)).path(forResource: "testImage1", ofType: "png")!)
+                image2 = UIImage(contentsOfFile: Bundle(for: type(of: self)).path(forResource: "testImage2", ofType: "png")!)
             })
 
             afterEach({
@@ -63,12 +63,12 @@ class WBannerSpec: QuickSpec {
 
             let verifyCommonInit = {
                 expect(bannerView.titleMessageLabel.numberOfLines).to(equal(1))
-                expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                expect(bannerView.titleMessageLabel.font).to(equal(UIFont.boldSystemFontOfSize(15)))
-                expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.whiteColor()))
-                expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.Left))
-                expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFontOfSize(12)))
-                expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.whiteColor()))
+                expect(bannerView.titleMessageLabel.textAlignment).to(equal(NSTextAlignment.left))
+                expect(bannerView.titleMessageLabel.font).to(equal(UIFont.boldSystemFont(ofSize: 15)))
+                expect(bannerView.titleMessageLabel.textColor).to(equal(UIColor.white))
+                expect(bannerView.bodyMessageLabel.textAlignment).to(equal(NSTextAlignment.left))
+                expect(bannerView.bodyMessageLabel.font).to(equal(UIFont.systemFont(ofSize: 12)))
+                expect(bannerView.bodyMessageLabel.textColor).to(equal(UIColor.white))
             }
 
             describe("when app has been init") {
@@ -76,11 +76,11 @@ class WBannerSpec: QuickSpec {
                     bannerView = WBannerView(rootView: subject.view)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WBannerView")
+                    let locToSave = path.appendingPathComponent("WBannerView")
 
                     NSKeyedArchiver.archiveRootObject(bannerView, toFile: locToSave)
 
-                    let bannerView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WBannerView
+                    let bannerView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WBannerView
 
                     expect(bannerView).toNot(equal(nil))
 
@@ -104,14 +104,14 @@ class WBannerSpec: QuickSpec {
                     // public properties
                     expect(bannerView.rootView).to(equal(subject.view))
                     expect(bannerView.showDuration).to(equal(BANNER_DEFAULT_SHOW_DURATION))
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.DismissesAfterTime))
-                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.Bottom))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.dismissesAfterTime))
+                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.bottom))
                     expect(bannerView.animationDuration).to(equal(BANNER_DEFAULT_ANIMATION_DURATION))
                     expect(bannerView.titleMessage).to(equal(""))
                     expect(bannerView.bodyMessage).to(equal(""))
                     expect(bannerView.titleIcon).to(beNil())
                     expect(bannerView.rightIcon).to(beNil())
-                    expect(bannerView.bannerColor).to(equal(UIColor.blackColor()))
+                    expect(bannerView.bannerColor).to(equal(UIColor.black))
                     expect(bannerView.bannerAlpha).to(equal(1.0))
                     expect(bannerView.titleMessageLabel).toNot(beNil())
                     expect(bannerView.bodyMessageLabel).toNot(beNil())
@@ -151,7 +151,7 @@ class WBannerSpec: QuickSpec {
                                              rightIcon: image2,
                                              bannerColor: color1,
                                              bannerAlpha: alpha1)
-                    bannerView.hideOptions = .NeverDismisses
+                    bannerView.hideOptions = .neverDismisses
 
                     // Banner is not displayed
                     expect(bannerView.isVisible()).to(beFalsy())
@@ -172,8 +172,8 @@ class WBannerSpec: QuickSpec {
                     // public properties
                     expect(bannerView.rootView).to(equal(subject.view))
                     expect(bannerView.showDuration).to(equal(BANNER_DEFAULT_SHOW_DURATION))
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.NeverDismisses))
-                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.Bottom))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.neverDismisses))
+                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.bottom))
                     expect(bannerView.animationDuration).to(equal(BANNER_DEFAULT_ANIMATION_DURATION))
                     expect(bannerView.titleMessageLabel).toNot(beNil())
                     expect(bannerView.bodyMessageLabel).toNot(beNil())
@@ -198,7 +198,7 @@ class WBannerSpec: QuickSpec {
                     bannerView.rightIcon = image2
                     bannerView.bannerColor = color2
                     bannerView.bannerAlpha = alpha2
-                    bannerView.hideOptions = .NeverDismisses
+                    bannerView.hideOptions = .neverDismisses
 
                     // Banner is not displayed
                     expect(bannerView.isVisible()).to(beFalsy())
@@ -219,8 +219,8 @@ class WBannerSpec: QuickSpec {
                     // public properties
                     expect(bannerView.rootView).to(equal(subject.view))
                     expect(bannerView.showDuration).to(equal(BANNER_DEFAULT_SHOW_DURATION))
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.NeverDismisses))
-                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.Bottom))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.neverDismisses))
+                    expect(bannerView.placement).to(equal(WBannerPlacementOptions.bottom))
                     expect(bannerView.animationDuration).to(equal(BANNER_DEFAULT_ANIMATION_DURATION))
                     expect(bannerView.titleMessageLabel).toNot(beNil())
                     expect(bannerView.bodyMessageLabel).toNot(beNil())
@@ -238,7 +238,7 @@ class WBannerSpec: QuickSpec {
 
                 it("should use a tap to dismiss banner") {
                     bannerView = WBannerView(rootView: subject.view)
-                    bannerView.hideOptions = WBannerHideOptions.DismissOnTap
+                    bannerView.hideOptions = WBannerHideOptions.dismissOnTap
                     bannerView.showDuration = 0
 
                     // Banner is not displayed
@@ -250,7 +250,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.DismissOnTap))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.dismissOnTap))
 
                     let sender = UITapGestureRecognizer.init()
                     bannerView.bannerWasTapped(sender)
@@ -262,7 +262,7 @@ class WBannerSpec: QuickSpec {
 
                 it("should use a never dismiss banner") {
                     bannerView = WBannerView(rootView: subject.view)
-                    bannerView.hideOptions = WBannerHideOptions.NeverDismisses
+                    bannerView.hideOptions = WBannerHideOptions.neverDismisses
 
                     // Banner is not displayed
                     expect(bannerView.isVisible()).to(beFalsy())
@@ -273,7 +273,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.NeverDismisses))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.neverDismisses))
 
                     let sender = UITapGestureRecognizer.init()
                     bannerView.bannerWasTapped(sender)
@@ -284,7 +284,7 @@ class WBannerSpec: QuickSpec {
 
                 it("should use a dismiss after time banner") {
                     bannerView = WBannerView(rootView: subject.view)
-                    bannerView.hideOptions = WBannerHideOptions.DismissesAfterTime
+                    bannerView.hideOptions = WBannerHideOptions.dismissesAfterTime
                     bannerView.showDuration = 2
 
                     // Banner is not displayed
@@ -296,7 +296,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.DismissesAfterTime))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.dismissesAfterTime))
 
                     let sender = UITapGestureRecognizer.init()
                     bannerView.bannerWasTapped(sender)
@@ -308,8 +308,8 @@ class WBannerSpec: QuickSpec {
 
                 it("should use a dismiss after time banner and tap to dismiss") {
                     bannerView = WBannerView(rootView: subject.view)
-                    bannerView.placement = .Top
-                    bannerView.hideOptions = WBannerHideOptions.DismissesAfterTime
+                    bannerView.placement = .top
+                    bannerView.hideOptions = WBannerHideOptions.dismissesAfterTime
                     bannerView.showDuration = 2
 
                     // Banner is not displayed
@@ -321,7 +321,7 @@ class WBannerSpec: QuickSpec {
                     expect(bannerView.isVisible()).to(beTruthy())
 
                     // custom properties
-                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.DismissesAfterTime))
+                    expect(bannerView.hideOptions).to(equal(WBannerHideOptions.dismissesAfterTime))
 
                     let sender = UITapGestureRecognizer.init()
                     bannerView.bannerWasTapped(sender)

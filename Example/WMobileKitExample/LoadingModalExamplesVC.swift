@@ -19,23 +19,23 @@
 import Foundation
 import WMobileKit
 
-public class LoadingModalExamplesVC: WSideMenuContentVC {
+open class LoadingModalExamplesVC: WSideMenuContentVC {
     let smallFrame = UIView()
     var loadingModal: WLoadingModal? = nil
     var loadingTapRecognizer: UITapGestureRecognizer?
     var smallLoadingTapRecognizer: UITapGestureRecognizer?
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         let loadingModalButton: UIButton = UIButton()
         view.addSubview(loadingModalButton)
-        loadingModalButton.setTitle("Large Loading Modal", forState: .Normal)
-        loadingModalButton.setTitleColor(.whiteColor(), forState: .Normal)
-        loadingModalButton.backgroundColor = .clearColor()
-        loadingModalButton.layer.borderColor = UIColor.whiteColor().CGColor
+        loadingModalButton.setTitle("Large Loading Modal", for: .normal)
+        loadingModalButton.setTitleColor(.white, for: .normal)
+        loadingModalButton.backgroundColor = .clear
+        loadingModalButton.layer.borderColor = UIColor.white.cgColor
         loadingModalButton.layer.cornerRadius = 5
-        loadingModalButton.snp_makeConstraints { (make) in
+        loadingModalButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(10)
             make.width.equalTo(200)
@@ -46,10 +46,10 @@ public class LoadingModalExamplesVC: WSideMenuContentVC {
         loadingTapRecognizer!.numberOfTapsRequired = 1
         loadingModalButton.addGestureRecognizer(loadingTapRecognizer!)
 
-        smallFrame.backgroundColor = .lightGrayColor()
+        smallFrame.backgroundColor = .lightGray
         view.addSubview(smallFrame)
-        smallFrame.snp_makeConstraints { (make) in
-            make.top.equalTo(loadingModalButton.snp_bottom).offset(20)
+        smallFrame.snp.makeConstraints { (make) in
+            make.top.equalTo(loadingModalButton.snp.bottom).offset(20)
             make.right.equalTo(view).offset(-10)
             make.bottom.equalTo(view).offset(-10)
             make.left.equalTo(view).offset(10)
@@ -57,12 +57,12 @@ public class LoadingModalExamplesVC: WSideMenuContentVC {
 
         let smallLoadingModalButton: UIButton = UIButton()
         smallFrame.addSubview(smallLoadingModalButton)
-        smallLoadingModalButton.setTitle("Small Loading Modal", forState: .Normal)
-        smallLoadingModalButton.setTitleColor(.whiteColor(), forState: .Normal)
-        smallLoadingModalButton.backgroundColor = .clearColor()
-        smallLoadingModalButton.layer.borderColor = UIColor.whiteColor().CGColor
+        smallLoadingModalButton.setTitle("Small Loading Modal", for: .normal)
+        smallLoadingModalButton.setTitleColor(.white, for: .normal)
+        smallLoadingModalButton.backgroundColor = .clear
+        smallLoadingModalButton.layer.borderColor = UIColor.white.cgColor
         smallLoadingModalButton.layer.cornerRadius = 5
-        smallLoadingModalButton.snp_makeConstraints { (make) in
+        smallLoadingModalButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(smallFrame)
             make.centerY.equalTo(smallFrame)
             make.width.equalTo(200)
@@ -74,14 +74,14 @@ public class LoadingModalExamplesVC: WSideMenuContentVC {
         smallLoadingModalButton.addGestureRecognizer(smallLoadingTapRecognizer!)
     }
 
-    public func displayLoadingModal(sender: AnyObject?) {
+    open func displayLoadingModal(_ sender: AnyObject?) {
         // One is already shown
         if (loadingModal != nil) {
             return
         }
 
         if let senderButton = sender as? UIGestureRecognizer {
-            loadingModal = WLoadingModal(.grayColor(),
+            loadingModal = WLoadingModal(.gray,
                                          title: "Title Text",
                                          description: "This will go away in 3 seconds.")
 
@@ -93,17 +93,17 @@ public class LoadingModalExamplesVC: WSideMenuContentVC {
                 loadingModal?.addBlurBackground = false
             }
 
-            let timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(LoadingModalExamplesVC.dismissLoadingModal(_:)), userInfo: nil, repeats: true)
-            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            let timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(LoadingModalExamplesVC.dismissLoadingModal(_:)), userInfo: nil, repeats: true)
+            RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
         }
     }
 
-    public func dismissLoadingModal(sender: AnyObject?) {
+    open func dismissLoadingModal(_ sender: AnyObject?) {
         if (loadingModal != nil) {
             loadingModal!.removeFromSuperview()
             loadingModal = nil
             
-            if let timer = sender as? NSTimer {
+            if let timer = sender as? Timer {
                 timer.invalidate()
             }
         }

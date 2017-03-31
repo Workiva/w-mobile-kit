@@ -27,55 +27,55 @@ let TABLE_HEIGHT_MAX: CGFloat = 90
 let TABLE_HEIGHT_ROW: CGFloat = 30
 
 @objc public protocol WAutoCompletionTextViewDelegate: class {
-    optional func didSelectAutoCompletion(data: AnyObject)
+    @objc optional func didSelectAutoCompletion(_ data: AnyObject)
 }
 
 @objc public protocol WAutoCompleteTextViewDataSource: UITableViewDataSource {
-    optional func didChangeAutoCompletionPrefix(textView: WAutoCompleteTextView, prefix: String, word: String)
-    optional func heightForAutoCompleteTable(textView: WAutoCompleteTextView) -> CGFloat
+    @objc optional func didChangeAutoCompletionPrefix(_ textView: WAutoCompleteTextView, prefix: String, word: String)
+    @objc optional func heightForAutoCompleteTable(_ textView: WAutoCompleteTextView) -> CGFloat
 }
 
-public class WAutoCompleteTextView: UIView {
-    private var topLineSeparator = UIView()
-    private var isAutoCompleting = false
-    private var keyboardHeight: CGFloat?
+open class WAutoCompleteTextView: UIView {
+    fileprivate var topLineSeparator = UIView()
+    fileprivate var isAutoCompleting = false
+    fileprivate var keyboardHeight: CGFloat?
     internal var backgroundView = UIView()
     internal var autoCompleteRange: Range<String.Index>?
     internal var currentTableHeight: CGFloat?
 
-    public func isShowingAutoComplete() -> Bool {
+    open func isShowingAutoComplete() -> Bool {
         return isAutoCompleting
     }
-    public var autoCompleteTable = WAutoCompleteTableView()
-    public var textView = WTextView()
-    public var replacesControlPrefix = false
-    public var addSpaceAfterReplacement = true
-    public var numCharactersBeforeAutoComplete = 1
-    public var controlPrefix: String?
-    public var bottomConstraintOffset: CGFloat = 0
+    open var autoCompleteTable = WAutoCompleteTableView()
+    open var textView = WTextView()
+    open var replacesControlPrefix = false
+    open var addSpaceAfterReplacement = true
+    open var numCharactersBeforeAutoComplete = 1
+    open var controlPrefix: String?
+    open var bottomConstraintOffset: CGFloat = 0
 
-    public lazy var submitButton = UIButton()
-    public var hasSubmitButton: Bool = false {
+    open lazy var submitButton = UIButton()
+    open var hasSubmitButton: Bool = false {
         didSet {
-            submitButton.hidden = !hasSubmitButton
+            submitButton.isHidden = !hasSubmitButton
             setupUI()
         }
     }
 
-    public weak var delegate: WAutoCompletionTextViewDelegate?
-    public var dataSource: WAutoCompleteTextViewDataSource? {
+    open weak var delegate: WAutoCompletionTextViewDelegate?
+    open var dataSource: WAutoCompleteTextViewDataSource? {
         didSet {
             autoCompleteTable.dataSource = dataSource
         }
     }
 
-    public var maxAutoCompleteHeight: CGFloat = TABLE_HEIGHT_MAX {
+    open var maxAutoCompleteHeight: CGFloat = TABLE_HEIGHT_MAX {
         didSet {
             setupUI()
         }
     }
 
-    public var rowHeight: CGFloat = TABLE_HEIGHT_ROW {
+    open var rowHeight: CGFloat = TABLE_HEIGHT_ROW {
         didSet {
             autoCompleteTable.rowHeight = rowHeight
             autoCompleteTable.reloadData()
@@ -96,97 +96,97 @@ public class WAutoCompleteTextView: UIView {
     }
 
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
-    public override func didMoveToSuperview() {
+    open override func didMoveToSuperview() {
         super.didMoveToSuperview()
 
         setupUI()
     }
 
-    private func commonInit() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
 
         addSubview(autoCompleteTable)
-        autoCompleteTable.scrollEnabled = true
+        autoCompleteTable.isScrollEnabled = true
         autoCompleteTable.delegate = self
 
         addSubview(backgroundView)
         backgroundView.backgroundColor = UIColor(hex: 0xEEEEEE)
 
         addSubview(textView)
-        textView.backgroundColor = .whiteColor()
-        textView.scrollEnabled = true
+        textView.backgroundColor = .white
+        textView.isScrollEnabled = true
         textView.scrollsToTop = false
-        textView.editable = true
-        textView.userInteractionEnabled = true
-        textView.font = UIFont.systemFontOfSize(15)
+        textView.isEditable = true
+        textView.isUserInteractionEnabled = true
+        textView.font = UIFont.systemFont(ofSize: 15)
         textView.placeholderText = "Type @ to mention someone"
         textView.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
-        textView.textColor = .darkGrayColor()
-        textView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        textView.textColor = .darkGray
+        textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.clipsToBounds = true
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 5.0
         textView.delegate = self
 
         addSubview(topLineSeparator)
-        topLineSeparator.backgroundColor = .lightGrayColor()
+        topLineSeparator.backgroundColor = .lightGray
 
         addSubview(submitButton)
-        submitButton.setTitle("Submit", forState: .Normal)
-        submitButton.setTitleColor(.darkGrayColor(), forState: .Normal)
+        submitButton.setTitle("Submit", for: UIControlState())
+        submitButton.setTitleColor(.darkGray, for: UIControlState())
         submitButton.titleLabel?.numberOfLines = 1
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        submitButton.backgroundColor = .clearColor()
-        submitButton.hidden = true
-        submitButton.enabled = false
+        submitButton.backgroundColor = .clear
+        submitButton.isHidden = true
+        submitButton.isEnabled = false
     }
 
-    public func setupUI() {
+    open func setupUI() {
         if let superview = superview {
-            autoCompleteTable.snp_remakeConstraints { (make) in
+            autoCompleteTable.snp.remakeConstraints { (make) in
                 make.left.equalTo(self)
                 make.right.equalTo(self)
                 make.height.equalTo(0)
                 make.top.equalTo(self)
             }
 
-            topLineSeparator.snp_remakeConstraints { (make) in
+            topLineSeparator.snp.remakeConstraints { (make) in
                 make.left.equalTo(self)
                 make.right.equalTo(self)
-                make.top.equalTo(autoCompleteTable.snp_bottom)
+                make.top.equalTo(autoCompleteTable.snp.bottom)
                 make.height.equalTo(0.5)
             }
 
-            backgroundView.snp_remakeConstraints { (make) in
+            backgroundView.snp.remakeConstraints { (make) in
                 make.left.equalTo(self)
                 make.right.equalTo(self)
-                make.top.equalTo(topLineSeparator.snp_bottom)
+                make.top.equalTo(topLineSeparator.snp.bottom)
                 make.height.equalTo(TEXT_VIEW_HEIGHT)
                 make.bottom.equalTo(self)
             }
 
             if (hasSubmitButton) {
-                submitButton.snp_remakeConstraints { (make) in
+                submitButton.snp.remakeConstraints { (make) in
                     make.top.equalTo(backgroundView).offset(8)
                     make.right.equalTo(backgroundView).offset(-8)
                     make.width.equalTo(SUBMIT_BUTTON_WIDTH)
                     make.bottom.equalTo(backgroundView).offset(-8)
                 }
 
-                textView.snp_remakeConstraints { (make) in
+                textView.snp.remakeConstraints { (make) in
                     make.left.equalTo(backgroundView).offset(8)
-                    make.right.equalTo(submitButton.snp_left).offset(-8)
+                    make.right.equalTo(submitButton.snp.left).offset(-8)
                     make.bottom.equalTo(backgroundView).offset(-8)
                     make.top.equalTo(backgroundView).offset(8)
                 }
             } else {
-                textView.snp_remakeConstraints { (make) in
+                textView.snp.remakeConstraints { (make) in
                     make.left.equalTo(backgroundView).offset(8)
                     make.right.equalTo(backgroundView).offset(-8)
                     make.bottom.equalTo(backgroundView).offset(-8)
@@ -194,7 +194,7 @@ public class WAutoCompleteTextView: UIView {
                 }
             }
 
-            snp_remakeConstraints { (make) in
+            snp.remakeConstraints { (make) in
                 make.left.equalTo(superview)
                 make.right.equalTo(superview)
                 if let keyboardHeight = keyboardHeight {
@@ -206,13 +206,13 @@ public class WAutoCompleteTextView: UIView {
         }
     }
 
-    public func dismiss() {
+    open func dismiss() {
         animateTable(false)
         textView.text = nil
         textView.resignFirstResponder()
     }
 
-    public func showAutoCompleteTable(show: Bool = true) {
+    open func showAutoCompleteTable(_ show: Bool = true) {
         if (show) {
             autoCompleteTable.reloadData()
         }
@@ -220,7 +220,7 @@ public class WAutoCompleteTextView: UIView {
         animateTable(show)
     }
 
-    public func animateTable(animateIn: Bool = true) {
+    open func animateTable(_ animateIn: Bool = true) {
         var height = maxAutoCompleteHeight
         if let dataSourceHeight = dataSource?.heightForAutoCompleteTable?(self) {
             height = min(dataSourceHeight, maxAutoCompleteHeight)
@@ -233,7 +233,7 @@ public class WAutoCompleteTextView: UIView {
 
         isAutoCompleting = animateIn
 
-        autoCompleteTable.snp_updateConstraints { (make) in
+        autoCompleteTable.snp.updateConstraints { (make) in
             if (animateIn) {
                 make.height.equalTo(height)
             } else {
@@ -243,19 +243,19 @@ public class WAutoCompleteTextView: UIView {
 
         updateHeight()
 
-        UIView.animateWithDuration(0.3,
-            animations: {
-                self.superview?.layoutIfNeeded()
-            },
-            completion: { finished in
-                self.autoCompleteTable.hidden = !animateIn
-            }
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.superview?.layoutIfNeeded()
+        },
+                       completion: { finished in
+                        self.autoCompleteTable.isHidden = !animateIn
+        }
         )
     }
 
-    public func adjustForKeyboardHeight(height: CGFloat = 0) {
+    open func adjustForKeyboardHeight(_ height: CGFloat = 0) {
         if let currentSuperview = superview {
-            snp_remakeConstraints { (make) in
+            snp.remakeConstraints { (make) in
                 make.bottom.equalTo(currentSuperview).offset(-height)
                 make.left.equalTo(currentSuperview)
                 make.right.equalTo(currentSuperview)
@@ -266,39 +266,74 @@ public class WAutoCompleteTextView: UIView {
         }
     }
 
-    public func keyboardWillShow(notification: NSNotification) {
+    open func keyboardWillShow(_ notification: Notification) {
         var height: CGFloat = bottomConstraintOffset
-        if let userInfo = notification.userInfo {
+        if let userInfo = (notification as NSNotification).userInfo {
             if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
-                let keyboardFrame = keyboardInfo.CGRectValue()
-                let screenHeight = UIScreen.mainScreen().bounds.height
+                let keyboardFrame = (keyboardInfo as AnyObject).cgRectValue
+                let screenHeight = UIScreen.main.bounds.height
 
-                height = screenHeight - keyboardFrame.origin.y
+                height = screenHeight - (keyboardFrame?.origin.y)!
                 keyboardHeight = height
             }
         }
         adjustForKeyboardHeight(height)
     }
 
-    public func keyboardWillHide(notification: NSNotification) {
+    open func keyboardWillHide(_ notification: Notification) {
         keyboardHeight = nil
         adjustForKeyboardHeight(bottomConstraintOffset)
     }
 
-    public func acceptAutoCompletionWithString(string: String) {
+    open func acceptAutoCompletionWithString(_ string: String) {
         acceptAutoCompletionWithAttributedString(NSAttributedString(string: string))
     }
 
-    public func acceptAutoCompletionWithAttributedString(attributedString: NSAttributedString) {
+    open func acceptAutoCompletionWithAttributedString(_ attributedString: NSAttributedString) {
         var replaceText = attributedString
 
-        if var range = autoCompleteRange {
+        if let range = autoCompleteRange {
             var selection = textView.selectedTextRange
 
-            if (!replacesControlPrefix) {
-                range = range.startIndex.advancedBy(1)..<range.endIndex
+            if (addSpaceAfterReplacement) {
+                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
+                    let attributedSuffix = NSMutableAttributedString(string: " ")
+
+                    attributedSuffix.addAttribute(NSFontAttributeName,
+                                                  value: textView.font!,
+                                                  range: NSRange(location:0,
+                                                                 length:attributedSuffix.length))
+
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                                                  value: textView.textColor!,
+                                                  range: NSRange(location:0,
+                                                                 length:attributedSuffix.length))
+
+                    mutableCopy.append(attributedSuffix)
+
+                    replaceText = mutableCopy
+                }
             }
 
+            if let currentText = textView.text {
+                let location = currentText.distance(from: currentText.startIndex, to: range.lowerBound)
+                let length = currentText.distance(from: range.lowerBound, to: range.upperBound)
+                let ns = NSMakeRange(location, length)
+
+                if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
+                    mutableCopy.replaceCharacters(in: ns, with: replaceText)
+
+                    textView.attributedText = mutableCopy
+
+                    let autoCompleteOffset = textView.text!.characters.distance(from: textView.text!.startIndex, to: range.lowerBound) + 1
+
+                    if let newSelectPos = textView.position(from: textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.length) {
+                        selection = textView.textRange(from: newSelectPos, to: newSelectPos)
+                        textView.selectedTextRange = selection
+                    }
+                }
+            }
+        } else {
             if (addSpaceAfterReplacement) {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
@@ -306,154 +341,124 @@ public class WAutoCompleteTextView: UIView {
                     attributedSuffix.addAttribute(NSFontAttributeName,
                         value: textView.font!,
                         range: NSRange(location:0,
-                                length:attributedSuffix.length))
+                            length:attributedSuffix.length))
 
                     attributedSuffix.addAttribute(NSForegroundColorAttributeName,
                         value: textView.textColor!,
                         range: NSRange(location:0,
-                                length:attributedSuffix.length))
+                            length:attributedSuffix.length))
 
-                    mutableCopy.appendAttributedString(attributedSuffix)
+                    mutableCopy.append(attributedSuffix)
+
                     replaceText = mutableCopy
                 }
             }
 
-            let currentText = textView.text
-
-            let location = currentText.startIndex.distanceTo(range.startIndex)
-            let length = range.startIndex.distanceTo(range.endIndex)
-            let ns = NSMakeRange(location, length)
-
             if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
-                mutableCopy.replaceCharactersInRange(ns, withAttributedString: replaceText)
-
-                textView.attributedText = mutableCopy
-
-                let autoCompleteOffset = textView.text!.startIndex.distanceTo(range.startIndex) + 1
-
-                if let newSelectPos = textView.positionFromPosition(textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.length) {
-                    selection = textView.textRangeFromPosition(newSelectPos, toPosition: newSelectPos)
-                    textView.selectedTextRange = selection
-                }
-            }
-
-        } else {
-            if (addSpaceAfterReplacement) {
-                if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
-                    mutableCopy.appendAttributedString(NSAttributedString(string: " "))
-                    replaceText = mutableCopy
-                }
-            }
-            
-            if let mutableCopy = textView.attributedText.mutableCopy() as? NSMutableAttributedString {
-                mutableCopy.appendAttributedString(replaceText)
+                mutableCopy.append(replaceText)
                 textView.attributedText = mutableCopy
             }
         }
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
 extension WAutoCompleteTextView: UITableViewDelegate {
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
             acceptAutoCompletionWithString(cell.textLabel!.text!)
-            delegate?.didSelectAutoCompletion?(cell.textLabel!.text!)
+            delegate?.didSelectAutoCompletion?(cell.textLabel!.text! as AnyObject)
         }
 
         showAutoCompleteTable(false)
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension WAutoCompleteTextView: UITextViewDelegate {
-    public func textViewDidChange(textView: UITextView) {
+    open func textViewDidChange(_ textView: UITextView) {
         processWordAtCursor(textView)
 
         updateHeight()
 
         if (hasSubmitButton) {
-            let trimmedString = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            submitButton.enabled = trimmedString.characters.count > 0
+            let trimmedString = textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            submitButton.isEnabled = trimmedString.characters.count > 0
         }
     }
 
-    public func textViewDidEndEditing(textView: UITextView) {
+    open func textViewDidEndEditing(_ textView: UITextView) {
         showAutoCompleteTable(false)
     }
 
-    private func updateHeight() {
+    fileprivate func updateHeight() {
         if (superview != nil) {
             if (textView.contentSize.height > 0) {
                 var height = min(textView.contentSize.height, MAX_TEXT_VIEW_HEIGHT)
                 height = max(height, TEXT_VIEW_HEIGHT)
 
-                backgroundView.snp_updateConstraints { (make) in
+                backgroundView.snp.updateConstraints { (make) in
                     make.height.equalTo(height)
                 }
 
-                UIView.animateWithDuration(0.2,
-                    animations: {
-                        self.superview?.layoutIfNeeded()
-                    },
-                    completion: nil)
+                UIView.animate(withDuration: 0.2,
+                               animations: {
+                                self.superview?.layoutIfNeeded()
+                },
+                               completion: nil)
             }
         }
     }
 
-    public func wordRangeAtCursor(textView: UITextView) -> Range<String.Index>? {
-        if (textView.text!.characters.count <= 0) {
-            return nil
-        }
+    open func wordRangeAtCursor(_ textView: UITextView) -> Range<String.Index>? {
+        var wordRange: Range<String.Index>?
 
-        if let range = textView.selectedTextRange {
-            let firstPos = min(textView.offsetFromPosition(textView.beginningOfDocument, toPosition: range.start), textView.text!.characters.count)
-            let firstIndex = textView.text!.characters.startIndex.advancedBy(firstPos)
+        if let text = textView.text, text.characters.count > 0, let selectedRange = textView.selectedTextRange {
+            let cursorPosition = min(textView.offset(from: textView.beginningOfDocument, to: selectedRange.start), text.characters.count)
+            let cursorIndex = text.index(text.startIndex, offsetBy: cursorPosition)
 
-            let leftPortion = textView.text?.substringToIndex(firstIndex)
-            let leftComponents = leftPortion?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            let leftWordPart = leftComponents?.last
+            let leftOfCursorString = text.substring(to: cursorIndex)
+            let leftComponents = leftOfCursorString.components(separatedBy: .whitespacesAndNewlines)
+            let leftWordPart = leftComponents.last
 
-            let rightPortion = textView.text?.substringFromIndex(firstIndex)
-            let rightComponents = rightPortion?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            let rightWordPart = rightComponents?.first
+            let rightOfCursorString = text.substring(from: cursorIndex)
+            let rightComponents = rightOfCursorString.components(separatedBy: .whitespacesAndNewlines)
+            let rightWordPart = rightComponents.first
 
             if (leftWordPart?.characters.count == 0 && rightWordPart?.characters.count == 0) {
                 return nil
             }
 
-            if (firstPos > 0) {
-                let charBeforeCursor = textView.text?.substringWithRange(textView.text!.startIndex.advancedBy(firstPos - 1)..<textView.text!.startIndex.advancedBy(firstPos))
-                let whitespaceRange = charBeforeCursor?.rangeOfCharacterFromSet(NSCharacterSet.whitespaceCharacterSet())
+            let leftOffset = -1 * (leftWordPart?.characters.count ?? 0)
+            let rightOffset = rightWordPart?.characters.count ?? 0
 
-                if (whitespaceRange?.count == 1) {
-                    return firstIndex.advancedBy(-leftWordPart!.characters.count)..<firstIndex.advancedBy(rightWordPart!.characters.count)
-                }
-            }
-
-            return firstIndex.advancedBy(-leftWordPart!.characters.count)..<firstIndex.advancedBy(rightWordPart!.characters.count)
+            wordRange = text.index(cursorIndex, offsetBy: leftOffset)..<text.index(cursorIndex, offsetBy: rightOffset)
         }
-        return nil
+
+        return wordRange
     }
 
-    public func processWordAtCursor(textView: UITextView) {
+    open func processWordAtCursor(_ textView: UITextView) {
         if let text = textView.text {
             if let range = wordRangeAtCursor(textView) {
-                if let word = textView.text?.substringWithRange(range) {
+                if let word = textView.text?.substring(with: range) {
                     if let prefix = controlPrefix {
                         if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
-                            let offset = text.startIndex.distanceTo(range.startIndex)
-                            let pos = textView.positionFromPosition(textView.beginningOfDocument, offset: offset)
-                            let wordWithoutPrefix = word.substringFromIndex(word.startIndex.advancedBy(prefix.characters.count))
-                            if (textView.offsetFromPosition(textView.selectedTextRange!.start, toPosition: pos!) != 0) {
-                                autoCompleteRange = range
+                            let offset = text.characters.distance(from: text.startIndex, to: range.lowerBound)
+                            let pos = textView.position(from: textView.beginningOfDocument, offset: offset)
+                            let wordWithoutPrefix = word.substring(from: word.characters.index(word.startIndex, offsetBy: prefix.characters.count))
+                            if (textView.offset(from: textView.selectedTextRange!.start, to: pos!) != 0) {
+                                if (!replacesControlPrefix) {
+                                    autoCompleteRange = text.index(range.lowerBound, offsetBy: 1)..<range.upperBound
+                                } else {
+                                    autoCompleteRange = range
+                                }
 
                                 dataSource?.didChangeAutoCompletionPrefix?(self, prefix: prefix, word: wordWithoutPrefix)
-
                                 return
                             }
                         }
@@ -467,27 +472,27 @@ extension WAutoCompleteTextView: UITextViewDelegate {
         }
     }
 
-    public func textViewDidChangeSelection(textView: UITextView) {
+    open func textViewDidChangeSelection(_ textView: UITextView) {
         processWordAtCursor(textView)
     }
-
-    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if let delegate = (textView as? WTextView)?.wTextViewDelegate where text == "\n" {
+    
+    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if let delegate = (textView as? WTextView)?.wTextViewDelegate , text == "\n" {
             return delegate.textViewShouldReturn(textView as! WTextView)
         }
         return true
     }
 }
 
-public class WAutoCompleteTableView: UITableView {
+open class WAutoCompleteTableView: UITableView {
     public convenience init() {
-        self.init(frame: CGRectZero, style: .Plain)
+        self.init(frame: CGRect.zero, style: .plain)
         
         allowsSelection = true
         allowsSelectionDuringEditing = true
-        userInteractionEnabled = true
-        scrollEnabled = true
+        isUserInteractionEnabled = true
+        isScrollEnabled = true
         layer.borderWidth = 0.5
-        layer.borderColor = UIColor.lightGrayColor().CGColor
+        layer.borderColor = UIColor.lightGray.cgColor
     }
 }

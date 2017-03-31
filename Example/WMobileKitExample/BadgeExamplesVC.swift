@@ -19,37 +19,37 @@
 import Foundation
 import WMobileKit
 
-public class BadgeExamplesVC: WSideMenuContentVC {
+open class BadgeExamplesVC: WSideMenuContentVC {
     @IBOutlet var storyboardAutoHideBadge: WBadge!
     @IBOutlet var storyboardBadge: WBadge!
     @IBOutlet var storyboardLocationBadge: WBadge!
 
-    @IBAction func valueChanged(sender: UIStepper) {
+    @IBAction func valueChanged(_ sender: UIStepper) {
         storyboardAutoHideBadge.count = Int(sender.value)
         storyboardBadge.count = Int(sender.value)
         storyboardLocationBadge.count = Int(sender.value)
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // Storyboard
-        storyboardAutoHideBadge.verticalAlignment = .Center
-        storyboardAutoHideBadge.horizontalAlignment = .Center
+        storyboardAutoHideBadge.verticalAlignment = .center
+        storyboardAutoHideBadge.horizontalAlignment = .center
 
         storyboardBadge.automaticallyHide = false
-        storyboardBadge.verticalAlignment = .Center
-        storyboardBadge.horizontalAlignment = .Center
+        storyboardBadge.verticalAlignment = .center
+        storyboardBadge.horizontalAlignment = .center
 
-        storyboardLocationBadge.verticalAlignment = .Bottom
-        storyboardLocationBadge.horizontalAlignment = .Left
+        storyboardLocationBadge.verticalAlignment = .bottom
+        storyboardLocationBadge.horizontalAlignment = .left
         storyboardLocationBadge.showValue = false
 
         // Defaults
         let badge1 = WBadge()
         badge1.count = 1
         view.addSubview(badge1)
-        badge1.snp_makeConstraints { (make) in
+        badge1.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-60)
             make.top.equalTo(view).offset(200)
         }
@@ -58,116 +58,116 @@ public class BadgeExamplesVC: WSideMenuContentVC {
         label1.text = "Default:"
         label1.sizeToFit()
         view.addSubview(label1)
-        label1.snp_makeConstraints { (make) in
-            make.right.equalTo(badge1.snp_left).offset(-4)
-            make.top.equalTo(badge1.snp_top).offset(-2)
+        label1.snp.makeConstraints { (make) in
+            make.right.equalTo(badge1.snp.left).offset(-4)
+            make.top.equalTo(badge1.snp.top).offset(-2)
         }
 
         let badge2 = WBadge()
         view.addSubview(badge2)
-        badge2.snp_makeConstraints { (make) in
-            make.left.equalTo(badge1.snp_right).offset(4)
-            make.top.equalTo(badge1.snp_top)
+        badge2.snp.makeConstraints { (make) in
+            make.left.equalTo(badge1.snp.right).offset(4)
+            make.top.equalTo(badge1.snp.top)
         }
         badge2.count = 67
 
         let badge3 = WBadge(111)
         view.addSubview(badge3)
-        badge3.snp_makeConstraints { (make) in
-            make.left.equalTo(badge2.snp_right).offset(4)
-            make.top.equalTo(badge2.snp_top)
+        badge3.snp.makeConstraints { (make) in
+            make.left.equalTo(badge2.snp.right).offset(4)
+            make.top.equalTo(badge2.snp.top)
         }
 
         let badge4 = WBadge(576937839)
         view.addSubview(badge4)
-        badge4.snp_makeConstraints { (make) in
-            make.left.equalTo(badge3.snp_right).offset(4)
-            make.top.equalTo(badge3.snp_top)
+        badge4.snp.makeConstraints { (make) in
+            make.left.equalTo(badge3.snp.right).offset(4)
+            make.top.equalTo(badge3.snp.top)
         }
 
         // Will be hidden since < 1
         let badge5 = WBadge(-9)
         view.addSubview(badge5)
-        badge5.snp_makeConstraints { (make) in
-            make.left.equalTo(badge4.snp_right).offset(4)
-            make.top.equalTo(badge4.snp_top)
+        badge5.snp.makeConstraints { (make) in
+            make.left.equalTo(badge4.snp.right).offset(4)
+            make.top.equalTo(badge4.snp.top)
         }
 
         // Custom
         let badge6 = WBadge()
         badge6.count = 1
-        badge6.badgeColor = .redColor()
-        badge6.countColor = .yellowColor()
+        badge6.badgeColor = .red
+        badge6.countColor = .yellow
         badge6.widthPadding = 10.0
         badge6.heightPadding = 5.0
         badge6.fontSize = 11.0
         badge6.cornerRadius = 17.0
         view.addSubview(badge6)
-        badge6.snp_makeConstraints { (make) in
+        badge6.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-60)
-            make.top.equalTo(badge1.snp_bottom).offset(20)
+            make.top.equalTo(badge1.snp.bottom).offset(20)
         }
 
         let label2 = UILabel()
         label2.text = "Custom:"
         label2.sizeToFit()
         view.addSubview(label2)
-        label2.snp_makeConstraints { (make) in
-            make.right.equalTo(badge6.snp_left).offset(-4)
-            make.centerY.equalTo(badge6.snp_centerY)
+        label2.snp.makeConstraints { (make) in
+            make.right.equalTo(badge6.snp.left).offset(-4)
+            make.centerY.equalTo(badge6.snp.centerY)
         }
 
         let badge7 = WBadge(67)
-        badge7.badgeColor = .greenColor()
-        badge7.countColor = .lightGrayColor()
+        badge7.badgeColor = .green
+        badge7.countColor = .lightGray
         badge7.widthPadding = 10.0
         badge7.heightPadding = 10.0
         badge7.fontSize = 15.0
         badge7.cornerRadius = 15.0
         view.addSubview(badge7)
-        badge7.snp_makeConstraints { (make) in
-            make.left.equalTo(badge6.snp_right).offset(4)
-            make.centerY.equalTo(badge6.snp_centerY)
+        badge7.snp.makeConstraints { (make) in
+            make.left.equalTo(badge6.snp.right).offset(4)
+            make.centerY.equalTo(badge6.snp.centerY)
         }
 
         let badge8 = WBadge(111)
-        badge8.badgeColor = .yellowColor()
-        badge8.countColor = .blackColor()
+        badge8.badgeColor = .yellow
+        badge8.countColor = .black
         badge8.widthPadding = 0
         badge8.heightPadding = 0
         badge8.fontSize = 10.0
         badge8.cornerRadius = 0
         view.addSubview(badge8)
-        badge8.snp_makeConstraints { (make) in
-            make.left.equalTo(badge7.snp_right).offset(4)
-            make.centerY.equalTo(badge6.snp_centerY)
+        badge8.snp.makeConstraints { (make) in
+            make.left.equalTo(badge7.snp.right).offset(4)
+            make.centerY.equalTo(badge6.snp.centerY)
         }
 
         let badge9 = WBadge(576937839)
-        badge9.badgeColor = .cyanColor()
-        badge9.countColor = .purpleColor()
+        badge9.badgeColor = .cyan
+        badge9.countColor = .purple
         badge9.widthPadding = 20
         badge9.heightPadding = 0
         badge9.fontSize = 8.0
         badge9.cornerRadius = 20
         view.addSubview(badge9)
-        badge9.snp_makeConstraints { (make) in
-            make.left.equalTo(badge8.snp_right).offset(4)
-            make.centerY.equalTo(badge6.snp_centerY)
+        badge9.snp.makeConstraints { (make) in
+            make.left.equalTo(badge8.snp.right).offset(4)
+            make.centerY.equalTo(badge6.snp.centerY)
         }
 
         let badge10 = WBadge(-9)
-        badge10.badgeColor = .blackColor()
-        badge10.countColor = .cyanColor()
+        badge10.badgeColor = .black
+        badge10.countColor = .cyan
         badge10.widthPadding = 0
         badge10.heightPadding = 20
         badge10.fontSize = 12.0
         badge10.cornerRadius = 20
         badge10.automaticallyHide = false
         view.addSubview(badge10)
-        badge10.snp_makeConstraints { (make) in
-            make.left.equalTo(badge9.snp_right).offset(4)
-            make.centerY.equalTo(badge6.snp_centerY)
+        badge10.snp.makeConstraints { (make) in
+            make.left.equalTo(badge9.snp.right).offset(4)
+            make.centerY.equalTo(badge6.snp.centerY)
         }
         
         view.layoutIfNeeded()

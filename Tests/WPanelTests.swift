@@ -1,3 +1,4 @@
+
 //
 //  WPanelTests.swift
 //  WMobileKit
@@ -39,11 +40,11 @@ class WPanelSpec: QuickSpec {
                 vc2 = WSideMenuContentVC()
                 vc3 = WSideMenuContentVC()
 
-                vc1!.view.backgroundColor = .greenColor()
-                vc2!.view.backgroundColor = .blueColor()
-                vc3!.view.backgroundColor = .redColor()
+                vc1!.view.backgroundColor = .green
+                vc2!.view.backgroundColor = .blue
+                vc3!.view.backgroundColor = .red
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -56,63 +57,63 @@ class WPanelSpec: QuickSpec {
 
             describe("when app has been init") {
                 it("should setup UI correctly") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    expect(subject.floatingButton.hidden) == false
-                    expect(subject.panInterceptView.hidden) == true
+                    expect(subject.floatingButton.isHidden) == false
+                    expect(subject.panInterceptView.isHidden) == true
                     expect(subject.panelView.frame.height) == subject.cornerRadius
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height
                 }
 
                 it("should move panel up based on ratio and hide floating button") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
                     let middleSnapRatio = subject.snapHeights[1]
                     let snapOffset = subject.view.frame.height * (1 - middleSnapRatio)
 
-                    subject.movePanelToSnapRatio(middleSnapRatio, animated: false)
+                    subject.movePanelToSnapRatio(ratio: middleSnapRatio, animated: false)
 
                     expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.25))
-                    expect(subject.floatingButton.hidden) == true
-                    expect(subject.panInterceptView.hidden) == false
+                    expect(subject.floatingButton.isHidden) == true
+                    expect(subject.panInterceptView.isHidden) == false
                 }
 
                 it("should panel up based on offset value and hide floating button") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.movePanelToValue(100, animated: false)
+                    subject.movePanelToValue(value: 100, animated: false)
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
-                    expect(subject.floatingButton.hidden) == true
-                    expect(subject.panInterceptView.hidden) == false
+                    expect(subject.floatingButton.isHidden) == true
+                    expect(subject.panInterceptView.isHidden) == false
                 }
 
                 it("should reveal floating button when panel is moved to 0") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.movePanelToValue(100, animated: false)
-                    subject.movePanelToValue(0, animated: false)
+                    subject.movePanelToValue(value: 100, animated: false)
+                    subject.movePanelToValue(value: 0, animated: false)
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height
-                    expect(subject.floatingButton.hidden) == false
-                    expect(subject.panInterceptView.hidden) == true
+                    expect(subject.floatingButton.isHidden) == false
+                    expect(subject.panInterceptView.isHidden) == true
                 }
 
                 it("should reveal vertical panel when pressing floating button") {
-                    subject.widthCapForSidePanel = CGFloat.max
-                    subject.floatingButtonWasPressed(subject.floatingButton)
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
+                    subject.floatingButtonWasPressed(sender: subject.floatingButton)
 
-                    expect(subject.floatingButton.hidden) == true
-                    expect(subject.panInterceptView.hidden) == false
+                    expect(subject.floatingButton.isHidden) == true
+                    expect(subject.panInterceptView.isHidden) == false
                     expect(subject.panelView.frame.origin.y).to(beCloseTo(subject.view.frame.height * (1 - subject.snapHeights[1]), within: 0.25))
                 }
 
                 it("should reveal side panel when pressing floating button") {
-                    subject.widthCapForSidePanel = CGFloat.min
-                    subject.floatingButtonWasPressed(subject.floatingButton)
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
+                    subject.floatingButtonWasPressed(sender: subject.floatingButton)
 
-                    expect(subject.floatingButton.hidden) == true
-                    expect(subject.panInterceptView.hidden) == false
+                    expect(subject.floatingButton.isHidden) == true
+                    expect(subject.panInterceptView.isHidden) == false
                     expect(subject.panelView.frame.origin.x) == subject.view.frame.width - subject.sidePanelWidth
                 }
 
@@ -121,24 +122,24 @@ class WPanelSpec: QuickSpec {
 
                     expect(subject.getLargestSnapRatio()) == 1.0
                     expect(subject.getSmallestSnapRatio()) == 0.0
-                    expect(subject.getNextSnapRatio(0.2)) == 0.4
-                    expect(subject.getNextSnapRatio(1.0)).to(beNil())
-                    expect(subject.getPreviousSnapRatio(1.0)) == 0.4
-                    expect(subject.getPreviousSnapRatio(0)).to(beNil())
+                    expect(subject.getNextSnapRatio(fromRatio: 0.2)) == 0.4
+                    expect(subject.getNextSnapRatio(fromRatio: 1.0)).to(beNil())
+                    expect(subject.getPreviousSnapRatio(fromRatio: 1.0)) == 0.4
+                    expect(subject.getPreviousSnapRatio(fromRatio: 0)).to(beNil())
                 }
             }
 
             describe("property setters") {
                 it("should change sidePanel property when changing width cap") {
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
                     expect(subject.sidePanel) == true
 
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
                     expect(subject.sidePanel) == false
                 }
 
                 it("should change if panel covers content by changing cap") {
-                    subject.sidePanelCoversContentUpToWidth = CGFloat.max
+                    subject.sidePanelCoversContentUpToWidth = CGFloat.greatestFiniteMagnitude
                     expect(subject.sidePanelCoversContent) == true
 
                     subject.sidePanelCoversContentUpToWidth = 100
@@ -146,8 +147,8 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("shoud widen side panel when increasing width property") {
-                    subject.widthCapForSidePanel = CGFloat.min
-                    subject.movePanelToSnapRatio(0.4, animated: false)
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
+                    subject.movePanelToSnapRatio(ratio: 0.4, animated: false)
 
                     subject.sidePanelWidth = 300
                     expect(subject.panelView.frame.width) == 300
@@ -158,10 +159,10 @@ class WPanelSpec: QuickSpec {
 
                 it("should change border properties on panel view when modified on vc") {
                     expect(subject.panelView.layer.borderWidth) == 0.5
-                    expect(subject.panelView.layer.borderColor) == UIColor.lightGrayColor().CGColor
+                    expect(subject.panelView.layer.borderColor) == UIColor.lightGray.cgColor
 
                     let newWidth: CGFloat = 5
-                    let newColor = UIColor.purpleColor().CGColor
+                    let newColor = UIColor.purple.cgColor
 
                     subject.outlineWidth = newWidth
                     subject.outlineColor = newColor
@@ -171,7 +172,7 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should modify cornerRadius and frame when changing property") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
                     let newRadius: CGFloat = 10
                     subject.cornerRadius = newRadius
@@ -181,13 +182,13 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should show paging control if set to always show") {
-                    expect(subject.pagingVC.pagingView.hidden) == false
+                    expect(subject.pagingVC.pagingView.isHidden) == false
 
                     subject.pages = [UIViewController]()
-                    expect(subject.pagingVC.pagingView.hidden) == true
+                    expect(subject.pagingVC.pagingView.isHidden) == true
 
                     subject.alwaysShowPagingBar = true
-                    expect(subject.pagingVC.pagingView.hidden) == false
+                    expect(subject.pagingVC.pagingView.isHidden) == false
                 }
 
                 it("should change paging control height") {
@@ -196,8 +197,8 @@ class WPanelSpec: QuickSpec {
                 }
 
                 it("should change paging indicator color") {
-                    let currentColor = UIColor.redColor()
-                    let indicatorColor = UIColor.greenColor()
+                    let currentColor = UIColor.red
+                    let indicatorColor = UIColor.green
 
                     subject.pagingVC.pagingView.currentPageIndicatorTintColor = currentColor
                     subject.pagingVC.pagingView.pageIndicatorTintColor = indicatorColor
@@ -209,54 +210,54 @@ class WPanelSpec: QuickSpec {
 
             describe("panel delegate methods") {
                 it("should return correct side panel value") {
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
                     expect(subject.isSidePanel()) == true
 
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
                     expect(subject.isSidePanel()) == false
                 }
 
                 it("should move panel to ratio correctly") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
                     let middleSnapRatio = subject.snapHeights[1]
                     let snapOffset = subject.view.frame.height * (1 - middleSnapRatio)
 
-                    subject.setPanelRatio(middleSnapRatio, animated: false)
+                    subject.setPanelRatio(ratio: middleSnapRatio, animated: false)
 
                     expect(subject.panelView.frame.origin.y).to(beCloseTo(snapOffset, within: 0.25))
-                    expect(subject.floatingButton.hidden) == true
+                    expect(subject.floatingButton.isHidden) == true
                 }
 
                 it("should panel up based on offset value and hide floating button") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.setPanelOffset(100, animated: false)
+                    subject.setPanelOffset(value: 100, animated: false)
 
                     expect(subject.panelView.frame.origin.y) == subject.view.frame.height - 100
-                    expect(subject.floatingButton.hidden) == true
+                    expect(subject.floatingButton.isHidden) == true
                 }
 
                 it("should move to minimum height if needed") {
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
                     subject.minimumSnapHeight = 500
 
-                    subject.floatingButtonWasPressed(subject.floatingButton)
+                    subject.floatingButtonWasPressed(sender: subject.floatingButton)
 
                     expect(subject.panelView.frame.height) == 500 + subject.cornerRadius
-                    expect(subject.floatingButton.hidden) == true
+                    expect(subject.floatingButton.isHidden) == true
                 }
             }
 
             describe("panel gestures") {
                 it ("should move panel to pan gesture location") {
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Changed
+                    recognizer.testState = .changed
                     recognizer.returnPoint = subject.view.center
 
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset).to(beCloseTo(subject.view.frame.height / 2, within: 5))
                 }
@@ -265,12 +266,12 @@ class WPanelSpec: QuickSpec {
                     subject.snapHeights = [0.0, 0.2, 0.4]
 
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Changed
-                    recognizer.returnPoint = CGPointZero
+                    recognizer.testState = .changed
+                    recognizer.returnPoint = CGPoint.zero
 
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset).to(beCloseTo(subject.view.frame.height * 0.42, within: 0.1))
                 }
@@ -278,111 +279,111 @@ class WPanelSpec: QuickSpec {
                 it ("should move side panel to pan gesture location") {
                     let frame = subject.view.frame
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Changed
+                    recognizer.testState = .changed
                     recognizer.returnPoint = CGPoint(x: frame.width - 50, y: 0)
 
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset).to(beCloseTo(50, within: 0.1))
                 }
 
                 it ("should not move side panel past max width") {
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Changed
+                    recognizer.testState = .changed
                     recognizer.returnPoint = CGPoint(x: -50, y: 0)
 
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset) == subject.sidePanelWidth
                 }
 
                 it("should snap side panel to side panel width") {
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Ended
+                    recognizer.testState = .ended
                     recognizer.returnPoint = CGPoint(x: subject.view.frame.width - subject.sidePanelWidth + 10, y: 0)
 
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset) == subject.sidePanelWidth
                 }
 
                 it("should snap side panel to beyond the view") {
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Ended
+                    recognizer.testState = .ended
                     recognizer.returnPoint = CGPoint(x: subject.view.frame.width - 10, y: 0)
 
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset) == 0
                 }
 
                 it("should snap vertical panel to closest ratio") {
                     subject.snapHeights = [0.0, 0.4]
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Ended
+                    recognizer.testState = .ended
                     recognizer.returnPoint = CGPoint(x: 0, y: subject.view.frame.height - 10)
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelRatio) == 0.0
                 }
 
                 it("should snap vertical panel to minimum height if needed") {
                     subject.snapHeights = [0.0, 0.1]
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
                     subject.minimumSnapHeight = 500
 
                     let recognizer = UIPanGestureRecognizerMock()
-                    recognizer.testState = .Ended
-                    recognizer.returnPoint = CGPointZero
+                    recognizer.testState = .ended
+                    recognizer.returnPoint = CGPoint.zero
 
-                    subject.panelWasPanned(recognizer)
+                    subject.panelWasPanned(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset) == 500
                 }
 
                 it("should hide panel when tapped") {
-                    subject.widthCapForSidePanel = CGFloat.max
-                    subject.movePanelToSnapRatio(0.4)
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
+                    subject.movePanelToSnapRatio(ratio: 0.4)
                     expect(subject.currentPanelRatio) == 0.4
 
                     let recognizer = UIPanGestureRecognizerMock()
-                    subject.panelWasTapped(recognizer)
+                    subject.panelWasTapped(recognizer: recognizer)
 
                     expect(subject.currentPanelRatio) == 0.0
                 }
 
                 it("should hide side panel when tapped") {
-                    subject.widthCapForSidePanel = CGFloat.min
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
 
-                    subject.movePanelToValue(subject.sidePanelWidth)
+                    subject.movePanelToValue(value: subject.sidePanelWidth)
                     expect(subject.currentPanelOffset) == subject.sidePanelWidth
 
                     let recognizer = UIPanGestureRecognizerMock()
-                    subject.panelWasTapped(recognizer)
+                    subject.panelWasTapped(recognizer: recognizer)
 
                     expect(subject.currentPanelOffset) == 0.0
                 }
 
                 it("should default value when switching from side panel to vertical") {
                     subject.snapHeights = [0.0, 0.2, 0.4, 0.8]
-                    subject.widthCapForSidePanel = CGFloat.max
+                    subject.widthCapForSidePanel = CGFloat.greatestFiniteMagnitude
 
-                    subject.movePanelToSnapRatio(0.4, animated: false)
+                    subject.movePanelToSnapRatio(ratio: 0.4, animated: false)
                     expect(subject.currentPanelRatio).to(beCloseTo(0.4, within: 0.05))
 
-                    subject.widthCapForSidePanel = CGFloat.min
-                    subject.movePanelToValue(200, animated: false)
+                    subject.widthCapForSidePanel = CGFloat.leastNormalMagnitude
+                    subject.movePanelToValue(value: 200, animated: false)
                     expect(subject.currentPanelRatio) == 0.2
                 }
             }
@@ -390,16 +391,18 @@ class WPanelSpec: QuickSpec {
             describe("page manager") {
                 it("should return correct next view controller") {
                     let pagingManager = subject.pagingVC.pagingManager
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfterViewController: vc1!)) == vc2
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfterViewController: vc2!)) == vc3
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfterViewController: vc3!)).to(beNil())
+
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc1!)) == vc2
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc2!)) == vc3
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerAfter: vc3!)).to(beNil())
                 }
 
                 it("should return correct previous view controller") {
                     let pagingManager = subject.pagingVC.pagingManager
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerBeforeViewController: vc1!)).to(beNil())
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerBeforeViewController: vc2!)) == vc1
-                    expect(pagingManager.pageViewController(pagingManager, viewControllerBeforeViewController: vc3!)) == vc2
+
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc1!)).to(beNil())
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc2!)) == vc1
+                    expect(pagingManager.pageViewController(pagingManager, viewControllerBefore: vc3!)) == vc2
                 }
 
                 it("should change page programmatically") {
@@ -407,7 +410,7 @@ class WPanelSpec: QuickSpec {
 
                     expect(pagingVC.pagingView.pagingControl.currentPage) == 0
 
-                    pagingVC.changeToPageIndex(false, index: 1)
+                    pagingVC.changeToPageIndex(animated: false, index: 1)
 
                     expect(pagingVC.pagingView.pagingControl.currentPage) == 1
                 }

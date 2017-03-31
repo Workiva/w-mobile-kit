@@ -16,10 +16,10 @@ Pod::Spec.new do |s|
                          'Brian Blanchard' => 'brian.blanchard@workiva.com',
                          'Bryan Rezende' => 'bryan.rezende@workiva.com' }
   s.source           = { :git => 'https://github.com/Workiva/w-mobile-kit.git', :tag => s.version.to_s }
-  s.platform         = :ios, '8.0'
+  s.platform         = :ios, '9.0'
   s.requires_arc     = true
   s.source_files     = 'Source/*{h,m,swift}'
-  s.dependency 'SnapKit', '0.22.0'
-  s.dependency 'CryptoSwift', '0.5.2'
-  s.dependency 'SDWebImage', '3.8'
+  s.dependency 'SnapKit', '3.2.0'
+  s.dependency 'CryptoSwift', '0.6.3'
+  s.dependency 'SDWebImage', '4.0.0'
 end

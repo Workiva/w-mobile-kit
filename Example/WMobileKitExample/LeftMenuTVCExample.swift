@@ -27,24 +27,24 @@ class NavigationVC: UINavigationController {
 
 class LeftMenuTVCExample: UITableViewController {
     // Use the class name as the identifier
-    lazy var welcomeVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WelcomeVC") as! NavigationVC
-    lazy var pagingControlExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("PagingControlExamplesVC") as! NavigationVC
-    lazy var pagingSelectorVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("WPagingSelectorVC") as! NavigationVC
-    lazy var userLogoViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("UserLogoViewExamplesVC") as! NavigationVC
-    lazy var modalViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("ModalViewExamplesVC") as! NavigationVC
-    lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextFieldExamplesVC") as! NavigationVC
-    lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("TextViewExamplesVC") as! NavigationVC
-    lazy var markdownTextViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("MarkdownTextViewExamplesVC") as! NavigationVC
-    lazy var spinnerExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SpinnerExamplesVC") as! NavigationVC
-    lazy var loadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("LoadingModalExamplesVC") as! NavigationVC
-    lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoCompleteTextViewExampleVC") as! NavigationVC
-    lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("SwitchAndRadioExamplesVC") as! NavigationVC
-    lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("BadgeExamplesVC") as! NavigationVC
-    lazy var panelExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("PanelExampleVC") as! NavigationVC
-    lazy var autoViewLayoutExampleVC: NavigationVC = mainStoryboard.instantiateViewControllerWithIdentifier("AutoViewLayoutExampleVC") as! NavigationVC
+    lazy var welcomeVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "WelcomeVC") as! NavigationVC
+    lazy var pagingControlExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "PagingControlExamplesVC") as! NavigationVC
+    lazy var pagingSelectorVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "WPagingSelectorVC") as! NavigationVC
+    lazy var userLogoViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "UserLogoViewExamplesVC") as! NavigationVC
+    lazy var modalViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "ModalViewExamplesVC") as! NavigationVC
+    lazy var textFieldExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "TextFieldExamplesVC") as! NavigationVC
+    lazy var textViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "TextViewExamplesVC") as! NavigationVC
+    lazy var markdownTextViewExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "MarkdownTextViewExamplesVC") as! NavigationVC
+    lazy var spinnerExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "SpinnerExamplesVC") as! NavigationVC
+    lazy var loadingModalExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "LoadingModalExamplesVC") as! NavigationVC
+    lazy var autoCompleteTextViewExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "AutoCompleteTextViewExampleVC") as! NavigationVC
+    lazy var switchAndRadioExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "SwitchAndRadioExamplesVC") as! NavigationVC
+    lazy var badgeExamplesVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "BadgeExamplesVC") as! NavigationVC
+    lazy var panelExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "PanelExampleVC") as! NavigationVC
+    lazy var autoViewLayoutExampleVC: NavigationVC = mainStoryboard.instantiateViewController(withIdentifier: "AutoViewLayoutExampleVC") as! NavigationVC
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch indexPath.row {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch (indexPath as NSIndexPath).row {
         case 0:
             sideMenuController()?.changeMainViewController(welcomeVC)
         case 1:
@@ -81,11 +81,11 @@ class LeftMenuTVCExample: UITableViewController {
 
         sideMenuController()?.closeSideMenu()
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = UIColor.clearColor()
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
 
     func defaultVC() -> UIViewController {

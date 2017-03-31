@@ -35,7 +35,7 @@ class WToastSpec: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 WToastManager.sharedInstance.rootWindow = window
                 window.rootViewController = subject
 
@@ -43,7 +43,7 @@ class WToastSpec: QuickSpec {
                 subject.endAppearanceTransition()
 
                 // Init the singleton
-                WToastManager.sharedInstance
+                _ = WToastManager.sharedInstance
             })
 
             afterEach({
@@ -55,20 +55,20 @@ class WToastSpec: QuickSpec {
             describe("when app has been init") {
                 let verifyCommonInit = {
                     expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissesAfterTime))
                     expect(toastView.rightIcon).to(beNil())
-                    expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                    expect(toastView.toastColor).to(equal(UIColor.black))
                 }
 
                 it("should init with coder correctly and verify commonInit") {
                     toastView = WToastView(message: message1)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WToastView")
+                    let locToSave = path.appendingPathComponent("WToastView")
 
                     NSKeyedArchiver.archiveRootObject(toastView, toFile: locToSave)
 
-                    let toastView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WToastView
+                    let toastView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WToastView
 
                     expect(toastView).toNot(equal(nil))
 
@@ -107,11 +107,11 @@ class WToastSpec: QuickSpec {
                         twoLineToastView = WToastTwoLineView(firstLine: "first", secondLine: "second")
 
                         let path = NSTemporaryDirectory() as NSString
-                        let locToSave = path.stringByAppendingPathComponent("WToastTwoLineView")
+                        let locToSave = path.appendingPathComponent("WToastTwoLineView")
 
                         NSKeyedArchiver.archiveRootObject(twoLineToastView, toFile: locToSave)
 
-                        let twoLineToastView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WToastTwoLineView
+                        let twoLineToastView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WToastTwoLineView
 
                         expect(twoLineToastView).toNot(equal(nil))
 
@@ -146,8 +146,8 @@ class WToastSpec: QuickSpec {
                 context("dismiss behavior") {
                     it("should successfully add and display a toast view that does not automatically dismiss and manually dismisses from the top") {
                         toastView = WToastView(message: message2)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Top
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.top
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -156,12 +156,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Top))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromTop))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.top))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromTop))
                         expect(toastView.message).to(equal(message2))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -176,8 +176,8 @@ class WToastSpec: QuickSpec {
 
                     it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap from the bottom") {
                         toastView = WToastView(message: message3)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Bottom
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.bottom
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -186,12 +186,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Bottom))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromBottom))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.bottom))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromBottom))
                         expect(toastView.message).to(equal(message3))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -207,9 +207,9 @@ class WToastSpec: QuickSpec {
 
                     it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap from the left starting at the top") {
                         toastView = WToastView(message: message3)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Top
-                        toastView.flyInDirection = WToastFlyInDirectionOptions.FromLeft
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.top
+                        toastView.flyInDirection = WToastFlyInDirectionOptions.fromLeft
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -218,12 +218,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Top))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromLeft))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.top))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromLeft))
                         expect(toastView.message).to(equal(message3))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -239,9 +239,9 @@ class WToastSpec: QuickSpec {
 
                     it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap from the left starting at the bottom") {
                         toastView = WToastView(message: message3)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Bottom
-                        toastView.flyInDirection = WToastFlyInDirectionOptions.FromLeft
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.bottom
+                        toastView.flyInDirection = WToastFlyInDirectionOptions.fromLeft
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -250,12 +250,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Bottom))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromLeft))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.bottom))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromLeft))
                         expect(toastView.message).to(equal(message3))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -271,9 +271,9 @@ class WToastSpec: QuickSpec {
 
                     it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap from the right starting from the top") {
                         toastView = WToastView(message: message3)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Top
-                        toastView.flyInDirection = WToastFlyInDirectionOptions.FromRight
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.top
+                        toastView.flyInDirection = WToastFlyInDirectionOptions.fromRight
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -282,12 +282,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Top))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromRight))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.top))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromRight))
                         expect(toastView.message).to(equal(message3))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -303,9 +303,9 @@ class WToastSpec: QuickSpec {
 
                     it("should successfully add and display a toast view that does not automatically dismiss and dismisses on tap from the right starting from the bottom") {
                         toastView = WToastView(message: message3)
-                        toastView.hideOptions = WToastHideOptions.DismissOnTap
-                        toastView.placement = WToastPlacementOptions.Bottom
-                        toastView.flyInDirection = WToastFlyInDirectionOptions.FromRight
+                        toastView.hideOptions = WToastHideOptions.dismissOnTap
+                        toastView.placement = WToastPlacementOptions.bottom
+                        toastView.flyInDirection = WToastFlyInDirectionOptions.fromRight
 
                         WToastManager.sharedInstance.showToast(toastView)
 
@@ -314,12 +314,12 @@ class WToastSpec: QuickSpec {
 
                         // public properties
                         expect(toastView.showDuration).to(equal(TOAST_DEFAULT_SHOW_DURATION))
-                        expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
-                        expect(toastView.placement).to(equal(WToastPlacementOptions.Bottom))
-                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.FromRight))
+                        expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
+                        expect(toastView.placement).to(equal(WToastPlacementOptions.bottom))
+                        expect(toastView.flyInDirection).to(equal(WToastFlyInDirectionOptions.fromRight))
                         expect(toastView.message).to(equal(message3))
                         expect(toastView.rightIcon).to(beNil())
-                        expect(toastView.toastColor).to(equal(UIColor.blackColor()))
+                        expect(toastView.toastColor).to(equal(UIColor.black))
                         expect(toastView.toastAlpha).to(equal(0.7))
 
                         // Verify the toast is still shown
@@ -336,11 +336,11 @@ class WToastSpec: QuickSpec {
 
                 it("should successfully add and display a custom toast view with a set width") {
                     let showDuration = 1.0
-                    let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                    let image = UIImage(contentsOfFile: Bundle(for: type(of: self)).path(forResource: "testImage1", ofType: "png")!)
 
                     toastView = WToastView()
                     toastView.showDuration = showDuration
-                    toastView.toastColor = .redColor()
+                    toastView.toastColor = .red
                     toastView.message = message4
                     toastView.rightIcon = image
                     toastView.toastAlpha = 0.6
@@ -353,11 +353,11 @@ class WToastSpec: QuickSpec {
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissesAfterTime))
                     expect(toastView.message).to(equal(message4))
                     expect(toastView.rightIcon).to(equal(image))
                     expect(toastView.rightIconImageView.image).to(equal(image))
-                    expect(toastView.toastColor).to(equal(UIColor.redColor()))
+                    expect(toastView.toastColor).to(equal(UIColor.red))
                     expect(toastView.toastAlpha).to(equal(0.6))
                     expect(toastView.width).to(equal(200))
                     
@@ -370,26 +370,26 @@ class WToastSpec: QuickSpec {
                     let showDuration = 0.0
 
                     toastView = WToastView()
-                    toastView.hideOptions = WToastHideOptions.DismissesAfterTime
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    toastView.hideOptions = WToastHideOptions.dismissesAfterTime
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissesAfterTime))
                     toastView.showDuration = showDuration
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
                 }
 
                 it("should change to DismissOnTap if the duration is set to a negative number") {
                     let showDuration = -99999.0
 
                     toastView = WToastView()
-                    toastView.hideOptions = WToastHideOptions.DismissesAfterTime
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissesAfterTime))
+                    toastView.hideOptions = WToastHideOptions.dismissesAfterTime
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissesAfterTime))
                     toastView.showDuration = showDuration
 
                     // public properties
                     expect(toastView.showDuration).to(equal(showDuration))
-                    expect(toastView.hideOptions).to(equal(WToastHideOptions.DismissOnTap))
+                    expect(toastView.hideOptions).to(equal(WToastHideOptions.dismissOnTap))
                 }
             }
         }

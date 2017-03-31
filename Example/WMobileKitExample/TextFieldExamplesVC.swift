@@ -19,29 +19,29 @@
 import Foundation
 import WMobileKit
 
-public class TextFieldsExamplesVC: WSideMenuContentVC {
+open class TextFieldsExamplesVC: WSideMenuContentVC {
     @IBOutlet var storyboardTextField: WTextField?
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         // MARK: Text Field with no icons.
         let noIconsLabel = UILabel()
         noIconsLabel.text = "This WTextField has no icons."
-        noIconsLabel.textAlignment = .Center
+        noIconsLabel.textAlignment = .center
         view.addSubview(noIconsLabel)
-        noIconsLabel.snp_makeConstraints { (make) in
+        noIconsLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(storyboardTextField!.snp_bottom).offset(10)
+            make.top.equalTo(storyboardTextField!.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
 
         let noIconsTextField = WTextField()
         view.addSubview(noIconsTextField)
-        noIconsTextField.snp_makeConstraints { (make) in
+        noIconsTextField.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(noIconsLabel.snp_bottom).offset(4)
+            make.top.equalTo(noIconsLabel.snp.bottom).offset(4)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
@@ -49,11 +49,11 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         // MARK: Text Field with a left icon.
         let leftIconLabel = UILabel()
         leftIconLabel.text = "This WTextField has a left icon."
-        leftIconLabel.textAlignment = .Center
+        leftIconLabel.textAlignment = .center
         view.addSubview(leftIconLabel)
-        leftIconLabel.snp_makeConstraints { (make) in
+        leftIconLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(noIconsTextField.snp_bottom).offset(10)
+            make.top.equalTo(noIconsTextField.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
@@ -61,9 +61,9 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         let leftIconTextField = WTextField()
         leftIconTextField.leftImage = UIImage(named: "person")
         view.addSubview(leftIconTextField)
-        leftIconTextField.snp_makeConstraints { (make) in
+        leftIconTextField.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(leftIconLabel.snp_bottom).offset(4)
+            make.top.equalTo(leftIconLabel.snp.bottom).offset(4)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
@@ -71,39 +71,39 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         // MARK: Text Field with a right icon.
         let rightIconLabel = UILabel()
         rightIconLabel.text = "This WTextField has a right icon."
-        rightIconLabel.textAlignment = .Center
+        rightIconLabel.textAlignment = .center
         view.addSubview(rightIconLabel)
-        rightIconLabel.snp_makeConstraints { (make) in
+        rightIconLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(leftIconTextField.snp_bottom).offset(10)
+            make.top.equalTo(leftIconTextField.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
 
         let rightIconTextField = WTextField()
         rightIconTextField.rightImage = UIImage(named: "gear")
-        rightIconTextField.textColor = UIColor.blackColor()
+        rightIconTextField.textColor = UIColor.black
         rightIconTextField.placeholder = "This has black text."
         view.addSubview(rightIconTextField)
-        rightIconTextField.snp_makeConstraints { (make) in
+        rightIconTextField.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(rightIconLabel.snp_bottom).offset(4)
+            make.top.equalTo(rightIconLabel.snp.bottom).offset(4)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
         rightIconTextField.imageSquareSize = 32
-        rightIconTextField.bottomLineColor = .blackColor()
-        rightIconTextField.tintColor = .blackColor()
+        rightIconTextField.bottomLineColor = .black
+        rightIconTextField.tintColor = .black
         rightIconTextField.bottomLineWidth = 2
 
         // MARK: Text Field with both icons.
         let bothIconLabel = UILabel()
         bothIconLabel.text = "This WTextField has both icons."
-        bothIconLabel.textAlignment = .Center
+        bothIconLabel.textAlignment = .center
         view.addSubview(bothIconLabel)
-        bothIconLabel.snp_makeConstraints { (make) in
+        bothIconLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(rightIconTextField.snp_bottom).offset(10)
+            make.top.equalTo(rightIconTextField.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
@@ -112,9 +112,9 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         bothIconTextField.leftImage = UIImage(named: "person")
         bothIconTextField.rightImage = UIImage(named: "gear")
         view.addSubview(bothIconTextField)
-        bothIconTextField.snp_makeConstraints { (make) in
+        bothIconTextField.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(bothIconLabel.snp_bottom).offset(4)
+            make.top.equalTo(bothIconLabel.snp.bottom).offset(4)
             make.width.equalTo(view).offset(-10)
             make.height.equalTo(30)
         }
@@ -122,11 +122,11 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         // MARK: Text Field with clear icon.
         let clearIconLabel = UILabel()
         clearIconLabel.text = "This WTextField has a clear icon."
-        clearIconLabel.textAlignment = .Center
+        clearIconLabel.textAlignment = .center
         view.addSubview(clearIconLabel)
-        clearIconLabel.snp_makeConstraints { (make) in
+        clearIconLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(bothIconTextField.snp_bottom).offset(10)
+            make.top.equalTo(bothIconTextField.snp.bottom).offset(10)
             make.width.equalTo(300)
             make.height.equalTo(20)
         }
@@ -135,9 +135,9 @@ public class TextFieldsExamplesVC: WSideMenuContentVC {
         clearIconTextField.rightImage = UIImage(named: "close")
         clearIconTextField.rightViewIsClearButton = true
         view.addSubview(clearIconTextField)
-        clearIconTextField.snp_makeConstraints { (make) in
+        clearIconTextField.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(clearIconLabel.snp_bottom).offset(4)
+            make.top.equalTo(clearIconLabel.snp.bottom).offset(4)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }

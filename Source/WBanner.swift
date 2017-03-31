@@ -21,16 +21,16 @@ import UIKit
 import SnapKit
 
 @objc public protocol WBannerViewDelegate {
-    optional func bannerWasTapped(sender: UITapGestureRecognizer)
-    optional func bannerDidHide(bannerView: WBannerView)
+    @objc optional func bannerWasTapped(_ sender: UITapGestureRecognizer)
+    @objc optional func bannerDidHide(_ bannerView: WBannerView)
 }
 
 public enum WBannerHideOptions {
-    case NeverDismisses, DismissOnTap, DismissesAfterTime
+    case neverDismisses, dismissOnTap, dismissesAfterTime
 }
 
 public enum WBannerPlacementOptions {
-    case Top, Bottom
+    case top, bottom
 }
 
 let BANNER_DEFAULT_HEIGHT = 68
@@ -44,55 +44,55 @@ let BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING = 8
 
 let BANNER_DEFAULT_BODY_NUMBER_OF_LINES = 2
 
-public class WBannerView: UIView {
+open class WBannerView: UIView {
     // Public API
-    public weak var delegate: WBannerViewDelegate?
+    open weak var delegate: WBannerViewDelegate?
 
-    public var rootView: UIView?
+    open var rootView: UIView?
 
     // If 0 or less, options change to dismiss on tap
-    public var showDuration: NSTimeInterval = BANNER_DEFAULT_SHOW_DURATION {
+    open var showDuration: TimeInterval = BANNER_DEFAULT_SHOW_DURATION {
         didSet {
-            hideOptions = showDuration > 0 ? .DismissesAfterTime : .DismissOnTap
+            hideOptions = showDuration > 0 ? .dismissesAfterTime : .dismissOnTap
         }
     }
 
-    public var hideOptions: WBannerHideOptions = .DismissesAfterTime
-    public var placement: WBannerPlacementOptions = .Bottom
-    public var animationDuration = BANNER_DEFAULT_ANIMATION_DURATION
-    public var height = BANNER_DEFAULT_HEIGHT
-    public var sidePadding: CGFloat = 0
+    open var hideOptions: WBannerHideOptions = .dismissesAfterTime
+    open var placement: WBannerPlacementOptions = .bottom
+    open var animationDuration = BANNER_DEFAULT_ANIMATION_DURATION
+    open var height = BANNER_DEFAULT_HEIGHT
+    open var sidePadding: CGFloat = 0
 
-    public var titleMessage = "" {
+    open var titleMessage = "" {
         didSet {
             titleMessageLabel.text = titleMessage
         }
     }
-    public var bodyMessage = "" {
+    open var bodyMessage = "" {
         didSet {
             bodyMessageLabel.text = bodyMessage
         }
     }
 
-    public var titleIcon: UIImage? {
+    open var titleIcon: UIImage? {
         didSet {
             titleIconImageView.image = titleIcon
         }
     }
 
-    public var rightIcon: UIImage? {
+    open var rightIcon: UIImage? {
         didSet {
             rightIconImageView.image = rightIcon
         }
     }
 
-    public var bannerColor: UIColor = .blackColor() {
+    open var bannerColor: UIColor = .black {
         didSet {
             backgroundView.backgroundColor = bannerColor
         }
     }
 
-    public var bannerAlpha: CGFloat = 1.0 {
+    open var bannerAlpha: CGFloat = 1.0 {
         didSet {
             backgroundView.alpha = bannerAlpha
             rightIconImageView.alpha = bannerAlpha
@@ -112,14 +112,14 @@ public class WBannerView: UIView {
         }
     }
 
-    public var titleMessageLabel = UILabel()
-    public var bodyMessageLabel = WLabel()
-    public var titleIconImageView = UIImageView()
-    public var rightIconImageView = UIImageView()
-    public var backgroundView = UIView()
+    open var titleMessageLabel = UILabel()
+    open var bodyMessageLabel = WLabel()
+    open var titleIconImageView = UIImageView()
+    open var rightIconImageView = UIImageView()
+    open var backgroundView = UIView()
 
     // Private API
-    internal var showTimer: NSTimer?
+    internal var showTimer: Timer?
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -134,13 +134,13 @@ public class WBannerView: UIView {
     }
 
     public convenience init(rootView: UIView) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
 
         self.rootView = rootView
     }
 
-    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .blackColor(), bannerAlpha: CGFloat = 1.0) {
-        self.init(frame: CGRectZero)
+    public convenience init(rootView: UIView, titleMessage: String, titleIcon: UIImage? = nil, bodyMessage: String, rightIcon: UIImage? = nil, bannerColor: UIColor = .black, bannerAlpha: CGFloat = 1.0) {
+        self.init(frame: CGRect.zero)
 
         self.rootView = rootView
         self.titleMessage = titleMessage
@@ -151,7 +151,7 @@ public class WBannerView: UIView {
         self.rightIcon = rightIcon
     }
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         addSubview(backgroundView)
         addSubview(titleMessageLabel)
         addSubview(titleIconImageView)
@@ -165,21 +165,21 @@ public class WBannerView: UIView {
         // Set defaults here instead of the setupUI so they will not be
         // overwritten by custom user values
         titleMessageLabel.numberOfLines = 1
-        titleMessageLabel.textAlignment = .Left
-        titleMessageLabel.font = UIFont.boldSystemFontOfSize(15)
-        titleMessageLabel.textColor = .whiteColor()
+        titleMessageLabel.textAlignment = .left
+        titleMessageLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        titleMessageLabel.textColor = .white
 
         bodyMessageLabel.numberOfLines = bodyNumberOfLines
-        bodyMessageLabel.textAlignment = .Left
-        bodyMessageLabel.font = UIFont.systemFontOfSize(12)
-        bodyMessageLabel.textColor = .whiteColor()
+        bodyMessageLabel.textAlignment = .left
+        bodyMessageLabel.font = UIFont.systemFont(ofSize: 12)
+        bodyMessageLabel.textColor = .white
     }
 
-    public func setupUI() {
+    open func setupUI() {
         // Do not set any defaults here as they will overwrite any custom
         // values when the banner is shown.
         // Values set by variables should still be set.
-        backgroundView.snp_remakeConstraints { (make) in
+        backgroundView.snp.remakeConstraints { (make) in
             make.left.equalTo(self)
             make.right.equalTo(self)
             make.bottom.equalTo(self)
@@ -189,7 +189,7 @@ public class WBannerView: UIView {
 
         titleIconImageView.image = titleIcon
         if (titleIconImageView.image != nil) {
-            titleIconImageView.snp_remakeConstraints { (make) in
+            titleIconImageView.snp.remakeConstraints { (make) in
                 make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
                 make.top.equalTo(self).offset(verticalPaddingForNumberOfLines(bodyNumberOfLines))
                 make.height.equalTo(15)
@@ -197,7 +197,7 @@ public class WBannerView: UIView {
             }
         } else {
             // Hide if not populated
-            titleIconImageView.snp_remakeConstraints { (make) in
+            titleIconImageView.snp.remakeConstraints { (make) in
                 make.left.equalTo(0)
                 make.top.equalTo(0)
                 make.height.equalTo(0)
@@ -207,7 +207,7 @@ public class WBannerView: UIView {
 
         rightIconImageView.image = rightIcon
         if (rightIconImageView.image != nil) {
-            rightIconImageView.snp_remakeConstraints { (make) in
+            rightIconImageView.snp.remakeConstraints { (make) in
                 make.centerY.equalTo(self)
                 make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
                 make.height.equalTo(16)
@@ -215,7 +215,7 @@ public class WBannerView: UIView {
             }
         } else {
             // Hide if not populated
-            rightIconImageView.snp_remakeConstraints { (make) in
+            rightIconImageView.snp.remakeConstraints { (make) in
                 make.left.equalTo(0)
                 make.top.equalTo(0)
                 make.height.equalTo(0)
@@ -223,36 +223,36 @@ public class WBannerView: UIView {
             }
         }
 
-        titleMessageLabel.snp_remakeConstraints { (make) in
+        titleMessageLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(self).offset(verticalPaddingForNumberOfLines(bodyNumberOfLines))
             make.height.equalTo(15)
 
             if (titleIconImageView.image != nil) {
-                make.left.equalTo(titleIconImageView.snp_right).offset(6)
+                make.left.equalTo(titleIconImageView.snp.right).offset(6)
             } else {
                 make.left.equalTo(self).offset(BANNER_DEFAULT_RIGHT_PADDING)
             }
 
             if (rightIconImageView.image != nil) {
-                make.right.equalTo(rightIconImageView.snp_left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
+                make.right.equalTo(rightIconImageView.snp.left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
             } else {
                 make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
             }
         }
         titleMessageLabel.text = titleMessage
 
-        bodyMessageLabel.snp_remakeConstraints { (make) in
+        bodyMessageLabel.snp.remakeConstraints { (make) in
             if (bodyNumberOfLines <= 1) {
-                make.top.equalTo(titleMessageLabel.snp_bottom).offset(7)
+                make.top.equalTo(titleMessageLabel.snp.bottom).offset(7)
             } else {
-                make.top.equalTo(titleMessageLabel.snp_bottom).offset(4)
+                make.top.equalTo(titleMessageLabel.snp.bottom).offset(4)
             }
 
             make.bottom.equalTo(self).offset(-verticalPaddingForNumberOfLines(bodyNumberOfLines))
             make.left.equalTo(self).offset(BANNER_DEFAULT_LEFT_PADDING)
 
             if (rightIconImageView.image != nil) {
-                make.right.equalTo(rightIconImageView.snp_left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
+                make.right.equalTo(rightIconImageView.snp.left).offset(-BANNER_RIGHT_ICON_IMAGE_VIEW_PADDING)
             } else {
                 make.right.equalTo(self).offset(-BANNER_DEFAULT_RIGHT_PADDING)
             }
@@ -265,7 +265,7 @@ public class WBannerView: UIView {
         layoutIfNeeded()
     }
 
-    private func verticalPaddingForNumberOfLines(numberOfLines: Int) -> CGFloat {
+    fileprivate func verticalPaddingForNumberOfLines(_ numberOfLines: Int) -> CGFloat {
         if (numberOfLines <= 1) {
             return 16.0
         } else if (numberOfLines == 2) {
@@ -275,45 +275,45 @@ public class WBannerView: UIView {
         }
     }
 
-    internal func bannerWasTapped(sender: UITapGestureRecognizer) {
+    internal func bannerWasTapped(_ sender: UITapGestureRecognizer) {
         delegate?.bannerWasTapped?(sender)
 
-        if hideOptions != .NeverDismisses {
+        if hideOptions != .neverDismisses {
             hide()
         }
     }
 
-    public func isVisible() -> Bool {
+    open func isVisible() -> Bool {
         return (window != nil)
     }
 
-    public func show() {
+    open func show() {
         if rootView == nil {
             print("Root view needed to show banner")
             return
         }
 
         rootView!.addSubview(self)
-        snp_remakeConstraints { (make) in
+        snp.remakeConstraints { (make) in
             make.height.equalTo(height)
             make.left.equalTo(rootView!).offset(sidePadding)
             make.right.equalTo(rootView!).offset(-sidePadding)
 
             switch placement {
-            case .Bottom:
-                make.top.equalTo(rootView!.snp_bottom)
+            case .bottom:
+                make.top.equalTo(rootView!.snp.bottom)
                 make.centerX.equalTo(rootView!)
-            case .Top:
-                make.bottom.equalTo(rootView!.snp_top)
+            case .top:
+                make.bottom.equalTo(rootView!.snp.top)
                 make.centerX.equalTo(rootView!)
             }
         }
         rootView!.layoutIfNeeded()
 
-        snp_remakeConstraints { (make) in
+        snp.remakeConstraints { (make) in
             make.height.equalTo(height)
 
-            if (placement == .Bottom) {
+            if (placement == .bottom) {
                 make.bottom.equalTo(rootView!)
             } else {
                 make.top.equalTo(rootView!)
@@ -323,13 +323,13 @@ public class WBannerView: UIView {
             make.right.equalTo(rootView!).offset(-sidePadding)
         }
 
-        UIView.animateWithDuration(animationDuration, delay: 0, options: .CurveEaseInOut,
+        UIView.animate(withDuration: animationDuration, delay: 0, options: UIViewAnimationOptions(),
             animations: {
                 self.rootView!.layoutIfNeeded()
             },
             completion: { finished in
-                if (self.hideOptions == .DismissesAfterTime) {
-                    self.showTimer = NSTimer.scheduledTimerWithTimeInterval(self.showDuration, target: self, selector: #selector(WBannerView.hide), userInfo: self, repeats: false)
+                if (self.hideOptions == .dismissesAfterTime) {
+                    self.showTimer = Timer.scheduledTimer(timeInterval: self.showDuration, target: self, selector: #selector(WBannerView.hide), userInfo: self, repeats: false)
                 }
             }
         )
@@ -337,27 +337,27 @@ public class WBannerView: UIView {
         setupUI()
     }
 
-    public func hide() {
+    open func hide() {
         showTimer?.invalidate()
         showTimer = nil
 
         if isVisible() {
             //animate out
-            snp_remakeConstraints{ (make) in
+            snp.remakeConstraints{ (make) in
                 make.height.equalTo(height)
                 make.left.equalTo(rootView!).offset(sidePadding)
                 make.right.equalTo(rootView!).offset(-sidePadding)
 
                 switch placement {
-                case .Bottom:
-                    make.top.equalTo(rootView!.snp_bottom)
+                case .bottom:
+                    make.top.equalTo(rootView!.snp.bottom)
                     make.centerX.equalTo(rootView!)
-                case .Top:
-                    make.bottom.equalTo(rootView!.snp_top)
+                case .top:
+                    make.bottom.equalTo(rootView!.snp.top)
                 }
             }
 
-            UIView.animateWithDuration(animationDuration,
+            UIView.animate(withDuration: animationDuration,
                 animations: {
                     self.rootView!.layoutIfNeeded()
                 },
@@ -371,7 +371,7 @@ public class WBannerView: UIView {
 }
 
 extension WBannerView: WLabelDelegate {
-    public func lineCountChanged(lineCount: Int) {
+    public func lineCountChanged(_ lineCount: Int) {
         bodyNumberOfLines = lineCount
     }
 }

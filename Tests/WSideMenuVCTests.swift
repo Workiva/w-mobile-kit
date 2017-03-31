@@ -35,12 +35,12 @@ class WSideMenuVCSpec: QuickSpec {
 
                 subject = WSideMenuVC(mainViewController: mainVC, leftSideMenuViewController: leftSideMenuVC)
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 mainNC = UINavigationController(rootViewController: subject)
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = mainNC
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -50,11 +50,11 @@ class WSideMenuVCSpec: QuickSpec {
             describe("when app has been init") {
                 it("should init with coder correctly and verify commonInit") {
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WSideMenuVC")
+                    let locToSave = path.appendingPathComponent("WSideMenuVC")
 
                     NSKeyedArchiver.archiveRootObject(subject, toFile: locToSave)
 
-                    let sideMenuVC = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WSideMenuVC
+                    let sideMenuVC = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSideMenuVC
 
                     expect(sideMenuVC).toNot(equal(nil))
                 }
@@ -66,10 +66,10 @@ class WSideMenuVCSpec: QuickSpec {
                     expect(subject.options).toNot(beNil())
 
                     // internal properties
-                    expect(subject.menuState).to(equal(WSideMenuState.Closed))
+                    expect(subject.menuState).to(equal(WSideMenuState.closed))
                     expect(subject.statusBarHidden).to(beFalsy())
 
-                    expect(UINavigationBar.appearance().translucent).to(beFalsy())
+                    expect(UINavigationBar.appearance().isTranslucent).to(beFalsy())
                 }
             }
 
@@ -77,14 +77,14 @@ class WSideMenuVCSpec: QuickSpec {
                 it("should open the side menu") {
                     subject.openSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
                 }
 
                 it("should close the side menu") {
                     subject.closeSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
                 }
 
@@ -92,23 +92,23 @@ class WSideMenuVCSpec: QuickSpec {
                     // Start open
                     subject.openSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
-                    expect(subject.backgroundTapView.hidden) == false
+                    expect(subject.backgroundTapView.isHidden) == false
 
                     // Close
                     subject.toggleSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
-                    expect(subject.backgroundTapView.hidden) == true
+                    expect(subject.backgroundTapView.isHidden) == true
 
                     // Open
                     subject.toggleSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
-                    expect(subject.backgroundTapView.hidden) == false
+                    expect(subject.backgroundTapView.isHidden) == false
                 }
             }
 
@@ -116,16 +116,16 @@ class WSideMenuVCSpec: QuickSpec {
                 it("should return default if no options are set") {
                     subject.options = nil
 
-                    expect(subject.preferredStatusBarStyle()).to(equal(UIStatusBarStyle.Default))
+                    expect(subject.preferredStatusBarStyle).to(equal(UIStatusBarStyle.default))
                 }
 
                 it("should return the option's style if options are set") {
                     var newOptions = WSideMenuOptions()
-                    newOptions.statusBarStyle = UIStatusBarStyle.LightContent
+                    newOptions.statusBarStyle = UIStatusBarStyle.lightContent
 
                     subject.options = newOptions
 
-                    expect(subject.preferredStatusBarStyle()).to(equal(UIStatusBarStyle.LightContent))
+                    expect(subject.preferredStatusBarStyle).to(equal(UIStatusBarStyle.lightContent))
                 }
             }
 
@@ -160,16 +160,16 @@ class WSideMenuVCSpec: QuickSpec {
                     // Start open
                     subject.openSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
-                    expect(subject.backgroundTapView.hidden) == false
+                    expect(subject.backgroundTapView.isHidden) == false
 
                     subject.backgroundWasTapped(subject)
 
                     // Now closed
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
-                    expect(subject.backgroundTapView.hidden) == true
+                    expect(subject.backgroundTapView.isHidden) == true
                 }
             }
 
@@ -192,23 +192,23 @@ class WSideMenuVCSpec: QuickSpec {
                     // Start open
                     subject.openSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
-                    expect(subject.backgroundTapView.hidden) == false
+                    expect(subject.backgroundTapView.isHidden) == false
 
                     // Close
                     sideMenuContentVC.toggleSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Closed), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.closed), timeout: 1)
                     expect(subject.statusBarHidden).to(beFalsy())
-                    expect(subject.backgroundTapView.hidden) == true
+                    expect(subject.backgroundTapView.isHidden) == true
 
                     // Open
                     sideMenuContentVC.toggleSideMenu()
 
-                    expect(subject.menuState).toEventually(equal(WSideMenuState.Open), timeout: 1)
+                    expect(subject.menuState).toEventually(equal(WSideMenuState.open), timeout: 1)
                     expect(subject.statusBarHidden).to(beTruthy())
-                    expect(subject.backgroundTapView.hidden) == false
+                    expect(subject.backgroundTapView.isHidden) == false
                 }
 
                 it("should respond to the back button item being tapped") {
@@ -222,19 +222,19 @@ class WSideMenuVCSpec: QuickSpec {
 
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.title) == "Toggle"
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image).to(beNil())
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .plain
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
                 }
 
                 it("should add side menu buttons for a content VC with a drawer icon") {
-                    let image = UIImage(contentsOfFile: NSBundle(forClass: self.dynamicType).pathForResource("testImage1", ofType: "png")!)
+                    let image = UIImage(contentsOfFile: Bundle(for: type(of: self)).path(forResource: "testImage1", ofType: "png")!)
 
                     subject.options?.drawerIcon = image
 
                     sideMenuContentVC.addWSideMenuButtons()
 
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.image).toNot(beNil())
-                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .Plain
+                    expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.style) == .plain
                     expect(sideMenuContentVC.navigationItem.leftBarButtonItem?.action) == #selector(WSideMenuContentVC.toggleSideMenu)
                 }
 
@@ -248,11 +248,11 @@ class WSideMenuVCSpec: QuickSpec {
                     additionalController.addWSideMenuButtons()
 
                     expect(additionalController.navigationItem.leftBarButtonItems?[0].title) == "Back"
-                    expect(additionalController.navigationItem.leftBarButtonItems?[0].style) == .Plain
+                    expect(additionalController.navigationItem.leftBarButtonItems?[0].style) == .plain
                     expect(additionalController.navigationItem.leftBarButtonItems?[0].action) == #selector(WSideMenuContentVC.backButtonItemWasTapped(_:))
 
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
-                    expect(additionalController.navigationItem.leftBarButtonItems?[1].style) == .Plain
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].style) == .plain
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -20, 0, 20)
                 }

@@ -30,7 +30,7 @@ class WCustomTransitionsTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -46,14 +46,14 @@ class WCustomTransitionsTests: QuickSpec {
             describe("when app has been init") {
                 it("should init") {
                     expect(animationController.presenting).to(beTruthy())
-                    expect(animationController.transitionDuration(nil)) == 1.0
+                    expect(animationController.transitionDuration) == 1.0
                 }
 
                 it("should perform animation without crash when presenting") {
                     // All the views have to be set up in WCustomTransitioningContext in
                     // order to hit coverage requirement, this just verifies we do not crash.
                     let transitioningContext = WCustomTransitioningContext()
-                    animationController.animateTransition(transitioningContext)
+                    animationController.animateTransition(using: transitioningContext)
                 }
 
                 it("should perform animation without crash when disappearing") {
@@ -62,15 +62,15 @@ class WCustomTransitionsTests: QuickSpec {
                     // All the views have to be set up in WCustomTransitioningContext in
                     // order to hit coverage requirement, this just verifies we do not crash.
                     let transitioningContext = WCustomTransitioningContext()
-                    animationController.animateTransition(transitioningContext)
+                    animationController.animateTransition(using: transitioningContext)
                 }
 
                 it("should allow transition duration to be set") {
-                    expect(animationController.transitionDuration(nil)) == 1.0
+                    expect(animationController.transitionDuration) == 1.0
 
                     animationController.transitionDuration = 0.8
 
-                    expect(animationController.transitionDuration(nil)) == 0.8
+                    expect(animationController.transitionDuration) == 0.8
                 }
             }
         }
@@ -81,52 +81,52 @@ class WCustomTransitioningContext: NSObject, UIViewControllerContextTransitionin
     let cView = UIView()
     let firstVC = UIViewController()
 
-    func containerView() -> UIView {
+    var containerView: UIView {
         return cView
     }
 
-    func viewControllerForKey(key: String) -> UIViewController? {
+    func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
         return firstVC
     }
 
-    func viewForKey(key: String) -> UIView? {
+    func view(forKey key: UITransitionContextViewKey) -> UIView? {
         return firstVC.view
     }
 
-    func initialFrameForViewController(vc: UIViewController) -> CGRect {
-        return CGRectZero
+    func initialFrame(for vc: UIViewController) -> CGRect {
+        return CGRect.zero
     }
 
-    func finalFrameForViewController(vc: UIViewController) -> CGRect {
-        return CGRectZero
+    func finalFrame(for vc: UIViewController) -> CGRect {
+        return CGRect.zero
     }
 
-    func isAnimated() -> Bool {
+    var isAnimated:  Bool {
         return false
     }
 
-    func isInteractive() -> Bool {
+    var isInteractive: Bool {
         return false
     }
 
-    func presentationStyle() -> UIModalPresentationStyle {
-        return .None
+    var presentationStyle: UIModalPresentationStyle {
+        return .none
     }
 
-    func completeTransition(didComplete: Bool) {}
+    func completeTransition(_ didComplete: Bool) {}
 
-    func updateInteractiveTransition(percentComplete: CGFloat) {}
+    func updateInteractiveTransition(_ percentComplete: CGFloat) {}
 
     func finishInteractiveTransition() {}
 
     func cancelInteractiveTransition() {}
 
-    func transitionWasCancelled() -> Bool {
+    var transitionWasCancelled: Bool {
         return true
     }
 
-    func targetTransform() -> CGAffineTransform {
-        return CGAffineTransformMake(0, 0, 0, 0, 0, 0)
+    var targetTransform: CGAffineTransform {
+        return CGAffineTransform(a: 0, b: 0, c: 0, d: 0, tx: 0, ty: 0)
     }
 
     func pauseInteractiveTransition() { }

@@ -20,16 +20,16 @@ import Foundation
 import UIKit
 
 public enum WSpinnerDirection: Equatable {
-    case Clockwise, CounterClockwise
+    case clockwise, counterClockwise
 }
 
-public class WSpinner: UIControl {
+open class WSpinner: UIControl {
     // MARK: - Properties
-    public var backgroundLayer: CAShapeLayer = CAShapeLayer()
-    public var progressLayer: CAShapeLayer = CAShapeLayer()
-    public var iconLayer: CALayer = CALayer()
+    open var backgroundLayer: CAShapeLayer = CAShapeLayer()
+    open var progressLayer: CAShapeLayer = CAShapeLayer()
+    open var iconLayer: CALayer = CALayer()
 
-    public var indeterminateSectionLength: CGFloat = 0.15 {
+    open var indeterminateSectionLength: CGFloat = 0.15 {
         didSet {
             if (indeterminate) {
                 progress = indeterminateSectionLength
@@ -37,31 +37,31 @@ public class WSpinner: UIControl {
         }
     }
 
-    public var icon: UIImage? {
+    open var icon: UIImage? {
         didSet {
-            iconLayer.contents = icon!.CGImage
+            iconLayer.contents = icon!.cgImage
 
             setNeedsDisplayMainThread()
         }
     }
 
-    public var progressLineColor: UIColor = UIColor(hex: 0xffffff, alpha: 0.75) {
+    open var progressLineColor: UIColor = UIColor(hex: 0xffffff, alpha: 0.75) {
         didSet {
-            progressLayer.strokeColor = progressLineColor.CGColor
+            progressLayer.strokeColor = progressLineColor.cgColor
 
             setNeedsDisplayMainThread()
         }
     }
 
-    public var backgroundLineColor: UIColor = UIColor(hex: 0xbfe4ff, alpha: 0.45) {
+    open var backgroundLineColor: UIColor = UIColor(hex: 0xbfe4ff, alpha: 0.45) {
         didSet {
-            backgroundLayer.strokeColor = backgroundLineColor.CGColor
+            backgroundLayer.strokeColor = backgroundLineColor.cgColor
 
             setNeedsDisplayMainThread()
         }
     }
 
-    public var lineWidth: CGFloat = 3 {
+    open var lineWidth: CGFloat = 3 {
         didSet {
             progressLayer.lineWidth = lineWidth;
             backgroundLayer.lineWidth = lineWidth;
@@ -70,7 +70,7 @@ public class WSpinner: UIControl {
         }
     }
 
-    public var progress: CGFloat = 0 {
+    open var progress: CGFloat = 0 {
         didSet {
             if (progress >= 1.0) {
                 progress = 1.0
@@ -80,7 +80,7 @@ public class WSpinner: UIControl {
         }
     }
 
-    public var indeterminate: Bool = false {
+    open var indeterminate: Bool = false {
         didSet {
             if (oldValue == indeterminate) {
                 return
@@ -90,14 +90,14 @@ public class WSpinner: UIControl {
                 progress = self.indeterminateSectionLength
 
                 let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-                rotationAnimation.toValue = direction == .Clockwise ? M_PI * 2 : -M_PI * 2
+                rotationAnimation.toValue = direction == .clockwise ? Double.pi * 2 : -Double.pi * 2
                 rotationAnimation.duration = 1.4
-                rotationAnimation.cumulative = true
+                rotationAnimation.isCumulative = true
                 rotationAnimation.repeatCount = HUGE
-                rotationAnimation.removedOnCompletion = false
+                rotationAnimation.isRemovedOnCompletion = false
 
-                backgroundLayer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
-                progressLayer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
+                backgroundLayer.add(rotationAnimation, forKey: "rotationAnimation")
+                progressLayer.add(rotationAnimation, forKey: "rotationAnimation")
             } else {
                 backgroundLayer.removeAllAnimations()
                 progressLayer.removeAllAnimations()
@@ -105,7 +105,7 @@ public class WSpinner: UIControl {
         }
     }
 
-    public var direction: WSpinnerDirection = .Clockwise {
+    open var direction: WSpinnerDirection = .clockwise {
         didSet {
             setNeedsDisplayMainThread()
         }
@@ -113,7 +113,7 @@ public class WSpinner: UIControl {
 
     // MARK: - Inits
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -128,30 +128,30 @@ public class WSpinner: UIControl {
         commonInit()
     }
 
-    private func commonInit() {
-        backgroundColor = .clearColor()
-        progressLayer.strokeColor = progressLineColor.CGColor
-        backgroundLayer.strokeColor = backgroundLineColor.CGColor
+    fileprivate func commonInit() {
+        backgroundColor = .clear
+        progressLayer.strokeColor = progressLineColor.cgColor
+        backgroundLayer.strokeColor = backgroundLineColor.cgColor
 
         setupBackgroundLayer()
         setupProgressLayer()
         setupIconLayer()
     }
 
-    private func setupBackgroundLayer() {
+    fileprivate func setupBackgroundLayer() {
         backgroundLayer.frame = bounds
-        backgroundLayer.fillColor = UIColor.clearColor().CGColor
+        backgroundLayer.fillColor = UIColor.clear.cgColor
         backgroundLayer.lineWidth = lineWidth
         backgroundLayer.lineCap = kCALineCapRound
 
         if (backgroundLayer.superlayer != layer) {
-            layer.insertSublayer(backgroundLayer, atIndex: 0)
+            layer.insertSublayer(backgroundLayer, at: 0)
         }
     }
 
-    private func setupProgressLayer() {
+    fileprivate func setupProgressLayer() {
         progressLayer.frame = bounds
-        progressLayer.fillColor = UIColor.clearColor().CGColor
+        progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineWidth = lineWidth
         progressLayer.lineCap = kCALineCapRound
 
@@ -160,7 +160,7 @@ public class WSpinner: UIControl {
         }
     }
 
-    private func setupIconLayer() {
+    fileprivate func setupIconLayer() {
         iconLayer.frame = bounds
 
         if (iconLayer.superlayer != layer) {
@@ -169,13 +169,13 @@ public class WSpinner: UIControl {
     }
 
     // MARK: - Drawing
-    public func setNeedsDisplayMainThread() {
-        dispatch_async(dispatch_get_main_queue()) {
+    open func setNeedsDisplayMainThread() {
+        DispatchQueue.main.async {
             self.setNeedsDisplay()
         }
     }
 
-    public override func drawRect(rect: CGRect) {
+    open override func draw(_ rect: CGRect) {
         backgroundLayer.frame = bounds
         progressLayer.frame = bounds
         iconLayer.frame = bounds
@@ -184,25 +184,25 @@ public class WSpinner: UIControl {
         drawProgress()
     }
 
-    public func drawBackgroundCircle() {
+    open func drawBackgroundCircle() {
         backgroundLayer.strokeStart = 0
         backgroundLayer.strokeEnd = 1
 
         backgroundLayer.path = circlePath(true)
     }
 
-    public func drawProgress() {
+    open func drawProgress() {
         progressLayer.strokeStart = 0
         progressLayer.strokeEnd = progress
 
         progressLayer.path = circlePath(false)
     }
 
-    private func circlePath(backgroundPath: Bool) -> CGPath {
-        let isClockwise = direction == .Clockwise
-        let startAngle = CGFloat(3 * M_PI / 2)
-        let endAngle = isClockwise ? startAngle + CGFloat(2 * M_PI) : startAngle - CGFloat(2 * M_PI)
-        let center = CGPointMake(bounds.size.width / 2, bounds.size.height / 2)
+    fileprivate func circlePath(_ backgroundPath: Bool) -> CGPath {
+        let isClockwise = direction == .clockwise
+        let startAngle = CGFloat(3 * Double.pi / 2)
+        let endAngle = isClockwise ? startAngle + CGFloat(2 * Double.pi) : startAngle - CGFloat(2 * Double.pi)
+        let center = CGPoint(x: bounds.size.width / 2, y: bounds.size.height / 2)
         let radius = (bounds.size.width - lineWidth) / 2
 
         var path: UIBezierPath?
@@ -213,8 +213,8 @@ public class WSpinner: UIControl {
             path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: isClockwise)
         }
 
-        path!.lineCapStyle = .Round
+        path!.lineCapStyle = .round
 
-        return path!.CGPath
+        return path!.cgPath
     }
 }

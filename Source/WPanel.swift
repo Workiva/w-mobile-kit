@@ -31,7 +31,7 @@ public protocol WPanelDelegate: class {
     func setPanelOffset(value: CGFloat, animated: Bool)
 }
 
-public class WPanel: UIView {
+open class WPanel: UIView {
     var topDragLine = UIView()
     var bottomDragLine = UIView()
 
@@ -51,41 +51,41 @@ public class WPanel: UIView {
     }
 
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
     public func commonInit() {
-        backgroundColor = .clearColor()
-        containerView.backgroundColor = .whiteColor()
+        backgroundColor = .clear
+        containerView.backgroundColor = .white
 
         addSubview(containerView)
         addSubview(topDragLine)
         addSubview(bottomDragLine)
 
-        topDragLine.backgroundColor = .grayColor()
-        bottomDragLine.backgroundColor = .grayColor()
+        topDragLine.backgroundColor = .gray
+        bottomDragLine.backgroundColor = .gray
 
         clipsToBounds = true
 
         setupUI()
     }
 
-    public func setupUI() {
+    open func setupUI() {
         let cornerRadius = layer.cornerRadius
-        containerView.snp_remakeConstraints { (make) in
+        containerView.snp.remakeConstraints { (make) in
             make.left.right.width.top.equalTo(self)
             make.bottom.equalTo(self).offset(-cornerRadius)
         }
 
-        topDragLine.snp_remakeConstraints { (make) in
+        topDragLine.snp.remakeConstraints { (make) in
             make.top.equalTo(self).offset(6)
             make.width.equalTo(dragLineWidth)
             make.centerX.equalTo(self)
             make.height.equalTo(1)
         }
 
-        bottomDragLine.snp_remakeConstraints { (make) in
-            make.top.equalTo(topDragLine.snp_bottom).offset(4)
+        bottomDragLine.snp.remakeConstraints { (make) in
+            make.top.equalTo(topDragLine.snp.bottom).offset(4)
             make.height.equalTo(topDragLine)
             make.centerX.equalTo(topDragLine)
             make.width.equalTo(topDragLine)
@@ -95,7 +95,7 @@ public class WPanel: UIView {
     }
 }
 
-public class WPanelVC: WSideMenuContentVC {
+open class WPanelVC: WSideMenuContentVC {
     public var panelView = WPanel()
     public var floatingButton = WFAButton()
     public var panInterceptView = UIView()
@@ -106,8 +106,8 @@ public class WPanelVC: WSideMenuContentVC {
 
     // Controls the constraint for the movement of the panel
     public var currentPanelOffset: CGFloat = 0 {
-        didSet {
-            mutableConstraint?.updateOffset(-currentPanelOffset)
+        didSet {            
+            mutableConstraint?.update(offset: -currentPanelOffset)
         }
     }
 
@@ -160,7 +160,7 @@ public class WPanelVC: WSideMenuContentVC {
             panelView.layer.borderWidth = outlineWidth
         }
     }
-    public var outlineColor: CGColor = UIColor.lightGrayColor().CGColor {
+    public var outlineColor: CGColor = UIColor.lightGray.cgColor {
         didSet {
             panelView.layer.borderColor = outlineColor
         }
@@ -182,7 +182,7 @@ public class WPanelVC: WSideMenuContentVC {
         commonInit()
     }
 
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         commonInit()
@@ -192,48 +192,48 @@ public class WPanelVC: WSideMenuContentVC {
         self.init(nibName: nil, bundle: nil)
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         currentPanelRatio = getSmallestSnapRatio()
         currentPanelOffset = view.frame.height * currentPanelRatio
-        panInterceptView.hidden = true
+        panInterceptView.isHidden = true
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         setupUI()
     }
 
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
 
-        coordinator.animateAlongsideTransition(
-            { (context) in
+        coordinator.animate(
+            alongsideTransition: { (context) in
                 self.setupUI()
             },
             completion: nil
         )
     }
 
-    public func commonInit() {
-        floatingButton.addTarget(self, action: #selector(WPanelVC.floatingButtonWasPressed(_:)), forControlEvents: .TouchUpInside)
+    open func commonInit() {
+        floatingButton.addTarget(self, action: #selector(WPanelVC.floatingButtonWasPressed(sender:)), for: .touchUpInside)
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(recognizer:)))
         tapRecognizer.cancelsTouchesInView = false
         panInterceptView.addGestureRecognizer(tapRecognizer)
 
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasPanned(_:)))
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasPanned(recognizer:)))
         panRecognizer.cancelsTouchesInView = false
         panInterceptView.addGestureRecognizer(panRecognizer)
 
-        let tapHideRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(_:)))
+        let tapHideRecognizer = UITapGestureRecognizer(target: self, action: #selector(WPanelVC.panelWasTapped(recognizer:)))
         tapHideRecognizer.cancelsTouchesInView = false
         contentContainerView.addGestureRecognizer(tapHideRecognizer)
     }
 
-    public func setupUI() {
+    open func setupUI() {
         view.addSubview(contentContainerView)
         view.addSubview(floatingButton)
         view.addSubview(panelView)
@@ -242,70 +242,70 @@ public class WPanelVC: WSideMenuContentVC {
         panelView.layer.borderWidth = outlineWidth
         panelView.layer.borderColor = outlineColor
 
-        panelView.snp_removeConstraints()
+        panelView.snp.removeConstraints()
 
         sidePanelCoversContent = view.frame.width <= sidePanelCoversContentUpToWidth
 
         if (sidePanel) {
             currentPanelOffset = currentPanelOffset > 0.0 ? sidePanelWidth : 0.0
-            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(fromRatio: getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
 
-            panelView.snp_remakeConstraints { (make) in
+            panelView.snp.remakeConstraints { (make) in
                 make.width.equalTo(sidePanelWidth)
                 make.top.bottom.height.equalTo(view)
-                mutableConstraint = make.left.equalTo(view.snp_right).offset(-currentPanelOffset).constraint
+                mutableConstraint = make.left.equalTo(view.snp.right).offset(-currentPanelOffset).constraint
             }
 
-            panInterceptView.snp_remakeConstraints { (make) in
+            panInterceptView.snp.remakeConstraints { (make) in
                 make.top.bottom.height.equalTo(panelView)
                 make.left.equalTo(panelView).offset(-20)
-                make.right.equalTo(panelView.snp_left).offset(15)
+                make.right.equalTo(panelView.snp.left).offset(15)
             }
 
-            contentContainerView.snp_remakeConstraints { (make) in
+            contentContainerView.snp.remakeConstraints { (make) in
                 make.centerY.left.top.bottom.equalTo(view)
                 if (!sidePanelCoversContent) {
-                    make.right.equalTo(panelView.snp_left)
+                    make.right.equalTo(panelView.snp.left)
                 } else {
                     make.right.equalTo(view)
                 }
             }
 
-            panelView.topDragLine.hidden = true
-            panelView.bottomDragLine.hidden = true
+            panelView.topDragLine.isHidden = true
+            panelView.bottomDragLine.isHidden = true
             panelView.layer.cornerRadius = 0
         } else {
             var offset = view.frame.height * currentPanelRatio
-            if let minimumSnapHeight = minimumSnapHeight where offset < minimumSnapHeight && offset > 0.0 {
+            if let minimumSnapHeight = minimumSnapHeight, offset < minimumSnapHeight && offset > 0.0 {
                 offset = minimumSnapHeight
             }
 
             currentPanelOffset = offset
 
-            contentContainerView.snp_remakeConstraints { (make) in
+            contentContainerView.snp.remakeConstraints { (make) in
                 make.edges.equalTo(view)
             }
 
-            panelView.snp_remakeConstraints { (make) in
+            panelView.snp.remakeConstraints { (make) in
                 make.width.equalTo(view).offset(-20)
                 make.centerX.equalTo(view)
-                mutableConstraint = make.top.equalTo(view.snp_bottom).offset(-currentPanelOffset).constraint
+                mutableConstraint = make.top.equalTo(view.snp.bottom).offset(-currentPanelOffset).constraint
                 make.bottom.equalTo(view).offset(cornerRadius)
             }
 
-            panInterceptView.snp_remakeConstraints { (make) in
+            panInterceptView.snp.remakeConstraints { (make) in
                 make.width.equalTo(panelView)
                 make.top.equalTo(panelView).offset(-30)
-                make.bottom.equalTo(panelView.snp_top).offset(20)
+                make.bottom.equalTo(panelView.snp.top).offset(20)
                 make.centerX.equalTo(panelView)
             }
 
-            panelView.topDragLine.hidden = false
-            panelView.bottomDragLine.hidden = false
+            panelView.topDragLine.isHidden = false
+            panelView.bottomDragLine.isHidden = false
             panelView.layer.cornerRadius = cornerRadius
         }
 
-        floatingButton.snp_remakeConstraints { (make) in
+        floatingButton.snp.remakeConstraints { (make) in
             make.right.equalTo(view).offset(-20)
             make.bottom.equalTo(view).offset(-20)
             make.height.width.equalTo(50)
@@ -315,14 +315,14 @@ public class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
     }
 
-    public func panelWasPanned(recognizer: UIPanGestureRecognizer) {
+    open func panelWasPanned(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
-        case .Began, .Changed:
+        case .began, .changed:
             if (sidePanel) {
-                let xLocation = recognizer.locationInView(view).x
+                let xLocation = recognizer.location(in: view).x
                 currentPanelOffset = min(sidePanelWidth, view.frame.width - xLocation)
             } else {
-                let yLocation = recognizer.locationInView(view).y
+                let yLocation = recognizer.location(in: view).y
                 var yOffset = view.frame.height - yLocation
                 let heightRatio: CGFloat = yOffset / view.frame.height
                 let largestRatio = getLargestSnapRatio()
@@ -342,22 +342,22 @@ public class WPanelVC: WSideMenuContentVC {
                 currentPanelOffset = yOffset
             }
             view.layoutIfNeeded()
-        case .Ended, .Cancelled, .Failed:
+        case .ended, .cancelled, .failed:
             if (sidePanel) {
-                let xLocation = recognizer.locationInView(view).x
+                let xLocation = recognizer.location(in: view).x
                 let xOffset = view.frame.width - xLocation
 
                 var closestWidthSnapValue = xOffset > (sidePanelWidth / 2) ? sidePanelWidth : 0
-                let xVelocity = recognizer.velocityInView(view).x
+                let xVelocity = recognizer.velocity(in: view).x
                 if (xVelocity > velocityForSwipe) {
                     closestWidthSnapValue = 0
                 } else if (xVelocity < -velocityForSwipe) {
                     closestWidthSnapValue = sidePanelWidth
                 }
 
-                movePanelToValue(closestWidthSnapValue, animated: true)
+                movePanelToValue(value: closestWidthSnapValue, animated: true)
             } else {
-                let yLocation = recognizer.locationInView(view).y
+                let yLocation = recognizer.location(in: view).y
                 let yOffset = view.frame.height - yLocation
                 let currentSnapRatio: CGFloat = yOffset / view.frame.height
 
@@ -376,23 +376,23 @@ public class WPanelVC: WSideMenuContentVC {
                 closestSnapRatio = closestSnapRatio ?? 0.0
 
                 // Check velocity of pan if user is flinging panel up or down
-                let yVelocity = -recognizer.velocityInView(view).y
-                if (yVelocity > velocityForSwipe && currentSnapRatio > closestSnapRatio) {
-                    if let nextRatio = getNextSnapRatio(closestSnapRatio!) {
+                let yVelocity = -recognizer.velocity(in: view).y
+                if (yVelocity > velocityForSwipe && currentSnapRatio > closestSnapRatio!) {
+                    if let nextRatio = getNextSnapRatio(fromRatio: closestSnapRatio!) {
                         closestSnapRatio = nextRatio
                     }
-                } else if (yVelocity < -velocityForSwipe && currentSnapRatio < closestSnapRatio) {
-                    if let prevRatio = getPreviousSnapRatio(closestSnapRatio!) {
+                } else if (yVelocity < -velocityForSwipe && currentSnapRatio < closestSnapRatio!) {
+                    if let prevRatio = getPreviousSnapRatio(fromRatio: closestSnapRatio!) {
                         closestSnapRatio = prevRatio
                     }
                 }
 
                 // Verify the height is not smaller than the minimum height if set
                 let actualHeight = view.frame.height * closestSnapRatio!
-                if let minimumSnapHeight = minimumSnapHeight where closestSnapRatio! > 0.0 && actualHeight < minimumSnapHeight {
-                    movePanelToValue(minimumSnapHeight, animated: true)
+                if let minimumSnapHeight = minimumSnapHeight, closestSnapRatio! > 0.0 && actualHeight < minimumSnapHeight {
+                    movePanelToValue(value: minimumSnapHeight, animated: true)
                 } else {
-                    movePanelToSnapRatio(closestSnapRatio!, animated: true)
+                    movePanelToSnapRatio(ratio: closestSnapRatio!, animated: true)
                 }
             }
         default:
@@ -400,33 +400,33 @@ public class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    public func panelWasTapped(recognizer: UIGestureRecognizer) {
+    open func panelWasTapped(recognizer: UIGestureRecognizer) {
         if (sidePanel && sidePanelCoversContent) {
-            movePanelToValue(0.0, animated: true)
+            movePanelToValue(value: 0.0, animated: true)
         } else if (!sidePanel) {
-            movePanelToSnapRatio(snapHeights[0], animated: true)
+            movePanelToSnapRatio(ratio: snapHeights[0], animated: true)
         }
     }
 
-    public func floatingButtonWasPressed(sender: WFAButton) {
+    open func floatingButtonWasPressed(sender: WFAButton) {
         if (sidePanel) {
-            movePanelToValue(sidePanelWidth, animated: true)
+            movePanelToValue(value: sidePanelWidth, animated: true)
         } else {
             // Move to 1st ratio above the smallest (which is typically 0.0), or the largest if there isn't one after the smallest
-            let snapRatio = getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()
+            let snapRatio = getNextSnapRatio(fromRatio: getSmallestSnapRatio()) ?? getLargestSnapRatio()
 
             // Verify the height is not smaller than the minimum height if set
             let actualHeight = view.frame.height * snapRatio
-            if let minimumSnapHeight = minimumSnapHeight where actualHeight < minimumSnapHeight {
-                movePanelToValue(minimumSnapHeight, animated: true)
+            if let minimumSnapHeight = minimumSnapHeight, actualHeight < minimumSnapHeight {
+                movePanelToValue(value: minimumSnapHeight, animated: true)
             } else {
-                movePanelToSnapRatio(snapRatio, animated: true)
+                movePanelToSnapRatio(ratio: snapRatio, animated: true)
             }
         }
     }
 
     // Snap Height Helpers
-    public func getNextSnapRatio(fromRatio: CGFloat) -> CGFloat? {
+    open func getNextSnapRatio(fromRatio: CGFloat) -> CGFloat? {
         var returnRatio: CGFloat?
         var nextHighest: CGFloat = 1.0
         for ratio in snapHeights {
@@ -439,7 +439,7 @@ public class WPanelVC: WSideMenuContentVC {
         return returnRatio
     }
 
-    public func getPreviousSnapRatio(fromRatio: CGFloat) -> CGFloat? {
+    open func getPreviousSnapRatio(fromRatio: CGFloat) -> CGFloat? {
         var returnRatio: CGFloat?
         var previousLowest: CGFloat = 0.0
         for ratio in snapHeights {
@@ -452,7 +452,7 @@ public class WPanelVC: WSideMenuContentVC {
         return returnRatio
     }
 
-    public func getSmallestSnapRatio() -> CGFloat {
+    open func getSmallestSnapRatio() -> CGFloat {
         var smallestRatio: CGFloat = 1.0
 
         for ratio in snapHeights {
@@ -464,7 +464,7 @@ public class WPanelVC: WSideMenuContentVC {
         return smallestRatio
     }
 
-    public func getLargestSnapRatio() -> CGFloat {
+    open func getLargestSnapRatio() -> CGFloat {
         var largestRatio: CGFloat = 0.0
 
         for ratio in snapHeights {
@@ -476,15 +476,15 @@ public class WPanelVC: WSideMenuContentVC {
         return largestRatio
     }
 
-    public func movePanelToSnapRatio(ratio: CGFloat, animated: Bool = false) {
+    open func movePanelToSnapRatio(ratio: CGFloat, animated: Bool = false) {
         // Get actual height
         let snapRatioOffset = view.frame.height * ratio
         currentPanelRatio = ratio
 
-        movePanelToValue(snapRatioOffset, animated: animated)
+        movePanelToValue(value: snapRatioOffset, animated: animated)
     }
 
-    public func movePanelToValue(value: CGFloat, animated: Bool = false) {
+    open func movePanelToValue(value: CGFloat, animated: Bool = false) {
         // Need to layout any pending changes before animation
         view.layoutIfNeeded()
 
@@ -492,21 +492,21 @@ public class WPanelVC: WSideMenuContentVC {
 
         // Set ratio as well for vertical panel in any case
         if (sidePanel) {
-            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
+            currentPanelRatio = currentPanelOffset > 0.0 ? (getNextSnapRatio(fromRatio: getSmallestSnapRatio()) ?? getLargestSnapRatio()) : 0.0
         } else {
             currentPanelRatio = currentPanelOffset / view.frame.height
         }
 
         if (animated) {
             if (sidePanel) {
-                UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut,
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut,
                     animations: {
                         self.view.layoutIfNeeded()
                     },
                     completion: nil
                 )
             } else {
-                UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut,
+                UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .curveEaseOut,
                     animations: {
                         self.view.layoutIfNeeded()
                     },
@@ -517,8 +517,8 @@ public class WPanelVC: WSideMenuContentVC {
             view.layoutIfNeeded()
         }
 
-        floatingButton.hidden = value > 0.0
-        panInterceptView.hidden = value <= 0.0
+        floatingButton.isHidden = value > 0.0
+        panInterceptView.isHidden = value <= 0.0
     }
 }
 
@@ -528,15 +528,15 @@ extension WPanelVC: WPanelDelegate {
     }
 
     public func setPanelRatio(ratio: CGFloat, animated: Bool) {
-        movePanelToSnapRatio(ratio, animated: animated)
+        movePanelToSnapRatio(ratio: ratio, animated: animated)
     }
 
     public func setPanelOffset(value: CGFloat, animated: Bool) {
-        movePanelToValue(value, animated: animated)
+        movePanelToValue(value: value, animated: animated)
     }
 }
 
-public class WPagingPanelVC: WPanelVC {
+open class WPagingPanelVC: WPanelVC {
     // An array of the view controllers to be pages
     public var pages: [UIViewController]? {
         didSet {
@@ -571,7 +571,7 @@ public class WPagingPanelVC: WPanelVC {
 
     public var pagingVC = WPanelPageControllerVC()
 
-    public override func commonInit() {
+    open override func commonInit() {
         super.commonInit()
 
         addViewControllerToContainer(panelView.containerView, viewController: pagingVC)
@@ -583,7 +583,7 @@ public class WPagingPanelVC: WPanelVC {
 //
 
 // View Controller to contain UIPageViewController and separate UIPageControl for customization options
-public class WPanelPageControllerVC: UIViewController {
+open class WPanelPageControllerVC: UIViewController {
     public var pagingManager = WPanelPageManagerVC()
     public var pagingContainerView = UIView()
 
@@ -620,14 +620,14 @@ public class WPanelPageControllerVC: UIViewController {
         }
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         commonInit()
         setupUI()
     }
 
-    public func commonInit() {
+    open func commonInit() {
         view.addSubview(pagingView)
         view.addSubview(pagingContainerView)
         addViewControllerToContainer(pagingContainerView, viewController: pagingManager)
@@ -635,25 +635,29 @@ public class WPanelPageControllerVC: UIViewController {
         pagingManager.pageIndicatorDelegate = self
     }
 
-    public func setupUI() {
-        if (alwaysShowPagingBar || pagingManager.pages?.count > 1) {
-            pagingView.hidden = false
+    open func setupUI() {
+        guard let pages = pagingManager.pages else {
+            return
+        }
 
-            pagingView.snp_remakeConstraints { (make) in
+        if (alwaysShowPagingBar || pages.count > 1) {
+            pagingView.isHidden = false
+
+            pagingView.snp.remakeConstraints { (make) in
                 make.width.centerX.equalTo(view)
                 make.height.equalTo(pagingHeight)
                 make.bottom.greaterThanOrEqualTo(view)
-                make.top.equalTo(view).offset(pagingBarHidePadding).priorityMedium()
+                make.top.equalTo(view).offset(pagingBarHidePadding).priority(500)
             }
 
-            pagingContainerView.snp_remakeConstraints { (make) in
+            pagingContainerView.snp.remakeConstraints { (make) in
                 make.width.centerX.top.equalTo(view)
-                make.bottom.equalTo(pagingView.snp_top)
+                make.bottom.equalTo(pagingView.snp.top)
             }
         } else {
-            pagingView.hidden = true
+            pagingView.isHidden = true
 
-            pagingContainerView.snp_remakeConstraints { (make) in
+            pagingContainerView.snp.remakeConstraints { (make) in
                 make.edges.equalTo(view)
             }
         }
@@ -663,23 +667,23 @@ public class WPanelPageControllerVC: UIViewController {
 
     func setPageScrollEnabled(enabled: Bool = true) {
         if let scrollView = view.subviews.last?.subviews.first?.subviews.first as? UIScrollView {
-            scrollView.scrollEnabled = enabled
+            scrollView.isScrollEnabled = enabled
         }
     }
 
     func calculateIfScrollingAllowed() {
-        if (pages?.count > 1 || canScrollWithOnlyOnePage) {
+        if ((pages?.count)! > 1 || canScrollWithOnlyOnePage) {
             setPageScrollEnabled()
         } else {
-            setPageScrollEnabled(false)
+            setPageScrollEnabled(enabled: false)
         }
     }
 
-    public func changeToPageIndex(animated: Bool, index: Int) {
+    open func changeToPageIndex(animated: Bool, index: Int) {
         if let pages = pages {
             if (index >= 0 && index < pages.count) {
-                pagingManager.setViewControllers([pages[index]], direction: .Forward, animated: animated, completion: nil)
-                wPanelPageManager(pagingManager, didUpdatePageIndex: index)
+                pagingManager.setViewControllers([pages[index]], direction: .forward, animated: animated, completion: nil)
+                wPanelPageManager(pageManager: pagingManager, didUpdatePageIndex: index)
             }
         }
     }
@@ -695,7 +699,7 @@ extension WPanelPageControllerVC: WPanelPageManagerDelegate {
     }
 }
 
-public class WPanelPageManagerVC: UIPageViewController {
+open class WPanelPageManagerVC: UIPageViewController {
     var pages: [UIViewController]? {
         didSet {
             setupUI()
@@ -704,15 +708,15 @@ public class WPanelPageManagerVC: UIPageViewController {
 
     weak var pageIndicatorDelegate: WPanelPageManagerDelegate?
 
-    public override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
-        super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: options)
+    public override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         dataSource = self
@@ -721,29 +725,29 @@ public class WPanelPageManagerVC: UIPageViewController {
         setupUI()
     }
 
-    public func setupUI() {
-        if let pages = pages, firstPage = pages.first {
-            setViewControllers([firstPage], direction: .Forward, animated: true, completion: nil)
+    open func setupUI() {
+        if let pages = pages, let firstPage = pages.first {
+            setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
 
-            pageIndicatorDelegate?.wPanelPageManager(self, didUpdatePageCount: pages.count)
+            pageIndicatorDelegate?.wPanelPageManager(pageManager: self, didUpdatePageCount: pages.count)
         }
     }
 }
 
 extension WPanelPageManagerVC: UIPageViewControllerDelegate {
-    public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let firstViewController = viewControllers?.first,
-            let index = pages?.indexOf(firstViewController) {
+            let index = pages?.index(of: firstViewController) {
 
-            pageIndicatorDelegate?.wPanelPageManager(self, didUpdatePageIndex: index)
+            pageIndicatorDelegate?.wPanelPageManager(pageManager: self, didUpdatePageIndex: index)
         }
     }
 }
 
 extension WPanelPageManagerVC: UIPageViewControllerDataSource {
-    public func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.indexOf(viewController) else {
+            guard let viewControllerIndex = pages.index(of: viewController) else {
                 return nil
             }
 
@@ -763,9 +767,9 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
         return nil
     }
 
-    public func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.indexOf(viewController) else {
+            guard let viewControllerIndex = pages.index(of: viewController) else {
                 return nil
             }
 
@@ -782,7 +786,7 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
     }
 }
 
-public class WPanelPagingView: UIView {
+open class WPanelPagingView: UIView {
     public var pagingControl = UIPageControl() {
         didSet {
             oldValue.removeFromSuperview()
@@ -791,12 +795,12 @@ public class WPanelPagingView: UIView {
         }
     }
 
-    public var currentPageIndicatorTintColor: UIColor = UIColor.purpleColor() {
+    public var currentPageIndicatorTintColor: UIColor = UIColor.purple {
         didSet {
             pagingControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor
         }
     }
-    public var pageIndicatorTintColor: UIColor = UIColor.whiteColor() {
+    public var pageIndicatorTintColor: UIColor = UIColor.white {
         didSet {
             pagingControl.pageIndicatorTintColor = pageIndicatorTintColor
         }
@@ -815,19 +819,19 @@ public class WPanelPagingView: UIView {
     }
 
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
-    public func commonInit() {
+    open func commonInit() {
         addSubview(pagingControl)
 
-        backgroundColor = .grayColor()
+        backgroundColor = .gray
 
         setupUI()
     }
 
-    public func setupUI() {
-        pagingControl.snp_remakeConstraints { (make) in
+    open func setupUI() {
+        pagingControl.snp.remakeConstraints { (make) in
             make.centerX.width.equalTo(self)
             make.height.equalTo(0)
             make.centerY.equalTo(self).offset(-2)

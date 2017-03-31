@@ -29,7 +29,7 @@ class WLoadingModalTests: QuickSpec {
             beforeEach({
                 subject = UIViewController()
 
-                let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                let window = UIWindow(frame: UIScreen.main.bounds)
                 window.rootViewController = subject
 
                 subject.beginAppearanceTransition(true, animated: false)
@@ -42,15 +42,15 @@ class WLoadingModalTests: QuickSpec {
 
             describe("when app has been init") {
                 let verifyCommonInit = {
-                    expect(loadingModalView.backgroundColor) == .clearColor()
+                    expect(loadingModalView.backgroundColor) == .clear
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
-                    expect(loadingModalView.titleLabel.textColor) == UIColor.whiteColor()
-                    expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.Center
-                    expect(loadingModalView.descriptionLabel.textColor) == UIColor.whiteColor()
-                    expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.Center
+                    expect(loadingModalView.titleLabel.textColor) == UIColor.white
+                    expect(loadingModalView.titleLabel.textAlignment) == NSTextAlignment.center
+                    expect(loadingModalView.descriptionLabel.textColor) == UIColor.white
+                    expect(loadingModalView.descriptionLabel.textAlignment) == NSTextAlignment.center
                     expect(loadingModalView.descriptionLabel.numberOfLines) == 0
-                    expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Dark))
-                    expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleWidth, .FlexibleHeight]
+                    expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.dark))
+                    expect(loadingModalView.blurEffectAutoResizingMask) == [.flexibleWidth, .flexibleHeight]
                     expect(loadingModalView.spinnerSize) == 44
                     expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 32
                     expect(loadingModalView.paddingBetweenTitleAndSpinner) == 32
@@ -63,11 +63,11 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView = WLoadingModal(frame: subject.view.frame)
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WLoadingModal")
+                    let locToSave = path.appendingPathComponent("WLoadingModal")
 
                     NSKeyedArchiver.archiveRootObject(loadingModalView, toFile: locToSave)
 
-                    let loadingModalView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WLoadingModal
+                    let loadingModalView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WLoadingModal
 
                     expect(loadingModalView).toNot(equal(nil))
 
@@ -79,11 +79,11 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView = WLoadingModal()
 
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.stringByAppendingPathComponent("WLoadingModal")
+                    let locToSave = path.appendingPathComponent("WLoadingModal")
 
                     NSKeyedArchiver.archiveRootObject(loadingModalView, toFile: locToSave)
 
-                    let loadingModalView = NSKeyedUnarchiver.unarchiveObjectWithFile(locToSave) as! WLoadingModal
+                    let loadingModalView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WLoadingModal
                     
                     expect(loadingModalView).toNot(equal(nil))
 
@@ -130,39 +130,39 @@ class WLoadingModalTests: QuickSpec {
                 }
 
                 it("should successfully create a loading view with custom settings") {
-                    loadingModalView = WLoadingModal(.whiteColor(),
+                    loadingModalView = WLoadingModal(.white,
                         title: "Unit Tests",
                         description: "Unit tests are a great resource, and everyone should love them.")
 
-                    expect(loadingModalView.backgroundColor) == .whiteColor()
+                    expect(loadingModalView.backgroundColor) == .white
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
 
                     let tLabel = loadingModalView.titleLabel
-                    expect(tLabel.textColor) == UIColor.whiteColor()
-                    expect(tLabel.textAlignment) == NSTextAlignment.Center
+                    expect(tLabel.textColor) == UIColor.white
+                    expect(tLabel.textAlignment) == NSTextAlignment.center
                     expect(tLabel.text).to(equal("Unit Tests"))
 
                     let dLabel = loadingModalView.descriptionLabel
-                    expect(dLabel.textColor) == UIColor.whiteColor()
-                    expect(dLabel.textAlignment) == NSTextAlignment.Center
+                    expect(dLabel.textColor) == UIColor.white
+                    expect(dLabel.textAlignment) == NSTextAlignment.center
                     expect(dLabel.numberOfLines) == 0
                     expect(dLabel.text).to(equal("Unit tests are a great resource, and everyone should love them."))
                 }
 
                 it("should successfully create a loading view with custom settings") {
-                    loadingModalView = WLoadingModal(.whiteColor(), title: "Unit Tests")
+                    loadingModalView = WLoadingModal(.white, title: "Unit Tests")
 
-                    expect(loadingModalView.backgroundColor) == .whiteColor()
+                    expect(loadingModalView.backgroundColor) == .white
                     expect(loadingModalView.spinnerView.indeterminate).to(beTruthy())
 
                     let tLabel = loadingModalView.titleLabel
-                    expect(tLabel.textColor) == UIColor.whiteColor()
-                    expect(tLabel.textAlignment) == NSTextAlignment.Center
+                    expect(tLabel.textColor) == UIColor.white
+                    expect(tLabel.textAlignment) == NSTextAlignment.center
                     expect(tLabel.text).to(equal("Unit Tests"))
 
                     let dLabel = loadingModalView.descriptionLabel
-                    expect(dLabel.textColor) == UIColor.whiteColor()
-                    expect(dLabel.textAlignment) == NSTextAlignment.Center
+                    expect(dLabel.textColor) == UIColor.white
+                    expect(dLabel.textAlignment) == NSTextAlignment.center
                     expect(dLabel.numberOfLines) == 0
                     expect(dLabel.text).to(beNil())
                 }
@@ -201,8 +201,8 @@ class WLoadingModalTests: QuickSpec {
                     loadingModalView.paddingBetweenDescriptionAndTitle = 30
                     loadingModalView.titleLabelHeight = 44
                     loadingModalView.descriptionLabelHeight = 66
-                    loadingModalView.blurEffectStyle = .Light
-                    loadingModalView.blurEffectAutoResizingMask = [.FlexibleRightMargin, .FlexibleTopMargin]
+                    loadingModalView.blurEffectStyle = .light
+                    loadingModalView.blurEffectAutoResizingMask = [.flexibleRightMargin, .flexibleTopMargin]
 
                     expect(loadingModalView.spinnerSize) == 11
                     expect(loadingModalView.paddingBetweenViewTopAndSpinner) == 100
@@ -210,8 +210,8 @@ class WLoadingModalTests: QuickSpec {
                     expect(loadingModalView.paddingBetweenDescriptionAndTitle) == 30
                     expect(loadingModalView.titleLabelHeight) == 44
                     expect(loadingModalView.descriptionLabelHeight) == 66
-                    expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.Light))
-                    expect(loadingModalView.blurEffectAutoResizingMask) == [.FlexibleRightMargin, .FlexibleTopMargin]
+                    expect(loadingModalView.blurEffectStyle).to(equal(UIBlurEffectStyle.light))
+                    expect(loadingModalView.blurEffectAutoResizingMask) == [.flexibleRightMargin, .flexibleTopMargin]
                 }
             }
         }

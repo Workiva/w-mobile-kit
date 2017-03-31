@@ -19,21 +19,21 @@
 import Foundation
 import WMobileKit
 
-public class PagingControlExamplesVC: WSideMenuContentVC {
+open class PagingControlExamplesVC: WSideMenuContentVC {
     let tab1Name = "Tab 1"
     let tab2Name = "Tab 2"
     let tab3Name = "Tab 3"
     let tab4Name = "Tab 4"
     let tab5Name = "Tab 5"
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         let pagingSelectorControl1 = WPagingSelectorControl(titles: [tab1Name, tab2Name])
-        pagingSelectorControl1.tabTextColor = UIColor.redColor()
+        pagingSelectorControl1.tabTextColor = UIColor.red
         
         view.addSubview(pagingSelectorControl1);
-        pagingSelectorControl1.snp_makeConstraints { (make) in
+        pagingSelectorControl1.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
@@ -43,53 +43,53 @@ public class PagingControlExamplesVC: WSideMenuContentVC {
         pagingSelectorControl1.layoutSubviews()
         
         let pagingSelectorControl2 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name])
-        pagingSelectorControl2.tabTextColor = UIColor.whiteColor()
+        pagingSelectorControl2.tabTextColor = UIColor.white
 
         view.addSubview(pagingSelectorControl2);
-        pagingSelectorControl2.snp_makeConstraints { (make) in
+        pagingSelectorControl2.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(pagingSelectorControl1.snp_bottom)
+            make.top.equalTo(pagingSelectorControl1.snp.bottom)
         }
 
         let pagingSelectorControl3 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name], tabWidth: 90)
-        pagingSelectorControl3.tabTextColor = UIColor.cyanColor()
+        pagingSelectorControl3.tabTextColor = UIColor.cyan
         
         view.addSubview(pagingSelectorControl3);
-        pagingSelectorControl3.snp_makeConstraints { (make) in
+        pagingSelectorControl3.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(pagingSelectorControl2.snp_bottom)
+            make.top.equalTo(pagingSelectorControl2.snp.bottom)
         }
         
         let pagingSelectorControl4 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name], tabWidth: 90)
-        pagingSelectorControl4.tabTextColor = UIColor.lightGrayColor()
+        pagingSelectorControl4.tabTextColor = UIColor.lightGray
         
         view.addSubview(pagingSelectorControl4);
-        pagingSelectorControl4.snp_makeConstraints { (make) in
+        pagingSelectorControl4.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(pagingSelectorControl3.snp_bottom)
+            make.top.equalTo(pagingSelectorControl3.snp.bottom)
         }
 
         let pagingSelectorControl5 = WPagingSelectorControl(titles: [tab1Name, tab2Name, tab3Name, tab4Name, tab5Name], tabWidth: 90, tabSpacing: 15)
-        pagingSelectorControl5.tabTextColor = UIColor.blackColor()
+        pagingSelectorControl5.tabTextColor = UIColor.black
         
         view.addSubview(pagingSelectorControl5);
-        pagingSelectorControl5.snp_makeConstraints { (make) in
+        pagingSelectorControl5.snp.makeConstraints { (make) in
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(DEFAULT_PAGING_SELECTOR_HEIGHT)
-            make.top.equalTo(pagingSelectorControl4.snp_bottom)
+            make.top.equalTo(pagingSelectorControl4.snp.bottom)
         }
         
         view.layoutIfNeeded()
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         // Set the WSideMenu delegate when the VC appears
