@@ -26,7 +26,7 @@ function run_unit_tests() {
     print_heading "Starting $1 unit tests."
 
     xcodebuild clean test -workspace WMobileKit.xcworkspace -scheme WMobileKit -configuration Debug -destination \
-    "platform=iOS Simulator,name=$1,OS=10.0" -enableCodeCoverage YES | ocunit2junit
+    "platform=iOS Simulator,name=$1,OS=10.3" -enableCodeCoverage YES | ocunit2junit
 
     unit_test_failure_check
 }
