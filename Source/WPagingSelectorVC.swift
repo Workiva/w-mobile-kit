@@ -519,7 +519,7 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
 
             view.addSubview(pagingSelectorControl)
 
-            pagingSelectorControl.snp.makeConstraints { (make) in
+            pagingSelectorControl.snp.remakeConstraints { (make) in
                 make.left.equalTo(view).offset(pagingControlSidePadding)
                 make.right.equalTo(view).offset(-pagingControlSidePadding)
                 make.height.equalTo(pagingControlHeight)
