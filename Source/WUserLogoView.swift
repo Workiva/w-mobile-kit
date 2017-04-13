@@ -190,15 +190,17 @@ open class WUserLogoView: UIView {
 
         initialsLabel.attributedText = attributedString
         initialsLabel.textAlignment = NSTextAlignment.center
-        initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
         switch type {
         case .Outline:
             initialsLabel.textColor = mappedColor
+            initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         case .Filled:
             initialsLabel.textColor = UIColor.white
+            initialsLabel.font = UIFont.boldSystemFont(ofSize: frame.width / 2.5)
         default:
             initialsLabel.textColor = mappedColor
+            initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         }
         bringSubview(toFront: initialsLabel)
     }
