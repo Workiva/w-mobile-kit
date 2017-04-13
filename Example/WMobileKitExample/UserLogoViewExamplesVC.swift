@@ -69,6 +69,7 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
 
         let userLogo2 = WUserLogoView(name: name2)
         scrollView.addSubview(userLogo2)
+        userLogo2.type = .Filled
         userLogo2.snp.makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
             make.top.equalTo(userLogoLabel.snp.bottom).offset(verticalSpacing)
@@ -89,6 +90,7 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
 
         let userLogo3 = WUserLogoView(name: name3)
         scrollView.addSubview(userLogo3)
+        userLogo3.shape = .Square
         userLogo3.snp.makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
             make.top.equalTo(userLogo2.snp.bottom).offset(30)
@@ -109,7 +111,7 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
 
         let userLogo4 = WUserLogoView(name: name4)
         userLogo4.initialsLimit = 2
-        userLogo4.initials = "AS"
+        userLogo4.type = .Filled
         scrollView.addSubview(userLogo4)
         userLogo4.snp.makeConstraints { (make) in
             make.centerX.equalTo(userLogo)
@@ -190,6 +192,8 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
 
         let userLogo8 = WUserLogoView(name: name8)
         userLogo8.initialsLimit = 1
+        userLogo8.shape = .Square
+        userLogo8.type = .Filled
         scrollView.addSubview(userLogo8)
         userLogo8.snp.makeConstraints { (make) in
             make.centerX.equalTo(userLogo6)
@@ -242,6 +246,7 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
         scrollView.addSubview(userLogoLabel10)
         userLogoLabel10.text = userLogo10.name
         userLogoLabel10.textAlignment = .center
+        userLogo10.initials = "AS"
         userLogoLabel10.snp.makeConstraints { (make) in
             make.top.equalTo(userLogo10.snp.bottom)
             make.centerX.equalTo(userLogo10)

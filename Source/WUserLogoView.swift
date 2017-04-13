@@ -21,6 +21,14 @@ import UIKit
 import CryptoSwift
 import SDWebImage
 
+public enum Shape {
+    case Circle, Square
+}
+
+public enum Type {
+    case Outline, Filled
+}
+
 open class WUserLogoView: UIView {
     open var initialsLimit = 3 {
         didSet {
@@ -53,6 +61,24 @@ open class WUserLogoView: UIView {
     }
 
     open var lineWidth: CGFloat = 1.0 {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var shape: Shape = .Circle {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var type: Type = .Outline {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var cornerRadius: CGFloat = 3 {
         didSet {
             setupUI()
         }
@@ -151,7 +177,7 @@ open class WUserLogoView: UIView {
             setupImage()
         }
 
-        setupCircle()
+        setupShape()
     }
 
     fileprivate func setupInitials() {
@@ -166,7 +192,15 @@ open class WUserLogoView: UIView {
         initialsLabel.textAlignment = NSTextAlignment.center
         initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
-        initialsLabel.textColor = mappedColor
+        switch type {
+        case .Outline:
+            initialsLabel.textColor = mappedColor
+        case .Filled:
+            initialsLabel.textColor = UIColor.white
+        default:
+            initialsLabel.textColor = mappedColor
+        }
+        bringSubview(toFront: initialsLabel)
     }
 
     fileprivate func setupImage() {
@@ -180,12 +214,28 @@ open class WUserLogoView: UIView {
         }
     }
 
-    fileprivate func setupCircle() {
+    fileprivate func setupShape() {
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        var path: UIBezierPath!
+
+        switch shape {
+        case .Circle:
+            path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        case .Square:
+            path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: frame.width, height: frame.height), cornerRadius: cornerRadius)
+        default:
+            path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        }
 
         circleLayer.path = path.cgPath
-        circleLayer.fillColor = UIColor.clear.cgColor
+        switch type {
+        case .Outline:
+            circleLayer.fillColor = UIColor.clear.cgColor
+        case.Filled:
+            circleLayer.fillColor = mappedColor.cgColor
+        default:
+            circleLayer.fillColor = UIColor.clear.cgColor
+        }
         circleLayer.lineWidth = lineWidth
         circleLayer.strokeColor = mappedColor.cgColor
     }
