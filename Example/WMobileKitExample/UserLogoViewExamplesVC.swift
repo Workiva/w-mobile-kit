@@ -259,7 +259,7 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
         userLogo11.lineWidth = 2
         scrollView.addSubview(userLogo11)
         userLogo11.snp.makeConstraints { (make) in
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(userLogo5)
             make.top.equalTo(userLogoLabel5.snp.bottom).offset(verticalSpacing)
             make.width.equalTo(70)
             make.height.equalTo(70)
@@ -272,6 +272,29 @@ open class UserLogoViewExamplesVC: WSideMenuContentVC {
         userLogoLabel11.snp.makeConstraints { (make) in
             make.top.equalTo(userLogo11.snp.bottom)
             make.centerX.equalTo(userLogo11)
+            make.height.equalTo(20)
+        }
+
+        let userLogo12 = WUserLogoView(name: name11)
+        userLogo12.initialsLimit = 2
+        userLogo12.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
+        userLogo12.lineWidth = 2
+        userLogo12.shape = .Square
+        scrollView.addSubview(userLogo12)
+        userLogo12.snp.makeConstraints { (make) in
+            make.centerX.equalTo(userLogo10)
+            make.top.equalTo(userLogoLabel5.snp.bottom).offset(verticalSpacing)
+            make.width.equalTo(70)
+            make.height.equalTo(70)
+        }
+
+        let userLogoLabel12 = UILabel()
+        scrollView.addSubview(userLogoLabel12)
+        userLogoLabel12.text = userLogo11.name
+        userLogoLabel12.textAlignment = .center
+        userLogoLabel12.snp.makeConstraints { (make) in
+            make.top.equalTo(userLogo12.snp.bottom)
+            make.centerX.equalTo(userLogo12)
             make.height.equalTo(20)
         }
 

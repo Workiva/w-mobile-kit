@@ -207,7 +207,12 @@ open class WUserLogoView: UIView {
             initialsLabel.isHidden = true
             profileImageView.isHidden = false
 
-            profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            switch shape {
+            case .Circle:
+                profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            case .Square:
+                profileImageView.layer.cornerRadius = cornerRadius
+            }
             profileImageView.clipsToBounds = true
             profileImageView.contentMode = .scaleAspectFill
         }

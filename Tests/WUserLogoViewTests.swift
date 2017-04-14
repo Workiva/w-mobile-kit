@@ -287,6 +287,17 @@ class WUserLogoViewTests: QuickSpec {
                     expect(userLogoView.initialsLabel.textColor) == UIColor.white
                     expect(userLogoView.shapeLayer.fillColor) == userLogoView.mappedColor.cgColor
                 }
+
+                it("should set correct corner radius") {
+                    userLogoView.shape = .Square
+                    userLogoView.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
+
+                    let cornerRadius: CGFloat = 5
+
+                    userLogoView.cornerRadius = cornerRadius
+
+                    expect(userLogoView.profileImageView.layer.cornerRadius) == cornerRadius
+                }
             }
         }
     }
