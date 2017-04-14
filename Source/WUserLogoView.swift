@@ -36,7 +36,7 @@ open class WUserLogoView: UIView {
         }
     }
     open var initialsLabel = UILabel()
-    internal var circleLayer = CAShapeLayer()
+    internal var shapeLayer = CAShapeLayer()
     internal var profileImageView = UIImageView()
 
     internal var mappedColor = UIColor.clear
@@ -139,7 +139,7 @@ open class WUserLogoView: UIView {
         addSubview(initialsLabel)
         addSubview(profileImageView)
 
-        layer.addSublayer(circleLayer)
+        layer.addSublayer(shapeLayer)
     }
 
     fileprivate func setupUIMainThread() {
@@ -198,9 +198,6 @@ open class WUserLogoView: UIView {
         case .Filled:
             initialsLabel.textColor = UIColor.white
             initialsLabel.font = UIFont.boldSystemFont(ofSize: frame.width / 2.5)
-        default:
-            initialsLabel.textColor = mappedColor
-            initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         }
         bringSubview(toFront: initialsLabel)
     }
@@ -225,21 +222,17 @@ open class WUserLogoView: UIView {
             path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
         case .Square:
             path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: frame.width, height: frame.height), cornerRadius: cornerRadius)
-        default:
-            path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
         }
 
-        circleLayer.path = path.cgPath
+        shapeLayer.path = path.cgPath
         switch type {
         case .Outline:
-            circleLayer.fillColor = UIColor.clear.cgColor
+            shapeLayer.fillColor = UIColor.clear.cgColor
         case.Filled:
-            circleLayer.fillColor = mappedColor.cgColor
-        default:
-            circleLayer.fillColor = UIColor.clear.cgColor
+            shapeLayer.fillColor = mappedColor.cgColor
         }
-        circleLayer.lineWidth = lineWidth
-        circleLayer.strokeColor = mappedColor.cgColor
+        shapeLayer.lineWidth = lineWidth
+        shapeLayer.strokeColor = mappedColor.cgColor
     }
 
     fileprivate func updateMappedColor() {
