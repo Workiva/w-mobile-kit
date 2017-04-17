@@ -21,6 +21,14 @@ import UIKit
 import CryptoSwift
 import SDWebImage
 
+public enum Shape {
+    case Circle, Square
+}
+
+public enum Type {
+    case Outline, Filled
+}
+
 open class WUserLogoView: UIView {
     open var initialsLimit = 3 {
         didSet {
@@ -28,7 +36,7 @@ open class WUserLogoView: UIView {
         }
     }
     open var initialsLabel = UILabel()
-    internal var circleLayer = CAShapeLayer()
+    internal var shapeLayer = CAShapeLayer()
     internal var profileImageView = UIImageView()
 
     internal var mappedColor = UIColor.clear
@@ -53,6 +61,24 @@ open class WUserLogoView: UIView {
     }
 
     open var lineWidth: CGFloat = 1.0 {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var shape: Shape = .Circle {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var type: Type = .Outline {
+        didSet {
+            setupUI()
+        }
+    }
+
+    open var cornerRadius: CGFloat = 3 {
         didSet {
             setupUI()
         }
@@ -113,7 +139,7 @@ open class WUserLogoView: UIView {
         addSubview(initialsLabel)
         addSubview(profileImageView)
 
-        layer.addSublayer(circleLayer)
+        layer.addSublayer(shapeLayer)
     }
 
     fileprivate func setupUIMainThread() {
@@ -151,7 +177,7 @@ open class WUserLogoView: UIView {
             setupImage()
         }
 
-        setupCircle()
+        setupShape()
     }
 
     fileprivate func setupInitials() {
@@ -164,9 +190,16 @@ open class WUserLogoView: UIView {
 
         initialsLabel.attributedText = attributedString
         initialsLabel.textAlignment = NSTextAlignment.center
-        initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
         initialsLabel.adjustsFontSizeToFitWidth = true
-        initialsLabel.textColor = mappedColor
+        switch type {
+        case .Outline:
+            initialsLabel.textColor = mappedColor
+            initialsLabel.font = UIFont.systemFont(ofSize: frame.width / 2.5)
+        case .Filled:
+            initialsLabel.textColor = UIColor.white
+            initialsLabel.font = UIFont.boldSystemFont(ofSize: frame.width / 2.5)
+        }
+        bringSubview(toFront: initialsLabel)
     }
 
     fileprivate func setupImage() {
@@ -174,20 +207,37 @@ open class WUserLogoView: UIView {
             initialsLabel.isHidden = true
             profileImageView.isHidden = false
 
-            profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            switch shape {
+            case .Circle:
+                profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            case .Square:
+                profileImageView.layer.cornerRadius = cornerRadius
+            }
             profileImageView.clipsToBounds = true
             profileImageView.contentMode = .scaleAspectFill
         }
     }
 
-    fileprivate func setupCircle() {
+    fileprivate func setupShape() {
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        let path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        var path: UIBezierPath!
 
-        circleLayer.path = path.cgPath
-        circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.lineWidth = lineWidth
-        circleLayer.strokeColor = mappedColor.cgColor
+        switch shape {
+        case .Circle:
+            path = UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        case .Square:
+            path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: frame.width, height: frame.height), cornerRadius: cornerRadius)
+        }
+
+        shapeLayer.path = path.cgPath
+        switch type {
+        case .Outline:
+            shapeLayer.fillColor = UIColor.clear.cgColor
+        case.Filled:
+            shapeLayer.fillColor = mappedColor.cgColor
+        }
+        shapeLayer.lineWidth = lineWidth
+        shapeLayer.strokeColor = mappedColor.cgColor
     }
 
     fileprivate func updateMappedColor() {

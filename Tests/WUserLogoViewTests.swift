@@ -251,6 +251,54 @@ class WUserLogoViewTests: QuickSpec {
                     expect(color11).to(equal(color12))
                 }
             }
+
+            describe("type and shape") {
+                let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
+
+                beforeEach({
+                    userLogoView = WUserLogoView()
+                    userLogoView.frame = frame
+                    userLogoView.name = name1
+                })
+
+                it("should use default values") {
+                    expect(userLogoView.type) == Type.Outline
+                    expect(userLogoView.shape) == Shape.Circle
+                    expect(userLogoView.cornerRadius) == 3
+                }
+
+                it("should create the correct shape") {
+                    userLogoView.shape = .Circle
+                    expect(userLogoView.shapeLayer.path) == UIBezierPath(arcCenter: center, radius: frame.width / 2 - 1, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true).cgPath
+
+                    userLogoView.shape = .Square
+                    expect(userLogoView.shapeLayer.path) == UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: frame.width, height: frame.height), cornerRadius: userLogoView.cornerRadius).cgPath
+                }
+
+                it("should set fill and font for correct type") {
+                    userLogoView.type = .Outline
+
+                    expect(userLogoView.initialsLabel.textColor) == userLogoView.mappedColor
+                    expect(userLogoView.shapeLayer.fillColor) == UIColor.clear.cgColor
+
+                    userLogoView.type = .Filled
+
+                    expect(userLogoView.initialsLabel.textColor) == UIColor.white
+                    expect(userLogoView.shapeLayer.fillColor) == userLogoView.mappedColor.cgColor
+                }
+
+                it("should set correct corner radius") {
+                    userLogoView.shape = .Square
+                    userLogoView.imageURL = "https://avatars0.githubusercontent.com/u/1087529?v=3&s=200"
+
+                    let cornerRadius: CGFloat = 5
+
+                    userLogoView.cornerRadius = cornerRadius
+
+                    expect(userLogoView.profileImageView.layer.cornerRadius) == cornerRadius
+                }
+            }
         }
     }
 }
