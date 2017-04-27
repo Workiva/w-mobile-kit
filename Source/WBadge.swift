@@ -46,7 +46,7 @@ open class WBadge: UIView {
         }
     }
     
-    open var borderWidth: CGFloat = 0 {
+    open var badgeBorderWidth: CGFloat = 0 {
         didSet {
             setupUI()
         }
@@ -191,8 +191,8 @@ open class WBadge: UIView {
         borderView.snp.remakeConstraints { (make) in
             make.centerX.equalTo(badgeView)
             make.centerY.equalTo(badgeView)
-            make.width.equalTo(badgeView.snp.width).offset(borderWidth)
-            make.height.equalTo(badgeView.snp.height).offset(borderWidth)
+            make.width.equalTo(badgeView.snp.width).offset(badgeBorderWidth)
+            make.height.equalTo(badgeView.snp.height).offset(badgeBorderWidth)
         }
         
         countLabel.snp.remakeConstraints { (make) in
@@ -223,7 +223,7 @@ open class WBadge: UIView {
     }
 
     internal func sizeForBadge() -> CGSize {
-        return CGSize(width: labelSize.width + widthPadding + borderWidth + (shouldShowValue() ? 0 : 1), height: labelSize.height + heightPadding + borderWidth)
+        return CGSize(width: labelSize.width + widthPadding + badgeBorderWidth + (shouldShowValue() ? 0 : 1), height: labelSize.height + heightPadding + badgeBorderWidth)
     }
 
     internal func setBadgeCount(_ count: Int) {

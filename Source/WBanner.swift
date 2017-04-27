@@ -60,7 +60,7 @@ open class WBannerView: UIView {
     open var hideOptions: WBannerHideOptions = .dismissesAfterTime
     open var placement: WBannerPlacementOptions = .bottom
     open var animationDuration = BANNER_DEFAULT_ANIMATION_DURATION
-    open var height = BANNER_DEFAULT_HEIGHT
+    open var bannerHeight = BANNER_DEFAULT_HEIGHT
     open var sidePadding: CGFloat = 0
 
     open var titleMessage = "" {
@@ -295,7 +295,7 @@ open class WBannerView: UIView {
 
         rootView!.addSubview(self)
         snp.remakeConstraints { (make) in
-            make.height.equalTo(height)
+            make.height.equalTo(bannerHeight)
             make.left.equalTo(rootView!).offset(sidePadding)
             make.right.equalTo(rootView!).offset(-sidePadding)
 
@@ -311,7 +311,7 @@ open class WBannerView: UIView {
         rootView!.layoutIfNeeded()
 
         snp.remakeConstraints { (make) in
-            make.height.equalTo(height)
+            make.height.equalTo(bannerHeight)
 
             if (placement == .bottom) {
                 make.bottom.equalTo(rootView!)
@@ -344,7 +344,7 @@ open class WBannerView: UIView {
         if isVisible() {
             //animate out
             snp.remakeConstraints{ (make) in
-                make.height.equalTo(height)
+                make.height.equalTo(bannerHeight)
                 make.left.equalTo(rootView!).offset(sidePadding)
                 make.right.equalTo(rootView!).offset(-sidePadding)
 
