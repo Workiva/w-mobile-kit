@@ -86,7 +86,7 @@ clean_previous_build
 
 print_heading "Generating code coverage report"
 bundle exec xcov -m 90 -w WMobileKit.xcworkspace -s WMobileKit -o xcov  \
-    --exclude_targets 'SDWebImage.framework, Nimble.framework, SnapKit.framework, CryptoSwift.framework, Quick.framework'
+    --exclude_targets 'SDWebImage.framework, Nimble.framework, SnapKit.framework, CryptoSwift.framework, Quick.framework, Material.framework'
 
 # If code coverage is not at least the minimum, stop here.
 if [ $? -ne 0 ]; then
