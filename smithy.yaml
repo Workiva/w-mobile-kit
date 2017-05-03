@@ -2,6 +2,7 @@ language: python
 
 runner_image: drydock-prod.workiva.net/workiva/smithy-runner:127520
 before_install:
+  - bundle update
   - bundle install --path ~/.gem
   - rbenv rehash
 

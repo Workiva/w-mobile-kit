@@ -22,4 +22,5 @@ Pod::Spec.new do |s|
   s.dependency 'SnapKit', '3.2.0'
   s.dependency 'CryptoSwift', '0.6.3'
   s.dependency 'SDWebImage', '4.0.0'
+  s.dependency 'Material', '2.6.3'
 end

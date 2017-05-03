@@ -1,11 +1,15 @@
 PODS:
   - CryptoSwift (0.6.3)
+  - Material (2.6.3):
+    - Material/Core (= 2.6.3)
+  - Material/Core (2.6.3)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (3.2.0)
-  - WMobileKit (4.0.0):
+  - WMobileKit (4.1.0):
     - CryptoSwift (= 0.6.3)
+    - Material (= 2.6.3)
     - SDWebImage (= 4.0.0)
     - SnapKit (= 3.2.0)
 
@@ -18,9 +22,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CryptoSwift: 623f81faf4bc34caf78b792f8625fda9fc309abd
+  Material: af607a7ec0e9978ef85cf189a3d8ceeeb650400f
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WMobileKit: 3d347a02b19670acc77476d781fad5711fcfb51f
+  WMobileKit: cb091a1f14ec372fd1217a0ff91d40a68a7091e3
 
 PODFILE CHECKSUM: fb0ddbcd40ed7b9c9487bbb0e366869765e5df23
 

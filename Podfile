@@ -5,6 +5,7 @@ def common_pods
   pod 'SnapKit', '3.2.0'
   pod 'CryptoSwift', '0.6.3'
   pod 'SDWebImage', '4.0.0'
+  pod 'Material', '2.6.3' #https://github.com/CosmicMind/Material
 end
 
 target 'WMobileKit' do
