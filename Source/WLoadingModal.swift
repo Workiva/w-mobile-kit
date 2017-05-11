@@ -130,7 +130,7 @@ open class WLoadingModal: UIView {
         commonInit()
     }
 
-    fileprivate func commonInit() {
+    open func commonInit() {
         backgroundColor = WThemeManager.sharedInstance.currentTheme.loadingModalBackgroundColor
 
         if (addBlurBackground) {

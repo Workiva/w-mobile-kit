@@ -310,7 +310,13 @@ open class WSideMenuVC: WSizeVC {
         )
     }
 
+    // Forwarding method call instead of having default parameter value to avoid breaking change
     open func closeSideMenu() {
+        closeSideMenu(completion: nil)
+    }
+
+    // Allow completion block parameter to avoid having to replace the delegate
+    open func closeSideMenu(completion: ((Swift.Void) -> Swift.Void)?) {
         delegate?.sideMenuWillClose?()
         
         leftSideMenuContainerView.snp.remakeConstraints { (make) in
@@ -334,6 +340,8 @@ open class WSideMenuVC: WSizeVC {
                 
                 // Disable the tap outside the drawer to close
                 self.backgroundTapView.isHidden = true
+
+                completion?()
             }
         )
     }
