@@ -166,7 +166,19 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
-        view.layoutIfNeeded()
+        let flexibleToastButton = UIButton(type: UIButtonType.roundedRect)
+        flexibleToastButton.backgroundColor = .lightGray
+        flexibleToastButton.tintColor = .green
+        flexibleToastButton.setTitle("Auto Dismiss Flexible Toast", for: UIControlState.normal)
+        flexibleToastButton.setTitleColor(.white, for: UIControlState.normal)
+        flexibleToastButton.addTarget(self, action: #selector(presentFlexibleToast(sender:)), for: UIControlEvents.touchUpInside)
+
+        view.addSubview(flexibleToastButton)
+        flexibleToastButton.snp.makeConstraints { (make) in
+            make.top.equalTo(tapToastButton.snp.bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
 
         // Banners
         let bannerLabel = UILabel()
@@ -175,7 +187,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(bannerLabel)
         bannerLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(tapToastButton.snp.bottom).offset(15)
+            make.top.equalTo(flexibleToastButton.snp.bottom).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
@@ -400,6 +412,16 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         toast.flyInDirection = .fromRight
         toast.widthRatio = 0.65
         toast.bottomPadding = 100
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    open func presentFlexibleToast(sender: UIButton) {
+        let toast = WToastFlexibleView(message: "This is a flexible toast. It will factor in the allowed width\nof the toast\nand then adjust the height to ensure that all of this text is present and does not get truncated.", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.showDuration = 0
+        toast.flyInDirection = .fromBottom
+        toast.widthRatio = 0.65
+        toast.bottomPadding = 100
+        toast.showDuration = 3
         WToastManager.sharedInstance.showToast(toast)
     }
 
