@@ -239,34 +239,44 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheet.titleString = "User Permissions"
 
-        actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
-            handler: { action in
-                NSLog(action.title! + " was tapped")
-                weakActionSheet?.deselectAction()
-                weakActionSheet?.setSelectedAction(action)
-        }))
+        // Fake this cell to look disabled but still allow it to be tapped/selected
+        var titleCellOptions = [WActionSheetOptions: Any]()
+        titleCellOptions[WActionSheetOptions.cellTitleColor] = UIColor.darkGray.withAlphaComponent(0.5)
+        titleCellOptions[WActionSheetOptions.cellSubtitleColor] = UIColor.darkGray.withAlphaComponent(0.5)
+        actionSheet.addAction(
+            WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
+                handler: { action in
+                    NSLog(action.title! + " was tapped")
+                },
+                options: titleCellOptions
+            )
+        )
+
         actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
         actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
         actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.destructive, enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
 
         actionSheet.setSelectedAction(1)
         actionSheet.hasCancel = true
-        actionSheet.dismissOnAction = true
+        actionSheet.dismissOnAction = false
         actionSheet.popoverPresentationController?.sourceView = sender
 
         present(actionSheet, animated: true, completion: nil)
@@ -332,12 +342,19 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
+
+        var titleCellOptions = [WActionSheetOptions: Any]()
+        titleCellOptions[WActionSheetOptions.cellTitleColor] = UIColor.purple
+
         actionSheetSort.addAction(WAction(title: "Title",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
-        }))
+            },
+            options: titleCellOptions
+        ))
+
         actionSheetSort.addAction(WAction(title: "Modified Date", enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
@@ -416,7 +433,8 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
     }
 
     open func presentFlexibleToast(sender: UIButton) {
-        let toast = WToastFlexibleView(message: "This is a flexible toast. It will factor in the allowed width\nof the toast\nand then adjust the height to ensure that all of this text is present and does not get truncated.", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        let toast = WToastFlexibleView(message: "This is a flexible toast. It will factor in the allowed width of the toast and then adjust the height to ensure that all of this text is present and does not get truncated.", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.maxHeight = 192
         toast.showDuration = 0
         toast.flyInDirection = .fromBottom
         toast.widthRatio = 0.65

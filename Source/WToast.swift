@@ -457,13 +457,15 @@ public class WToastTwoLineView: WToastView {
 }
 
 public class WToastFlexibleView: WToastView {
+    public var maxHeight: Int = 2 * TOAST_DEFAULT_HEIGHT
+
     public override func setupUI() {
         super.setupUI()
 
         let labelWidth = messageLabel.frame.width
         if let text = messageLabel.text {
             let toastLabelHeight = text.heightWithConstrainedWidth(labelWidth, font: messageLabel.font)
-            height = Int(toastLabelHeight + 16)
+            height = min(Int(toastLabelHeight + 16), maxHeight)
 
             heightConstraint?.deactivate()
             snp.makeConstraints { make in

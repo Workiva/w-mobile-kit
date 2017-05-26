@@ -140,6 +140,20 @@ class WToastSpec: QuickSpec {
                         expect(twoLineToastView.isVisible()).toEventually(beFalsy(), timeout: displayTime)
                     }
                 }
+
+                describe("flexible toast view") {
+                    var flexibleToastView: WToastFlexibleView!
+
+                    it("should grow to fit text") {
+                        let string = "0\n1\n2\n3\n4\n5\n6\n7\n8\n9"
+                        flexibleToastView = WToastFlexibleView(message: string)
+
+                        WToastManager.sharedInstance.showToast(flexibleToastView)
+
+                        expect(flexibleToastView.frame.height) > CGFloat(TOAST_DEFAULT_HEIGHT)
+                        expect(flexibleToastView.frame.height) <= CGFloat(flexibleToastView.maxHeight)
+                    }
+                }
             }
 
             describe("custom property behavior") {
