@@ -97,6 +97,7 @@ open class WToastView: UIView {
     open var bottomPadding = TOAST_DEFAULT_PADDING
     open var leftPadding: Int?
     open var rightPadding: Int?
+    open var heightConstraint: Constraint?
 
     open var message = "" {
         didSet {
@@ -201,8 +202,7 @@ open class WToastView: UIView {
 
         messageLabel.snp.remakeConstraints { (make) in
             make.centerY.equalTo(self)
-            make.top.equalTo(self).offset(8)
-            make.bottom.equalTo(self).offset(-8)
+            make.top.bottom.equalToSuperview().inset(8)
             make.left.equalTo(self).offset(frame.size.width / 10)
             make.right.equalTo(self).offset(-frame.size.width / 10 - 14)
         }
@@ -226,14 +226,14 @@ open class WToastView: UIView {
     open func show() {
         WToastManager.sharedInstance.rootWindow!.addSubview(self)
         snp.remakeConstraints { (make) in
-            make.height.equalTo(height)
-            
+            heightConstraint = make.height.equalTo(height).constraint
+
             if let width = width {
                 make.width.equalTo(width)
             } else {
                 make.width.equalTo(WToastManager.sharedInstance.rootWindow!).multipliedBy(widthRatio)
             }
-            
+
             switch flyInDirection {
                 case .fromBottom:
                     make.top.equalTo(WToastManager.sharedInstance.rootWindow!.snp.bottom)
@@ -255,13 +255,16 @@ open class WToastView: UIView {
                     } else {
                         make.top.equalTo(WToastManager.sharedInstance.rootWindow!).offset(topPadding)
                     }
-            }
+                }
         }
+
+        WToastManager.sharedInstance.rootWindow!.layoutIfNeeded()
+        setupUI()
         WToastManager.sharedInstance.rootWindow!.layoutIfNeeded()
 
         snp.remakeConstraints { (make) in
-            make.height.equalTo(height)
-            
+            heightConstraint = make.height.equalTo(height).constraint
+
             if let width = width {
                 make.width.equalTo(width)
             } else {
@@ -293,8 +296,6 @@ open class WToastView: UIView {
                 }
             }
         )
-
-        setupUI()
     }
 
     open func hide() {
@@ -306,8 +307,8 @@ open class WToastView: UIView {
 
             //animate out
             snp.remakeConstraints{ (make) in
-                make.height.equalTo(height)
-                
+                heightConstraint = make.height.equalTo(height).constraint
+
                 if let width = width {
                     make.width.equalTo(width)
                 } else {
@@ -452,5 +453,47 @@ public class WToastTwoLineView: WToastView {
         rightIconImageView.alpha = toastAlpha
         
         layoutIfNeeded()
+    }
+}
+
+public class WToastFlexibleView: WToastView {
+    public var maxHeight: Int = 2 * TOAST_DEFAULT_HEIGHT
+
+    public override func setupUI() {
+        super.setupUI()
+
+        let labelWidth = messageLabel.frame.width
+        if let text = messageLabel.text {
+            let toastLabelHeight = text.heightWithConstrainedWidth(labelWidth, font: messageLabel.font)
+            height = min(Int(toastLabelHeight + 16), maxHeight)
+
+            heightConstraint?.deactivate()
+            snp.makeConstraints { make in
+                heightConstraint = make.height.equalTo(height).constraint
+            }
+
+            layoutIfNeeded()
+        }
+    }
+
+    override func commonInit() {
+        super.commonInit()
+
+        messageLabel.numberOfLines = 0
+    }
+}
+
+extension String {
+    func heightWithConstrainedWidth(_ width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+
+        let boundingBox = (self as NSString).boundingRect(
+            with: constraintRect,
+            options: .usesLineFragmentOrigin,
+            attributes: [NSFontAttributeName: font],
+            context: nil
+        )
+        
+        return ceil(boundingBox.height)
     }
 }

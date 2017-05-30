@@ -166,7 +166,19 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
             make.width.equalTo(200)
         }
 
-        view.layoutIfNeeded()
+        let flexibleToastButton = UIButton(type: UIButtonType.roundedRect)
+        flexibleToastButton.backgroundColor = .lightGray
+        flexibleToastButton.tintColor = .green
+        flexibleToastButton.setTitle("Auto Dismiss Flexible Toast", for: UIControlState.normal)
+        flexibleToastButton.setTitleColor(.white, for: UIControlState.normal)
+        flexibleToastButton.addTarget(self, action: #selector(presentFlexibleToast(sender:)), for: UIControlEvents.touchUpInside)
+
+        view.addSubview(flexibleToastButton)
+        flexibleToastButton.snp.makeConstraints { (make) in
+            make.top.equalTo(tapToastButton.snp.bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(200)
+        }
 
         // Banners
         let bannerLabel = UILabel()
@@ -175,7 +187,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
 
         view.addSubview(bannerLabel)
         bannerLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(tapToastButton.snp.bottom).offset(15)
+            make.top.equalTo(flexibleToastButton.snp.bottom).offset(15)
             make.centerX.equalTo(view)
             make.width.equalTo(220)
         }
@@ -227,34 +239,44 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
 
         actionSheet.titleString = "User Permissions"
 
-        actionSheet.addAction(WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
-            handler: { action in
-                NSLog(action.title! + " was tapped")
-                weakActionSheet?.deselectAction()
-                weakActionSheet?.setSelectedAction(action)
-        }))
+        // Fake this cell to look disabled but still allow it to be tapped/selected
+        var titleCellOptions = [WActionSheetOptions: Any]()
+        titleCellOptions[WActionSheetOptions.cellTitleColor] = UIColor.darkGray.withAlphaComponent(0.5)
+        titleCellOptions[WActionSheetOptions.cellSubtitleColor] = UIColor.darkGray.withAlphaComponent(0.5)
+        actionSheet.addAction(
+            WAction(title: "Owner", subtitle: "Has full editing rights. May set other users' permissions.",
+                handler: { action in
+                    NSLog(action.title! + " was tapped")
+                },
+                options: titleCellOptions
+            )
+        )
+
         actionSheet.addAction(WAction(title: "Editor", subtitle: "May view and make changes to the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
         actionSheet.addAction(WAction(title: "Viewer", subtitle: "May only view and comment on the document.",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
         actionSheet.addAction(WAction(title: "None (Remove Access)", subtitle: "Removes the collaborator's access to the document.", style: ActionStyle.destructive, enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
+                weakActionSheet?.animateOut()
         }))
 
         actionSheet.setSelectedAction(1)
         actionSheet.hasCancel = true
-        actionSheet.dismissOnAction = true
+        actionSheet.dismissOnAction = false
         actionSheet.popoverPresentationController?.sourceView = sender
 
         present(actionSheet, animated: true, completion: nil)
@@ -320,12 +342,19 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
         }))
+
+        var titleCellOptions = [WActionSheetOptions: Any]()
+        titleCellOptions[WActionSheetOptions.cellTitleColor] = UIColor.purple
+
         actionSheetSort.addAction(WAction(title: "Title",
             handler: { action in
                 NSLog(action.title! + " was tapped")
                 weakActionSheet?.deselectAction()
                 weakActionSheet?.setSelectedAction(action)
-        }))
+            },
+            options: titleCellOptions
+        ))
+
         actionSheetSort.addAction(WAction(title: "Modified Date", enabled: false,
             handler: { action in
                 NSLog(action.title! + " was tapped")
@@ -400,6 +429,17 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         toast.flyInDirection = .fromRight
         toast.widthRatio = 0.65
         toast.bottomPadding = 100
+        WToastManager.sharedInstance.showToast(toast)
+    }
+
+    open func presentFlexibleToast(sender: UIButton) {
+        let toast = WToastFlexibleView(message: "This is a flexible toast. It will factor in the allowed width of the toast and then adjust the height to ensure that all of this text is present and does not get truncated.", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
+        toast.maxHeight = 192
+        toast.showDuration = 0
+        toast.flyInDirection = .fromBottom
+        toast.widthRatio = 0.65
+        toast.bottomPadding = 100
+        toast.showDuration = 3
         WToastManager.sharedInstance.showToast(toast)
     }
 

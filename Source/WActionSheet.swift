@@ -37,6 +37,13 @@ public enum SheetSeparatorStyle {
     case all, destructiveOnly
 }
 
+public enum WActionSheetOptions: String {
+    case cellTitleFont = "wTitleFont",
+    cellTitleColor = "wCellTitleColor",
+    cellSubtitleFont = "wCellSubtitleFont",
+    cellSubtitleColor = "wCellSubtitleColor"
+}
+
 internal protocol WBaseActionSheetDelegate: class {
     func commonInit()
     func setupUI(_ animated: Bool)
@@ -336,6 +343,7 @@ open class WAction<T> {
     open var handler: ((WAction) -> Void)?
     open var index = 0
     open var enabled = true
+    open var options: Dictionary<WActionSheetOptions, Any>?
 
     public init(title: String?,
                 subtitle: String? = nil,
@@ -343,7 +351,8 @@ open class WAction<T> {
                 data: T? = nil,
                 style: ActionStyle? = ActionStyle.normal,
                 enabled: Bool = true,
-                handler: ((WAction<T>) -> Void)? = nil) {
+                handler: ((WAction<T>) -> Void)? = nil,
+                options: Dictionary<WActionSheetOptions, Any>? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -351,6 +360,7 @@ open class WAction<T> {
         self.actionStyle = style
         self.enabled = enabled
         self.handler = handler
+        self.options = options
     }
 }
 
@@ -707,8 +717,8 @@ open class WTableViewCell<ActionDataType>: UITableViewCell {
                 }
 
                 subtitleLabel?.text = subtitle
-                subtitleLabel?.font = UIFont.systemFont(ofSize: 12)
-                subtitleLabel?.textColor = UIColor(hex: 0x707070)
+                subtitleLabel?.font = actionInfo.options?[WActionSheetOptions.cellSubtitleFont] as? UIFont ?? UIFont.systemFont(ofSize: 12)
+                subtitleLabel?.textColor = actionInfo.options?[WActionSheetOptions.cellSubtitleColor] as? UIColor ?? UIColor(hex: 0x707070)
 
                 subtitleLabel?.snp.remakeConstraints { (make) in
                     if (actionInfo.image != nil) {
@@ -731,8 +741,8 @@ open class WTableViewCell<ActionDataType>: UITableViewCell {
                 }
 
                 titleLabel?.text = title
-                titleLabel?.font = UIFont.systemFont(ofSize: 20)
-                titleLabel?.textColor = UIColor(hex: 0x595959)
+                titleLabel?.font = actionInfo.options?[WActionSheetOptions.cellTitleFont] as? UIFont ?? UIFont.systemFont(ofSize: 20)
+                titleLabel?.textColor = actionInfo.options?[WActionSheetOptions.cellTitleColor] as? UIColor ?? UIColor(hex: 0x595959)
 
                 titleLabel?.snp.remakeConstraints { (make) in
                     make.height.equalTo(23)
