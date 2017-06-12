@@ -18,6 +18,7 @@
 		73B2B5CC1CD2B5AA00053D22 /* WTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */; };
 		73B81F191CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */; };
 		73B81F1C1CE13DA1009A9D73 /* WAutoCompleteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */; };
+		73BB3C0F1EEF1C510066D199 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BB3C0E1EEF1C510066D199 /* libz.tbd */; };
 		73D44B8D1DEF365E0022120F /* WPanelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B8B1DEF35940022120F /* WPanelTests.swift */; };
 		73D44B8F1DEF368C0022120F /* WPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B8E1DEF368C0022120F /* WPanel.swift */; };
 		73D44B911DEF37080022120F /* WFAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D44B901DEF37080022120F /* WFAButton.swift */; };
@@ -91,6 +92,7 @@
 		73B2B5CB1CD2B5AA00053D22 /* WTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WTextView.swift; sourceTree = "<group>"; };
 		73B81F181CE13A62009A9D73 /* WAutoCompleteTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WAutoCompleteTextViewTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		73B81F1A1CE13D12009A9D73 /* WAutoCompleteTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WAutoCompleteTextView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73BB3C0E1EEF1C510066D199 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		73D44B8B1DEF35940022120F /* WPanelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPanelTests.swift; sourceTree = "<group>"; };
 		73D44B8E1DEF368C0022120F /* WPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WPanel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		73D44B901DEF37080022120F /* WFAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WFAButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -151,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73BB3C0F1EEF1C510066D199 /* libz.tbd in Frameworks */,
 				1A9048BF1853EFEA8D34C92B /* Pods_WMobileKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +173,7 @@
 		1A97BF6F65F054BD1EE8E35D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73BB3C0E1EEF1C510066D199 /* libz.tbd */,
 				BA23B86A117BB8C881149924 /* Pods_WMobileKit.framework */,
 				9014B7182CFF6FADD5EC6054 /* Pods_WMobileKitTests.framework */,
 			);
@@ -672,9 +676,20 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Material\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-lz",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				"SWIFT_INCLUDE_PATHS[arch=*]" = "$(PROJECT_DIR)/Swiftzlib";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -693,9 +708,20 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Material\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-lz",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				"SWIFT_INCLUDE_PATHS[arch=*]" = "$(PROJECT_DIR)/Swiftzlib";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};

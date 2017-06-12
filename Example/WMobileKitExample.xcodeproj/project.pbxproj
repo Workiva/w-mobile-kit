@@ -12,6 +12,7 @@
 		7310E3661DD4E39500153C7F /* PanelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310E3651DD4E39500153C7F /* PanelExample.swift */; };
 		73A12C6A1CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */; };
 		73B2B5CE1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */; };
+		73BB3C051EEF19BD0066D199 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BB3C041EEF13670066D199 /* libz.tbd */; };
 		73E59C441D1C96F000AADD51 /* PagingControlVCExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E59C431D1C96F000AADD51 /* PagingControlVCExampleVC.swift */; };
 		80385E53D084ED5C70EE82DE /* Pods_WMobileKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */; };
 		CE76EA541D1DA9E800B5F487 /* TextViewExamplesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE76EA531D1DA9E800B5F487 /* TextViewExamplesVC.swift */; };
@@ -42,6 +43,7 @@
 		7310E3651DD4E39500153C7F /* PanelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PanelExample.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		73A12C691CBEC2DE0092A3C2 /* UserLogoViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = UserLogoViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		73B2B5CD1CD2BB7000053D22 /* MarkdownTextViewExamplesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MarkdownTextViewExamplesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		73BB3C041EEF13670066D199 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		73BE4C981CD94D4B0025E34E /* AutoCompleteTextViewExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AutoCompleteTextViewExampleVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		73E59C431D1C96F000AADD51 /* PagingControlVCExampleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PagingControlVCExampleVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		86294297CE93610FE8E6B978 /* Pods-WMobileKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WMobileKitExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73BB3C051EEF19BD0066D199 /* libz.tbd in Frameworks */,
 				80385E53D084ED5C70EE82DE /* Pods_WMobileKitExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +114,7 @@
 		AD8C6D27E828A655C5FF53CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73BB3C041EEF13670066D199 /* libz.tbd */,
 				D3EBC53ABD49DE26032E3B06 /* Pods_WMobileKitExample.framework */,
 				1A1FAB8DBB3EC373E4196E5E /* Pods_WMobileKitExample_Tests.framework */,
 			);

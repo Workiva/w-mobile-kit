@@ -17,6 +17,7 @@
 //  limitations under the License.
 
 import Foundation
+import zlib
 
 public extension String {
     // Returns the concatenation of the first letter of each word in a string
@@ -37,7 +38,12 @@ public extension String {
 
     // Returns the CRC32 checksum for a string as an int
     public func crc32int() -> UInt {
-        return strtoul(crc32(), nil, 16)
+        if let data = self.data(using: .utf8) {
+            let crc = data.withUnsafeBytes { crc32(0, $0, numericCast(data.count)) }
+            return UInt(crc)
+        }
+
+        return 0
     }
 }
 

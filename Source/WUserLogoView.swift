@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import CryptoSwift
 import SDWebImage
 
 public enum Shape {
