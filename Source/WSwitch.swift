@@ -177,7 +177,7 @@ open class WSwitch: UIControl {
         shouldSendActionEvent = true
     }
 
-    open func switchWasPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc open func switchWasPressed(_ sender: UILongPressGestureRecognizer) {
         if (!isEnabled) {
             return
         }

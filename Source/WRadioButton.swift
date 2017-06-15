@@ -212,8 +212,7 @@ open class WRadioButton: UIControl {
         indicatorView.alpha = isSelected ? 1.0 : 0.0
     }
 
-    open func radioButtonSelected(notification: NSNotification) {
-
+    @objc open func radioButtonSelected(notification: NSNotification) {
         let sender: WRadioButton? = notification.object as! WRadioButton?
 
         if groupID == sender?.groupID {
@@ -228,7 +227,7 @@ open class WRadioButton: UIControl {
         the threadhold, but will re-highlight if the press moves back in.
      Selection will only occur if the touch up is within the threshold.
      */
-    open func buttonWasPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc open func buttonWasPressed(_ sender: UILongPressGestureRecognizer) {
         if (!isEnabled) {
             return
         }

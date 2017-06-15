@@ -48,8 +48,8 @@ open class MarkdownTextViewExamplesVC: WSideMenuContentVC {
         let multipleCorrectTextView = WMarkdownTextView("This WMarkdownTextView has [multiple]() correct [Markdown]() URLs")
         multipleCorrectTextView.textAlignment = .center
         multipleCorrectTextView.backgroundColor = .clear
-        multipleCorrectTextView.linkTextAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                                      NSForegroundColorAttributeName: UIColor.purple]
+        multipleCorrectTextView.linkTextAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
+                                                      NSAttributedStringKey.foregroundColor.rawValue: UIColor.purple]
         view.addSubview(multipleCorrectTextView)
         multipleCorrectTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
@@ -73,8 +73,8 @@ open class MarkdownTextViewExamplesVC: WSideMenuContentVC {
         complexTextView.text = "This WMarkdownTextView has a [co[mpl]ex]   () URL"
         complexTextView.backgroundColor = .clear
         complexTextView.textAlignment = .center
-        complexTextView.linkTextAttributes = [NSForegroundColorAttributeName: UIColor.yellow,
-                                              NSUnderlineStyleAttributeName: NSUnderlineStyle.styleThick.rawValue]
+        complexTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.yellow,
+                                              NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleThick.rawValue]
         view.addSubview(complexTextView)
         complexTextView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)

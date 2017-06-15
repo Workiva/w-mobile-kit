@@ -298,7 +298,7 @@ open class WToastView: UIView {
         )
     }
 
-    open func hide() {
+    @objc open func hide() {
         showTimer?.invalidate()
         showTimer = nil
 
@@ -490,7 +490,7 @@ extension String {
         let boundingBox = (self as NSString).boundingRect(
             with: constraintRect,
             options: .usesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: font],
+            attributes: [NSAttributedStringKey.font: font],
             context: nil
         )
         

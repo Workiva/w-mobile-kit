@@ -1,8 +1,5 @@
 PODS:
-  - Material (2.6.3):
-    - Material/Core (= 2.6.3)
-  - Material/Core (2.6.3)
-  - Nimble (6.0.1)
+  - Nimble (7.0.1)
   - Quick (1.1.0)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
@@ -10,19 +7,27 @@ PODS:
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
-  - Material (= 2.6.3)
-  - Nimble (= 6.0.1)
+  - Nimble (= 7.0.1)
   - Quick (= 1.1.0)
   - SDWebImage (= 4.0.0)
-  - SnapKit (= 3.2.0)
+  - SnapKit (from `https://github.com/SnapKit/SnapKit.git`, commit `d31148f`)
+
+EXTERNAL SOURCES:
+  SnapKit:
+    :commit: d31148f
+    :git: https://github.com/SnapKit/SnapKit.git
+
+CHECKOUT OPTIONS:
+  SnapKit:
+    :commit: d31148f
+    :git: https://github.com/SnapKit/SnapKit.git
 
 SPEC CHECKSUMS:
-  Material: af607a7ec0e9978ef85cf189a3d8ceeeb650400f
-  Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
+  Nimble: 657d000e11df8aebe27cdaf9d244de7f30ed87f7
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SnapKit: c71c530b73cedd2a8b998098687001baff265086
 
-PODFILE CHECKSUM: fe466141186a34ce33b7be18165df4f75c6df98c
+PODFILE CHECKSUM: 07486fc2368d9e28d98c5b330178f51dd3b9e395
 
 COCOAPODS: 1.2.1

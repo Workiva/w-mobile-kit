@@ -64,7 +64,7 @@ open class WTextField: UITextField {
     open var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
         didSet {
             if (self.placeholder != nil) {
-                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSAttributedStringKey.foregroundColor: placeHolderTextColor])
             } else {
                 self.setEmptyPlaceholder()
             }
@@ -160,7 +160,7 @@ open class WTextField: UITextField {
     fileprivate func setEmptyPlaceholder() {
         // We need to set the placeholder to an empty string in this case so that
         // the color persists when they "set" (now really change) the placeholder text
-        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedStringKey.foregroundColor: placeHolderTextColor])
     }
 
     // MARK: - Custom Rect Sizings
@@ -204,7 +204,7 @@ open class WTextField: UITextField {
         return CGRect(x: xPosition, y: bounds.origin.y, width: width, height: bounds.size.height - 2)
     }
 
-    func textFieldDidChange() {
+    @objc func textFieldDidChange() {
         determineIfRightViewShouldBeHidden()
     }
 
@@ -223,7 +223,7 @@ open class WTextField: UITextField {
         }
     }
 
-    func clearButtonWasPressed() {
+    @objc func clearButtonWasPressed() {
         text = ""
         sendActions(for: .editingChanged)
         determineIfRightViewShouldBeHidden()

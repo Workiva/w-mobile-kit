@@ -230,7 +230,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         sideMenuController()?.delegate = self
     }
 
-    open func presentPermissionsActionSheet(_ sender: UIButton) {
+    @objc open func presentPermissionsActionSheet(_ sender: UIButton) {
         definesPresentationContext = true
 
         let actionSheet = WActionSheetVC<String>()
@@ -282,7 +282,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         present(actionSheet, animated: true, completion: nil)
     }
 
-    open func presentIconActionSheet(_ sender: UIButton) {
+    @objc open func presentIconActionSheet(_ sender: UIButton) {
         definesPresentationContext = true
 
         let actionSheetIcons = WActionSheetVC<String>()
@@ -322,7 +322,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         present(actionSheetIcons, animated: true, completion: nil)
     }
 
-    open func presentSortActionSheet(_ sender: UIButton) {
+    @objc open func presentSortActionSheet(_ sender: UIButton) {
         definesPresentationContext = true
 
         let actionSheetSort = WActionSheetVC<String>()
@@ -377,7 +377,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         present(actionSheetSort, animated: true, completion: nil)
     }
 
-    open func presentPickerActionSheet(_ sender: UIButton) {
+    @objc open func presentPickerActionSheet(_ sender: UIButton) {
         self.definesPresentationContext = true
 
         let actionSheetPicker = WPickerActionSheet<String>()
@@ -409,7 +409,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         present(actionSheetPicker, animated: true, completion: nil)
     }
 
-    open func presentAutoToast(_ sender: UIButton) {
+    @objc open func presentAutoToast(_ sender: UIButton) {
         let toast = WToastView(message: "Auto Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 3
         toast.placement = .top
@@ -417,13 +417,13 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         WToastManager.sharedInstance.showToast(toast)
     }
 
-    open func presentAutoTwoLineToast(sender: UIButton) {
+    @objc open func presentAutoTwoLineToast(sender: UIButton) {
         let toast = WToastTwoLineView(firstLine: "This is the first line, that will be truncated on its own.", secondLine: "This is the second line, notice how the first line did not hide this text.")
         toast.showDuration = 3
         WToastManager.sharedInstance.showToast(toast)
     }
 
-    open func presentTapToast(sender: UIButton) {
+    @objc open func presentTapToast(sender: UIButton) {
         let toast = WToastView(message: "Tap Dismiss Toast", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.showDuration = 0
         toast.flyInDirection = .fromRight
@@ -432,7 +432,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         WToastManager.sharedInstance.showToast(toast)
     }
 
-    open func presentFlexibleToast(sender: UIButton) {
+    @objc open func presentFlexibleToast(sender: UIButton) {
         let toast = WToastFlexibleView(message: "This is a flexible toast. It will factor in the allowed width of the toast and then adjust the height to ensure that all of this text is present and does not get truncated.", icon: UIImage(named: "close"), toastColor: UIColor(hex: 0x006400))
         toast.maxHeight = 192
         toast.showDuration = 0
@@ -443,7 +443,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         WToastManager.sharedInstance.showToast(toast)
     }
 
-    open func presentTopBanner(_ sender: UIButton) {
+    @objc open func presentTopBanner(_ sender: UIButton) {
         topBanner?.hide()
 
         topBanner = WBannerView(rootView: view,
@@ -459,7 +459,7 @@ open class ModalViewExamplesVC: WSideMenuContentVC {
         topBanner!.show()
     }
 
-    open func presentBottomBanner(_ sender: UIButton) {
+    @objc open func presentBottomBanner(_ sender: UIButton) {
         bottomBanner?.hide()
 
         bottomBanner = WBannerView(rootView: view,

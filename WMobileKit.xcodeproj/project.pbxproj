@@ -367,11 +367,11 @@
 				TargetAttributes = {
 					D53D0B901CAB09020065D106 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 					};
 					D53D0B9A1CAB09020065D106 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -679,8 +679,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					"\"Material\"",
-					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
 					"\"SnapKit\"",
@@ -692,7 +690,8 @@
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "$(PROJECT_DIR)/Swiftzlib";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -711,8 +710,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					"\"Material\"",
-					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
 					"\"SnapKit\"",
@@ -723,7 +720,8 @@
 				SKIP_INSTALL = YES;
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "$(PROJECT_DIR)/Swiftzlib";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -739,7 +737,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -754,7 +753,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = WMobileKit.WMobileKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

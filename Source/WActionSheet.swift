@@ -148,8 +148,8 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
     }
 
     // In case an action is tapped during dismissal, still call its completion handler
-    open override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
-        let newCompletion: (() -> Void) = { [weak self] Void in
+    open override func dismiss(animated flag: Bool, completion: (() -> ())?) {
+        let newCompletion: (() -> ()) = { [weak self] () in
             completion?()
             self?.completionToHandle?()
         }
@@ -169,7 +169,7 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
 
         presentingWindow?.addSubview(tapRecognizerView)
 
-        let animateOutSelector = #selector(animateOut as (Void) -> Void)
+        let animateOutSelector = #selector(animateOut as () -> ())
         if (tapRecognizerView.gestureRecognizers == nil) {
             // Do not use #selector here, causes issue with iPhone 4S
             let darkViewRecognizer = UITapGestureRecognizer(target: self, action: animateOutSelector)
@@ -241,11 +241,11 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
         presentingWindow?.isHidden = false
     }
 
-    open func animateOut() {
+    @objc open func animateOut() {
         animateOut(0.1)
     }
 
-    open func animateOut(_ delay: TimeInterval, completion: (() -> Void)? = nil) {
+    @objc open func animateOut(_ delay: TimeInterval, completion: (() -> Void)? = nil) {
         checkForPresentingWindow()
 
         // Do not dismiss twice, but store the completion handler to be called if needed
@@ -989,7 +989,7 @@ open class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>,
             make.bottom.equalTo(containerView.snp.bottom)
         }
 
-        view.layoutIfNeeded()
+        presentingWindow?.layoutSubviews()
 
         if (animated) {
             containerView.snp.remakeConstraints { (make) in
@@ -1014,12 +1014,12 @@ open class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>,
         }
     }
 
-    func toolbarDoneButtonWasTouched(){
+    @objc func toolbarDoneButtonWasTouched(){
         animateOut()
         pickerDelegate?.pickerViewDoneButtonWasTapped(pickerView.selectedRow(inComponent: 0))
     }
 
-    func toolbarCancelButtonWasTouched(){
+    @objc func toolbarCancelButtonWasTouched(){
         animateOut()
         pickerDelegate?.pickerViewCancelButtonWasTapped()
     }

@@ -266,7 +266,7 @@ open class WAutoCompleteTextView: UIView {
         }
     }
 
-    open func keyboardWillShow(_ notification: Notification) {
+    @objc open func keyboardWillShow(_ notification: Notification) {
         var height: CGFloat = bottomConstraintOffset
         if let userInfo = (notification as NSNotification).userInfo {
             if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
@@ -280,7 +280,7 @@ open class WAutoCompleteTextView: UIView {
         adjustForKeyboardHeight(height)
     }
 
-    open func keyboardWillHide(_ notification: Notification) {
+    @objc open func keyboardWillHide(_ notification: Notification) {
         keyboardHeight = nil
         adjustForKeyboardHeight(bottomConstraintOffset)
     }
@@ -299,12 +299,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSFontAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedStringKey.font,
                                                   value: textView.font!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedStringKey.foregroundColor,
                                                   value: textView.textColor!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
@@ -338,12 +338,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSFontAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedStringKey.font,
                         value: textView.font!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedStringKey.foregroundColor,
                         value: textView.textColor!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))

@@ -222,7 +222,7 @@ open class SwitchAndRadioExamplesVC: WSideMenuContentVC {
         storyboardLabel.text = sender.on ? "On" : "Off"
     }
     
-    open func switchValueChanged(_ sender: WSwitch) {
+    @objc open func switchValueChanged(_ sender: WSwitch) {
         switch sender.tag {
         case 1:
             switchLabel1.text = sender.on ? "On" : "Off"

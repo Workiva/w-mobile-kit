@@ -74,7 +74,7 @@ open class LoadingModalExamplesVC: WSideMenuContentVC {
         smallLoadingModalButton.addGestureRecognizer(smallLoadingTapRecognizer!)
     }
 
-    open func displayLoadingModal(_ sender: AnyObject?) {
+    @objc open func displayLoadingModal(_ sender: AnyObject?) {
         // One is already shown
         if (loadingModal != nil) {
             return
@@ -98,7 +98,7 @@ open class LoadingModalExamplesVC: WSideMenuContentVC {
         }
     }
 
-    open func dismissLoadingModal(_ sender: AnyObject?) {
+    @objc open func dismissLoadingModal(_ sender: AnyObject?) {
         if (loadingModal != nil) {
             loadingModal!.removeFromSuperview()
             loadingModal = nil

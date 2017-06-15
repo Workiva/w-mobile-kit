@@ -1,29 +1,32 @@
 PODS:
-  - Material (2.6.3):
-    - Material/Core (= 2.6.3)
-  - Material/Core (2.6.3)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (3.2.0)
   - WMobileKit (5.0.2):
-    - Material (= 2.6.3)
     - SDWebImage (= 4.0.0)
-    - SnapKit (= 3.2.0)
 
 DEPENDENCIES:
+  - SnapKit (from `https://github.com/SnapKit/SnapKit.git`, commit `d31148f`)
   - WMobileKit (from `../`)
 
 EXTERNAL SOURCES:
+  SnapKit:
+    :commit: d31148f
+    :git: https://github.com/SnapKit/SnapKit.git
   WMobileKit:
     :path: "../"
 
-SPEC CHECKSUMS:
-  Material: af607a7ec0e9978ef85cf189a3d8ceeeb650400f
-  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WMobileKit: 6643b1576548386d3503779acc88c41cc73a2268
+CHECKOUT OPTIONS:
+  SnapKit:
+    :commit: d31148f
+    :git: https://github.com/SnapKit/SnapKit.git
 
-PODFILE CHECKSUM: 11fa404a0cf37eea8d730e11ab88e15c604e818b
+SPEC CHECKSUMS:
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SnapKit: c71c530b73cedd2a8b998098687001baff265086
+  WMobileKit: 1eb16543f22fcfb058047f6218f2383aadfa9408
+
+PODFILE CHECKSUM: 67596c707fd078eaf811491fc42d68fcba075453
 
 COCOAPODS: 1.2.1
