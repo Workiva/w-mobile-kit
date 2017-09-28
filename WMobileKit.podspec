@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '9.0'
   s.requires_arc     = true
   s.source_files     = 'Source/*{h,m,swift}'
-  # s.dependency 'SnapKit', '3.2.0'
+  s.dependency 'SnapKit', '4.0.0'
   s.dependency 'SDWebImage', '4.0.0'
-  s.library = "z"
+  s.dependency 'Material', '2.10.2'
 end
