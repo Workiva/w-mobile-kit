@@ -2,8 +2,9 @@ platform :ios, '9.0'
 use_frameworks!
 
 def common_pods
-  pod 'SnapKit', :git => 'https://github.com/SnapKit/SnapKit.git', :commit => 'd31148f' #'3.2.0',
-  pod 'SDWebImage', '4.0.0'
+  pod 'Material', '2.10.2' #https://github.com/CosmicMind/Material
+  pod 'SDWebImage', '4.0.0' #https://github.com/rs/SDWebImage
+  pod 'SnapKit', '4.0.0' #https://github.com/SnapKit/SnapKit
 end
 
 target 'WMobileKit' do
@@ -12,6 +13,6 @@ end
 
 target 'WMobileKitTests' do
   common_pods
-  pod 'Quick', '1.1.0'
-  pod 'Nimble', '7.0.1'
+  pod 'Nimble', '7.0.2' #https://github.com/Quick/Nimble
+  pod 'Quick', '1.2.0' #https://github.com/Quick/Quick
 end

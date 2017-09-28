@@ -77,7 +77,7 @@ class WRadioButtonSpec: QuickSpec {
                     
                     let radioButton = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WRadioButton
                     
-                    expect(radioButton).toNot(equal(nil))
+                    expect(radioButton).toNot(beNil())
                     
                     // default settings from commonInit and default var values
                     verifyCommonInit()

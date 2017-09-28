@@ -70,7 +70,7 @@ class WToastSpec: QuickSpec {
 
                     let toastView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WToastView
 
-                    expect(toastView).toNot(equal(nil))
+                    expect(toastView).toNot(beNil())
 
                     // default settings from commonInit
                     verifyCommonInit()
@@ -113,7 +113,7 @@ class WToastSpec: QuickSpec {
 
                         let twoLineToastView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WToastTwoLineView
 
-                        expect(twoLineToastView).toNot(equal(nil))
+                        expect(twoLineToastView).toNot(beNil())
 
                         // default settings from commonInit
                         verifyCommonInit()

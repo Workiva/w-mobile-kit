@@ -55,7 +55,7 @@ class WTextViewTests: QuickSpec {
 
                     let textView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WMarkdownTextView
 
-                    expect(textView).toNot(equal(nil))
+                    expect(textView).toNot(beNil())
 
                     // default settings from commonInit
                     verifyCommonInit()
@@ -120,7 +120,7 @@ class WTextViewTests: QuickSpec {
                     
                     let textView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTextView
                     
-                    expect(textView).toNot(equal(nil))
+                    expect(textView).toNot(beNil())
                     
                     // default settings from commonInit
                     verifyCommonInit()

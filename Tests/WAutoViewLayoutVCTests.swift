@@ -60,7 +60,7 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                     
                     let object = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WAutoViewLayoutVC
                     
-                    expect(object).toNot(equal(nil))
+                    expect(object).toNot(beNil())
                     
                     // default settings from commonInit
                     verifyCommonInit()
@@ -90,7 +90,7 @@ class WAutoViewLayoutVCSpec: QuickSpec {
                 it("should return cell for views") {
                     subject.views = WUtils.generateExampleViews(count: 10)
 
-                    expect(subject.collectionView(subject.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))).toNot(equal(nil))
+                    expect(subject.collectionView(subject.collectionView, cellForItemAt: IndexPath(item: 0, section: 0))).toNot(beNil())
                 }
 
                 it("should be able to change alignment") {

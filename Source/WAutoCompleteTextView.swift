@@ -126,7 +126,7 @@ open class WAutoCompleteTextView: UIView {
         textView.isUserInteractionEnabled = true
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.placeholderText = "Type @ to mention someone"
-        textView.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
+        textView.tintColor = UIColor(red: 0, green: 0.455, blue: 1.0, alpha: 1.0)
         textView.textColor = .darkGray
         textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.clipsToBounds = true

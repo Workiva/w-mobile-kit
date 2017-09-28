@@ -82,7 +82,7 @@ class WBannerSpec: QuickSpec {
 
                     let bannerView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WBannerView
 
-                    expect(bannerView).toNot(equal(nil))
+                    expect(bannerView).toNot(beNil())
 
                     expect(bannerView.bodyMessageLabel.numberOfLines).to(equal(2))
 
