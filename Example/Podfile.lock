@@ -1,13 +1,9 @@
 PODS:
-  - Material (2.10.2):
-    - Material/Core (= 2.10.2)
-  - Material/Core (2.10.2)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (3.2.0)
   - WMobileKit (5.0.2):
-    - Material (= 2.10.2)
     - SDWebImage (= 4.0.0)
     - SnapKit (= 3.2.0)
 
@@ -19,10 +15,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Material: 8265a77332acfb7872a7fd0f4f2023f080d25d1f
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WMobileKit: bd30412c810fdf932111e3b018e492f186dbad8c
+  WMobileKit: 8f8fcc629a18afdc4c2bc05552b3f39d87fd689e
 
 PODFILE CHECKSUM: 50451b01e8766a60fa2696bc94f3b3a97221600f
 

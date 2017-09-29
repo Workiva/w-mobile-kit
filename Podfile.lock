@@ -1,7 +1,4 @@
 PODS:
-  - Material (2.10.2):
-    - Material/Core (= 2.10.2)
-  - Material/Core (2.10.2)
   - Nimble (7.0.2)
   - Quick (1.2.0)
   - SDWebImage (4.0.0):
@@ -10,19 +7,17 @@ PODS:
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
-  - Material (= 2.10.2)
   - Nimble (= 7.0.2)
   - Quick (= 1.2.0)
   - SDWebImage (= 4.0.0)
   - SnapKit (= 3.2.0)
 
 SPEC CHECKSUMS:
-  Material: 8265a77332acfb7872a7fd0f4f2023f080d25d1f
   Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 8a45b5315f5200fd094f9e3382e5e6b4b91c3ea6
+PODFILE CHECKSUM: 869006563e497ab56e495433b3828a8dcf9b056e
 
 COCOAPODS: 1.4.0.beta.1
