@@ -5,11 +5,11 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
-  - SnapKit (4.0.0)
+  - SnapKit (3.2.0)
   - WMobileKit (5.0.2):
     - Material (= 2.10.2)
     - SDWebImage (= 4.0.0)
-    - SnapKit (= 4.0.0)
+    - SnapKit (= 3.2.0)
 
 DEPENDENCIES:
   - WMobileKit (from `../`)
@@ -21,9 +21,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Material: 8265a77332acfb7872a7fd0f4f2023f080d25d1f
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WMobileKit: 3cd834ca9caf97a05989b5b57ff43ffc7b6d4f86
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  WMobileKit: bd30412c810fdf932111e3b018e492f186dbad8c
 
-PODFILE CHECKSUM: fdf84b5e9d574be09477f2123b8f10b13d2f68a7
+PODFILE CHECKSUM: a48bf5e0226985a3123f1566e36d0455beb8a213
 
 COCOAPODS: 1.4.0.beta.1
