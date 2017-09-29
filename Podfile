@@ -17,15 +17,16 @@ target 'WMobileKitTests' do
   pod 'Quick', '1.2.0' #https://github.com/Quick/Quick
 end
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      if target.name == 'Material'
-        config.build_settings['SWIFT_VERSION'] = '3.2'
-      end
-      if target.name == 'SnapKit'
-        config.build_settings['SWIFT_VERSION'] = '3.2'
-      end
-    end
-  end
-end
+#post_install do |installer|
+#  installer.pods_project.targets.each do |target|
+#    target.build_configurations.each do |config|
+#      if target.name == 'Material'
+#        config.build_settings['SWIFT_VERSION'] = '3.2'
+#      end
+#      if target.name == 'SnapKit'
+#        config.build_settings['SWIFT_VERSION'] = '3.2'
+#      end
+#    end
+#  end
+#end
+

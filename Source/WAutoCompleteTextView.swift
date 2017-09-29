@@ -299,12 +299,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSAttributedStringKey.font,
+                    attributedSuffix.addAttribute(NSFontAttributeName,
                                                   value: textView.font!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSAttributedStringKey.foregroundColor,
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
                                                   value: textView.textColor!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
@@ -338,12 +338,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSAttributedStringKey.font,
+                    attributedSuffix.addAttribute(NSFontAttributeName,
                         value: textView.font!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSAttributedStringKey.foregroundColor,
+                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
                         value: textView.textColor!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))

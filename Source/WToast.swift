@@ -490,7 +490,7 @@ extension String {
         let boundingBox = (self as NSString).boundingRect(
             with: constraintRect,
             options: .usesLineFragmentOrigin,
-            attributes: [NSAttributedStringKey.font: font],
+            attributes: [NSFontAttributeName: font],
             context: nil
         )
         

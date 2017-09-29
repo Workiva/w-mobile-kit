@@ -64,7 +64,7 @@ open class WTextField: UITextField {
     open var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
         didSet {
             if (self.placeholder != nil) {
-                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSAttributedStringKey.foregroundColor: placeHolderTextColor])
+                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
             } else {
                 self.setEmptyPlaceholder()
             }
@@ -160,7 +160,7 @@ open class WTextField: UITextField {
     fileprivate func setEmptyPlaceholder() {
         // We need to set the placeholder to an empty string in this case so that
         // the color persists when they "set" (now really change) the placeholder text
-        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedStringKey.foregroundColor: placeHolderTextColor])
+        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
     }
 
     // MARK: - Custom Rect Sizings

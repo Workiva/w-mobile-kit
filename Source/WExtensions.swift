@@ -67,9 +67,9 @@ public extension UILabel {
         paragraphStyle.minimumLineHeight = frame.size.height
         paragraphStyle.maximumLineHeight = frame.size.height
         paragraphStyle.lineBreakMode = .byWordWrapping
-        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: font, NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        let attributes: [String: AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
 
-        let size = text!.size(withAttributes: attributes)
+        let size = text!.size(attributes: attributes)
         let stringWidth = size.width
 
         let constrainedSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
