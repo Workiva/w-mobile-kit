@@ -126,7 +126,7 @@ open class SpinnerExamplesVC: WSideMenuContentVC {
         startProgress()
     }
 
-    open func updateProgress(_ sender: AnyObject) {
+    @objc open func updateProgress(_ sender: AnyObject) {
         if sender is Timer {
             let timer = sender as! Timer;
 

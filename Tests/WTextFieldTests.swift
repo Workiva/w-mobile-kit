@@ -64,7 +64,7 @@ class WTextFieldTests: QuickSpec {
 
                     let object = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTextField
 
-                    expect(object).toNot(equal(nil))
+                    expect(object).toNot(beNil())
 
                     // default settings from commonInit
                     verifyCommonInit()

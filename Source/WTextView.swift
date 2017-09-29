@@ -231,7 +231,7 @@ open class WMarkdownTextView: WTextView {
                 let replaceRange = NSMakeRange(startIndexDistance, text.characters.distance(from: text.startIndex, to: totalRange!.upperBound) - startIndexDistance)
                 
                 let replacedAttribString = NSMutableAttributedString(string: linkString)
-                replacedAttribString.addAttribute(NSLinkAttributeName, value: addressString, range: NSMakeRange(0, linkString.characters.count))
+                replacedAttribString.addAttribute(NSAttributedStringKey.link, value: addressString, range: NSMakeRange(0, linkString.characters.count))
                 
                 attribString.replaceCharacters(in: replaceRange, with: replacedAttribString)
             }
@@ -247,7 +247,7 @@ open class WMarkdownTextView: WTextView {
         
         var markdownArray = [Dictionary<String, Range<String.Index>>]()
         
-        let resetVariables: (Void) -> Void = {
+        let resetVariables: () -> () = {
             openBracketPos = nil
             closeBracketPos = nil
             openParenPos = nil

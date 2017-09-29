@@ -181,7 +181,7 @@ open class WSideMenuVC: WSizeVC {
         }
     }
     
-    open func didPan(_ recognizer: UIPanGestureRecognizer) {
+    @objc open func didPan(_ recognizer: UIPanGestureRecognizer) {
         let velocity = recognizer.velocity(in: view)
         let isMovingRight = velocity.x > 0
         let location = recognizer.location(in: view).x
@@ -316,7 +316,7 @@ open class WSideMenuVC: WSizeVC {
     }
 
     // Allow completion block parameter to avoid having to replace the delegate
-    open func closeSideMenu(completion: ((Swift.Void) -> Swift.Void)?) {
+    open func closeSideMenu(completion: (() -> ())?) {
         delegate?.sideMenuWillClose?()
         
         leftSideMenuContainerView.snp.remakeConstraints { (make) in
@@ -424,11 +424,11 @@ open class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
         addWSideMenuButtons()
     }
 
-    open func toggleSideMenu() {
+    @objc open func toggleSideMenu() {
         sideMenuController()?.toggleSideMenu()
     }
 
-    open func backButtonItemWasTapped(_ sender: AnyObject) {
+    @objc open func backButtonItemWasTapped(_ sender: AnyObject) {
         _ = navigationController?.popViewController(animated: true)
     }
 }

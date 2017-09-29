@@ -55,7 +55,7 @@ class WUtilsTests: QuickSpec {
 
         describe("example color") {
             it("should generate a random color") {
-                expect(WUtils.getRandomColor()).toNot(equal(nil))
+                expect(WUtils.getRandomColor()).toNot(beNil())
             }
         }
     }

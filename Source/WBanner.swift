@@ -337,7 +337,7 @@ open class WBannerView: UIView {
         setupUI()
     }
 
-    open func hide() {
+    @objc open func hide() {
         showTimer?.invalidate()
         showTimer = nil
 

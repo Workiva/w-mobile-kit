@@ -20,7 +20,6 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
   s.source_files     = 'Source/*{h,m,swift}'
   s.dependency 'SnapKit', '3.2.0'
-  s.dependency 'CryptoSwift', '0.6.3'
   s.dependency 'SDWebImage', '4.0.0'
-  s.dependency 'Material', '2.6.3'
+  s.dependency 'Material', '2.10.2'
 end

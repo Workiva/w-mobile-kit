@@ -147,7 +147,7 @@ open class WThemeManager: NSObject {
     fileprivate func customizeNavigationBar(_ theme: WTheme) {
         UINavigationBar.appearance().barTintColor = theme.navigationBarColor
         UINavigationBar.appearance().tintColor = theme.navigationTintColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.navigationTextColor]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue): theme.navigationTextColor]
 
         // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().isTranslucent = false
