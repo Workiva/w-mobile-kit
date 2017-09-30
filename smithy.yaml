@@ -1,6 +1,6 @@
 language: python
 
-runner_image: drydock-prod.workiva.net/workiva/smithy-runner:127520
+runner_image: drydock-prod.workiva.net/workiva/smithy-runner:224702
 before_install:
   - bundle update
   - bundle install --path ~/.gem
