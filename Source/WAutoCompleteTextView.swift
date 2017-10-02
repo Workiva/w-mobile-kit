@@ -126,7 +126,7 @@ open class WAutoCompleteTextView: UIView {
         textView.isUserInteractionEnabled = true
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.placeholderText = "Type @ to mention someone"
-        textView.tintColor = UIColor(colorLiteralRed: 0, green: 0.455, blue: 1, alpha: 1)
+        textView.tintColor = UIColor(red: 0, green: 0.455, blue: 1.0, alpha: 1.0)
         textView.textColor = .darkGray
         textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.clipsToBounds = true
@@ -266,7 +266,7 @@ open class WAutoCompleteTextView: UIView {
         }
     }
 
-    open func keyboardWillShow(_ notification: Notification) {
+    @objc open func keyboardWillShow(_ notification: Notification) {
         var height: CGFloat = bottomConstraintOffset
         if let userInfo = (notification as NSNotification).userInfo {
             if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
@@ -280,7 +280,7 @@ open class WAutoCompleteTextView: UIView {
         adjustForKeyboardHeight(height)
     }
 
-    open func keyboardWillHide(_ notification: Notification) {
+    @objc open func keyboardWillHide(_ notification: Notification) {
         keyboardHeight = nil
         adjustForKeyboardHeight(bottomConstraintOffset)
     }

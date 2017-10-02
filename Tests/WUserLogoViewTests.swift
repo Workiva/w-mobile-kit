@@ -61,7 +61,7 @@ class WUserLogoViewTests: QuickSpec {
 
                     let object = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WUserLogoView
 
-                    expect(object).toNot(equal(nil))
+                    expect(object).toNot(beNil())
 
                     // default settings from commonInit
                 }

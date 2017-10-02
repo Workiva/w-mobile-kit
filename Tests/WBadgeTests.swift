@@ -77,7 +77,7 @@ class WBadgeSpec: QuickSpec {
 
                     let badge = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WBadge
 
-                    expect(badge).toNot(equal(nil))
+                    expect(badge).toNot(beNil())
 
                     // default settings from commonInit and default public properties
                     verifyCommonInit()

@@ -247,7 +247,7 @@ open class WMarkdownTextView: WTextView {
         
         var markdownArray = [Dictionary<String, Range<String.Index>>]()
         
-        let resetVariables: (Void) -> Void = {
+        let resetVariables: () -> () = {
             openBracketPos = nil
             closeBracketPos = nil
             openParenPos = nil

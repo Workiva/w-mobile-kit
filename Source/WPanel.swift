@@ -315,7 +315,7 @@ open class WPanelVC: WSideMenuContentVC {
         view.layoutIfNeeded()
     }
 
-    open func panelWasPanned(recognizer: UIPanGestureRecognizer) {
+    @objc open func panelWasPanned(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began, .changed:
             if (sidePanel) {
@@ -400,7 +400,7 @@ open class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    open func panelWasTapped(recognizer: UIGestureRecognizer) {
+    @objc open func panelWasTapped(recognizer: UIGestureRecognizer) {
         if (sidePanel && sidePanelCoversContent) {
             movePanelToValue(value: 0.0, animated: true)
         } else if (!sidePanel) {
@@ -408,7 +408,7 @@ open class WPanelVC: WSideMenuContentVC {
         }
     }
 
-    open func floatingButtonWasPressed(sender: WFAButton) {
+    @objc open func floatingButtonWasPressed(sender: WFAButton) {
         if (sidePanel) {
             movePanelToValue(value: sidePanelWidth, animated: true)
         } else {

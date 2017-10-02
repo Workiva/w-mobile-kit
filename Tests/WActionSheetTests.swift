@@ -94,32 +94,32 @@ class WActionSheetSpec: QuickSpec {
                 
                 it("should init table cell with coder correctly") {
                     let tableCell = WTableViewCell<Any>(frame: CGRect.zero)
-                    
+
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.appendingPathComponent("testsActionSheet")
-                    
+                    let locToSave = path.appendingPathComponent("WTableViewCell")
+
                     NSKeyedArchiver.archiveRootObject(tableCell, toFile: locToSave)
-                    
+
                     let newTableCell = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTableViewCell<Any>
-                    
-                    expect(newTableCell).toNot(equal(nil))
+
+                    expect(newTableCell).toNot(beNil())
                     expect(newTableCell.selectBar.isHidden).to(equal(true))
-                    expect(newTableCell.separatorBar).toNot(equal(nil))
+                    expect(newTableCell.separatorBar).toNot(beNil())
                 }
-                
+
                 it("should init table header with coder correctly") {
                     let headerView = WHeaderView(frame: CGRect.zero)
-                    
+
                     let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.appendingPathComponent("testsActionSheet")
-                    
+                    let locToSave = path.appendingPathComponent("WHeaderView")
+
                     NSKeyedArchiver.archiveRootObject(headerView, toFile: locToSave)
-                    
+
                     let newHeaderView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WHeaderView
-                    
-                    expect(newHeaderView).toNot(equal(nil))
+
+                    expect(newHeaderView).toNot(beNil())
                 }
-                
+
                 it("should have default status bar settings") {
                     expect(subject.prefersStatusBarHidden) == false
                     expect(subject.preferredStatusBarStyle) == UIStatusBarStyle.default

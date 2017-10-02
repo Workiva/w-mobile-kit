@@ -204,7 +204,7 @@ open class WTextField: UITextField {
         return CGRect(x: xPosition, y: bounds.origin.y, width: width, height: bounds.size.height - 2)
     }
 
-    func textFieldDidChange() {
+    @objc func textFieldDidChange() {
         determineIfRightViewShouldBeHidden()
     }
 
@@ -223,7 +223,7 @@ open class WTextField: UITextField {
         }
     }
 
-    func clearButtonWasPressed() {
+    @objc func clearButtonWasPressed() {
         text = ""
         sendActions(for: .editingChanged)
         determineIfRightViewShouldBeHidden()

@@ -37,11 +37,11 @@ public enum WToastFlyInDirectionOptions {
     case fromTop, fromRight, fromBottom, fromLeft
 }
 
-let TOAST_DEFAULT_HEIGHT = 64
-let TOAST_DEFAULT_PADDING = 32
-let TOAST_DEFAULT_WIDTH_RATIO = 0.8
-let TOAST_DEFAULT_SHOW_DURATION = 2.0
-let TOAST_DEFAULT_ANIMATION_DURATION = 0.3
+public let TOAST_DEFAULT_HEIGHT = 64
+public let TOAST_DEFAULT_PADDING = 32
+public let TOAST_DEFAULT_WIDTH_RATIO = 0.8
+public let TOAST_DEFAULT_SHOW_DURATION = 2.0
+public let TOAST_DEFAULT_ANIMATION_DURATION = 0.3
 
 open class WToastManager: NSObject, WToastViewDelegate {
     open var currentToast: WToastView?
@@ -298,7 +298,7 @@ open class WToastView: UIView {
         )
     }
 
-    open func hide() {
+    @objc open func hide() {
         showTimer?.invalidate()
         showTimer = nil
 

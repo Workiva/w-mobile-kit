@@ -56,7 +56,7 @@ class WSwitchSpec: QuickSpec {
                     
                     let switchControl = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSwitch
                     
-                    expect(switchControl).toNot(equal(nil))
+                    expect(switchControl).toNot(beNil())
                     
                     // default settings from commonInit
                     verifyCommonInit()

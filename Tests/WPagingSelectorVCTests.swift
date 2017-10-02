@@ -155,7 +155,7 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     let tabView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WTabView
 
-                    expect(tabView).toNot(equal(nil))
+                    expect(tabView).toNot(beNil())
                 }
             }
 
@@ -176,7 +176,7 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     let selectionIndicatorView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSelectionIndicatorView
 
-                    expect(selectionIndicatorView).toNot(equal(nil))
+                    expect(selectionIndicatorView).toNot(beNil())
                 }
             }
 
@@ -204,7 +204,7 @@ class WPagingSelectorVCSpec: QuickSpec {
 
                     let pagingSelectorControl = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WPagingSelectorControl
 
-                    expect(pagingSelectorControl).toNot(equal(nil))
+                    expect(pagingSelectorControl).toNot(beNil())
                     
                     verifyCommonInit()
                 }

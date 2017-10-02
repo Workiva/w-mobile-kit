@@ -56,7 +56,7 @@ class WSideMenuVCSpec: QuickSpec {
 
                     let sideMenuVC = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WSideMenuVC
 
-                    expect(sideMenuVC).toNot(equal(nil))
+                    expect(sideMenuVC).toNot(beNil())
                 }
 
                 it("should have the correct properties set") {

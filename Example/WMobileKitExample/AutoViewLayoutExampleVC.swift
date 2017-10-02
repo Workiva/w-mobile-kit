@@ -144,7 +144,7 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
         })
     }
 
-    public func randomizeViewCount() {
+    @objc public func randomizeViewCount() {
         // Optional: Can change the views and the autoViewLayoutVC will update the UI
         let randomCount = Int(arc4random_uniform(55) + 5)
         autoViewLayoutVC.views = WUtils.generateExampleViews(count: randomCount)

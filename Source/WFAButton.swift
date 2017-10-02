@@ -127,7 +127,7 @@ public class WFAButton: UIControl {
         }
     }
 
-    public func buttonWasLongPressed(recognizer: UILongPressGestureRecognizer) {
+    @objc public func buttonWasLongPressed(recognizer: UILongPressGestureRecognizer) {
         let touchLocation = recognizer.location(in: self)
 
         switch recognizer.state {

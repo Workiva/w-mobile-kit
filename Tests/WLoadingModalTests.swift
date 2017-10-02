@@ -60,22 +60,6 @@ class WLoadingModalTests: QuickSpec {
                 }
 
                 it("should init with coder correctly and verify commonInit") {
-                    loadingModalView = WLoadingModal(frame: subject.view.frame)
-
-                    let path = NSTemporaryDirectory() as NSString
-                    let locToSave = path.appendingPathComponent("WLoadingModal")
-
-                    NSKeyedArchiver.archiveRootObject(loadingModalView, toFile: locToSave)
-
-                    let loadingModalView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WLoadingModal
-
-                    expect(loadingModalView).toNot(equal(nil))
-
-                    // default settings from commonInit
-                    verifyCommonInit()
-                }
-
-                it("should init with coder correctly and verify commonInit") {
                     loadingModalView = WLoadingModal()
 
                     let path = NSTemporaryDirectory() as NSString
@@ -85,7 +69,7 @@ class WLoadingModalTests: QuickSpec {
 
                     let loadingModalView = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WLoadingModal
                     
-                    expect(loadingModalView).toNot(equal(nil))
+                    expect(loadingModalView).toNot(beNil())
 
                     verifyCommonInit()
                     expect(loadingModalView.addBlurBackground) == true

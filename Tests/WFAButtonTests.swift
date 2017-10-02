@@ -63,7 +63,7 @@ class WFAButtonSpec: QuickSpec {
 
                     let button = NSKeyedUnarchiver.unarchiveObject(withFile: locToSave) as! WFAButton
 
-                    expect(button).toNot(equal(nil))
+                    expect(button).toNot(beNil())
 
                     // default settings from commonInit and default public properties
                     verifyCommonInit()
