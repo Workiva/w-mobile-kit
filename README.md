@@ -74,7 +74,8 @@ Alternatively, you can run `pod install` from the Example directory.
 
  - `use_frameworks!` must be at the top of your Podfile (since this is a Swift pod)
  - iOS 8.0+
- - Xcode 6.0
+ - Xcode 9.0
+ - Objective-C, Swift 3.2
 
 ## Installation
 
