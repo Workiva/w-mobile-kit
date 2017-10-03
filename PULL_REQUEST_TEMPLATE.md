@@ -9,14 +9,17 @@ What Was Changed
 Acceptance Criteria
 ---
 
+
+Testing Instructions
+---
+
+
 Merge Checklist
 ---
-- [ ] bundle exec pod lib lint WMobileKit.podspec --allow-warnings
 - [ ] Author of commit is not a reviewer
-- [ ] Acceptance criteria clearly stated and validated
-- [ ] Tag relevant contributor(s) for a change
 - [ ] CR +1
 - [ ] QA +1 (includes code review and pulling in the code/testing)
+- [ ] bundle exec pod lib lint WMobileKit.podspec --allow-warnings passes
 - [ ] Security review if applicable
 - [ ] Bump the WMobileKit.podspec, Source/Info.plist, and Example/WMobileKitExample/Info.plist
 using ```version_bump.sh```according to semantic versioning.
