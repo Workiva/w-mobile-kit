@@ -3,8 +3,9 @@
 [![Version](https://img.shields.io/cocoapods/v/WMobileKit.svg?style=flat)](http://cocoapods.org/pods/WMobileKit)
 [![License](https://img.shields.io/cocoapods/l/WMobileKit.svg?style=flat)](http://cocoapods.org/pods/WMobileKit)
 [![Platform](https://img.shields.io/cocoapods/p/WMobileKit.svg?style=flat)](http://cocoapods.org/pods/WMobileKit)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59d266080dd7d400015d1a6f&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59d266080dd7d400015d1a6f/build/latest?branch=master)
 
-WMobileKit is a Swift library containing various custom UI components to provide functionality outside of the default libraries. Each component is customizable and featured in a sample app to demonstrate its functinality!
+WMobileKit is a Swift library containing various custom UI components to provide functionality outside of the default libraries. Each component is customizable and featured in a sample app to demonstrate its functionality!
 
 ### Index
 * [Controls](#controls)
@@ -89,6 +90,17 @@ pod "WMobileKit"
 Run the following in the root directory
 ```ruby
 ./setup.sh
+```
+
+## Contributions
+
+A release is automatically created with each pull request. Please bump the WMobileKit.podspec,
+Source/Info.plist, and Example/WMobileKitExample/Info.plist using ```version_bump.sh```
+according to semantic versioning.
+
+Example: (5.1.0 is the old version 5.1.1 is the new version)
+```ruby
+./version_bump.sh 5.1.0 5.1.1
 ```
 
 ### Known Issues
