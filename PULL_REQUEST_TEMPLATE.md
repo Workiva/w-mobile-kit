@@ -18,7 +18,7 @@ Merge Checklist
 ---
 - [ ] Author of commit is not a reviewer
 - [ ] CR +1
-- [ ] QA +1 (includes code review and pulling in the code/testing)
+- [ ] +10 (includes code review and pulling in the code/testing)
 - [ ] bundle exec pod lib lint WMobileKit.podspec --allow-warnings passes
 - [ ] Security review if applicable
 - [ ] Bump the WMobileKit.podspec, Source/Info.plist, and Example/WMobileKitExample/Info.plist
