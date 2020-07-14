@@ -3,7 +3,7 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (4.2.0)
-  - WMobileKit (6.0):
+  - WMobileKit (6.0.0):
     - SDWebImage (= 4.0.0)
     - SnapKit (= 4.2.0)
 
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  WMobileKit: aa8d121fd9839d18778a68ff3d9524187ef8b658
+  WMobileKit: 91355d4f983caaac1a6e8cf4a5c55f511404e721
 
 PODFILE CHECKSUM: 1a35a412865963548a050b5d1c7cab126c70a421
 
