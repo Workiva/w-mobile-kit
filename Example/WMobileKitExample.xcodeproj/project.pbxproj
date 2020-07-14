@@ -193,6 +193,7 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				8FC73EFBB362335A5F128DBD /* [CP] Embed Pods Frameworks */,
 				05A9FF5587E4F95729BD1C5D /* 📦 Embed Pods Frameworks */,
+				180DDB3909D5D88DAC79D7D8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,6 +268,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		180DDB3909D5D88DAC79D7D8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3EB43EB92E58032AF0667799 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,7 +307,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/WMobileKit/WMobileKit.framework",
@@ -304,7 +320,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitExample/Pods-WMobileKitExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		98A5CCD15F7D28C68E4CCA77 /* [CP] Check Pods Manifest.lock */ = {

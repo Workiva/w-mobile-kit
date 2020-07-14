@@ -740,7 +740,7 @@ let options = convertFromOptionalUIPageViewControllerOptionsKeyDictionary(option
 extension WPanelPageManagerVC: UIPageViewControllerDelegate {
     public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let firstViewController = viewControllers?.first,
-            let index = pages?.index(of: firstViewController) {
+            let index = pages?.firstIndex(of: firstViewController) {
 
             pageIndicatorDelegate?.wPanelPageManager(pageManager: self, didUpdatePageIndex: index)
         }
@@ -750,7 +750,7 @@ extension WPanelPageManagerVC: UIPageViewControllerDelegate {
 extension WPanelPageManagerVC: UIPageViewControllerDataSource {
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.index(of: viewController) else {
+            guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
                 return nil
             }
 
@@ -772,7 +772,7 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
 
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.index(of: viewController) else {
+            guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
                 return nil
             }
 

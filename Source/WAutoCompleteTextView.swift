@@ -325,7 +325,7 @@ open class WAutoCompleteTextView: UIView {
 
                     textView.attributedText = mutableCopy
 
-                    let autoCompleteOffset = textView.text!.characters.distance(from: textView.text!.startIndex, to: range.lowerBound) + 1
+                    let autoCompleteOffset = textView.text!.distance(from: textView.text!.startIndex, to: range.lowerBound) + 1
 
                     if let newSelectPos = textView.position(from: textView.beginningOfDocument, offset: autoCompleteOffset + replaceText.length) {
                         selection = textView.textRange(from: newSelectPos, to: newSelectPos)
@@ -387,7 +387,7 @@ extension WAutoCompleteTextView: UITextViewDelegate {
 
         if (hasSubmitButton) {
             let trimmedString = textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            submitButton.isEnabled = trimmedString.characters.count > 0
+            submitButton.isEnabled = trimmedString.count > 0
         }
     }
 
@@ -417,8 +417,8 @@ extension WAutoCompleteTextView: UITextViewDelegate {
     open func wordRangeAtCursor(_ textView: UITextView) -> Range<String.Index>? {
         var wordRange: Range<String.Index>?
 
-        if let text = textView.text, text.characters.count > 0, let selectedRange = textView.selectedTextRange {
-            let cursorPosition = min(textView.offset(from: textView.beginningOfDocument, to: selectedRange.start), text.characters.count)
+        if let text = textView.text, text.count > 0, let selectedRange = textView.selectedTextRange {
+            let cursorPosition = min(textView.offset(from: textView.beginningOfDocument, to: selectedRange.start), text.count)
             let cursorIndex = text.index(text.startIndex, offsetBy: cursorPosition)
 
             let leftOfCursorString = text.substring(to: cursorIndex)
@@ -429,12 +429,12 @@ extension WAutoCompleteTextView: UITextViewDelegate {
             let rightComponents = rightOfCursorString.components(separatedBy: .whitespacesAndNewlines)
             let rightWordPart = rightComponents.first
 
-            if (leftWordPart?.characters.count == 0 && rightWordPart?.characters.count == 0) {
+            if (leftWordPart?.count == 0 && rightWordPart?.count == 0) {
                 return nil
             }
 
-            let leftOffset = -1 * (leftWordPart?.characters.count ?? 0)
-            let rightOffset = rightWordPart?.characters.count ?? 0
+            let leftOffset = -1 * (leftWordPart?.count ?? 0)
+            let rightOffset = rightWordPart?.count ?? 0
 
             wordRange = text.index(cursorIndex, offsetBy: leftOffset)..<text.index(cursorIndex, offsetBy: rightOffset)
         }
@@ -447,10 +447,10 @@ extension WAutoCompleteTextView: UITextViewDelegate {
             if let range = wordRangeAtCursor(textView) {
                 if let word = textView.text?.substring(with: range) {
                     if let prefix = controlPrefix {
-                        if ((word.hasPrefix(prefix) && word.characters.count >= numCharactersBeforeAutoComplete + prefix.characters.count) || prefix.isEmpty) {
-                            let offset = text.characters.distance(from: text.startIndex, to: range.lowerBound)
+                        if ((word.hasPrefix(prefix) && word.count >= numCharactersBeforeAutoComplete + prefix.count) || prefix.isEmpty) {
+                            let offset = text.distance(from: text.startIndex, to: range.lowerBound)
                             let pos = textView.position(from: textView.beginningOfDocument, offset: offset)
-                            let wordWithoutPrefix = word.substring(from: word.characters.index(word.startIndex, offsetBy: prefix.characters.count))
+                            let wordWithoutPrefix = word.substring(from: word.index(word.startIndex, offsetBy: prefix.count))
                             if (textView.offset(from: textView.selectedTextRange!.start, to: pos!) != 0) {
                                 if (!replacesControlPrefix) {
                                     autoCompleteRange = text.index(range.lowerBound, offsetBy: 1)..<range.upperBound

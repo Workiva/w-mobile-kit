@@ -185,7 +185,7 @@ open class WUserLogoView: UIView {
 
         let spacing = max(frame.size.width, 30) / 30 - 1
         let attributedString = NSMutableAttributedString(string: initials!)
-        attributedString.addAttribute(NSAttributedString.Key.kern, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.characters.count - 1, 0)))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: CGFloat(spacing), range: NSRange(location: 0, length: max(initials!.count - 1, 0)))
 
         initialsLabel.attributedText = attributedString
         initialsLabel.textAlignment = NSTextAlignment.center

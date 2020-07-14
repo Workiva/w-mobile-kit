@@ -46,7 +46,7 @@ public let TOAST_DEFAULT_ANIMATION_DURATION = 0.3
 open class WToastManager: NSObject, WToastViewDelegate {
     open var currentToast: WToastView?
 
-    open static let sharedInstance = WToastManager()
+    public static let sharedInstance = WToastManager()
 
     // Custom window can be provided. Default to frontmost window.
     open var rootWindow: UIWindow? = UIApplication.shared.windows.first

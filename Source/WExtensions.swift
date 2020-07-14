@@ -26,9 +26,9 @@ public extension String {
         var initials = String()
 
         enumerateSubstrings(in: range, options: NSString.EnumerationOptions.byWords) { (substring, _, _, stop) -> () in
-            let initial = substring!.characters.first! as Character
+            let initial = substring!.first! as Character
             initials = initials + String(initial)
-            if (initials.characters.count >= limit) {
+            if (initials.count >= limit) {
                 stop = true
             }
         }

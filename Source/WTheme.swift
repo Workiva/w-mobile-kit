@@ -113,7 +113,7 @@ open class CustomTheme: WTheme {
 }
 
 open class WThemeManager: NSObject {
-    open static let sharedInstance = WThemeManager()
+    public static let sharedInstance = WThemeManager()
 
     fileprivate override init() {
         super.init()

@@ -227,11 +227,11 @@ open class WMarkdownTextView: WTextView {
                 let linkString = text.substring(with: linkRange!)
                 let addressString = text.substring(with: addressRange!)
                 
-                let startIndexDistance = text.characters.distance(from: text.startIndex, to: totalRange!.lowerBound)
-                let replaceRange = NSMakeRange(startIndexDistance, text.characters.distance(from: text.startIndex, to: totalRange!.upperBound) - startIndexDistance)
+                let startIndexDistance = text.distance(from: text.startIndex, to: totalRange!.lowerBound)
+                let replaceRange = NSMakeRange(startIndexDistance, text.distance(from: text.startIndex, to: totalRange!.upperBound) - startIndexDistance)
                 
                 let replacedAttribString = NSMutableAttributedString(string: linkString)
-                replacedAttribString.addAttribute(NSAttributedString.Key.link, value: addressString, range: NSMakeRange(0, linkString.characters.count))
+                replacedAttribString.addAttribute(NSAttributedString.Key.link, value: addressString, range: NSMakeRange(0, linkString.count))
                 
                 attribString.replaceCharacters(in: replaceRange, with: replacedAttribString)
             }
@@ -257,7 +257,7 @@ open class WMarkdownTextView: WTextView {
         }
         
         // find end of url string
-        for (index, char) in text.characters.enumerated() {
+        for (index, char) in text.enumerated() {
             switch char {
             case "[":
                 if (foundURLString) {
@@ -297,9 +297,9 @@ open class WMarkdownTextView: WTextView {
                 closeParenPos = index
                 
                 // Create ranges of form Range<String.Index>
-                let totalRange = text.characters.index(text.startIndex, offsetBy: openBracketPos!)..<text.characters.index(text.startIndex, offsetBy: closeParenPos! + 1)
-                let linkRange = text.characters.index(text.startIndex, offsetBy: openBracketPos! + 1)..<text.characters.index(text.startIndex, offsetBy: closeBracketPos!)
-                let addressRange = text.characters.index(text.startIndex, offsetBy: openParenPos! + 1)..<text.characters.index(text.startIndex, offsetBy: closeParenPos!)
+                let totalRange = text.index(text.startIndex, offsetBy: openBracketPos!)..<text.index(text.startIndex, offsetBy: closeParenPos! + 1)
+                let linkRange = text.index(text.startIndex, offsetBy: openBracketPos! + 1)..<text.index(text.startIndex, offsetBy: closeBracketPos!)
+                let addressRange = text.index(text.startIndex, offsetBy: openParenPos! + 1)..<text.index(text.startIndex, offsetBy: closeParenPos!)
                 
                 let markdownDict = [KEY_RANGE_TOTAL: totalRange, KEY_RANGE_LINK: linkRange, KEY_RANGE_ADDRESS: addressRange]
                 markdownArray.append(markdownDict)

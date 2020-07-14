@@ -324,7 +324,6 @@
 				D53D0B8D1CAB09020065D106 /* Frameworks */,
 				D53D0B8E1CAB09020065D106 /* Headers */,
 				D53D0B8F1CAB09020065D106 /* Resources */,
-				8D99D0B7871F05D6462D9C3F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -344,7 +343,6 @@
 				D53D0B981CAB09020065D106 /* Frameworks */,
 				D53D0B991CAB09020065D106 /* Resources */,
 				43E652AB36073A13CD00196A /* [CP] Embed Pods Frameworks */,
-				0CE3D058B6A97EFFE9A84F19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -367,11 +365,11 @@
 				TargetAttributes = {
 					D53D0B901CAB09020065D106 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1150;
 					};
 					D53D0B9A1CAB09020065D106 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -380,6 +378,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = D53D0B871CAB09020065D106;
@@ -417,28 +416,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CE3D058B6A97EFFE9A84F19 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		43E652AB36073A13CD00196A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
@@ -453,7 +437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WMobileKitTests/Pods-WMobileKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		53CF0FEC4C594C5B31C50188 /* [CP] Check Pods Manifest.lock */ = {
@@ -490,21 +474,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8D99D0B7871F05D6462D9C3F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WMobileKit/Pods-WMobileKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -722,7 +691,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -752,7 +721,7 @@
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "$(PROJECT_DIR)/Swiftzlib";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -769,7 +738,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -785,7 +754,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WMobileKitTests-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
