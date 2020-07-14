@@ -266,7 +266,7 @@ open class WSideMenuVC: WSizeVC {
         statusBarHidden = hide
         
         if let window = UIApplication.shared.delegate?.window {
-            window?.windowLevel = hide ? UIWindowLevelStatusBar : UIWindowLevelNormal            
+            window?.windowLevel = hide ? UIWindow.Level.statusBar : UIWindow.Level.normal            
         }
     }
     
@@ -406,7 +406,7 @@ open class WSideMenuContentVC: WSizeVC, WSideMenuProtocol {
                         action: #selector(WSideMenuContentVC.backButtonItemWasTapped(_:)))
                 }
 
-                sideMenuButtonItem.imageInsets = UIEdgeInsetsMake(0, -paddingBetweenBackAndMenuIcons, 0, paddingBetweenBackAndMenuIcons)
+                sideMenuButtonItem.imageInsets = UIEdgeInsets.init(top: 0, left: -paddingBetweenBackAndMenuIcons, bottom: 0, right: paddingBetweenBackAndMenuIcons)
 
                 navigationItem.leftBarButtonItems = [backMenuButtonItem, sideMenuButtonItem]
             } else {
@@ -450,7 +450,7 @@ extension UIViewController {
     public func addViewControllerToContainer(_ containerView: UIView, viewController: UIViewController?) {
         // Adds a view controller as a child view controller and calls needed life cycle methods
         if let targetViewController = viewController {
-            addChildViewController(targetViewController)
+            addChild(targetViewController)
             containerView.addSubview(targetViewController.view)
             
             targetViewController.view.snp.remakeConstraints { (make) in
@@ -460,16 +460,16 @@ extension UIViewController {
                 make.bottom.equalTo(containerView)
             }
             
-            targetViewController.didMove(toParentViewController: self)
+            targetViewController.didMove(toParent: self)
         }
     }
     
     public func removeViewControllerFromContainer(_ viewController: UIViewController?) {
         // Removes a child view controller and calls needed life cyle methods
         if let targetViewController = viewController {
-            targetViewController.willMove(toParentViewController: nil)
+            targetViewController.willMove(toParent: nil)
             targetViewController.view.removeFromSuperview()
-            targetViewController.removeFromParentViewController()
+            targetViewController.removeFromParent()
         }
     }
 }

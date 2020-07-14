@@ -708,8 +708,11 @@ open class WPanelPageManagerVC: UIPageViewController {
 
     weak var pageIndicatorDelegate: WPanelPageManagerDelegate?
 
-    public override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
+    public override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
+// Local variable inserted by Swift 4.2 migrator.
+let options = convertFromOptionalUIPageViewControllerOptionsKeyDictionary(options)
+
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: convertToOptionalUIPageViewControllerOptionsKeyDictionary(options))
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -737,7 +740,7 @@ open class WPanelPageManagerVC: UIPageViewController {
 extension WPanelPageManagerVC: UIPageViewControllerDelegate {
     public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let firstViewController = viewControllers?.first,
-            let index = pages?.index(of: firstViewController) {
+            let index = pages?.firstIndex(of: firstViewController) {
 
             pageIndicatorDelegate?.wPanelPageManager(pageManager: self, didUpdatePageIndex: index)
         }
@@ -747,7 +750,7 @@ extension WPanelPageManagerVC: UIPageViewControllerDelegate {
 extension WPanelPageManagerVC: UIPageViewControllerDataSource {
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.index(of: viewController) else {
+            guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
                 return nil
             }
 
@@ -769,7 +772,7 @@ extension WPanelPageManagerVC: UIPageViewControllerDataSource {
 
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let pages = pages {
-            guard let viewControllerIndex = pages.index(of: viewController) else {
+            guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
                 return nil
             }
 
@@ -840,4 +843,16 @@ open class WPanelPagingView: UIView {
         pagingControl.pageIndicatorTintColor = pageIndicatorTintColor
         pagingControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalUIPageViewControllerOptionsKeyDictionary(_ input: [UIPageViewController.OptionsKey: Any]?) -> [String: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalUIPageViewControllerOptionsKeyDictionary(_ input: [String: Any]?) -> [UIPageViewController.OptionsKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIPageViewController.OptionsKey(rawValue: key), value)})
 }

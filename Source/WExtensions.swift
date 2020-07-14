@@ -26,9 +26,9 @@ public extension String {
         var initials = String()
 
         enumerateSubstrings(in: range, options: NSString.EnumerationOptions.byWords) { (substring, _, _, stop) -> () in
-            let initial = substring!.characters.first! as Character
+            let initial = substring!.first! as Character
             initials = initials + String(initial)
-            if (initials.characters.count >= limit) {
+            if (initials.count >= limit) {
                 stop = true
             }
         }
@@ -67,9 +67,9 @@ public extension UILabel {
         paragraphStyle.minimumLineHeight = frame.size.height
         paragraphStyle.maximumLineHeight = frame.size.height
         paragraphStyle.lineBreakMode = .byWordWrapping
-        let attributes: [String: AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
+        let attributes: [String: AnyObject] = [convertFromNSAttributedStringKey(NSAttributedString.Key.font): font, convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): paragraphStyle]
 
-        let size = text!.size(attributes: attributes)
+        let size = text!.size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
         let stringWidth = size.width
 
         let constrainedSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
@@ -93,4 +93,15 @@ public extension UIApplication {
         }
         return true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

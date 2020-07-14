@@ -626,7 +626,7 @@ open class WPagingSelectorVC: WSideMenuContentVC, WPagingSelectorControlDelegate
                 animation.fromValue = enabled ? 0.0 : shadowOpacity
                 animation.toValue = enabled ? shadowOpacity : 0.0
                 animation.duration = shadowAnimationDuration
-                animation.fillMode = kCAFillModeForwards
+                animation.fillMode = CAMediaTimingFillMode.forwards
                 animation.isRemovedOnCompletion = false
                 
                 self.pagingSelectorControl?.layer.add(animation, forKey: "shadowAnimation")

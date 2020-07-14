@@ -142,7 +142,7 @@ open class WSpinner: UIControl {
         backgroundLayer.frame = bounds
         backgroundLayer.fillColor = UIColor.clear.cgColor
         backgroundLayer.lineWidth = lineWidth
-        backgroundLayer.lineCap = kCALineCapRound
+        backgroundLayer.lineCap = CAShapeLayerLineCap.round
 
         if (backgroundLayer.superlayer != layer) {
             layer.insertSublayer(backgroundLayer, at: 0)
@@ -153,7 +153,7 @@ open class WSpinner: UIControl {
         progressLayer.frame = bounds
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineWidth = lineWidth
-        progressLayer.lineCap = kCALineCapRound
+        progressLayer.lineCap = CAShapeLayerLineCap.round
 
         if (progressLayer.superlayer != layer) {
             layer.addSublayer(progressLayer)

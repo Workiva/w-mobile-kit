@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WMobileKit'
-  s.version          = '5.1.3'
+  s.version          = '6.0.0'
   s.summary          = 'Swift library containing various custom UI components to provide functionality outside of the default libraries.'
   s.license          = { :type => 'Apache', :file => 'LICENSE' }
   s.homepage         = 'https://github.com/Workiva/w-mobile-kit'
@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '9.0'
   s.requires_arc     = true
   s.source_files     = 'Source/*{h,m,swift}'
-  s.dependency 'SnapKit', '3.2.0'
+  s.dependency 'SnapKit', '4.2.0'
   s.dependency 'SDWebImage', '4.0.0'
 end

@@ -46,7 +46,7 @@ public let TOAST_DEFAULT_ANIMATION_DURATION = 0.3
 open class WToastManager: NSObject, WToastViewDelegate {
     open var currentToast: WToastView?
 
-    open static let sharedInstance = WToastManager()
+    public static let sharedInstance = WToastManager()
 
     // Custom window can be provided. Default to frontmost window.
     open var rootWindow: UIWindow? = UIApplication.shared.windows.first
@@ -286,7 +286,7 @@ open class WToastView: UIView {
             }
         }
 
-        UIView.animate(withDuration: animationDuration, delay: 0, options: UIViewAnimationOptions(),
+        UIView.animate(withDuration: animationDuration, delay: 0, options: UIView.AnimationOptions(),
             animations: {
                 WToastManager.sharedInstance.rootWindow!.layoutIfNeeded()
             },
@@ -490,10 +490,21 @@ extension String {
         let boundingBox = (self as NSString).boundingRect(
             with: constraintRect,
             options: .usesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: font],
+            attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]),
             context: nil
         )
         
         return ceil(boundingBox.height)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

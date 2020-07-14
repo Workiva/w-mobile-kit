@@ -74,13 +74,13 @@ open class WLoadingModal: UIView {
         }
     }
 
-    open var blurEffectStyle: UIBlurEffectStyle = .dark {
+    open var blurEffectStyle: UIBlurEffect.Style = .dark {
         didSet {
             remakeBlurBackground()
         }
     }
 
-    open var blurEffectAutoResizingMask: UIViewAutoresizing = [.flexibleWidth, .flexibleHeight] {
+    open var blurEffectAutoResizingMask: UIView.AutoresizingMask = [.flexibleWidth, .flexibleHeight] {
         didSet {
             remakeBlurBackground()
         }
@@ -198,7 +198,7 @@ open class WLoadingModal: UIView {
     }
 
     open func show(_ view: UIView) {
-        self.show(view, insets: UIEdgeInsetsMake(0, 0, 0, 0))
+        self.show(view, insets: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0))
     }
 
     open func show(_ view: UIView, insets: UIEdgeInsets) {

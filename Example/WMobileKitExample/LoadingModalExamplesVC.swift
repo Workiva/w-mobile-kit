@@ -94,7 +94,7 @@ open class LoadingModalExamplesVC: WSideMenuContentVC {
             }
 
             let timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(LoadingModalExamplesVC.dismissLoadingModal(_:)), userInfo: nil, repeats: true)
-            RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+            RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
         }
     }
 
