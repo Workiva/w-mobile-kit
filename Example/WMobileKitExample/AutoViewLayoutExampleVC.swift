@@ -30,15 +30,15 @@ public class AutoViewLayoutExampleVC: WSideMenuContentVC {
     let topPadding: CGFloat = 20.0
 
     let descriptionLabel = UILabel()
-    let randomButton = UIButton(type: UIButtonType.roundedRect)
+    let randomButton = UIButton(type: UIButton.ButtonType.roundedRect)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         randomButton.backgroundColor = .lightGray
         randomButton.tintColor = .green
-        randomButton.setTitle("Randomize Count", for: UIControlState.normal)
-        randomButton.setTitleColor(.white, for: UIControlState.normal)
+        randomButton.setTitle("Randomize Count", for: UIControl.State.normal)
+        randomButton.setTitleColor(.white, for: UIControl.State.normal)
         randomButton.addTarget(self, action: #selector(AutoViewLayoutExampleVC.randomizeViewCount), for: .touchUpInside)
         view.addSubview(randomButton)
         randomButton.snp.remakeConstraints { (make) in

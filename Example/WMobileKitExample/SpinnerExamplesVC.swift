@@ -151,6 +151,6 @@ open class SpinnerExamplesVC: WSideMenuContentVC {
 
     open func startProgress() {
         let timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SpinnerExamplesVC.updateProgress(_:)), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
+        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
     }
 }

@@ -1,9 +1,9 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 def common_pods
   pod 'SDWebImage', '4.0.0' #https://github.com/rs/SDWebImage
-  pod 'SnapKit', '3.2.0' #https://github.com/SnapKit/SnapKit
+  pod 'SnapKit', '4.2.0' #https://github.com/SnapKit/SnapKit
 end
 
 target 'WMobileKit' do
