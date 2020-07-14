@@ -21,12 +21,17 @@ import UIKit
 @testable import WMobileKit
 
 open class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
-    open var testState: UIGestureRecognizerState!
+    open var testState: UIGestureRecognizer.UIGestureRecognizer.State!
     open var returnPoint: CGPoint?
 
 
-    open override var state: UIGestureRecognizerState {
-        return testState
+    open override var state: UIGestureRecognizer.UIGestureRecognizer.State {
+        get {
+            return testState
+        }
+        set {
+            testState = newValue
+        }
     }
 
     open override func location(in view: UIView?) -> CGPoint {
@@ -35,12 +40,17 @@ open class UILongPressGestureRecognizerMock: UILongPressGestureRecognizer {
 }
 
 open class UIPanGestureRecognizerMock: UIPanGestureRecognizer {
-    open var testState: UIGestureRecognizerState!
+    open var testState: UIGestureRecognizer.UIGestureRecognizer.State!
     open var returnPoint: CGPoint?
     open var returnVelocity: CGPoint?
 
-    open override var state: UIGestureRecognizerState {
-        return testState
+    open override var state: UIGestureRecognizer.UIGestureRecognizer.State {
+        get {
+            return testState
+        }
+        set {
+            testState = newValue
+        }
     }
 
     open override func location(in view: UIView?) -> CGPoint {

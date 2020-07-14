@@ -254,7 +254,7 @@ class WSideMenuVCSpec: QuickSpec {
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].style) == .plain
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].action) == #selector(WSideMenuContentVC.toggleSideMenu)
-                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -20, 0, 20)
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsets.init(top: 0, left: -20, bottom: 0, right: 20)
                 }
 
                 it("should have correct padding between menu and back icons") {
@@ -269,7 +269,7 @@ class WSideMenuVCSpec: QuickSpec {
                     additionalController.addWSideMenuButtons()
 
                     expect(additionalController.navigationItem.leftBarButtonItems?[1].title) == "Toggle"
-                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsetsMake(0, -10, 0, 10)
+                    expect(additionalController.navigationItem.leftBarButtonItems?[1].imageInsets) == UIEdgeInsets.init(top: 0, left: -10, bottom: 0, right: 10)
                 }
             }
         }

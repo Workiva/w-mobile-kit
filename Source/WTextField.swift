@@ -47,7 +47,7 @@ open class WTextField: UITextField {
         }
     }
 
-    open override var rightViewMode: UITextFieldViewMode {
+    open override var rightViewMode: UITextField.ViewMode {
         didSet {
             determineIfRightViewShouldBeHidden()
         }
@@ -64,7 +64,7 @@ open class WTextField: UITextField {
     open var placeHolderTextColor: UIColor = UIColor(hex: 0xFFFFFF, alpha: 0.55) {
         didSet {
             if (self.placeholder != nil) {
-                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+                self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): placeHolderTextColor]))
             } else {
                 self.setEmptyPlaceholder()
             }
@@ -132,7 +132,7 @@ open class WTextField: UITextField {
         if (rightImage != nil) {
             if (rightViewIsClearButton) {
                 let clearButton = UIButton()
-                clearButton.setImage(rightImage, for: UIControlState())
+                clearButton.setImage(rightImage, for: UIControl.State())
                 clearButton.addTarget(self, action: #selector(clearButtonWasPressed), for: .touchUpInside)
                 rightView = clearButton
                 rightViewMode = .whileEditing
@@ -160,7 +160,7 @@ open class WTextField: UITextField {
     fileprivate func setEmptyPlaceholder() {
         // We need to set the placeholder to an empty string in this case so that
         // the color persists when they "set" (now really change) the placeholder text
-        self.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSForegroundColorAttributeName: placeHolderTextColor])
+        self.attributedPlaceholder = NSAttributedString(string: "", attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): placeHolderTextColor]))
     }
 
     // MARK: - Custom Rect Sizings
@@ -228,4 +228,15 @@ open class WTextField: UITextField {
         sendActions(for: .editingChanged)
         determineIfRightViewShouldBeHidden()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

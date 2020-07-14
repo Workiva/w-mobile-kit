@@ -136,7 +136,7 @@ class WActionSheetSpec: QuickSpec {
                 it("should set window and subview properties correctly") {
                     expect(subject.presentingWindow).toNot(beNil())
                     expect(subject.presentingWindow!.isHidden) == false
-                    expect(subject.presentingWindow!.windowLevel) == UIWindowLevelStatusBar + 1
+                    expect(subject.presentingWindow!.windowLevel) == UIWindow.Level.statusBar + 1
                     expect(subject.presentingWindow!.rootViewController) == subject.statusBarStyleController
                     
                     expect(subject.tapRecognizerView.backgroundColor) == UIColor.black.withAlphaComponent(0.4)

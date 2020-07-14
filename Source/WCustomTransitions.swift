@@ -63,7 +63,7 @@ open class SlideAnimationController: NSObject, UIViewControllerAnimatedTransitio
             delay: 0.0,
             usingSpringWithDamping: 1,
             initialSpringVelocity: 1,
-            options: UIViewAnimationOptions(),
+            options: UIView.AnimationOptions(),
             animations: {
                 fromView.transform = self.presenting ? fromOffScreenOnLeft : fromOffScreenOnRight
                 toView.transform = CGAffineTransform.identity

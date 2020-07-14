@@ -132,7 +132,7 @@ open class WTextView: UITextView, UITextViewDelegate {
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(textDidChange),
-                                                         name: NSNotification.Name.UITextViewTextDidChange,
+                                                         name: UITextView.textDidChangeNotification,
                                                          object: nil)
 
         addSubview(leftImageView)
@@ -195,7 +195,7 @@ open class WTextView: UITextView, UITextViewDelegate {
         
     deinit {
         NotificationCenter.default.removeObserver(self,
-            name: NSNotification.Name.UITextViewTextDidChange,
+            name: UITextView.textDidChangeNotification,
             object: nil)
     }
 }
@@ -231,7 +231,7 @@ open class WMarkdownTextView: WTextView {
                 let replaceRange = NSMakeRange(startIndexDistance, text.characters.distance(from: text.startIndex, to: totalRange!.upperBound) - startIndexDistance)
                 
                 let replacedAttribString = NSMutableAttributedString(string: linkString)
-                replacedAttribString.addAttribute(NSLinkAttributeName, value: addressString, range: NSMakeRange(0, linkString.characters.count))
+                replacedAttribString.addAttribute(NSAttributedString.Key.link, value: addressString, range: NSMakeRange(0, linkString.characters.count))
                 
                 attribString.replaceCharacters(in: replaceRange, with: replacedAttribString)
             }

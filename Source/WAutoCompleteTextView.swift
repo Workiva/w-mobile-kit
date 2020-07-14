@@ -106,8 +106,8 @@ open class WAutoCompleteTextView: UIView {
     }
 
     fileprivate func commonInit() {
-        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WAutoCompleteTextView.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         backgroundColor = .clear
 
@@ -138,8 +138,8 @@ open class WAutoCompleteTextView: UIView {
         topLineSeparator.backgroundColor = .lightGray
 
         addSubview(submitButton)
-        submitButton.setTitle("Submit", for: UIControlState())
-        submitButton.setTitleColor(.darkGray, for: UIControlState())
+        submitButton.setTitle("Submit", for: UIControl.State())
+        submitButton.setTitleColor(.darkGray, for: UIControl.State())
         submitButton.titleLabel?.numberOfLines = 1
         submitButton.titleLabel?.adjustsFontSizeToFitWidth = true
         submitButton.backgroundColor = .clear
@@ -269,7 +269,7 @@ open class WAutoCompleteTextView: UIView {
     @objc open func keyboardWillShow(_ notification: Notification) {
         var height: CGFloat = bottomConstraintOffset
         if let userInfo = (notification as NSNotification).userInfo {
-            if let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] {
+            if let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] {
                 let keyboardFrame = (keyboardInfo as AnyObject).cgRectValue
                 let screenHeight = UIScreen.main.bounds.height
 
@@ -299,12 +299,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSFontAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedString.Key.font,
                                                   value: textView.font!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedString.Key.foregroundColor,
                                                   value: textView.textColor!,
                                                   range: NSRange(location:0,
                                                                  length:attributedSuffix.length))
@@ -338,12 +338,12 @@ open class WAutoCompleteTextView: UIView {
                 if let mutableCopy = replaceText.mutableCopy() as? NSMutableAttributedString {
                     let attributedSuffix = NSMutableAttributedString(string: " ")
 
-                    attributedSuffix.addAttribute(NSFontAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedString.Key.font,
                         value: textView.font!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))
 
-                    attributedSuffix.addAttribute(NSForegroundColorAttributeName,
+                    attributedSuffix.addAttribute(NSAttributedString.Key.foregroundColor,
                         value: textView.textColor!,
                         range: NSRange(location:0,
                             length:attributedSuffix.length))

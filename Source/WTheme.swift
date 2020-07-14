@@ -147,7 +147,7 @@ open class WThemeManager: NSObject {
     fileprivate func customizeNavigationBar(_ theme: WTheme) {
         UINavigationBar.appearance().barTintColor = theme.navigationBarColor
         UINavigationBar.appearance().tintColor = theme.navigationTintColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: theme.navigationTextColor]
+        UINavigationBar.appearance().titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: theme.navigationTextColor])
 
         // Needed for views to not show behind the nav bar
         UINavigationBar.appearance().isTranslucent = false
@@ -163,4 +163,10 @@ open class WThemeManager: NSObject {
     }
 
     fileprivate func customizeSideMenuVC(_ theme: WTheme) {}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

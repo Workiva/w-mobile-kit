@@ -323,7 +323,7 @@ open class WBannerView: UIView {
             make.right.equalTo(rootView!).offset(-sidePadding)
         }
 
-        UIView.animate(withDuration: animationDuration, delay: 0, options: UIViewAnimationOptions(),
+        UIView.animate(withDuration: animationDuration, delay: 0, options: UIView.AnimationOptions(),
             animations: {
                 self.rootView!.layoutIfNeeded()
             },

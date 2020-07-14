@@ -162,7 +162,7 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
 
         view.backgroundColor = UIColor.white.withAlphaComponent(0.0)
 
-        presentingWindow?.windowLevel = UIWindowLevelStatusBar + 1
+        presentingWindow?.windowLevel = UIWindow.Level.statusBar + 1
         presentingWindow?.backgroundColor = UIColor.white.withAlphaComponent(0.0)
         presentingWindow?.rootViewController = statusBarStyleController
         presentingWindow?.isHidden = true
@@ -218,8 +218,8 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
                 make.bottom.equalTo(containerView)
             }
 
-            cancelButton.setTitle("Cancel", for: UIControlState())
-            cancelButton.setTitleColor(UIColor(hex: 0x595959), for: UIControlState())
+            cancelButton.setTitle("Cancel", for: UIControl.State())
+            cancelButton.setTitleColor(UIColor(hex: 0x595959), for: UIControl.State())
             cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
             cancelButton.backgroundColor = .white
             cancelButton.layer.cornerRadius = 4
@@ -272,7 +272,7 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
             make.height.equalTo((delegate?.heightForActionSheet())!)
         }
 
-        UIView.animate(withDuration: 0.05, delay: delay, options: UIViewAnimationOptions.curveEaseOut,
+        UIView.animate(withDuration: 0.05, delay: delay, options: UIView.AnimationOptions.curveEaseOut,
             animations: { [weak self] in
                 self?.presentingWindow?.layoutIfNeeded()
             },
@@ -290,7 +290,7 @@ open class WBaseActionSheet<ActionDataType>: UIViewController {
                         make.top.equalTo(self!.presentingWindow!.snp.bottom)
                     }
 
-                    UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions(),
+                    UIView.animate(withDuration: 0.25, delay: 0, options: UIView.AnimationOptions(),
                         animations: { [weak self] in
                             self?.presentingWindow?.layoutIfNeeded()
                             self?.tapRecognizerView.backgroundColor = .clear
@@ -471,7 +471,7 @@ open class WActionSheetVC<ActionDataType>: WBaseActionSheet<ActionDataType>, WBa
                 make.height.equalTo(height)
             }
 
-            UIView.animate(withDuration: 0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseOut,
+            UIView.animate(withDuration: 0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIView.AnimationOptions.curveEaseOut,
                 animations: {
                     self.presentingWindow?.layoutIfNeeded()
                     self.tapRecognizerView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -662,7 +662,7 @@ open class WTableViewCell<ActionDataType>: UITableViewCell {
         commonInit()
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         commonInit()
@@ -941,12 +941,12 @@ open class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>,
         pickerView.dataSource = self
         pickerView.delegate = self
 
-        toolbarCancelButton.setTitle("Cancel", for: UIControlState())
-        toolbarCancelButton.setTitleColor(UIColor.blue, for: UIControlState())
+        toolbarCancelButton.setTitle("Cancel", for: UIControl.State())
+        toolbarCancelButton.setTitleColor(UIColor.blue, for: UIControl.State())
         toolbarCancelButton.addTarget(self, action: #selector(WPickerActionSheet.toolbarCancelButtonWasTouched), for: .touchUpInside)
 
-        toolbarDoneButton.setTitle("Done", for: UIControlState())
-        toolbarDoneButton.setTitleColor(UIColor.blue, for: UIControlState())
+        toolbarDoneButton.setTitle("Done", for: UIControl.State())
+        toolbarDoneButton.setTitleColor(UIColor.blue, for: UIControl.State())
         toolbarDoneButton.addTarget(self, action: #selector(WPickerActionSheet.toolbarDoneButtonWasTouched), for: .touchUpInside)
 
         toolbarContainerView.addSubview(toolbarCancelButton)
@@ -1005,7 +1005,7 @@ open class WPickerActionSheet<ActionDataType>: WBaseActionSheet<ActionDataType>,
                 make.height.equalTo(height)
             }
 
-            UIView.animate(withDuration: 0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseOut,
+            UIView.animate(withDuration: 0.35, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 5.0, options: UIView.AnimationOptions.curveEaseOut,
                 animations: { [weak self] in
                     self?.presentingWindow?.layoutIfNeeded()
                 },

@@ -65,13 +65,13 @@ class WSpinnerTests: QuickSpec {
                     expect(bLayer.frame) == CGRect.zero
                     expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 3
-                    expect(bLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(bLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Progress layer should be configured to the default
                     let pLayer = spinnerView.progressLayer
                     expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 3
-                    expect(pLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(pLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Icon layer should be configured to the default
                     let iLayer = spinnerView.iconLayer
@@ -125,13 +125,13 @@ class WSpinnerTests: QuickSpec {
                     expect(bLayer.frame) == CGRect.zero
                     expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 3
-                    expect(bLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(bLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Progress layer should be configured to the default
                     let pLayer = spinnerView.progressLayer
                     expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 3
-                    expect(pLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(pLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Both layer should have an animation
                     let verifyRotationAnimation = {
@@ -212,13 +212,13 @@ class WSpinnerTests: QuickSpec {
                     expect(bLayer.frame) == CGRect.zero
                     expect(bLayer.fillColor) == UIColor.clear.cgColor
                     expect(bLayer.lineWidth) == 1
-                    expect(bLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(bLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Progress layer
                     let pLayer = spinnerView.progressLayer
                     expect(pLayer.frame) == CGRect.zero
                     expect(pLayer.lineWidth) == 1
-                    expect(pLayer.lineCap) == kCALineCapRound
+                    expect(convertFromCAShapeLayerLineCap(pLayer.lineCap)) == convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
 
                     // Icon layer should be still configured to the default
                     let iLayer = spinnerView.iconLayer
@@ -260,4 +260,9 @@ class WSpinnerTests: QuickSpec {
             }
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAShapeLayerLineCap(_ input: CAShapeLayerLineCap) -> String {
+	return input.rawValue
 }

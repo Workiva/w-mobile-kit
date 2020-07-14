@@ -103,8 +103,8 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should receive notification when keyboard will show") {
                     subject.view.addSubview(autoCompleteView)
                     
-                    let userInfo: [AnyHashable: Any] = [UIKeyboardFrameEndUserInfoKey: NSValue(cgRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
-                    let notification = NSNotification(name: NSNotification.Name.UIKeyboardWillShow, object: nil, userInfo: userInfo)
+                    let userInfo: [AnyHashable: Any] = [UIResponder.keyboardFrameEndUserInfoKey: NSValue(cgRect: CGRect(x: 0, y: 0, width: 10, height: 10))]
+                    let notification = NSNotification(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: userInfo)
                     
                     NotificationCenter.default.post(notification as Notification)
                 }
@@ -112,7 +112,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should set view to bottom when keyboard will hide") {
                     subject.view.addSubview(autoCompleteView)
                     
-                    NotificationCenter.default.post(name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+                    NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
                     
                     expect(autoCompleteView.frame.origin.y).toEventually(beCloseTo(autoCompleteView.superview!.frame.size.height - autoCompleteView.frame.size.height, within: 0.1), timeout: 0.3)
                 }
@@ -120,7 +120,7 @@ class WAutoCompleteTextViewSpec: QuickSpec {
                 it("should remove as observer when deinit") {
                     autoCompleteView = nil
                     
-                    NotificationCenter.default.post(name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+                    NotificationCenter.default.post(name: UIResponder.keyboardWillHideNotification, object: nil)
                 }
             }
             
